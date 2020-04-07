@@ -1,4 +1,4 @@
-# browtricks
+# Volkswagen email corporate communications CMS
 
 ## Project setup
 ```

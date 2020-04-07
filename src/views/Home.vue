@@ -1,6 +1,6 @@
 <template>
   <div>
-    <HelloWorld msg="Welcome to BrowTricks" />
+    <HelloWorld msg="Welcome to VW emails CMS" />
   </div>
 </template>
 
