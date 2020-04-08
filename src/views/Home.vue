@@ -1,6 +1,11 @@
 <template>
   <div>
-    <HelloWorld msg="Welcome to VW emails CMS" />
+    <p v-if="isAuthenticated">
+      <router-link to="/posts/add">Add a post</router-link>
+    </p>
+    <p v-if="!isAuthenticated">
+      <router-link to="/login">Login</router-link>
+    </p>
   </div>
 </template>
 
@@ -10,8 +15,11 @@ import HelloWorld from '@/components/HelloWorld.vue';
 
 export default {
   name: 'Home',
-  components: {
-    HelloWorld
+  components: {},
+  computed: {
+    isAuthenticated() {
+      return this.$store.getters['auth/isAuthenticated'];
+    }
   }
 };
 </script>
