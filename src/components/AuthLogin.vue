@@ -112,7 +112,7 @@ export default {
     async oauth(provider) {
       // TODO: move to store
       await this.$store.commit('auth/updateProvider', provider);
-      await this.$store.dispatch('auth/updateReturnUrl', window.location.href);
+      await this.$store.dispatch('auth/updateReturnUrl', window.location.origin);
       const redirectUrl = await this.$store.getters['auth/oauth'];
       window.location.assign(redirectUrl);
     }
