@@ -75,9 +75,7 @@ export default {
       return state.forgotPasswordError;
     },
     oauth(state) {
-      return APIPath(
-        `/api/v0/authentication/provider/login?provider=${state.provider}&returnUrl=${state.returnURL}`
-      );
+      return APIPath(`/api/v0/authentication/provider/login?provider=${state.provider}&returnUrl=${state.returnURL}`);
     }
   },
   mutations: {
@@ -248,7 +246,6 @@ export default {
       return AuthenticationService.logout().then(() => {
         context.commit('updateLoading', false);
         context.commit('logout');
-        router.push({ name: 'home' });
       });
     },
     async ping(context) {

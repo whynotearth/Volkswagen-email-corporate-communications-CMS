@@ -17,6 +17,18 @@ import AuthLogin from '@/components/AuthLogin';
 
 export default {
   name: 'LoginPage',
-  components: { AuthLogin }
+  mounted() {
+    setTimeout(() => {
+      if (this.isAuthenticated) {
+        this.$router.push({ name: 'Home' });
+      }
+    }, 2000);
+  },
+  components: { AuthLogin },
+  computed: {
+    isAuthenticated() {
+      return this.$store.getters['auth/isAuthenticated'];
+    }
+  }
 };
 </script>
