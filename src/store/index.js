@@ -4,6 +4,7 @@ import auth from './modules/auth';
 import category from './modules/category';
 import loading from './modules/loading';
 import snackbar from './modules/snackbar';
+import post from './modules/post';
 import VuexPersistence from 'vuex-persist';
 
 const vuexLocal = new VuexPersistence({
@@ -20,6 +21,7 @@ export default new Vuex.Store({
     snackbar,
     loading,
     auth,
-    category
+    category,
+    post
   }
 });
