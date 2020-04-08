@@ -20,6 +20,6 @@ export default new Vuex.Store({
     snackbar,
     loading,
     auth,
-    category,
+    category
   }
 });

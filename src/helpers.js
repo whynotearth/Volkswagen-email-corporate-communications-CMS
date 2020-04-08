@@ -39,11 +39,7 @@ export function changeUrlExtension(url, newExtension) {
 }
 
 export function transformCloudinaryUrl(resourceUrl, transformations) {
-  if (
-    !resourceUrl ||
-    !transformations ||
-    resourceUrl.indexOf('cloudinary') < 0
-  ) {
+  if (!resourceUrl || !transformations || resourceUrl.indexOf('cloudinary') < 0) {
     return resourceUrl;
   }
   const urlParts = resourceUrl.split('/');
@@ -57,10 +53,7 @@ export function getPosterImage(videoUrl, transformations) {
   if (!videoUrl) {
     return null;
   }
-  return transformCloudinaryUrl(
-    changeUrlExtension(videoUrl, 'jpg'),
-    transformations
-  );
+  return transformCloudinaryUrl(changeUrlExtension(videoUrl, 'jpg'), transformations);
 }
 
 export function hasAudio(video) {
@@ -114,15 +107,9 @@ export function reviewDay(date) {
 
 export function setDocumentClassesOnToggleDialog(isOpen) {
   if (isOpen) {
-    document.documentElement.classList.add(
-      'overflow-y-hidden',
-      'dialog--is-open'
-    );
+    document.documentElement.classList.add('overflow-y-hidden', 'dialog--is-open');
   } else {
-    document.documentElement.classList.remove(
-      'overflow-y-hidden',
-      'dialog--is-open'
-    );
+    document.documentElement.classList.remove('overflow-y-hidden', 'dialog--is-open');
   }
 }
 
@@ -134,10 +121,7 @@ export function getFormattedMetaDescription(text) {
   return text.substring(0, 180).trim();
 }
 
-export function getFormattedMetaTitle(
-  text,
-  { titleCase = true, maxLength = 80 } = {}
-) {
+export function getFormattedMetaTitle(text, { titleCase = true, maxLength = 80 } = {}) {
   let result = text;
   if (titleCase) {
     result = startCase(toLower(result));

@@ -1,5 +1,5 @@
 // @ts-ignore
-import { PageService } from '@whynotearth/meredith-axios'
+import { PageService } from '@whynotearth/meredith-axios';
 import Vue from 'vue';
 import { companySlug } from '@/constants/app';
 
