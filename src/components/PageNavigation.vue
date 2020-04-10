@@ -32,6 +32,15 @@
           Add a post
         </router-link>
       </div>
+      <div class="text-sm lg:flex-grow">
+        <router-link
+          v-if="isAuthenticated"
+          to="/jumpstart-test"
+          class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"
+        >
+          Jumpstart test
+        </router-link>
+      </div>
       <div>
         <a
           v-if="isAuthenticated"

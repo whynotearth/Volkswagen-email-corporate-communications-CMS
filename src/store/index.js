@@ -5,6 +5,7 @@ import category from './modules/category';
 import loading from './modules/loading';
 import snackbar from './modules/snackbar';
 import post from './modules/post';
+import jumpstart from './modules/jumpstart';
 import VuexPersistence from 'vuex-persist';
 
 const vuexLocal = new VuexPersistence({
@@ -22,6 +23,7 @@ export default new Vuex.Store({
     loading,
     auth,
     category,
-    post
+    post,
+    jumpstart
   }
 });

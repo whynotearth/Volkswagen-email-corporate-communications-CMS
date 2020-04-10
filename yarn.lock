@@ -1306,9 +1306,9 @@
     "@webassemblyjs/wast-parser" "1.9.0"
     "@xtuc/long" "4.2.2"
 
-"@whynotearth/meredith-axios@whynotearth/meredith-axios#v1.0.1":
+"@whynotearth/meredith-axios@whynotearth/meredith-axios#v1.0.2":
   version "1.0.0"
-  resolved "https://codeload.github.com/whynotearth/meredith-axios/tar.gz/67f89ce60b9b1c18170b1f4a7020ac54a5e3f663"
+  resolved "https://codeload.github.com/whynotearth/meredith-axios/tar.gz/c65fecb91a5d25f612efb75ebb8c7bd287204139"
   dependencies:
     swagger-axios-codegen "^0.9.17"
 
