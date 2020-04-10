@@ -6,7 +6,7 @@
         <div>
           <div class="mb-4">
             <label class="block text-gray-700 text-sm font-bold mb-2" for="SubjectInput">
-              subject
+              Subject
             </label>
             <input
               v-model="subjectInput"
@@ -15,7 +15,7 @@
               class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               id="SubjectInput"
               type="text"
-              placeholder=""
+              placeholder="Write subject"
             />
           </div>
 
@@ -62,15 +62,16 @@
               placeholder="Write description"
             />
           </div>
-          
+
         </div>
+
         <div class="flex items-center justify-between">
           <button
             class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             type="button"
             @click="submit()"
           >
-            Save
+            Submit
           </button>
         </div>
       </form>
@@ -93,9 +94,9 @@ export default {
     };
   },
   methods: {
-    submit() {
+    async submit() {
       try {
-        this.$store.dispatch('jumpstart/test', {
+        await this.$store.dispatch('jumpstart/test', {
           params: {
             body: {
               date: this.dateInput,
@@ -105,7 +106,11 @@ export default {
             }
           }
         });
+        alert('Successfully sent');
+        
       } catch (error) {
+        alert('Not sent, an error occured.');
+        
         console.log(error);
       }
     }

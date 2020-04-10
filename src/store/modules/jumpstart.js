@@ -17,9 +17,9 @@ export default {
       
       try {
         const data = await JumpStartService.test(params);
-        // context.commit('update', data);
+        context.commit('update', data);
       } catch (error) {
-        return new Error('Error in add post');
+        throw new Error('Error in jumstart test');
       }
     }
   },
