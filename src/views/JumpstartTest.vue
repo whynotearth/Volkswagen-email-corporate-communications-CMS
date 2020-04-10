@@ -20,19 +20,6 @@
           </div>
 
           <div class="mb-4">
-            <label class="block text-gray-700 text-sm font-bold mb-2" for="DescriptionInput">
-              Description
-            </label>
-            <textarea
-              v-model="descriptionInput"
-              rows="12"
-              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="DescriptionInput"
-              type="text"
-              placeholder="Write description"
-            />
-          </div>
-          <div class="mb-4">
             <label class="block text-gray-700 text-sm font-bold mb-2" for="DateInput">
               Date
             </label>
@@ -46,6 +33,7 @@
               placeholder="Write date"
             />
           </div>
+
           <div class="mb-4">
             <label class="block text-gray-700 text-sm font-bold mb-2" for="ToInput">
               To
@@ -57,9 +45,24 @@
               class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               id="ToInput"
               type="text"
-              placeholder="Write to address"
+              placeholder="To"
             />
           </div>
+
+          <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="DescriptionInput">
+              Description
+            </label>
+            <textarea
+              v-model="descriptionInput"
+              rows="12"
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="DescriptionInput"
+              type="text"
+              placeholder="Write description"
+            />
+          </div>
+          
         </div>
         <div class="flex items-center justify-between">
           <button
