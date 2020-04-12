@@ -4,9 +4,7 @@
       class="input appearance-none outline-none relative bg-transparent border border-gray-600 rounded w-full px-4 py-3 focus:border-2 active:border-2"
       :class="[
         { filled: value.length > 0 },
-        error
-          ? 'focus:border-red-600 active:border-red-600'
-          : 'focus:border-gray-500 active:border-gray-500'
+        error ? 'focus:border-red-600 active:border-red-600' : 'focus:border-gray-500 active:border-gray-500'
       ]"
       :type="type"
       :value="value"

@@ -7,9 +7,7 @@
       @input="$emit('input', $event.target.value)"
       :placeholder="placeholder || label"
     ></textarea>
-    <label
-      class="label bg-secondary absolute mb-0 top-0 left-0 mt-3 ml-3 cursor-text text-gray-500"
-    >
+    <label class="label bg-secondary absolute mb-0 top-0 left-0 mt-3 ml-3 cursor-text text-gray-500">
       {{ label }}
     </label>
   </div>

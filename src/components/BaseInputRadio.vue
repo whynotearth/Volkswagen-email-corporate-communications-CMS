@@ -8,10 +8,7 @@
       class="rounded-full h-5 w-5 p-1 border-2 border-gray-500 inline-block align-baseline mr-4 -mb-0.5"
       :class="{ 'border-button': selectedOption === value }"
     >
-      <div
-        class="h-full w-full rounded-full"
-        :class="{ 'bg-button': selectedOption === value }"
-      ></div>
+      <div class="h-full w-full rounded-full" :class="{ 'bg-button': selectedOption === value }"></div>
     </div>
     <span>
       <slot name="title">{{ value }}</slot>

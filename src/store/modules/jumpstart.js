@@ -14,7 +14,6 @@ export default {
   },
   actions: {
     async test(context, { params }) {
-      
       try {
         const data = await JumpStartService.test(params);
         context.commit('update', data);
