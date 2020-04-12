@@ -4,7 +4,7 @@ import '@/connection/init';
 import './registerServiceWorker';
 import router from './router';
 import store from './store';
-import './assets/tailwind.css';
+import './styles/tailwind.css';
 import configureModerator from './store/store-moderator';
 
 Vue.config.productionTip = false;

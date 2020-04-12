@@ -1,6 +1,6 @@
 // https://github.com/tailwindcss/tailwindcss/blob/master/stubs/defaultConfig.stub.js#L5
 const defaultTheme = require('tailwindcss/defaultTheme');
-const plugin = require('tailwindcss/plugin');
+const customUtilities = require('./src/styles/tailwind-utilities')
 
 module.exports = {
   theme: {
@@ -52,18 +52,6 @@ module.exports = {
     borderWidth: ['responsive', 'hover', 'focus', 'active']
   },
   plugins: [
-    plugin(function({ addUtilities, config }) {
-      const newUtilities = {
-        '.display-1': {
-          fontSize: config('theme.fontSize.xl'),
-          fontWeight: config('theme.fontWeight.semibold'),
-          lineHeight: config('theme.lineHeight.10')
-        }
-      };
-
-      addUtilities(newUtilities, {
-        variants: ['responsive']
-      });
-    })
+    ...customUtilities
   ]
 };
