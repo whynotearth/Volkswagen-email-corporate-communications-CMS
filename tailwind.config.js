@@ -1,6 +1,6 @@
 // https://github.com/tailwindcss/tailwindcss/blob/master/stubs/defaultConfig.stub.js#L5
 const defaultTheme = require('tailwindcss/defaultTheme');
-const customUtilities = require('./src/styles/tailwind-utilities')
+const customUtilities = require('./src/styles/tailwind-utilities');
 
 module.exports = {
   theme: {
@@ -34,16 +34,33 @@ module.exports = {
         sans: ['Work Sans', ...defaultTheme.fontFamily.sans]
       },
       fontSize: {
-        xs: '0.75rem',
-        sm: '0.875rem',
-        base: '1rem',
-        lg: '1.25rem',
-        xl: '1.375rem',
-        '2xl': '2rem',
-        '3xl': '2.25rem',
-        '4xl': '3rem',
-        '5xl': '3.5rem',
-        '6xl': '7rem'
+        xs: '0.75rem', // 12
+        sm: '0.875rem', // 16
+        base: '1rem', // 16
+        lg: '1.25rem', // 20
+        xl: '1.375rem', // 22
+        '2xl': '1.5rem', // 24
+        '3xl': '2rem', // 32
+        '4xl': '2.25rem', // 36
+        '5xl': '3rem', // 48
+        '6xl': '3.5rem', // 56
+        '7xl': '7rem' // 112
+      },
+      lineHeight: {
+        none: '1',
+        tight: '1.25',
+        snug: '1.375',
+        normal: '1.5',
+        relaxed: '1.625',
+        loose: '2',
+        '3': '.75rem',
+        '4': '1rem',
+        '5': '1.25rem',
+        '6': '1.5rem',
+        '7': '1.75rem',
+        '8': '2rem',
+        '9': '2.25rem',
+        '10': '2.5rem'
       }
     }
   },
@@ -51,7 +68,5 @@ module.exports = {
     backgroundColor: ['responsive', 'hover', 'focus', 'active'],
     borderWidth: ['responsive', 'hover', 'focus', 'active']
   },
-  plugins: [
-    ...customUtilities
-  ]
+  plugins: [...customUtilities]
 };

@@ -1,17 +1,74 @@
+// https://www.tailwindcss.cn/docs/plugins/
+// https://web-crunch.com/posts/how-to-extend-tailwind-css
+
 const plugin = require('tailwindcss/plugin');
 
-const displays = plugin(function({ addUtilities, config }) {
-  const newUtilities = {
+const textUtilsPlugin = plugin(function({ addUtilities, theme, variants }) {
+  const textUtils = {
+    '.display-4': {
+      fontSize: theme('fontSize.7xl'),
+      fontWeight: theme('fontWeight.normal'),
+      lineHeight: '112px',
+      color: 'rgba(0,0,0,0.87)'
+    },
+    '.display-3': {
+      fontSize: theme('fontSize.6xl'),
+      fontWeight: theme('fontWeight.normal'),
+      lineHeight: '48px',
+      color: 'rgba(0,0,0,0.87)'
+    },
+    '.display-2': {
+      fontSize: theme('fontSize.5xl'),
+      fontWeight: theme('fontWeight.normal'),
+      lineHeight: '40px',
+      color: 'rgba(0,0,0,0.87)'
+    },
     '.display-1': {
-      fontSize: config('theme.fontSize.xl'),
-      fontWeight: config('theme.fontWeight.semibold'),
-      lineHeight: config('theme.lineHeight.10')
+      fontSize: theme('fontSize.xl'),
+      fontWeight: theme('fontWeight.semibold'),
+      lineHeight: '40px',
+      color: 'rgba(0,0,0,0.87)'
+    },
+
+    '.headline': {
+      fontSize: theme('fontSize.3xl'),
+      fontWeight: theme('fontWeight.bold'),
+      lineHeight: '38px',
+      color: 'rgba(0,0,0,0.87)'
+    },
+    '.title': {
+      fontSize: theme('fontSize.xl'),
+      fontWeight: theme('fontWeight.semibold'),
+      lineHeight: '26px',
+      color: 'rgba(0,0,0,0.87)'
+    },
+    '.subheader': {
+      fontSize: theme('fontSize.xl'),
+      fontWeight: theme('fontWeight.medium'),
+      lineHeight: '25px',
+      color: 'rgba(0,0,0,0.87)'
+    },
+    '.body-2': {
+      fontSize: theme('fontSize.xl'),
+      fontWeight: theme('fontWeight.medium'),
+      lineHeight: '24px',
+      color: 'rgba(0,0,0,0.87)'
+    },
+    '.body-1': {
+      fontSize: theme('fontSize.xl'),
+      fontWeight: theme('fontWeight.normal'),
+      lineHeight: '20px',
+      color: 'rgba(0,0,0,0.87)'
+    },
+    '.caption': {
+      fontSize: theme('fontSize.xl'),
+      fontWeight: theme('fontWeight.normal'),
+      lineHeight: '16px',
+      color: 'rgba(0,0,0,0.54)'
     }
   };
 
-  addUtilities(newUtilities, {
-    variants: ['responsive']
-  });
+  addUtilities(textUtils, variants('responsive'));
 });
 
-module.exports = [displays];
+module.exports = [textUtilsPlugin];
