@@ -1,7 +1,7 @@
 <template>
   <div class="mb-4 relative">
     <input
-      class="input appearance-none outline-none relative bg-transparent border border-gray-600 rounded w-full px-4 py-3 focus:border-2 active:border-2"
+      class="input appearance-none outline-none relative bg-transparent border border-gray-600 rounded w-full px-4 py-3 focus:shadow-md active:shadow-md"
       :class="[
         { filled: value.length > 0 },
         error ? 'focus:border-red-600 active:border-red-600' : 'focus:border-gray-500 active:border-gray-500'
@@ -12,7 +12,7 @@
       :placeholder="placeholder || label"
     />
     <label
-      class="label bg-secondary absolute mb-0 top-0 left-0 mt-3 ml-3 cursor-text"
+      class="label bg-surface absolute mb-0 top-0 left-0 mt-3 ml-3 cursor-text"
       :class="error ? 'text-red-600' : 'text-gray-500'"
     >
       {{ label }}
@@ -27,7 +27,7 @@ export default {
   props: {
     value: {
       type: String,
-      default: null
+      default: ''
     },
     label: {
       type: String,
@@ -61,12 +61,13 @@ export default {
 .input:focus + .label,
 .input:active + .label,
 .input.filled + .label {
-  font-size: 0.75rem;
-  transition: all 0.2s ease-out;
-  top: -1.3rem;
+  font-size: inherit;
+  transition: transform 0.2s ease-out;
+  transform: translateY(-1.3rem) scale(0.75);
   opacity: 1;
   display: block;
   z-index: 3;
+  will-change: transform;
 }
 
 .input:focus::placeholder {

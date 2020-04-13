@@ -2,11 +2,11 @@
   <div>
     <PageNavigation />
     <div class="container mx-auto">
-      <div class="display-1">
-        display 1: Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eveniet, accusantium!
-      </div>
-      <div class="display-2">
-        display 2: Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eveniet, accusantium!
+      <br />
+      <br />
+      <br />
+      <div class="max-w-sm mx-auto">
+        <input-text></input-text>
       </div>
     </div>
   </div>
@@ -14,9 +14,10 @@
 
 <script>
 import PageNavigation from '@/components/PageNavigation.vue';
+import InputText from '@/components/BaseInputText.vue';
 
 export default {
   name: 'Home',
-  components: { PageNavigation }
+  components: { PageNavigation, InputText }
 };
 </script>
