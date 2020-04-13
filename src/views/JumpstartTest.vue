@@ -62,7 +62,6 @@
               placeholder="Write description"
             />
           </div>
-
         </div>
 
         <div class="flex items-center justify-between">
@@ -107,10 +106,9 @@ export default {
           }
         });
         alert('Successfully sent');
-        
       } catch (error) {
         alert('Not sent, an error occured.');
-        
+
         console.log(error);
       }
     }
