@@ -4,6 +4,7 @@ import Home from '../views/Home.vue';
 import PostAdd from '../views/PostAdd.vue';
 import AuthLogin from '../views/AuthLogin.vue';
 import JumpstartTest from '../views/JumpstartTest.vue';
+import MemoAdd from '../views/MemoAdd.vue';
 
 Vue.use(VueRouter);
 
@@ -27,6 +28,12 @@ const routes = [
     path: '/jumpstart-test',
     name: 'JumpstartTest',
     component: JumpstartTest
+  },
+  {
+    path: '/memo/add/:step?',
+    name: 'MemoAdd',
+    component: MemoAdd,
+    props: true
   }
 ];
 

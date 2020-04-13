@@ -5,6 +5,7 @@ const customUtilities = require('./src/styles/tailwind-utilities');
 module.exports = {
   theme: {
     extend: {
+      container: { padding: '2rem', center: true },
       colors: {
         primary: '#011D51',
         secondary: '#03B3F9',
@@ -23,8 +24,7 @@ module.exports = {
         sm: '640px',
         md: '768px',
         lg: '1024px',
-        xl: '1280px',
-        xxl: '1920px'
+        xl: '1280px'
       },
       spacing: {
         '0.5': '0.125rem',

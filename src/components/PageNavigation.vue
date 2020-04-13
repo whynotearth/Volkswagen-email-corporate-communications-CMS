@@ -26,6 +26,15 @@
       <div class="text-sm lg:flex-grow">
         <router-link
           v-if="isAuthenticated"
+          to="/memo/add"
+          class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"
+        >
+          Add Memo
+        </router-link>
+      </div>
+      <div class="text-sm lg:flex-grow">
+        <router-link
+          v-if="isAuthenticated"
           to="/posts/add"
           class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"
         >
