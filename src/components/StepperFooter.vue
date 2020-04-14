@@ -4,14 +4,43 @@
       <div class="bg-surface flex-grow"></div>
       <div class="bg-primary flex-grow"></div>
     </div>
-    <div class="container flex items-center h-full z-2 relative">
-      <a class="link-back block bg-surface flex h-full items-center justify-start px-6 font-semibold text-error">
-        Back
+    <div class="container flex items-center h-full z-2 relative px-6 md:px-0">
+      <a
+        @click="$emit('changeStep', -1)"
+        class="link-back block bg-surface flex h-full items-center justify-start px-1 font-semibold text-error cursor-pointer select-none"
+      >
+        <svg width="8" height="12" viewBox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M7.4 1.4L6 0L0 6L6 12L7.4 10.6L2.8 6L7.4 1.4Z"
+            fill="currentColor"
+          />
+        </svg>
+
+        <span class="ml-2">Back</span>
       </a>
       <a
-        class="link-forward block bg-primary flex-grow text-white flex h-full items-center justify-end px-6 font-semibold"
+        @click="$emit('changeStep', 1)"
+        class="link-forward block bg-primary flex-grow text-white flex h-full items-center justify-end px-1 font-semibold cursor-pointer select-none"
       >
-        Preview Memo
+        <span class="mr-2">{{ stepHeaderNext(step) }}</span>
+
+        <svg
+          class="transform -scale-x-1"
+          width="8"
+          height="12"
+          viewBox="0 0 8 12"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M7.4 1.4L6 0L0 6L6 12L7.4 10.6L2.8 6L7.4 1.4Z"
+            fill="currentColor"
+          />
+        </svg>
       </a>
     </div>
   </footer>
@@ -24,4 +53,26 @@
 .page-footer {
   box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.2), 0px 4px 5px rgba(0, 0, 0, 0.12), 0px 2px 4px rgba(0, 0, 0, 0.14);
 }
+.flip {
+  transform: scaleX(-1);
+}
 </style>
+
+<script>
+export default {
+  name: 'StepperFooter',
+  props: {
+    step: Number,
+    steps: Array,
+    options: Object
+  },
+  methods: {
+    stepHeaderNext(currentStep) {
+      if (this.options.isLastStep) {
+        return this.options.submitText;
+      }
+      return this.steps[currentStep] || '';
+    }
+  }
+};
+</script>

@@ -1,7 +1,7 @@
 <template>
   <div class="header-steppable bg-surface sticky inset-x-0 top-0 z-3 py-1">
     <div class="container">
-      <BaseStepperCircle :steps="['Internal Memo', 'Preview Memo']" :current-step="step"></BaseStepperCircle>
+      <BaseStepperCircle :steps="steps" :current-step="step" :options="options"></BaseStepperCircle>
     </div>
   </div>
 </template>
@@ -13,7 +13,9 @@ export default {
   name: 'StepperHeader',
   components: { BaseStepperCircle },
   props: {
-    step: Number
+    step: Number,
+    steps: Array,
+    options: Object
   }
 };
 </script>

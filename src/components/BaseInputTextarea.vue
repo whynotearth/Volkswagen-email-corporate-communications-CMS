@@ -1,13 +1,13 @@
 <template>
   <div class="mb-4 relative">
     <textarea
-      class="input disable-scrollbars appearance-none relative bg-transparent border border-gray-600 rounded h-32 w-full px-4 py-3 focus:outline-none focus:border-gray-500 focus:border-2 active:border-gray-500 active:border-2"
+      class="input disable-scrollbars appearance-none relative bg-transparent border border-gray-600 rounded h-32 w-full px-4 py-3 focus:outline-none focus:border-gray-500 active:border-gray-500 focus:shadow-md active:shadow-md"
       :class="value.length > 0 ? 'filled' : ''"
       :value="value"
       @input="$emit('input', $event.target.value)"
       :placeholder="placeholder || label"
     ></textarea>
-    <label class="label bg-secondary absolute mb-0 top-0 left-0 mt-3 ml-3 cursor-text text-gray-500">
+    <label class="label bg-surface absolute mb-0 top-0 left-0 mt-3 ml-3 cursor-text text-gray-500">
       {{ label }}
     </label>
   </div>
@@ -19,7 +19,7 @@ export default {
   props: {
     value: {
       type: String,
-      default: null
+      default: ''
     },
     label: {
       type: String,

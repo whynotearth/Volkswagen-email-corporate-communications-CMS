@@ -25,7 +25,7 @@
     </div>
     <div class="flex-grow text-right flex items-end flex-col justify-center">
       <h3 class="stepper-title text-primary text-xl mb-2">{{ stepHeader(currentStep) }}</h3>
-      <h4 class="leading-tight text-sm text-primary">
+      <h4 v-if="!options.isLastStep" class="leading-tight text-sm text-primary">
         {{ stepSubheader(currentStep) | formatStepSubHeader }}
       </h4>
     </div>
@@ -45,6 +45,10 @@ export default {
     currentStep: {
       type: Number,
       required: true
+    },
+    options: {
+      type: Object,
+      default: () => {}
     }
   },
   data: () => ({

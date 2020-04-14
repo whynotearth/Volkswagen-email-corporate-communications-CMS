@@ -1,12 +1,19 @@
 <template>
   <div class="page h-screen flex flex-col">
-    <StepperHeader :step="step" />
-    <div class="scrollable-area flex-grow z-2 overflow-y-auto">
-      <div class="container py-4 overflow-y-auto">
-        <slot />
-      </div>
+    <StepperHeader :steps="steps" :step="step" :options="options" />
+    <div class="flex-grow z-2 overflow-y-hidden">
+      <slot />
     </div>
-    <StepperFooter></StepperFooter>
+    <StepperFooter
+      @changeStep="
+        val => {
+          $emit('changeStep', val);
+        }
+      "
+      :steps="steps"
+      :step="step"
+      :options="options"
+    ></StepperFooter>
   </div>
 </template>
 
@@ -18,7 +25,9 @@ export default {
   name: 'StepperManager',
   components: { StepperHeader, StepperFooter },
   props: {
-    step: Number
+    step: Number,
+    steps: Array,
+    options: Object
   }
 };
 </script>
