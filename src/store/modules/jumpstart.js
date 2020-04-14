@@ -1,4 +1,5 @@
 import { JumpStartService } from '@whynotearth/meredith-axios';
+import Vue from 'vue';
 // import { companySlug } from '@/constants/app';
 
 export default {
@@ -13,19 +14,19 @@ export default {
   },
   mutations: {
     update_response_message(state, payload) {
-      state.response_message = payload;
+      Vue.set(state, 'response_message', payload);
     },
     update_to(state, payload) {
-      state.form_data.to = payload;
+      Vue.set(state.form_data, 'to', payload);
     },
     update_subject(state, payload) {
-      state.form_data.subject = payload;
+      Vue.set(state.form_data, 'subject', payload);
     },
     update_description(state, payload) {
-      state.form_data.description = payload;
+      Vue.set(state.form_data, 'description', payload);
     },
     update_date(state, payload) {
-      state.form_data.date = payload;
+      Vue.set(state.form_data, 'date', payload);
     }
   },
   actions: {

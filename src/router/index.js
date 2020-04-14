@@ -5,6 +5,7 @@ import PostAdd from '../views/PostAdd.vue';
 import AuthLogin from '../views/AuthLogin.vue';
 import JumpstartTest from '../views/JumpstartTest.vue';
 import MemoAdd from '../views/MemoAdd.vue';
+import LogoScreen from '../views/LogoScreen.vue';
 
 Vue.use(VueRouter);
 
@@ -33,6 +34,12 @@ const routes = [
     path: '/memo/add/:step?',
     name: 'MemoAdd',
     component: MemoAdd,
+    props: true
+  },
+  {
+    path: '/success/:title?',
+    name: 'Success',
+    component: LogoScreen,
     props: true
   }
 ];
