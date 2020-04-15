@@ -1,5 +1,6 @@
 // https://github.com/tailwindcss/tailwindcss/blob/master/stubs/defaultConfig.stub.js#L5
 const defaultTheme = require('tailwindcss/defaultTheme');
+const { colors } = require('tailwindcss/defaultTheme');
 const customUtilities = require('./src/styles/tailwind-utilities');
 
 module.exports = {
@@ -12,6 +13,10 @@ module.exports = {
     extend: {
       container: { padding: '1.5rem', center: true },
       colors: {
+        blue: {
+          ...colors.blue,
+          '900': '#002F62'
+        },
         primary: '#011D51',
         secondary: '#03B3F9',
         background: '#FFFFFF',
@@ -33,6 +38,7 @@ module.exports = {
         sans: ['Work Sans', ...defaultTheme.fontFamily.sans]
       },
       fontSize: {
+        '2xs': '0.5625rem', // 9
         xs: '0.75rem', // 12
         sm: '0.875rem', // 16
         base: '1rem', // 16
