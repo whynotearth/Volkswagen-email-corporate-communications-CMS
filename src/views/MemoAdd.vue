@@ -5,7 +5,7 @@
     :options="{ submitText: 'Finish & Send', isLastStep: currentStep === steps.length }"
     @changeStep="changeStep"
   >
-    <div class="px-0 overflow-y-auto flex flex-col h-full">
+    <div class="px-0 overflow-y-auto flex flex-col h-full narrow-scrollbars">
       <MemoAddStep1 v-if="currentStep === 1"></MemoAddStep1>
       <MemoAddStep2 v-if="currentStep === 2"></MemoAddStep2>
       <!-- <SplashScreen v-if="currentStep === 2"></SplashScreen> -->

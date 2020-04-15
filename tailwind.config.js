@@ -1,12 +1,22 @@
 // https://github.com/tailwindcss/tailwindcss/blob/master/stubs/defaultConfig.stub.js#L5
 const defaultTheme = require('tailwindcss/defaultTheme');
+const { colors } = require('tailwindcss/defaultTheme');
 const customUtilities = require('./src/styles/tailwind-utilities');
 
 module.exports = {
   theme: {
+    screens: {
+      sm: '640px',
+      md: '768px',
+      lg: '928px'
+    },
     extend: {
-      container: { padding: '2rem', center: true },
+      container: { padding: '1.5rem', center: true },
       colors: {
+        blue: {
+          ...colors.blue,
+          '900': '#002F62'
+        },
         primary: '#011D51',
         secondary: '#03B3F9',
         background: '#FFFFFF',
@@ -20,12 +30,6 @@ module.exports = {
         oneteam: '#D9EFFF',
         answers: '#EDEDED'
       },
-      screens: {
-        sm: '640px',
-        md: '768px',
-        lg: '1024px',
-        xl: '1280px'
-      },
       spacing: {
         '0.5': '0.125rem',
         '1.5': '0.375rem'
@@ -34,6 +38,7 @@ module.exports = {
         sans: ['Work Sans', ...defaultTheme.fontFamily.sans]
       },
       fontSize: {
+        '2xs': '0.5625rem', // 9
         xs: '0.75rem', // 12
         sm: '0.875rem', // 16
         base: '1rem', // 16
@@ -60,7 +65,9 @@ module.exports = {
         '7': '1.75rem',
         '8': '2rem',
         '9': '2.25rem',
-        '10': '2.5rem'
+        '10': '2.5rem',
+        // custom:
+        '11': '1.181818'
       },
       scale: {
         '-1': '-1'

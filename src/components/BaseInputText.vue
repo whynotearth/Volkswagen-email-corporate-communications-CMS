@@ -58,16 +58,22 @@ export default {
   z-index: 2;
 }
 
+.input + .label {
+  background-color: rgba(255, 255, 255, 0);
+}
 .input:focus + .label,
 .input:active + .label,
 .input.filled + .label {
   font-size: inherit;
-  transition: transform 0.2s ease-out;
   transform: translateY(-1.3rem) scale(0.75);
+  transform-origin: left;
   opacity: 1;
   display: block;
   z-index: 3;
   will-change: transform;
+  transition: transform 200ms ease-out, background-color 50ms ease-out 150ms;
+  background-color: rgba(255, 255, 255, 1);
+  border-radius: 100px;
 }
 
 .input:focus::placeholder {

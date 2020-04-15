@@ -4,10 +4,10 @@
       <div class="bg-surface flex-grow"></div>
       <div class="bg-primary flex-grow"></div>
     </div>
-    <div class="container flex items-center h-full z-2 relative px-6 md:px-0">
+    <div class="container flex items-center h-full z-2 relative px-6">
       <a
         @click="$emit('changeStep', -1)"
-        class="link-back block bg-surface flex h-full items-center justify-start px-1 font-semibold text-error cursor-pointer select-none"
+        class="link-back block bg-surface flex h-full items-center justify-start font-semibold text-error cursor-pointer select-none"
       >
         <svg width="8" height="12" viewBox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path
@@ -22,7 +22,7 @@
       </a>
       <a
         @click="$emit('changeStep', 1)"
-        class="link-forward block bg-primary flex-grow text-white flex h-full items-center justify-end px-1 font-semibold cursor-pointer select-none"
+        class="link-forward block bg-primary flex-grow text-white flex h-full items-center justify-end font-semibold cursor-pointer select-none"
       >
         <span class="mr-2">{{ stepHeaderNext(step) }}</span>
 

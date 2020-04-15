@@ -1,7 +1,7 @@
 <template>
-  <div class="w-100 flex">
-    <div class="w-20 h-20">
-      <BaseProgressCircle :centerX="40" :centerY="40" :radius="25" :percentageProgress="percentageProgress">
+  <div class="w-100 flex items-center h-20">
+    <div class="w-16 h-16">
+      <BaseProgressCircle :centerX="32" :centerY="32" :radius="30" :percentageProgress="percentageProgress">
         <text
           x="50%"
           y="50%"
@@ -14,8 +14,8 @@
       </BaseProgressCircle>
     </div>
     <div class="flex-grow text-right flex items-end flex-col justify-center">
-      <h3 class="stepper-title text-primary text-xl mb-2">{{ stepHeader(currentStep) }}</h3>
-      <h4 v-if="!options.isLastStep" class="leading-tight text-sm text-primary">
+      <h3 class="text-primary mb-2 h2-mobile">{{ stepHeader(currentStep) }}</h3>
+      <h4 v-if="!options.isLastStep" class="body-1-mobile text-primary">
         {{ stepSubheader(currentStep) | formatStepSubHeader }}
       </h4>
     </div>
@@ -67,9 +67,3 @@ export default {
   }
 };
 </script>
-
-<style scoped>
-.stepper-title {
-  line-height: 1.181818;
-}
-</style>

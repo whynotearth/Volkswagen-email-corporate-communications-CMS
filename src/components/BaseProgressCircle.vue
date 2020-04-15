@@ -59,6 +59,7 @@ export default {
 svg {
   transform: rotate(-90deg);
   stroke-width: 0.25rem;
+  stroke-linecap: round;
 }
 
 svg .progress-circle--content {

@@ -1,6 +1,6 @@
 <template>
-  <div class="p-6 flex-grow">
-    <div class="container px-0">
+  <div class="py-6 flex-grow">
+    <div class="container px-4 md:px-6">
       <BaseInputText v-model="subject" label="Email Subject Line" placeholder="Email Subject Line"></BaseInputText>
       <BaseInputText v-model="date" label="Memo Date" placeholder="Memo Date"></BaseInputText>
       <BaseInputText v-model="to" label="Audience" placeholder="Audience"></BaseInputText>
