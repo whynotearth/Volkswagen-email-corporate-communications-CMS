@@ -72,8 +72,12 @@ const textUtilsPlugin = plugin(function({ addUtilities, theme, variants }) {
     '.body-1-mobile': {
       fontSize: theme('fontSize.base'),
       fontWeight: theme('fontWeight.normal'),
-      lineHeight: '20px',
-      color: 'rgba(0,0,0,0.84)'
+      lineHeight: '20px'
+    },
+    '.h2-mobile': {
+      fontSize: theme('fontSize.xl'),
+      fontWeight: theme('fontWeight.semibold'),
+      lineHeight: theme('lineHeight.11')
     },
     '.caption': {
       fontSize: theme('fontSize.xl'),

@@ -1,5 +1,5 @@
 <template>
-  <div class="py-6 bg-primary h-full">
+  <div class="py-6 bg-brand-gradient h-full">
     <div class="h-full text-left container px-4 md:px-6">
       <div class="h-full bg-surface">
         <div class="h-full overflow-y-auto">
@@ -20,7 +20,7 @@
             <p class="mb-2"><b>Date:</b> {{ get_date }}</p>
             <p class="mb-2"><b>To:</b> {{ get_to }}</p>
             <p class="mb-2">{{ get_subject }}</p>
-            <p>{{ get_description }}</p>
+            <div class="whitespace-pre-line break-words">{{ get_description }}</div>
           </div>
         </div>
       </div>
