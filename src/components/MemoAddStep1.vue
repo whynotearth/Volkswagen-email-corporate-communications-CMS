@@ -4,7 +4,12 @@
       <BaseInputText v-model="subject" label="Email Subject Line" placeholder="Email Subject Line"></BaseInputText>
       <BaseInputText v-model="date" label="Memo Date" placeholder="Memo Date"></BaseInputText>
       <BaseInputText v-model="to" label="Audience" placeholder="Audience"></BaseInputText>
-      <BaseInputTextarea v-model="description" label="Memo Body" placeholder="Memo Body"></BaseInputTextarea>
+      <BaseInputTextarea
+        class="body-1-mobile"
+        v-model="description"
+        label="Memo Body"
+        placeholder="Memo Body"
+      ></BaseInputTextarea>
     </div>
   </div>
 </template>

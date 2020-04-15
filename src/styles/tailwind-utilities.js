@@ -3,17 +3,8 @@
 
 const plugin = require('tailwindcss/plugin');
 
-const textUtilsPlugin = plugin(function({ addUtilities, theme, variants }) {
+const customUtils = plugin(function({ addUtilities, theme, variants }) {
   const textUtils = {
-    '.narrow-scrollbars::-webkit-scrollbar': {
-      width: '6px'
-    },
-    '.narrow-scrollbars::-webkit-scrollbar-track': {
-      background: '#ddd'
-    },
-    '.narrow-scrollbars::-webkit-scrollbar-thumb': {
-      background: '#666'
-    },
     '.display-4': {
       fontSize: theme('fontSize.7xl'),
       fontWeight: theme('fontWeight.normal'),
@@ -63,16 +54,16 @@ const textUtilsPlugin = plugin(function({ addUtilities, theme, variants }) {
       lineHeight: '24px',
       color: 'rgba(0,0,0,0.87)'
     },
+    '.body-1-mobile': {
+      fontSize: theme('fontSize.base'),
+      fontWeight: theme('fontWeight.normal'),
+      lineHeight: '20px'
+    },
     '.body-1': {
       fontSize: theme('fontSize.xl'),
       fontWeight: theme('fontWeight.normal'),
       lineHeight: '20px',
       color: 'rgba(0,0,0,0.87)'
-    },
-    '.body-1-mobile': {
-      fontSize: theme('fontSize.base'),
-      fontWeight: theme('fontWeight.normal'),
-      lineHeight: '20px'
     },
     '.h2-mobile': {
       fontSize: theme('fontSize.xl'),
@@ -95,8 +86,23 @@ const textUtilsPlugin = plugin(function({ addUtilities, theme, variants }) {
     }
   };
 
-  addUtilities(textUtils, variants('responsive'));
+  const scrollbarUtils = {
+    '.narrow-scrollbars::-webkit-scrollbar': {
+      width: '6px'
+    },
+    '.narrow-scrollbars::-webkit-scrollbar-track': {
+      background: '#ddd'
+    },
+    '.narrow-scrollbars::-webkit-scrollbar-thumb': {
+      background: '#666'
+    }
+  };
+
+  addUtilities(textUtils, {
+    variants: ['responsive']
+  });
   addUtilities(backgroundUtils);
+  addUtilities(scrollbarUtils);
 });
 
-module.exports = [textUtilsPlugin];
+module.exports = [customUtils];
