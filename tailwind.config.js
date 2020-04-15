@@ -4,8 +4,13 @@ const customUtilities = require('./src/styles/tailwind-utilities');
 
 module.exports = {
   theme: {
+    screens: {
+      sm: '640px',
+      md: '768px',
+      lg: '928px'
+    },
     extend: {
-      container: { padding: '2rem', center: true },
+      container: { padding: '1.5rem', center: true },
       colors: {
         primary: '#011D51',
         secondary: '#03B3F9',
@@ -19,12 +24,6 @@ module.exports = {
         people: '#01B1EC',
         oneteam: '#D9EFFF',
         answers: '#EDEDED'
-      },
-      screens: {
-        sm: '640px',
-        md: '768px',
-        lg: '1024px',
-        xl: '1280px'
       },
       spacing: {
         '0.5': '0.125rem',

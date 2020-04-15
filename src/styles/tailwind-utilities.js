@@ -5,6 +5,15 @@ const plugin = require('tailwindcss/plugin');
 
 const textUtilsPlugin = plugin(function({ addUtilities, theme, variants }) {
   const textUtils = {
+    '.narrow-scrollbars::-webkit-scrollbar': {
+      width: '6px'
+    },
+    '.narrow-scrollbars::-webkit-scrollbar-track': {
+      background: '#ddd'
+    },
+    '.narrow-scrollbars::-webkit-scrollbar-thumb': {
+      background: '#666'
+    },
     '.display-4': {
       fontSize: theme('fontSize.7xl'),
       fontWeight: theme('fontWeight.normal'),
