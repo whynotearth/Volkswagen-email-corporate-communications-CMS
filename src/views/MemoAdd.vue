@@ -32,14 +32,14 @@ export default {
     steps: ['Internal Memo', 'Preview Memo']
   }),
   computed: {
-    ...mapGetters('jumpstart', ['get_to', 'get_subject', 'get_date', 'get_description']),
+    ...mapGetters('memo', ['get_to', 'get_subject', 'get_date', 'get_description']),
     currentStep() {
       return parseInt(this.step);
     }
   },
   methods: {
-    ...mapActions('jumpstart', ['test']),
-    ...mapMutations('jumpstart', ['update_response_message']),
+    ...mapActions('memo', ['memo']),
+    ...mapMutations('memo', ['update_response_message']),
     parseInt,
     changeStep(change) {
       this.update_response_message({ message: '' });
@@ -68,7 +68,7 @@ export default {
         }
       };
       try {
-        await this.test({ params });
+        await this.memo({ params });
         this.$router.push({ name: 'Success', params: { title: 'Success!' } });
       } catch (error) {
         this.update_response_message({
