@@ -4,7 +4,6 @@ import Home from '../views/Home.vue';
 import PostAdd from '../views/PostAdd.vue';
 import AuthLogin from '../views/AuthLogin.vue';
 import MemoAdd from '../views/MemoAdd.vue';
-import ResultScreen from '../views/ResultScreen.vue';
 import store from '../store';
 
 Vue.use(VueRouter);
@@ -37,12 +36,6 @@ const routes = [
       requiresAuth: true,
       needsUserInfo: false
     }
-  },
-  {
-    path: '/screenmessage/:title?/:message?',
-    name: 'ResultScreen',
-    component: ResultScreen,
-    props: true
   }
 ];
 
