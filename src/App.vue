@@ -17,17 +17,6 @@ body {
 
 <script>
 export default {
-  mounted() {
-    this.getUser();
-  },
-  methods: {
-    async getUser() {
-      try {
-        await this.$store.dispatch('auth/ping');
-      } catch (error) {
-        console.log(error.message);
-      }
-    }
-  }
+  name: 'App'
 };
 </script>

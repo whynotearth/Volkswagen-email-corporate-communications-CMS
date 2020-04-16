@@ -172,14 +172,8 @@ export default {
         context.commit('updateLoading', false);
         throw new Error(error.message);
       }
-      let pingResult;
-      try {
-        pingResult = await store.dispatch('auth/ping');
-      } catch (error) {
-        throw error;
-      } finally {
-        context.commit('updateLoading', false);
-      }
+      const pingResult = await store.dispatch('auth/ping');
+      context.commit('updateLoading', false);
       if (!pingResult) {
         throw new Error('An error occured during login');
       }
@@ -243,24 +237,28 @@ export default {
     logout(context) {
       context.commit('updateLoading', true);
 
-      return AuthenticationService.logout().then(() => {
+      return AuthenticationService.logout().then(async () => {
         context.commit('updateLoading', false);
+        await context.dispatch('updateToken', '');
         context.commit('logout');
       });
     },
     async ping(context) {
-      const token = context.getters.token;
-
       try {
         const params = {};
-        const options = {
-          // headers: { Authorization: `Bearer ${token}` }
-        };
+        const options = {};
         const user = await AuthenticationService.ping(params, options);
         await context.dispatch('updateUser', user);
       } catch (error) {
-        console.log('ping 401');
-        throw new Error('Getting user data failed');
+        const isStatus401 = error.response.status;
+        if (isStatus401) {
+          console.log('ping 401');
+          await context.dispatch('updateToken', '');
+          return 'IS_LOGGED_OUT';
+        } else {
+          console.log('ping response is unknown.');
+          return false;
+        }
       }
       return true;
     }
