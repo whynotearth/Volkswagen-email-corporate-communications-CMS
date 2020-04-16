@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import auth from './modules/auth';
+import authKeep from './modules/authKeep';
 import category from './modules/category';
 import loading from './modules/loading';
 import snackbar from './modules/snackbar';
@@ -10,7 +11,7 @@ import VuexPersistence from 'vuex-persist';
 
 const vuexLocal = new VuexPersistence({
   storage: window.localStorage,
-  modules: ['auth', 'memo'],
+  modules: ['memo', 'authKeep'],
   key: 'store'
 });
 
@@ -24,6 +25,7 @@ export default new Vuex.Store({
     auth,
     category,
     post,
-    memo
+    memo,
+    authKeep
   }
 });

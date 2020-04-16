@@ -130,9 +130,9 @@ export function getFormattedMetaTitle(text, { titleCase = true, maxLength = 80 }
 }
 
 export function getAuthHeaders() {
-  const jwtToken = store.getters['auth/token'];
-  if (!jwtToken) {
+  const JWTToken = store.getters['authKeep/token'];
+  if (!JWTToken) {
     return;
   }
-  return { Authorization: `Bearer ${jwtToken}` };
+  return { Authorization: `Bearer ${JWTToken}` };
 }
