@@ -1,7 +1,7 @@
 // https://github.com/tailwindcss/tailwindcss/blob/master/stubs/defaultConfig.stub.js#L5
 const defaultTheme = require('tailwindcss/defaultTheme');
 const { colors } = require('tailwindcss/defaultTheme');
-const customUtilities = require('./src/styles/tailwind-utilities');
+const customUtils = require('./src/styles/tailwind-utilities');
 
 module.exports = {
   theme: {
@@ -78,5 +78,5 @@ module.exports = {
     backgroundColor: ['responsive', 'hover', 'focus', 'active'],
     borderWidth: ['responsive', 'hover', 'focus', 'active']
   },
-  plugins: [...customUtilities]
+  plugins: [...customUtils]
 };

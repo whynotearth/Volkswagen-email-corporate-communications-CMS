@@ -3,40 +3,31 @@
 
 const plugin = require('tailwindcss/plugin');
 
-const textUtilsPlugin = plugin(function({ addUtilities, theme, variants }) {
+const customUtils = plugin(function({ addUtilities, theme, variants }) {
   const textUtils = {
-    '.narrow-scrollbars::-webkit-scrollbar': {
-      width: '6px'
-    },
-    '.narrow-scrollbars::-webkit-scrollbar-track': {
-      background: '#ddd'
-    },
-    '.narrow-scrollbars::-webkit-scrollbar-thumb': {
-      background: '#666'
-    },
     '.display-4': {
       fontSize: theme('fontSize.7xl'),
       fontWeight: theme('fontWeight.normal'),
-      lineHeight: '112px',
-      color: 'rgba(0,0,0,0.87)'
+      lineHeight: '112px'
+      // color: 'rgba(0,0,0,0.87)'
     },
     '.display-3': {
       fontSize: theme('fontSize.6xl'),
-      fontWeight: theme('fontWeight.normal'),
-      lineHeight: '48px',
-      color: 'rgba(0,0,0,0.87)'
+      fontWeight: theme('fontWeight.semibold'),
+      lineHeight: '48px'
+      // color: 'rgba(0,0,0,0.87)'
     },
     '.display-2': {
       fontSize: theme('fontSize.5xl'),
       fontWeight: theme('fontWeight.normal'),
-      lineHeight: '40px',
-      color: 'rgba(0,0,0,0.87)'
+      lineHeight: '40px'
+      // color: 'rgba(0,0,0,0.87)'
     },
     '.display-1': {
       fontSize: theme('fontSize.xl'),
       fontWeight: theme('fontWeight.semibold'),
-      lineHeight: '40px',
-      color: 'rgba(0,0,0,0.87)'
+      lineHeight: '40px'
+      // color: 'rgba(0,0,0,0.87)'
     },
 
     '.headline': {
@@ -48,31 +39,31 @@ const textUtilsPlugin = plugin(function({ addUtilities, theme, variants }) {
     '.title': {
       fontSize: theme('fontSize.xl'),
       fontWeight: theme('fontWeight.semibold'),
-      lineHeight: '26px',
-      color: 'rgba(0,0,0,0.87)'
+      lineHeight: '26px'
+      // color: 'rgba(0,0,0,0.87)'
     },
     '.subheader': {
       fontSize: theme('fontSize.xl'),
       fontWeight: theme('fontWeight.medium'),
-      lineHeight: '25px',
-      color: 'rgba(0,0,0,0.87)'
+      lineHeight: '25px'
+      // color: 'rgba(0,0,0,0.87)'
     },
     '.body-2': {
       fontSize: theme('fontSize.xl'),
       fontWeight: theme('fontWeight.medium'),
-      lineHeight: '24px',
-      color: 'rgba(0,0,0,0.87)'
-    },
-    '.body-1': {
-      fontSize: theme('fontSize.xl'),
-      fontWeight: theme('fontWeight.normal'),
-      lineHeight: '20px',
-      color: 'rgba(0,0,0,0.87)'
+      lineHeight: '24px'
+      // color: 'rgba(0,0,0,0.87)'
     },
     '.body-1-mobile': {
       fontSize: theme('fontSize.base'),
       fontWeight: theme('fontWeight.normal'),
       lineHeight: '20px'
+    },
+    '.body-1': {
+      fontSize: theme('fontSize.xl'),
+      fontWeight: theme('fontWeight.normal'),
+      lineHeight: '20px'
+      // color: 'rgba(0,0,0,0.87)'
     },
     '.h2-mobile': {
       fontSize: theme('fontSize.xl'),
@@ -82,8 +73,8 @@ const textUtilsPlugin = plugin(function({ addUtilities, theme, variants }) {
     '.caption': {
       fontSize: theme('fontSize.xl'),
       fontWeight: theme('fontWeight.normal'),
-      lineHeight: '16px',
-      color: 'rgba(0,0,0,0.54)'
+      lineHeight: '16px'
+      // color: 'rgba(0,0,0,0.54)'
     }
   };
 
@@ -95,8 +86,23 @@ const textUtilsPlugin = plugin(function({ addUtilities, theme, variants }) {
     }
   };
 
-  addUtilities(textUtils, variants('responsive'));
+  const scrollbarUtils = {
+    '.narrow-scrollbars::-webkit-scrollbar': {
+      width: '6px'
+    },
+    '.narrow-scrollbars::-webkit-scrollbar-track': {
+      background: '#ddd'
+    },
+    '.narrow-scrollbars::-webkit-scrollbar-thumb': {
+      background: '#666'
+    }
+  };
+
+  addUtilities(textUtils, {
+    variants: ['responsive']
+  });
   addUtilities(backgroundUtils);
+  addUtilities(scrollbarUtils);
 });
 
-module.exports = [textUtilsPlugin];
+module.exports = [customUtils];
