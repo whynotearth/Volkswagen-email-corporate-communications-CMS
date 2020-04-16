@@ -41,6 +41,8 @@ export default {
 .input {
   transition: border 0.2s ease-in-out;
   z-index: 2;
+  font-size: inherit;
+  line-height: inherit;
 }
 
 .input + .label {
