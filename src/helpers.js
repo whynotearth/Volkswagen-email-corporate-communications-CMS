@@ -136,3 +136,11 @@ export function getAuthHeaders() {
   }
   return { Authorization: `Bearer ${JWTToken}` };
 }
+
+export async function sleep(time) {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve();
+    }, time);
+  });
+}

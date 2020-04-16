@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-brand-gradient flex items-center justify-center">
+  <div class="bg-brand-gradient flex items-center justify-center h-full">
     <div>
       <div class="progress-wrapper mb-4 md:mb-12">
         <!-- desktop -->
@@ -38,8 +38,7 @@
           ></image>
         </BaseProgressCircle>
       </div>
-
-      <p v-if="title !== '-'" class="text-white headline">{{ title }}</p>
+      <p v-if="title" class="text-white headline md:display-3 mb-4">{{ title }}</p>
       <p v-if="message" class="text-white body-1">{{ message }}</p>
     </div>
   </div>
@@ -49,7 +48,7 @@
 import BaseProgressCircle from '@/components/BaseProgressCircle.vue';
 
 export default {
-  name: 'ResultScreen',
+  name: 'OverlayBrand',
   components: { BaseProgressCircle },
   data: () => ({
     progress: 0
@@ -60,11 +59,12 @@ export default {
     },
     message: {
       default: ''
+    },
+    isVisible: {
+      default: false
     }
   },
   mounted() {
-    console.log('this', this);
-
     setTimeout(() => {
       this.progress = 1;
     }, 300);
@@ -76,5 +76,11 @@ export default {
 .progress-wrapper {
   width: 164px;
   height: 164px;
+}
+@screen md {
+  .progress-wrapper {
+    width: 328px;
+    height: 328px;
+  }
 }
 </style>

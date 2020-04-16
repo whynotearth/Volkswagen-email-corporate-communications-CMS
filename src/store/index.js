@@ -7,6 +7,7 @@ import loading from './modules/loading';
 import snackbar from './modules/snackbar';
 import post from './modules/post';
 import memo from './modules/memo';
+import overlay from './modules/overlay';
 import VuexPersistence from 'vuex-persist';
 
 const vuexLocal = new VuexPersistence({
@@ -26,6 +27,7 @@ export default new Vuex.Store({
     category,
     post,
     memo,
-    authKeep
+    authKeep,
+    overlay
   }
 });
