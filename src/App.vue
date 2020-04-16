@@ -1,11 +1,12 @@
 <template>
   <div id="app" class="text-center">
     <router-view />
-    <OverlayBrand
-      :isVisible="overlayModel.title"
-      :title="overlayModel.title"
-      :message="overlayModel.message"
-    ></OverlayBrand>
+
+    <transition name="fade">
+      <div v-if="overlayModel.title" class="w-full h-full fixed block top-0 left-0 z-50">
+        <OverlayBrand :title="overlayModel.title" :message="overlayModel.message"></OverlayBrand>
+      </div>
+    </transition>
   </div>
 </template>
 

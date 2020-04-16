@@ -89,7 +89,7 @@ export default {
         message: ''
       });
 
-      await sleep(2000);
+      await sleep(1000);
 
       await this.$router.push({
         name: 'Home'
