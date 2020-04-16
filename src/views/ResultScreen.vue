@@ -38,8 +38,7 @@
           ></image>
         </BaseProgressCircle>
       </div>
-
-      <p v-if="title !== '-'" class="text-white headline">{{ title }}</p>
+      <p v-if="title !== '-'" class="text-white headline md:display-3 mb-4">{{ title }}</p>
       <p v-if="message" class="text-white body-1">{{ message }}</p>
     </div>
   </div>
@@ -76,5 +75,11 @@ export default {
 .progress-wrapper {
   width: 164px;
   height: 164px;
+}
+@screen md {
+  .progress-wrapper {
+    width: 328px;
+    height: 328px;
+  }
 }
 </style>
