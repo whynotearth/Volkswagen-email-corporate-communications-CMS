@@ -1,9 +1,7 @@
-// @ts-ignore
 import { AuthenticationService } from '@whynotearth/meredith-axios';
 import { APIPath } from '@/helpers';
 import store from '@/store';
 import { setDocumentClassesOnToggleDialog } from '@/helpers';
-import router from '@/router';
 
 const defaultUser = {
   id: 0,
@@ -21,7 +19,6 @@ const authStates = {
 const defaultState = {
   email: '',
   password: '',
-  token: '',
   status: '',
   user: defaultUser,
   loading: false,
@@ -52,9 +49,6 @@ export default {
     },
     password: state => {
       return state.password;
-    },
-    token: state => {
-      return state.token;
     },
     user: state => {
       return state.user;
@@ -106,9 +100,6 @@ export default {
     updateUser(state, payload) {
       state.user = payload;
     },
-    updateToken(state, payload) {
-      state.token = payload;
-    },
     updateReturnUrl(state, payload) {
       state.returnURL = payload;
     },
@@ -129,9 +120,6 @@ export default {
     },
     updateReturnUrl(context, payload) {
       context.commit('updateReturnUrl', payload);
-    },
-    updateToken(context, payload) {
-      context.commit('updateToken', payload);
     },
     updateUser(context, payload) {
       context.commit('updateUser', payload);
@@ -167,7 +155,7 @@ export default {
           }
         });
 
-        await context.dispatch('updateToken', token);
+        await store.dispatch('authKeep/updateToken', token);
       } catch (error) {
         context.commit('updateLoading', false);
         throw new Error(error.message);
@@ -185,7 +173,7 @@ export default {
             email: email
           }
         });
-        context.dispatch('updateToken', token);
+        store.dispatch('authKeep/updateToken', token);
       } catch (error) {
         throw error;
       }
@@ -201,8 +189,6 @@ export default {
           }
         })
           .then(token => {
-            context.state.token = token;
-
             store
               .dispatch('auth/ping')
               .then(resolve)
@@ -239,7 +225,7 @@ export default {
 
       return AuthenticationService.logout().then(async () => {
         context.commit('updateLoading', false);
-        await context.dispatch('updateToken', '');
+        store.dispatch('authKeep/clear');
         context.commit('logout');
       });
     },
@@ -253,7 +239,7 @@ export default {
         const isStatus401 = error.response.status;
         if (isStatus401) {
           console.log('ping 401');
-          await context.dispatch('updateToken', '');
+          await store.dispatch('authKeep/clear');
           return 'IS_LOGGED_OUT';
         } else {
           console.log('ping response is unknown.');
