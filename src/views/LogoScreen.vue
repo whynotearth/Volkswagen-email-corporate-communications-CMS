@@ -1,49 +1,50 @@
 <template>
-  <!-- <router-link to="/"> -->
-  <div class="h-screen bg-brand-gradient flex items-center justify-center">
-    <div>
-      <div class="progress-wrapper mb-4 md:mb-12">
-        <!-- desktop -->
-        <BaseProgressCircle
-          class="hidden md:block"
-          :centerX="164"
-          :centerY="164"
-          :radius="160"
-          :percentageProgress="progress"
-        >
-          <image
-            class="progress-circle--content block"
-            x="20"
-            y="20"
-            width="288"
-            height="288"
-            xlink:href="https://res.cloudinary.com/whynotearth/image/upload/v1586859428/Volkswagen/cms/logo-light_um5gka.svg"
-          ></image>
-        </BaseProgressCircle>
+  <router-link to="/">
+    <div class="min-h-screen bg-brand-gradient flex items-center justify-center">
+      <div>
+        <div class="progress-wrapper mb-4 md:mb-12">
+          <!-- desktop -->
+          <BaseProgressCircle
+            class="hidden md:block"
+            :centerX="164"
+            :centerY="164"
+            :radius="160"
+            :percentageProgress="progress"
+          >
+            <image
+              class="progress-circle--content block"
+              x="20"
+              y="20"
+              width="288"
+              height="288"
+              xlink:href="https://res.cloudinary.com/whynotearth/image/upload/v1586859428/Volkswagen/cms/logo-light_um5gka.svg"
+            ></image>
+          </BaseProgressCircle>
 
-        <!-- mobile -->
-        <BaseProgressCircle
-          class="block md:hidden"
-          :centerX="82"
-          :centerY="82"
-          :radius="80"
-          :percentageProgress="progress"
-        >
-          <image
-            class="progress-circle--content block"
-            x="10"
-            y="10"
-            width="144"
-            height="144"
-            xlink:href="https://res.cloudinary.com/whynotearth/image/upload/v1586859428/Volkswagen/cms/logo-light_um5gka.svg"
-          ></image>
-        </BaseProgressCircle>
+          <!-- mobile -->
+          <BaseProgressCircle
+            class="block md:hidden"
+            :centerX="82"
+            :centerY="82"
+            :radius="80"
+            :percentageProgress="progress"
+          >
+            <image
+              class="progress-circle--content block"
+              x="10"
+              y="10"
+              width="144"
+              height="144"
+              xlink:href="https://res.cloudinary.com/whynotearth/image/upload/v1586859428/Volkswagen/cms/logo-light_um5gka.svg"
+            ></image>
+          </BaseProgressCircle>
+        </div>
+
+        <p class="text-white headline md:display-3">{{ title }}</p>
+        <br />
       </div>
-
-      <p class="text-white headline md:display-3">{{ title }}</p>
     </div>
-  </div>
-  <!-- </router-link> -->
+  </router-link>
 </template>
 
 <script>
