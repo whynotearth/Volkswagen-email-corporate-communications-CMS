@@ -33,7 +33,7 @@ import { mapGetters } from 'vuex';
 export default {
   name: 'MemoAddStep2',
   computed: {
-    ...mapGetters('jumpstart', ['get_to', 'get_subject', 'get_date', 'get_description', 'get_response_message'])
+    ...mapGetters('memo', ['get_to', 'get_subject', 'get_date', 'get_description', 'get_response_message'])
   }
 };
 </script>

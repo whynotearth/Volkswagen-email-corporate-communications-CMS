@@ -17,7 +17,7 @@ export default {
   name: 'MemoAddStep1',
   components: { BaseInputText, BaseInputTextarea },
   computed: {
-    ...mapGetters('jumpstart', ['get_to', 'get_subject', 'get_date', 'get_description']),
+    ...mapGetters('memo', ['get_to', 'get_subject', 'get_date', 'get_description']),
     to: {
       get() {
         return this.get_to;
@@ -52,7 +52,7 @@ export default {
     }
   },
   methods: {
-    ...mapMutations('jumpstart', ['update_to', 'update_description', 'update_date', 'update_subject'])
+    ...mapMutations('memo', ['update_to', 'update_description', 'update_date', 'update_subject'])
   }
 };
 </script>
