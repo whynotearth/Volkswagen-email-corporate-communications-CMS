@@ -1,17 +1,40 @@
 <template>
   <div>
-    <form ref="form" name="Login" @submit.prevent="" class="pt-6 pb-8 mb-4">
+    <form ref="form" name="Login" @submit.prevent="" class="pt-6 pb-8 mb-4 text-left">
       <div class="mb-4">
-        <BaseInputText class="bg-primary text-white" v-model="email" label="Email" placeholder="Email"></BaseInputText>
-      </div>
-      <div class="mb-6">
         <BaseInputText
           class="bg-primary text-white"
-          v-model="password"
+          v-model="$v.email.$model"
+          label="Email"
+          placeholder="Email"
+          :error="$v.email.$dirty && (!$v.email.required || !$v.email.email)"
+        >
+          <span v-if="$v.email.$dirty && !$v.email.required" class="text-xs text-error">
+            Email is required
+          </span>
+          <span v-if="$v.email.$dirty && !$v.email.email" class="text-xs text-error">
+            Please enter valid email
+          </span>
+        </BaseInputText>
+      </div>
+      <div class="mb-4">
+        <BaseInputText
+          class="bg-primary text-white"
+          v-model="$v.password.$model"
           label="Password"
           placeholder="Password"
           type="password"
-        ></BaseInputText>
+          :error="$v.password.$dirty && !$v.password.required"
+        >
+          <span v-if="$v.password.$dirty && !$v.password.required" class="text-xs text-error">
+            Password is required
+          </span>
+        </BaseInputText>
+      </div>
+      <div class="mb-6">
+        <span v-if="loginError.length > 0" class="text-xs text-error">
+          {{ loginError }}
+        </span>
       </div>
       <div class="flex items-center justify-between">
         <!-- submit button -->
@@ -51,23 +74,19 @@
 import store from '@/store';
 import isEmail from 'validator/lib/isEmail';
 import BaseInputText from '@/components/BaseInputText.vue';
+import { required, email } from 'vuelidate/lib/validators';
 
 export default {
   name: 'AuthLogin',
   components: { BaseInputText },
-  data() {
-    return {
-      valid: false,
-      isPasswordVisible: false,
-      rules: {
-        email: [
-          v => !!v || 'E-mail is required',
-          v => (v || '').indexOf(' ') < 0 || 'No spaces are allowed',
-          v => isEmail(v) || 'E-mail must be valid'
-        ],
-        password: [v => !!v || 'Password is required']
-      }
-    };
+  validations: {
+    email: {
+      required,
+      email
+    },
+    password: {
+      required
+    }
   },
   beforeDestroy() {
     this.cleanup();
@@ -79,13 +98,18 @@ export default {
     updateActiveState(value) {
       this.$store.dispatch('auth/updateActiveState', value);
     },
-    async submit() {
-      try {
-        await this.login();
-        this.$emit('success');
-      } catch (error) {
-        this.$store.dispatch('auth/updateLoginError', error.message);
+    submit() {
+      this.$v.$touch();
+      if (this.$v.$invalid) {
+        return false;
       }
+      this.login()
+        .then(() => {
+          this.$emit('success');
+        })
+        .catch(error => {
+          this.$store.dispatch('auth/updateLoginError', error.message);
+        });
     },
     async login() {
       await this.$store.dispatch('auth/loginStandard');
