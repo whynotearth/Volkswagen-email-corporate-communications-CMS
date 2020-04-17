@@ -5,6 +5,7 @@
         <BaseInputText
           class="bg-primary text-white"
           v-model="$v.email.$model"
+          idName="email"
           label="Email"
           placeholder="Email"
           :error="$v.email.$dirty && (!$v.email.required || !$v.email.email)"
@@ -21,6 +22,7 @@
         <BaseInputText
           class="bg-primary text-white"
           v-model="$v.password.$model"
+          idName="password"
           label="Password"
           placeholder="Password"
           type="password"
