@@ -1,11 +1,16 @@
 <template>
   <div class="py-6 flex-grow">
     <div class="container px-4 md:px-6">
-      <BaseInputText v-model="subject" label="Email Subject Line" placeholder="Email Subject Line"></BaseInputText>
-      <BaseInputText v-model="date" label="Memo Date" placeholder="Memo Date"></BaseInputText>
-      <BaseInputText v-model="to" label="Audience" placeholder="Audience"></BaseInputText>
+      <BaseInputText
+        class="bg-surface"
+        v-model="subject"
+        label="Email Subject Line"
+        placeholder="Email Subject Line"
+      ></BaseInputText>
+      <BaseInputText class="bg-surface" v-model="date" label="Memo Date" placeholder="Memo Date"></BaseInputText>
+      <BaseInputText class="bg-surface" v-model="to" label="Audience" placeholder="Audience"></BaseInputText>
       <BaseInputTextarea
-        class="body-1-mobile"
+        class="body-1-mobile bg-surface"
         v-model="description"
         label="Memo Body"
         placeholder="Memo Body"
