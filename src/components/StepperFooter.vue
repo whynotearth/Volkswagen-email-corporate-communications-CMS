@@ -7,7 +7,7 @@
     <div class="container flex items-center h-full z-2 relative px-6">
       <a
         @click="$emit('changeStep', -1)"
-        class="link-back block bg-surface flex h-full items-center justify-start font-semibold text-error cursor-pointer select-none"
+        class="link-back block bg-surface flex h-full items-center justify-start font-normal text-error cursor-pointer select-none"
       >
         <svg width="8" height="12" viewBox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path
