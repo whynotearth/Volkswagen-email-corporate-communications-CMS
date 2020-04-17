@@ -6,6 +6,9 @@ import router from './router';
 import store from './store';
 import './styles/tailwind.css';
 import configureModerator from './store/store-moderator';
+import Vuelidate from 'vuelidate';
+
+Vue.use(Vuelidate);
 
 Vue.config.productionTip = false;
 
