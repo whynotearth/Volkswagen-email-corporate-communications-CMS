@@ -2,10 +2,12 @@ import { MemoService } from '@whynotearth/meredith-axios';
 import Vue from 'vue';
 // import { companySlug } from '@/constants/app';
 
+export const defaultMemoFormData = [];
+
 export default {
   namespaced: true,
   state: {
-    form_data: {},
+    form_data: defaultMemoFormData,
     response_message: {
       type: '', // error, success
       message: '',
@@ -27,12 +29,16 @@ export default {
     },
     update_date(state, payload) {
       Vue.set(state.form_data, 'date', payload);
+    },
+    update_form_data(state, payload) {
+      Vue.set(state, 'form_data', payload);
     }
   },
   actions: {
     async memo(context, payload) {
       try {
         await MemoService.memo(payload.params);
+        context.commit('update_form_data', defaultMemoFormData);
       } catch (error) {
         throw new Error('Error in jumstart test');
       }
