@@ -6,7 +6,7 @@
     @changeStep="changeStep"
   >
     <div class="px-0 overflow-y-auto flex flex-col h-full narrow-scrollbars">
-      <MemoAddStep1 v-if="currentStep === 1"></MemoAddStep1>
+      <MemoAddStep1 v-if="currentStep === 1" ref="memoForm" :error="validationError"></MemoAddStep1>
       <MemoAddStep2 v-if="currentStep === 2"></MemoAddStep2>
     </div>
   </StepperManager>
@@ -29,7 +29,8 @@ export default {
   },
   data: () => ({
     steps: ['Internal Memo', 'Preview Memo'],
-    showResult: false
+    showResult: false,
+    validationError: false
   }),
   computed: {
     ...mapGetters('memo', ['get_to', 'get_subject', 'get_date', 'get_description']),
@@ -46,6 +47,14 @@ export default {
 
       const newStep = parseInt(this.step) + change;
 
+      if (this.$refs.memoForm && this.step === 1 && newStep > 1) {
+        this.$refs.memoForm.$v.$touch();
+        if (this.$refs.memoForm.$v.$invalid) {
+          this.validationError = true;
+          return false;
+        }
+      }
+
       const wantToExit = newStep < 1;
       if (wantToExit) {
         this.$store.dispatch('memo/clear_form_data');
@@ -60,7 +69,7 @@ export default {
       this.$router.push({ name: 'MemoAdd', params: { step: newStep } });
     },
 
-    async submit() {
+    submit() {
       const params = {
         body: {
           date: this.get_date,
@@ -69,20 +78,18 @@ export default {
           subject: this.get_subject
         }
       };
-      try {
-        await this.memo({ params });
-        this.$store.dispatch('memo/clear_form_data');
-        this.onSuccessSubmit();
-      } catch (error) {
-        this.update_response_message({
-          // TODO: use network response
-          message: 'Not sent, please check the form fields.',
-          type: 'error',
-          class: 'text-error'
+      this.memo({ params })
+        .then(() => {
+          this.$store.dispatch('memo/clear_form_data');
+          this.onSuccessSubmit();
+        })
+        .catch(error => {
+          this.update_response_message({
+            message: error.response.data.title,
+            type: 'error',
+            class: 'text-error'
+          });
         });
-
-        console.log(error);
-      }
     },
 
     async onSuccessSubmit() {

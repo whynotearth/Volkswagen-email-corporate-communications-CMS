@@ -143,28 +143,26 @@ export default {
         title: authStates[payload].title
       });
     },
-    async loginStandard(context) {
+    loginStandard(context) {
       context.commit('updateLoginError', '');
       context.commit('updateLoading', true);
-      let token;
-      try {
-        token = await AuthenticationService.login({
-          body: {
-            email: context.state.email,
-            password: context.state.password
-          }
+      AuthenticationService.login({
+        body: {
+          email: context.state.email,
+          password: context.state.password
+        }
+      })
+        .then(token => {
+          store.dispatch('authKeep/updateToken', token);
+          store.dispatch('auth/ping').catch(error => {
+            context.commit('updateLoginError', error.response.data.error);
+          });
+          context.commit('updateLoading', false);
+        })
+        .catch(error => {
+          context.commit('updateLoginError', error.response.data.error);
+          context.commit('updateLoading', false);
         });
-
-        await store.dispatch('authKeep/updateToken', token);
-      } catch (error) {
-        context.commit('updateLoading', false);
-        throw new Error(error.message);
-      }
-      const pingResult = await store.dispatch('auth/ping');
-      context.commit('updateLoading', false);
-      if (!pingResult) {
-        throw new Error('An error occured during login');
-      }
     },
     async registerAuto(context, { email }) {
       try {

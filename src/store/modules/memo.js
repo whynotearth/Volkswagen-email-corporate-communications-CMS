@@ -7,7 +7,12 @@ const defaultMemoFormData = {};
 export default {
   namespaced: true,
   state: {
-    form_data: { ...defaultMemoFormData },
+    form_data: {
+      to: '',
+      subject: '',
+      description: '',
+      date: ''
+    },
     response_message: {
       type: '', // error, success
       message: '',
@@ -40,11 +45,7 @@ export default {
       console.log('defaultMemoFormData', defaultMemoFormData);
     },
     async memo(context, payload) {
-      try {
-        await MemoService.memo(payload.params);
-      } catch (error) {
-        throw new Error('Error in jumstart test');
-      }
+      await MemoService.memo(payload.params);
     }
   },
   getters: {
