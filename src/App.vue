@@ -12,10 +12,12 @@
 
 <script>
 import OverlayBrand from '@/components/OverlayBrand.vue';
+// import vhFix from '@/mixins/vh-fix';
 
 export default {
   name: 'App',
   components: { OverlayBrand },
+  // mixins: [vhFix],
   computed: {
     overlayModel() {
       return this.$store.getters['overlay/model'];

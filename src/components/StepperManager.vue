@@ -1,5 +1,5 @@
 <template>
-  <div class="page h-screen flex flex-col">
+  <div class="page h-full flex flex-col">
     <StepperHeader :steps="steps" :step="step" :options="options" />
     <div class="flex-grow z-2 overflow-y-hidden">
       <slot />
