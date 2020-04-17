@@ -3,7 +3,7 @@
     <div class="container px-4 md:px-6 text-left">
       <BaseInputText
         class="bg-surface"
-        v-model="subject"
+        v-model="$v.subject.$model"
         label="Email Subject Line"
         placeholder="Email Subject Line"
         :error="$v.subject.$dirty && !$v.subject.required"
@@ -14,7 +14,7 @@
       </BaseInputText>
       <BaseInputText
         class="bg-surface"
-        v-model="date"
+        v-model="$v.date.$model"
         label="MM/DD/YYYY"
         placeholder="Memo Date"
         :error="$v.date.$dirty && !$v.date.required"
@@ -25,7 +25,7 @@
       </BaseInputText>
       <BaseInputText
         class="bg-surface"
-        v-model="to"
+        v-model="$v.to.$model"
         label="Audience"
         placeholder="Audience"
         :error="$v.to.$dirty && !$v.to.required"
@@ -36,7 +36,7 @@
       </BaseInputText>
       <BaseInputTextarea
         class="body-1-mobile bg-surface"
-        v-model="description"
+        v-model="$v.description.$model"
         label="Memo Body"
         placeholder="Memo Body"
         :error="$v.description.$dirty && !$v.description.required"
