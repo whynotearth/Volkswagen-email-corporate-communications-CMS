@@ -1,6 +1,9 @@
 <template>
-  <div class="bg-brand-gradient flex items-center justify-center min-h-full">
+  <div class="bg-brand-gradient flex items-center justify-center min-h-full relative">
     <div class="w-full">
+      <a v-if="isAuthenticated" class="absolute top-0 right-0 text-white p-4 text-sm" @click.prevent="logout()" href="#"
+        >Log out</a
+      >
       <div class="max-w-sm mx-auto px-6">
         <div class="mb-6">
           <img
@@ -37,6 +40,16 @@ export default {
   computed: {
     isAuthenticated() {
       return this.$store.getters['auth/isAuthenticated'];
+    }
+  },
+  methods: {
+    async logout() {
+      try {
+        await this.$store.dispatch('auth/logout');
+      } catch (error) {
+        // TODO: snackbar
+        console.log('logout failed');
+      }
     }
   }
 };

@@ -82,7 +82,7 @@ export default {
     async submit() {
       try {
         await this.login();
-        this.$router.push({ name: 'Home' });
+        this.$emit('success');
       } catch (error) {
         this.$store.dispatch('auth/updateLoginError', error.message);
       }

@@ -10,7 +10,7 @@
           />
         </div>
         <h1 class="h1-mobile md:h1 mb-20 text-white">Welcome to Jumpstart</h1>
-        <AuthLogin />
+        <AuthLogin @success="onSuccess" />
       </div>
     </div>
   </div>
@@ -27,6 +27,11 @@ export default {
   computed: {
     isAuthenticated() {
       return this.$store.getters['auth/isAuthenticated'];
+    }
+  },
+  methods: {
+    onSuccess() {
+      this.$router.push({ name: 'Home' });
     }
   }
 };
