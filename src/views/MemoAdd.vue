@@ -48,6 +48,7 @@ export default {
 
       const wantToExit = newStep < 1;
       if (wantToExit) {
+        this.$store.dispatch('memo/clear_form_data');
         return this.$router.push({ name: 'Home' });
       }
 
@@ -70,6 +71,7 @@ export default {
       };
       try {
         await this.memo({ params });
+        this.$store.dispatch('memo/clear_form_data');
         this.onSuccessSubmit();
       } catch (error) {
         this.update_response_message({
