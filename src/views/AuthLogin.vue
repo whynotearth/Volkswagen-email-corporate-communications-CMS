@@ -1,14 +1,16 @@
 <template>
-  <div>
-    <PageNavigation />
-
-    <div class="container mx-auto mt-4">
-      <div class="max-w-xs mx-auto">
-        <div class="flex flex-wrap my-4 ">
-          <div class="w-full bg-gray-500 h-12">
-            <AuthLogin />
-          </div>
+  <div class="bg-brand-gradient flex items-center justify-center min-h-full">
+    <div class="w-full">
+      <div class="max-w-sm mx-auto px-6">
+        <div class="mb-6">
+          <img
+            class="w-16 h-16 mx-auto block"
+            src="https://res.cloudinary.com/whynotearth/image/upload/v1586859428/Volkswagen/cms/logo-light_um5gka.svg"
+            alt=""
+          />
         </div>
+        <h1 class="h1-mobile md:h1 mb-20 text-white">Welcome to Jumpstart</h1>
+        <AuthLogin />
       </div>
     </div>
   </div>
@@ -18,11 +20,10 @@
 import store from '@/store';
 import isEmail from 'validator/lib/isEmail';
 import AuthLogin from '@/components/AuthLogin';
-import PageNavigation from '@/components/PageNavigation.vue';
 
 export default {
   name: 'LoginPage',
-  components: { AuthLogin, PageNavigation },
+  components: { AuthLogin },
   computed: {
     isAuthenticated() {
       return this.$store.getters['auth/isAuthenticated'];

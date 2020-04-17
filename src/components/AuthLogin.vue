@@ -1,38 +1,22 @@
 <template>
   <div>
-    <form ref="form" name="Login" @submit.prevent="" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+    <form ref="form" name="Login" @submit.prevent="" class="pt-6 pb-8 mb-4">
       <div class="mb-4">
-        <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
-          E-mail
-        </label>
-        <input
-          v-model="email"
-          name="E-mail"
-          required
-          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          id="username"
-          type="email"
-          placeholder="E-mail address"
-        />
+        <BaseInputText class="bg-primary text-white" v-model="email" label="Email" placeholder="Email"></BaseInputText>
       </div>
       <div class="mb-6">
-        <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
-          Password
-        </label>
-        <input
+        <BaseInputText
+          class="bg-primary text-white"
           v-model="password"
-          name="Password"
-          required
-          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-          id="password"
+          label="Password"
+          placeholder="Password"
           type="password"
-          placeholder="Your password"
-        />
-        <!-- <p class="text-red-500 text-xs italic">Please choose a password.</p> -->
+        ></BaseInputText>
       </div>
       <div class="flex items-center justify-between">
+        <!-- submit button -->
         <button
-          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          class="bg-secondary w-full hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline transition duration-100 ease-in-out transition-all label-mobile"
           type="button"
           @click="submit()"
         >
@@ -44,7 +28,7 @@
       </div>
     </form>
 
-    <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+    <!-- <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
       <p class="mb-4">
         <a
           class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
@@ -59,16 +43,18 @@
           >Login by Google</a
         >
       </p>
-    </div>
+    </div> -->
   </div>
 </template>
 
 <script>
 import store from '@/store';
 import isEmail from 'validator/lib/isEmail';
+import BaseInputText from '@/components/BaseInputText.vue';
 
 export default {
   name: 'AuthLogin',
+  components: { BaseInputText },
   data() {
     return {
       valid: false,

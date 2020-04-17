@@ -12,7 +12,7 @@
       :placeholder="placeholder || label"
     />
     <label
-      class="label bg-surface absolute mb-0 top-0 left-0 mt-3 ml-3 cursor-text"
+      class="label bg-inherit absolute mb-0 top-0 left-0 mt-3 ml-3 cursor-text"
       :class="error ? 'text-red-600' : 'text-gray-500'"
     >
       {{ label }}
@@ -59,7 +59,7 @@ export default {
 }
 
 .input + .label {
-  background-color: rgba(255, 255, 255, 0);
+  /* background-color: rgba(255, 255, 255, 0); */
 }
 .input:focus + .label,
 .input:active + .label,
@@ -72,7 +72,7 @@ export default {
   z-index: 3;
   will-change: transform;
   transition: transform 200ms ease-out, background-color 50ms ease-out 150ms;
-  background-color: rgba(255, 255, 255, 1);
+  /* background-color: rgba(255, 255, 255, 1); */
   border-radius: 100px;
 }
 
