@@ -1,5 +1,3 @@
-import { defaultMemoFormData } from '@/store/modules/memo.js';
-
 export default function configureModerator(store, router) {
   // listen to mutations
   store.subscribe(({ type, payload }, state) => {
@@ -7,7 +5,7 @@ export default function configureModerator(store, router) {
     switch (type) {
       case 'auth/logout':
         // return store.commit('booking/resetState');
-        store.commit('memo/update_form_data', defaultMemoFormData);
+        store.dispatch('memo/clear_form_data')
     }
     /* eslint-enable */
   });
