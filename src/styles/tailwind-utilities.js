@@ -5,6 +5,11 @@ const plugin = require('tailwindcss/plugin');
 
 const customUtils = plugin(function({ addUtilities, theme, variants }) {
   const textUtils = {
+    '.h1-mobile': {
+      fontSize: theme('fontSize.3xl'),
+      fontWeight: theme('fontWeight.bold'),
+      lineHeight: '38px'
+    },
     '.display-4': {
       fontSize: theme('fontSize.7xl'),
       fontWeight: theme('fontWeight.normal'),
@@ -75,10 +80,18 @@ const customUtils = plugin(function({ addUtilities, theme, variants }) {
       fontWeight: theme('fontWeight.normal'),
       lineHeight: '16px'
       // color: 'rgba(0,0,0,0.54)'
+    },
+    '.label-mobile': {
+      fontWeight: theme('fontWeight.medium'),
+      fontSize: theme('fontSize.sm'),
+      textTransform: 'uppercase'
     }
   };
 
   const backgroundUtils = {
+    '.bg-inherit': {
+      background: 'inherit'
+    },
     '.bg-brand-gradient': {
       background: `radial-gradient(50% 49.2% at 0% 0.8%, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0) 100%), ${theme(
         'colors.primary'
