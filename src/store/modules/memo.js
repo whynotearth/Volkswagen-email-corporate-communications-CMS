@@ -5,7 +5,12 @@ import Vue from 'vue';
 export default {
   namespaced: true,
   state: {
-    form_data: {},
+    form_data: {
+      to: '',
+      subject: '',
+      description: '',
+      date: ''
+    },
     response_message: {
       type: '', // error, success
       message: '',
@@ -31,11 +36,7 @@ export default {
   },
   actions: {
     async memo(context, payload) {
-      try {
-        await MemoService.memo(payload.params);
-      } catch (error) {
-        throw new Error('Error in jumstart test');
-      }
+      await MemoService.memo(payload.params);
     }
   },
   getters: {
