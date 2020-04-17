@@ -58,6 +58,20 @@ export default {
   z-index: 2;
 }
 
+@-webkit-keyframes autofill {
+  0%,
+  100% {
+    color: inherit;
+    background: transparent;
+  }
+}
+
+.input:-webkit-autofill {
+  -webkit-animation-delay: 1s; /* Safari support - any positive time runs instantly */
+  -webkit-animation-name: autofill;
+  -webkit-animation-fill-mode: both;
+}
+
 .input:focus + .label,
 .input:active + .label,
 .input.filled + .label {
