@@ -103,13 +103,9 @@ export default {
       if (this.$v.$invalid) {
         return false;
       }
-      this.login()
-        .then(() => {
-          this.$emit('success');
-        })
-        .catch(error => {
-          this.$store.dispatch('auth/updateLoginError', error.message);
-        });
+      this.login().then(() => {
+        this.$emit('success');
+      });
     },
     async login() {
       await this.$store.dispatch('auth/loginStandard');
