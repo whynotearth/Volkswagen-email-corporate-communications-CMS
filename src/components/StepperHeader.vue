@@ -1,5 +1,5 @@
 <template>
-  <div class="header-steppable bg-surface sticky inset-x-0 top-0 z-3 py-1">
+  <div class="header-steppable bg-surface sticky inset-x-0 top-0 z-10 py-1">
     <div class="container px-4 md:px-6">
       <BaseStepperCircle :steps="steps" :current-step="step" :options="options"></BaseStepperCircle>
     </div>

@@ -1,10 +1,10 @@
 <template>
-  <footer class="page-footer h-12 relative">
-    <div class="absolute h-full w-full flex z-1">
+  <footer class="page-footer h-12 relative z-20">
+    <div class="absolute h-full w-full flex z-10">
       <div class="bg-surface flex-grow"></div>
       <div class="bg-primary flex-grow"></div>
     </div>
-    <div class="container flex items-center h-full z-2 relative px-6">
+    <div class="container flex items-center h-full z-20 relative px-6">
       <a
         @click="$emit('changeStep', -1)"
         class="link-back block bg-surface flex h-full items-center justify-start font-normal text-error cursor-pointer select-none"
