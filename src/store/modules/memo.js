@@ -2,6 +2,8 @@ import { MemoService } from '@whynotearth/meredith-axios';
 import Vue from 'vue';
 // import { companySlug } from '@/constants/app';
 
+const defaultMemoFormData = {};
+
 export default {
   namespaced: true,
   state: {
@@ -32,9 +34,16 @@ export default {
     },
     update_date(state, payload) {
       Vue.set(state.form_data, 'date', payload);
+    },
+    update_form_data(state, payload) {
+      Vue.set(state, 'form_data', payload);
     }
   },
   actions: {
+    clear_form_data(context) {
+      context.commit('update_form_data', { ...defaultMemoFormData });
+      console.log('defaultMemoFormData', defaultMemoFormData);
+    },
     async memo(context, payload) {
       await MemoService.memo(payload.params);
     }
