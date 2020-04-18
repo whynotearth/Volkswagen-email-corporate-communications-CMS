@@ -144,3 +144,9 @@ export async function sleep(time) {
     }, time);
   });
 }
+
+export function randomId() {
+  return Math.random()
+    .toString()
+    .substr(2);
+}
