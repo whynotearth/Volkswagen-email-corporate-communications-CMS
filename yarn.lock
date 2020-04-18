@@ -1308,9 +1308,10 @@
     "@webassemblyjs/wast-parser" "1.9.0"
     "@xtuc/long" "4.2.2"
 
-"@whynotearth/meredith-axios@whynotearth/meredith-axios#master":
-  version "1.0.0"
-  resolved "https://codeload.github.com/whynotearth/meredith-axios/tar.gz/126c8a4d2cc30218c1d163167e137722c5ceec9c"
+"@whynotearth/meredith-axios@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@whynotearth/meredith-axios/-/meredith-axios-1.0.1.tgz#d561f37137e5af2a6e3b6f3cf4861faa76aeaa98"
+  integrity sha512-Gv1tq93bwE2U5wut4NkfdvVdQX5lqFARGWM61tflHn6SiPz9RMDVF8gzm8LZLvIteBVvUy0gh2mhF5yUcvjjwA==
   dependencies:
     swagger-axios-codegen "^0.9.17"
 
@@ -6417,7 +6418,7 @@ postcss-modules-values@^3.0.0:
     icss-utils "^4.0.0"
     postcss "^7.0.6"
 
-postcss-nested@^4.1.1:
+postcss-nested@^4.1.1, postcss-nested@^4.2.1:
   version "4.2.1"
   resolved "https://registry.yarnpkg.com/postcss-nested/-/postcss-nested-4.2.1.tgz#4bc2e5b35e3b1e481ff81e23b700da7f82a8b248"
   integrity sha512-AMayXX8tS0HCp4O4lolp4ygj9wBn32DJWXvG6gCv+ZvJrEa00GUxJcJEEzMh87BIe6FrWdYkpR2cuyqHKrxmXw==

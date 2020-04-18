@@ -4,3 +4,4 @@
 @tailwind utilities;
 
 @import './animations.css';
+@import './plugin-multiselect.css';
