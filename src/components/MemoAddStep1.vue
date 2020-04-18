@@ -1,6 +1,17 @@
 <template>
   <div class="py-6 flex-grow">
     <div class="container px-4 md:px-6 text-left">
+      <Multiselect
+        v-model="value"
+        tag-placeholder="Add this as new tag"
+        placeholder="Search or add a tag"
+        label="name"
+        track-by="code"
+        :options="options"
+        :multiple="true"
+        :taggable="true"
+      ></Multiselect>
+
       <BaseInputText
         class="bg-surface"
         v-model="$v.subject.$model"
@@ -52,14 +63,26 @@
   </div>
 </template>
 
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
+
 <script>
 import BaseInputText from '@/components/BaseInputText.vue';
 import BaseInputTextarea from '@/components/BaseInputTextarea.vue';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
 import { required } from 'vuelidate/lib/validators';
+import Multiselect from 'vue-multiselect';
+
 export default {
   name: 'MemoAddStep1',
-  components: { BaseInputText, BaseInputTextarea },
+  components: { BaseInputText, BaseInputTextarea, Multiselect },
+  data: () => ({
+    value: [{ name: 'Javascript', code: 'js' }],
+    options: [
+      { name: 'Vue.js', code: 'vu' },
+      { name: 'Javascript', code: 'js' },
+      { name: 'Open Source', code: 'os' }
+    ]
+  }),
   props: {
     error: {
       type: Boolean,
