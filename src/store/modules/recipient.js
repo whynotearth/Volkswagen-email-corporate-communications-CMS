@@ -1,4 +1,4 @@
-import { RecipientService } from '@whynotearth/meredith-axios';
+import { RecipientService, DistributionGroupService } from '@whynotearth/meredith-axios';
 import Vue from 'vue';
 
 export default {
@@ -7,18 +7,18 @@ export default {
     items: []
   },
   mutations: {
-    updateAll(state, payload) {
+    update_items(state, payload) {
       Vue.set(state, 'items', payload);
     }
   },
   actions: {
-    async getItems(context, { body }) {
-      // TODO:
-      // const data = await RecipientService.recipient();
+    async fetch_recipients(context) {
+      const data = await DistributionGroupService.distributiongroups();
+      context.commit('update_items', data);
     }
   },
   getters: {
-    items: state => name => {
+    get_recipients: state => {
       return state.items || [];
     }
   }

@@ -1,3 +1,13 @@
+/* TODO: remove */
+.multiselect__content-wrapper {
+  display: block !important;
+}
+
 .multiselect__tag {
-  @apply bg-primary;
+}
+.multiselect__option--highlight {
+  @apply bg-secondary-012;
+  &:after {
+    display: none;
+  }
 }

@@ -2,14 +2,12 @@
   <div class="py-6 flex-grow">
     <div class="container px-4 md:px-6 text-left">
       <Multiselect
-        v-model="value"
-        tag-placeholder="Add this as new tag"
-        placeholder="Search or add a tag"
-        label="name"
-        track-by="code"
-        :options="options"
+        v-model="recipients"
+        placeholder="To:"
+        :options="get_recipients"
         :multiple="true"
-        :taggable="true"
+        :hide-selected="true"
+        :allow-empty="false"
       ></Multiselect>
 
       <BaseInputText
@@ -26,7 +24,7 @@
       <BaseInputText
         class="bg-surface"
         v-model="$v.date.$model"
-        label="MM/DD/YYYY"
+        label="Memo Date"
         placeholder="Memo Date"
         :error="$v.date.$dirty && !$v.date.required"
       >
@@ -76,12 +74,8 @@ export default {
   name: 'MemoAddStep1',
   components: { BaseInputText, BaseInputTextarea, Multiselect },
   data: () => ({
-    value: [{ name: 'Javascript', code: 'js' }],
-    options: [
-      { name: 'Vue.js', code: 'vu' },
-      { name: 'Javascript', code: 'js' },
-      { name: 'Open Source', code: 'os' }
-    ]
+    recipients: [],
+    options: ['Group1']
   }),
   props: {
     error: {
@@ -105,6 +99,7 @@ export default {
   },
   computed: {
     ...mapGetters('memo', ['get_to', 'get_subject', 'get_date', 'get_description']),
+    ...mapGetters('recipient', ['get_recipients']),
     to: {
       get() {
         return this.get_to;
@@ -139,7 +134,11 @@ export default {
     }
   },
   methods: {
-    ...mapMutations('memo', ['update_to', 'update_description', 'update_date', 'update_subject'])
+    ...mapMutations('memo', ['update_to', 'update_description', 'update_date', 'update_subject']),
+    ...mapActions('recipient', ['fetch_recipients'])
+  },
+  mounted() {
+    this.fetch_recipients();
   }
 };
 </script>
