@@ -5,10 +5,13 @@
         class="mb-4"
         v-model="recipients"
         placeholder="To:"
-        :options="get_recipients"
+        :options="get_recipients_available"
         :multiple="true"
         :hide-selected="true"
-      ></Multiselect>
+      >
+        <template v-slot:noResult>Nothing found</template>
+        <template v-slot:noOptions>No options available</template>
+      </Multiselect>
 
       <BaseInputText
         class="bg-surface"
@@ -73,9 +76,6 @@ import Multiselect from 'vue-multiselect';
 export default {
   name: 'MemoAddStep1',
   components: { BaseInputText, BaseInputTextarea, Multiselect },
-  data: () => ({
-    recipients: []
-  }),
   props: {
     error: {
       type: Boolean,
@@ -97,8 +97,8 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('memo', ['get_to', 'get_subject', 'get_date', 'get_description']),
-    ...mapGetters('recipient', ['get_recipients']),
+    ...mapGetters('memo', ['get_to', 'get_subject', 'get_date', 'get_description', 'get_recipients']),
+    ...mapGetters('recipient', ['get_recipients_available']),
     to: {
       get() {
         return this.get_to;
@@ -130,10 +130,18 @@ export default {
       set(value) {
         this.update_date(value);
       }
+    },
+    recipients: {
+      get() {
+        return this.get_recipients;
+      },
+      set(value) {
+        this.update_recipients(value);
+      }
     }
   },
   methods: {
-    ...mapMutations('memo', ['update_to', 'update_description', 'update_date', 'update_subject']),
+    ...mapMutations('memo', ['update_to', 'update_description', 'update_date', 'update_subject', 'update_recipients']),
     ...mapActions('recipient', ['fetch_recipients'])
   },
   mounted() {

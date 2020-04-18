@@ -18,7 +18,7 @@ export default {
     }
   },
   getters: {
-    get_recipients: state => {
+    get_recipients_available: state => {
       return state.items || [];
     }
   }
