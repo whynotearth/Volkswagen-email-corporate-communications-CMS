@@ -1308,7 +1308,7 @@
     "@webassemblyjs/wast-parser" "1.9.0"
     "@xtuc/long" "4.2.2"
 
-"@whynotearth/meredith-axios@whynotearth/meredith-axios#v1.0.4":
+"@whynotearth/meredith-axios@whynotearth/meredith-axios#master":
   version "1.0.0"
   resolved "https://codeload.github.com/whynotearth/meredith-axios/tar.gz/126c8a4d2cc30218c1d163167e137722c5ceec9c"
   dependencies:
