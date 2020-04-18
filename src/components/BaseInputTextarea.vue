@@ -8,11 +8,13 @@
           ? 'border-red-600 focus:border-red-600 active:border-red-600'
           : 'border-gray-600 focus:border-gray-500 active:border-gray-500'
       ]"
+      :id="idName"
       :value="value"
       @blur="$emit('input', $event.target.value)"
       :placeholder="placeholder || label"
     ></textarea>
     <label
+      :for="idName"
       class="label bg-inherit absolute mb-0 top-0 left-0 mt-3 ml-3 cursor-text"
       :class="error ? 'text-red-600' : 'text-gray-500'"
     >
@@ -23,6 +25,8 @@
 </template>
 
 <script>
+import { randomId } from '@/helpers.js';
+
 export default {
   name: 'InputTextarea',
   props: {
@@ -38,7 +42,11 @@ export default {
       type: String
     },
     error: {
-      default: Boolean
+      type: Boolean
+    },
+    idName: {
+      type: String,
+      default: randomId
     }
   },
   data() {
