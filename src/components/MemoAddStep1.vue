@@ -2,12 +2,12 @@
   <div class="py-6 flex-grow">
     <div class="container px-4 md:px-6 text-left">
       <Multiselect
+        class="mb-4"
         v-model="recipients"
         placeholder="To:"
         :options="get_recipients"
         :multiple="true"
         :hide-selected="true"
-        :allow-empty="false"
       ></Multiselect>
 
       <BaseInputText
@@ -74,8 +74,7 @@ export default {
   name: 'MemoAddStep1',
   components: { BaseInputText, BaseInputTextarea, Multiselect },
   data: () => ({
-    recipients: [],
-    options: ['Group1']
+    recipients: []
   }),
   props: {
     error: {
