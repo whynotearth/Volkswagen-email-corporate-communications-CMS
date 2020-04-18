@@ -25,6 +25,8 @@
 </template>
 
 <script>
+import { randomId } from '@/helpers.js';
+
 export default {
   name: 'InputTextarea',
   props: {
@@ -43,7 +45,8 @@ export default {
       type: Boolean
     },
     idName: {
-      type: Boolean
+      type: String,
+      default: randomId
     }
   },
   data() {
