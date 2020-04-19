@@ -71,6 +71,9 @@ module.exports = {
       },
       scale: {
         '-1': '-1'
+      },
+      inset: {
+        '1/2': '50%'
       }
     }
   },
