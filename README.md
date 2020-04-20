@@ -1,5 +1,11 @@
 # Volkswagen email corporate communications CMS
 
+## Branches
+
+`staging` is our development branch  
+`master` is live production branch  
+For creating new PRs, please select `staging` as the target branch (except hotfix's).
+
 ## Project setup
 ```
 yarn install
