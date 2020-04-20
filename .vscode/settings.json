@@ -4,5 +4,6 @@
   "workbench.colorCustomizations": {
     "titleBar.activeBackground": "#292baa",
     "titleBar.activeForeground": "#f3f3f3"
-  }
+  },
+  "css.validate": false
 }
