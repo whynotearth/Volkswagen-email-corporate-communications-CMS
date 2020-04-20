@@ -1,18 +1,6 @@
 <template>
   <div>
-    <nav class="flex items-strech items-center px-4 py-3 flex-wrap shadow-md">
-      <div class="flex-start mr-3">
-        <router-link class="inline-block" to="/">
-          <img
-            class="mt-1"
-            src="https://res.cloudinary.com/whynotearth/image/upload/v1587102533/Volkswagen/cms/back_oay5wt.png"
-          />
-        </router-link>
-      </div>
-      <div class="text-primary h2-mobile">
-        Settings
-      </div>
-    </nav>
+    <AppBarHeader :title="'Settings'" :to-link="'/'" />
     <div class="flex items-strech items-center shadow-sm px-4 py-3">
       <a
         v-if="isAuthenticated"
@@ -45,10 +33,11 @@
 <script>
 import PageNavigation from '@/components/PageNavigation.vue';
 import AuthLogin from '@/components/AuthLogin';
+import AppBarHeader from '@/components/AppBarHeader.vue';
 
 export default {
   name: 'SettingsPage',
-  // components: { AuthLogin },
+  components: { AppBarHeader },
   computed: {
     isAuthenticated() {
       return this.$store.getters['auth/isAuthenticated'];

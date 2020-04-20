@@ -1,0 +1,45 @@
+<template>
+  <nav class="flex items-strech items-center px-4 py-4 flex-wrap shadow-md">
+    <div class="flex-start mr-3">
+      <router-link class="inline-block align-middle" :to="toLink">
+        <img
+          class="mt-1"
+          src="https://res.cloudinary.com/whynotearth/image/upload/v1587102533/Volkswagen/cms/back_oay5wt.png"
+        />
+      </router-link>
+    </div>
+    <div class="text-primary h2-mobile">
+      {{ title }}
+    </div>
+    <router-link v-if="action" class="flex-grow inline-block action-link text-xl text-right" :to="action.link">{{
+      action.label
+    }}</router-link>
+  </nav>
+</template>
+
+<script>
+export default {
+  name: 'AppBarHeader',
+  props: {
+    title: {
+      type: String,
+      required: true
+    },
+    toLink: {
+      type: String,
+      default: '/'
+    },
+    action: {
+      type: Object,
+      default: () => {}
+    }
+  }
+};
+</script>
+
+<style scoped>
+.action-link {
+  color: #03b3f9;
+  font-weight: 500;
+}
+</style>

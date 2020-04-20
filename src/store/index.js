@@ -8,6 +8,7 @@ import snackbar from './modules/snackbar';
 import post from './modules/post';
 import memo from './modules/memo';
 import overlay from './modules/overlay';
+import distributionGroup from './modules/distributionGroup';
 import VuexPersistence from 'vuex-persist';
 
 const vuexLocal = new VuexPersistence({
@@ -28,6 +29,7 @@ export default new Vuex.Store({
     post,
     memo,
     authKeep,
+    distributionGroup,
     overlay
   }
 });

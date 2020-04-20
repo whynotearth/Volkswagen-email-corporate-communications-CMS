@@ -5,6 +5,7 @@ import PostAdd from '../views/PostAdd.vue';
 import AuthLogin from '../views/AuthLogin.vue';
 import MemoAdd from '../views/MemoAdd.vue';
 import Settings from '../views/Settings';
+import EmailList from '../views/EmailList';
 import store from '../store';
 
 Vue.use(VueRouter);
@@ -42,6 +43,14 @@ const routes = [
     path: '/settings',
     name: 'Settings',
     component: Settings,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/email/list',
+    name: 'EmailList',
+    component: EmailList,
     meta: {
       requiresAuth: true
     }
