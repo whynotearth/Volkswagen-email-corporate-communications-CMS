@@ -1,7 +1,10 @@
 @tailwind base;
+
 @import './base.css';
+
 @tailwind components;
 @tailwind utilities;
 
 @import './typography.css';
+@import './elevation.css';
 @import './animations.css';

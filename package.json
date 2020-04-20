@@ -5,7 +5,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint && stylelint 'src/**/*.css' --fix"
   },
   "dependencies": {
     "@whynotearth/meredith-axios": "latest",
@@ -37,6 +37,8 @@
     "postcss-nested": "^4.2.1",
     "postcss-pxtorem": "^5.1.1",
     "prettier": "1.19.1",
+    "stylelint": "^13.3.2",
+    "stylelint-config-standard": "^20.0.0",
     "vue-template-compiler": "2.6.11"
   }
 }
