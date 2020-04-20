@@ -1,9 +1,9 @@
 <template>
   <div class="bg-brand-gradient flex items-center justify-center min-h-full relative">
     <div class="w-full">
-      <a v-if="isAuthenticated" class="absolute top-0 right-0 text-white p-4 text-sm" @click.prevent="logout()" href="#"
-        >Log out</a
-      >
+      <router-link v-if="isAuthenticated" to="/settings" class="absolute top-0 right-0 text-white p-4 text-sm">
+        <img src="https://res.cloudinary.com/whynotearth/image/upload/v1587275972/Volkswagen/cms/wheel_2_rk5nr4.png" />
+      </router-link>
       <div class="max-w-sm mx-auto px-6">
         <div class="mb-6">
           <img
@@ -42,15 +42,6 @@ export default {
       return this.$store.getters['auth/isAuthenticated'];
     }
   },
-  methods: {
-    async logout() {
-      try {
-        await this.$store.dispatch('auth/logout');
-      } catch (error) {
-        // TODO: snackbar
-        console.log('logout failed');
-      }
-    }
-  }
+  methods: {}
 };
 </script>
