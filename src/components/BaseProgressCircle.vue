@@ -1,9 +1,9 @@
 <template>
-  <svg class="w-full h-full text-inactive stroke-current">
+  <svg class="w-full h-full">
     <!-- background circle -->
     <circle
       :stroke-width="strokeWidth"
-      class="text-gray-300"
+      class="text-inactive stroke-current"
       :cx="centerX"
       :cy="centerY"
       :r="radius"
