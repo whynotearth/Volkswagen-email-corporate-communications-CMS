@@ -5,6 +5,8 @@ const plugin = require('tailwindcss/plugin');
 
 const customUtils = plugin(function({ addUtilities, theme, variants }) {
   const textUtils = {
+    // DEPRECATED:
+    // ----------------------------
     '.h1-mobile': {
       fontSize: theme('fontSize.3xl'),
       fontWeight: theme('fontWeight.bold'),
