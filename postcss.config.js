@@ -1,5 +1,6 @@
 const autoprefixer = require('autoprefixer');
 const tailwindcss = require('tailwindcss');
+const postcssNested = require('postcss-nested');
 const postcssPurgecss = require('@fullhuman/postcss-purgecss');
 
 const purgecss = postcssPurgecss({
@@ -16,5 +17,6 @@ const purgecss = postcssPurgecss({
 });
 
 module.exports = {
-  plugins: [tailwindcss, autoprefixer, ...(process.env.NODE_ENV === 'production' ? [purgecss] : [])]
+  plugins: [tailwindcss, postcssNested, autoprefixer]
+  // , ...(process.env.NODE_ENV === 'production' ? [purgecss] : [])
 };

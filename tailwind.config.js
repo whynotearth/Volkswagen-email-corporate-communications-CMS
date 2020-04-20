@@ -51,6 +51,9 @@ module.exports = {
         '6xl': '3.5rem', // 56
         '7xl': '7rem' // 112
       },
+      zIndex: {
+        '100': '100'
+      },
       lineHeight: {
         none: '1',
         tight: '1.25',
