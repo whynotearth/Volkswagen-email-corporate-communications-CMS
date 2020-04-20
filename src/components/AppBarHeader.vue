@@ -2,10 +2,7 @@
   <nav class="flex items-strech items-center px-4 py-4 flex-wrap shadow-md">
     <div class="flex-start mr-3">
       <router-link class="inline-block align-middle" :to="toLink">
-        <img
-          class="mt-1"
-          src="https://res.cloudinary.com/whynotearth/image/upload/v1587102533/Volkswagen/cms/back_oay5wt.png"
-        />
+        <img src="https://res.cloudinary.com/whynotearth/image/upload/v1587102533/Volkswagen/cms/back_oay5wt.png" />
       </router-link>
     </div>
     <div class="text-primary h2-mobile">
