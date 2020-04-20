@@ -4,6 +4,7 @@ import Home from '../views/Home.vue';
 import PostAdd from '../views/PostAdd.vue';
 import AuthLogin from '../views/AuthLogin.vue';
 import MemoAdd from '../views/MemoAdd.vue';
+import Settings from '../views/Settings';
 import store from '../store';
 
 Vue.use(VueRouter);
@@ -35,6 +36,14 @@ const routes = [
     meta: {
       requiresAuth: true,
       needsUserInfo: false
+    }
+  },
+  {
+    path: '/settings',
+    name: 'Settings',
+    component: Settings,
+    meta: {
+      requiresAuth: true
     }
   }
 ];
