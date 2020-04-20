@@ -1,9 +1,14 @@
 .multiselect__content-wrapper {
   box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.2), 0px 3px 14px rgba(0, 0, 0, 0.12), 0px 8px 10px rgba(0, 0, 0, 0.14);
+  @apply border-0 rounded-t-none rounded-b;
+}
+
+.multiselect {
+  border-color: inherit;
 }
 
 .multiselect__tags {
-  border-color: rgba(0, 0, 0, 0.38);
+  border-color: inherit;
   @apply rounded px-4;
   font-size: 12px;
   line-height: 16px;
@@ -47,7 +52,15 @@
 .multiselect__option--highlight {
   @apply bg-secondary-012;
   @apply text-black;
-  &:after {
-    display: none;
-  }
+}
+
+
+.multiselect--material-label {
+    font-size: inherit;
+    transform: translateY(-0.7rem) translateX(0.75rem) scale(0.75);
+    transform-origin: left;
+    will-change: transform opacity;
+    color: inherit;
+    padding: 0 5px;
+    @apply inline-block z-100 relative bg-inherit rounded-full ;
 }

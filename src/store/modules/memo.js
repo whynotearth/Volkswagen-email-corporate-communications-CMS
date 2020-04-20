@@ -1,10 +1,14 @@
 import { MemoService } from '@whynotearth/meredith-axios';
-
 import Vue from 'vue';
-console.log('MemoService', MemoService);
-// import { companySlug } from '@/constants/app';
+import { cloneDeep } from 'lodash-es';
 
-const defaultMemoFormData = {};
+const defaultMemoFormData = {
+  to: '',
+  subject: '',
+  description: '',
+  date: '',
+  recipients: []
+};
 
 export default {
   namespaced: true,
@@ -47,7 +51,7 @@ export default {
   },
   actions: {
     clear_form_data(context) {
-      context.commit('update_form_data', { ...defaultMemoFormData });
+      context.commit('update_form_data', cloneDeep(defaultMemoFormData));
     },
     async memos(context, payload) {
       await MemoService.memos(payload.params);

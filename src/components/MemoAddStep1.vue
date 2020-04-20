@@ -1,17 +1,35 @@
 <template>
   <div class="py-6 flex-grow">
     <div class="container px-4 md:px-6 text-left">
-      <Multiselect
-        class="mb-4"
-        v-model="recipients"
-        placeholder="To:"
-        :options="get_recipients_available"
-        :multiple="true"
-        :hide-selected="true"
+      <div
+        class="mb-4 bg-white relative"
+        :class="[
+          { filled: recipients.length > 0, error: recipientsIsDirthy && recipients.length === 0 },
+          recipientsIsDirthy && recipients.length === 0
+            ? 'text-red-600 border-red-600'
+            : 'text-gray-500 border-gray-600'
+        ]"
       >
-        <template v-slot:noResult>Nothing found</template>
-        <template v-slot:noOptions>No options available</template>
-      </Multiselect>
+        <label class="multiselect--material-label absolute" v-if="recipients.length > 0" for="memoadd-step1-recipients"
+          >To:</label
+        >
+        <Multiselect
+          id="memoadd-step1-recipients"
+          v-model="recipients"
+          placeholder="To:"
+          :options="get_recipients_available"
+          :multiple="true"
+          :hide-selected="true"
+          :show-labels="false"
+          @close="recipientsIsDirthy = true"
+        >
+          <template v-slot:noResult>Nothing found</template>
+          <template v-slot:noOptions>No options available</template>
+        </Multiselect>
+        <span v-if="recipientsIsDirthy && recipients.length === 0" class="text-xs text-error">
+          To is required
+        </span>
+      </div>
 
       <BaseInputText
         class="bg-surface"
@@ -76,6 +94,10 @@ import Multiselect from 'vue-multiselect';
 export default {
   name: 'MemoAddStep1',
   components: { BaseInputText, BaseInputTextarea, Multiselect },
+  data: () => ({
+    // TODO: refactor, use vuelidate
+    recipientsIsDirthy: false
+  }),
   props: {
     error: {
       type: Boolean,
@@ -83,6 +105,9 @@ export default {
     }
   },
   validations: {
+    // recipients: {
+    //   required
+    // },
     subject: {
       required
     },
