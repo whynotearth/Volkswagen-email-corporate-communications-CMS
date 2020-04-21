@@ -1,29 +1,13 @@
 <template>
   <div class="">
-    <AppBarHeader :title="'Email List'" :to-link="'/'" :action="{ link: '/', label: 'Add New' }" />
+    <AppBarHeader :title="'Email List'" :to-link="'/'" :action="{ link: '/email/campaign', label: 'Add New' }" />
     <div class="flex">
       <ul class="w-full pt-4">
-        <li class="flex text-left px-4 py-4">
-          <router-link to="/">
-            <div>Human Resources</div>
+        <li v-for="stat in stats" v-bind:key="stat.distributionGroup" class="flex text-left px-4 py-4">
+          <router-link to="/email/marketing">
+            <div>{{ stat.distributionGroup }}</div>
             <div class="item-details text-xs pt-1">
-              203 subscribers | 35% opens | 60% clicks
-            </div>
-          </router-link>
-        </li>
-        <li class="flex text-left px-4 py-4">
-          <router-link to="/">
-            <label>Set Default Send Time</label>
-            <div class="item-details text-xs pt-1">
-              213 subscribers | 35% opens | 60% clicks
-            </div>
-          </router-link>
-        </li>
-        <li class="flex text-left px-4 py-4">
-          <router-link to="/">
-            <label>Marketing</label>
-            <div class="item-details text-xs pt-1">
-              153 subscribers | 35% opens | 60% clicks
+              {{ stat.subscriberCount }} subscribers | {{ stat.openPercent }}% opens | {{ stat.clickPercent }}% clicks
             </div>
           </router-link>
         </li>
@@ -43,7 +27,7 @@ export default {
     }
   },
   mounted() {
-    //this.getStats()
+    this.getStats()
   },
   methods: {
     getStats() {

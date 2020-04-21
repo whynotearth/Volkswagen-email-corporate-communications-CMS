@@ -5,7 +5,9 @@ import PostAdd from '../views/PostAdd.vue';
 import AuthLogin from '../views/AuthLogin.vue';
 import MemoAdd from '../views/MemoAdd.vue';
 import Settings from '../views/Settings';
+import EmailCampaign from '../views/EmailCampaign';
 import EmailList from '../views/EmailList';
+import EmailMarketing from '../views/EmailMarketing';
 import store from '../store';
 
 Vue.use(VueRouter);
@@ -48,14 +50,29 @@ const routes = [
     }
   },
   {
+    path: '/email/campaign',
+    name: 'EmailCampaign',
+    component: EmailCampaign,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
     path: '/email/list',
     name: 'EmailList',
     component: EmailList,
     meta: {
       requiresAuth: true
     }
-  }
-];
+  },
+  {
+    path: '/email/marketing',
+    name: 'EmailMarketing',
+    component: EmailMarketing,
+    meta: {
+      requiresAuth: true
+    }
+  }];
 
 const router = new VueRouter({
   mode: 'history',

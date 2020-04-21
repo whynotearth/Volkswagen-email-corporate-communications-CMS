@@ -8,7 +8,7 @@ export default {
   },
   mutations: {
     update(state, payload) {
-      Vue.set(state.stats, payload.data);
+      state.stats = payload.data;
     }
   },
   actions: {
@@ -23,7 +23,7 @@ export default {
   },
   getters: {
     getStats: state => {
-      return state.stats || [];
+      return state.stats || {};
     }
   }
 };
