@@ -7,7 +7,7 @@ import MemoAdd from '../views/MemoAdd.vue';
 import Settings from '../views/Settings';
 import EmailCampaign from '../views/EmailCampaign';
 import EmailList from '../views/EmailList';
-import EmailMarketing from '../views/EmailMarketing';
+import EmailListGroup from '../views/EmailListGroup';
 import store from '../store';
 
 Vue.use(VueRouter);
@@ -66,13 +66,14 @@ const routes = [
     }
   },
   {
-    path: '/email/marketing',
-    name: 'EmailMarketing',
-    component: EmailMarketing,
+    path: '/email/group',
+    name: 'EmailListGroup',
+    component: EmailListGroup,
     meta: {
       requiresAuth: true
     }
-  }];
+  }
+];
 
 const router = new VueRouter({
   mode: 'history',
