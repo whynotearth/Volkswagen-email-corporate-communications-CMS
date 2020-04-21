@@ -1,5 +1,5 @@
 <template>
-  <div class="">
+  <div>
     <AppBarHeader :title="'Email Campaign'" :to-link="'/settings'" />
     <div class="flex items-strech items-center shadow-sm px-4 py-3">
       <router-link

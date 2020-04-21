@@ -8,6 +8,8 @@ import Settings from '../views/Settings';
 import EmailCampaign from '../views/EmailCampaign';
 import EmailList from '../views/EmailList';
 import EmailListGroup from '../views/EmailListGroup';
+import EmailAdd from '../views/EmailAdd';
+import EmailEdit from '../views/EmailEdit';
 import store from '../store';
 
 Vue.use(VueRouter);
@@ -69,6 +71,22 @@ const routes = [
     path: '/email/group',
     name: 'EmailListGroup',
     component: EmailListGroup,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/email/add',
+    name: 'EmailAdd',
+    component: EmailAdd,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/email/edit',
+    name: 'EmailEdit',
+    component: EmailEdit,
     meta: {
       requiresAuth: true
     }

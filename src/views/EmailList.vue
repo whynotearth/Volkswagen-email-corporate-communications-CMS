@@ -1,6 +1,10 @@
 <template>
   <div class="">
-    <AppBarHeader :title="'Email List'" :to-link="'/'" :action="{ link: '/email/campaign', label: 'Add New' }" />
+    <AppBarHeader
+      :title="'Email List'"
+      :to-link="'/email/campaign'"
+      :action="{ link: '/email/campaign', label: 'Add New' }"
+    />
     <div class="flex">
       <ul class="w-full pt-4">
         <li

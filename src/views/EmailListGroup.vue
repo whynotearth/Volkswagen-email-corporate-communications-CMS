@@ -1,6 +1,6 @@
 <template>
   <div class="">
-    <AppBarHeader :title="titleHeader" :to-link="'/'" :action="{ link: '/email/list', label: 'Add New' }" />
+    <AppBarHeader :title="titleHeader" :to-link="'/email/list'" :action="{ link: '/email/add', label: 'Add New' }" />
     <div class="flex">
       <ul class="w-full pt-4">
         <li v-for="item in recipients" :key="item.id" class="flex text-left px-4 py-4">
@@ -22,21 +22,21 @@ export default {
   name: 'Marketing',
   components: { AppBarHeader },
   computed: {
-    recipients () {
-      return this.$store.getters['distributionGroup/getRecipients']
+    recipients() {
+      return this.$store.getters['distributionGroup/getRecipients'];
     },
-    selectedStat () {
-      return this.$store.getters['distributionGroup/selectedStat']
+    selectedStat() {
+      return this.$store.getters['distributionGroup/selectedStat'];
     },
-    titleHeader () {
-      return (this.selectedStat && this.selectedStat.distributionGroup) || ''
+    titleHeader() {
+      return (this.selectedStat && this.selectedStat.distributionGroup) || '';
     }
   },
-  mounted () {
+  mounted() {
     this.getEmailListGroup();
   },
   methods: {
-    getEmailListGroup () {
+    getEmailListGroup() {
       this.$store.dispatch('distributionGroup/getRecipients', this.selectedStat.distributionGroup);
     }
   }

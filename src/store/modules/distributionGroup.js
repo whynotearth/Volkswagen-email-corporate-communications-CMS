@@ -6,7 +6,8 @@ export default {
   state: {
     stats: [],
     selectedStat: {},
-    recipients: []
+    recipients: [],
+    email: ''
   },
   mutations: {
     updateStats(state, payload) {
@@ -16,7 +17,10 @@ export default {
       state.selectedStat = payload;
     },
     updateRecipients(state, payload) {
-      state.recipients = payload.data
+      state.recipients = payload.data;
+    },
+    updateEmail(state, payload) {
+      state.email = payload;
     }
   },
   actions: {
@@ -31,9 +35,26 @@ export default {
     async getRecipients(context, groupName) {
       try {
         const data = await DistributionGroupService.recipients({ distributionGroupName: groupName });
-        context.commit('updateRecipients', { data })
+        context.commit('updateRecipients', { data });
       } catch (error) {
         return new Error('get recipients issue');
+      }
+    },
+    async addRecipient(context, groupName, options) {
+      try {
+        const data = await DistributionGroupService.recipients1({ distributionGroupName: groupName }, options);
+      } catch (error) {
+        return new Error('add recipient issue');
+      }
+    },
+    async updateRecipient(content, group, options) {
+      try {
+        const data = await DistributionGroupService.recipients2(
+          { distributionGroupName: group.name, recipientId: group.id },
+          options
+        );
+      } catch (error) {
+        return new Error('put recipient issue');
       }
     }
   },
@@ -45,7 +66,10 @@ export default {
       return state.selectedStat;
     },
     getRecipients: state => {
-      return state.recipients
+      return state.recipients;
+    },
+    email: state => {
+      return state.email;
     }
   }
 };
