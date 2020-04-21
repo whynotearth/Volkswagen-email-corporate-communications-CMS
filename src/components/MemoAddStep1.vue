@@ -16,7 +16,7 @@
         <Multiselect
           id="memoadd-step1-recipients"
           v-model="recipients"
-          placeholder="To:"
+          :placeholder="recipients.length === 0 ? 'To:' : ''"
           :options="get_recipients_available"
           :multiple="true"
           :hide-selected="true"

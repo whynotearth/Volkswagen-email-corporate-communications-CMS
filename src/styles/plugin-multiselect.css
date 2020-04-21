@@ -1,5 +1,6 @@
 .multiselect__content-wrapper {
-  box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.2), 0px 3px 14px rgba(0, 0, 0, 0.12), 0px 8px 10px rgba(0, 0, 0, 0.14);
+  box-shadow: 0 4px 5px rgba(0, 0, 0, 0.2), 0 3px 14px rgba(0, 0, 0, 0.12), 0 8px 10px rgba(0, 0, 0, 0.14);
+
   @apply border-0 rounded-t-none rounded-b;
 }
 
@@ -9,58 +10,84 @@
 
 .multiselect__tags {
   border-color: inherit;
+
   @apply rounded px-4;
+
   font-size: 12px;
   line-height: 16px;
   min-height: 50px;
 }
+
 .multiselect__select {
   height: 48px;
+  z-index: 1;
 }
+
 .multiselect__input,
 .multiselect__single {
   margin-bottom: 0;
+
   @apply text-base leading-7 px-0;
+
   padding-top: 2px;
 }
+
 .multiselect__tag {
   @apply bg-white border rounded-full text-black pr-8 py-2;
+
   border-color: rgba(0, 0, 0, 0.12);
 }
-.multiselect__placeholder {
-  margin-bottom: 0;
-  @apply text-base leading-7;
-}
+
 .multiselect__tag-icon {
   height: 22px;
   display: block;
   margin-top: 3px;
   margin-right: 3px;
   transition: none;
+
+  &::after {
+    @apply text-primary;
+  }
 }
+
 .multiselect__tag-icon:focus,
 .multiselect__tag-icon:hover {
   @apply bg-white rounded-full text-black;
+
   background: rgba(0, 0, 0, 0.38);
   transition: none;
 }
-.multiselect__tag-icon:focus:after,
-.multiselect__tag-icon:hover:after {
+
+.multiselect__tag-icon:focus::after,
+.multiselect__tag-icon:hover::after {
   @apply text-white;
+
   transition: none;
 }
+
 .multiselect__option--highlight {
   @apply bg-secondary-012;
   @apply text-black;
 }
 
-
 .multiselect--material-label {
-    font-size: inherit;
-    transform: translateY(-0.7rem) translateX(0.75rem) scale(0.75);
-    transform-origin: left;
-    will-change: transform opacity;
-    color: inherit;
-    padding: 0 5px;
-    @apply inline-block z-100 relative bg-inherit rounded-full ;
+  font-size: inherit;
+  transform: translateY(-0.7rem) translateX(0.75rem) scale(0.75);
+  transform-origin: left;
+  will-change: transform opacity;
+  color: inherit;
+  padding: 0 5px;
+
+  @apply inline-block z-100 relative bg-inherit rounded-full;
+}
+
+.multiselect__input {
+  width: auto !important;
+  max-width: 150px;
+  background: none;
+  padding-top: 2px !important;
+}
+
+.multiselect__placeholder {
+  display: none;
 }
