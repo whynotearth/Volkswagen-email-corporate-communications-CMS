@@ -1,5 +1,5 @@
 .multiselect__content-wrapper {
-  box-shadow: 0 4px 5px rgba(0, 0, 0, 0.2), 0 3px 14px rgba(0, 0, 0, 0.12), 0 8px 10px rgba(0, 0, 0, 0.14);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.24), 0 2px 8px rgba(0, 0, 0, 0.12);
 
   @apply border-0 rounded-t-none rounded-b;
 }
