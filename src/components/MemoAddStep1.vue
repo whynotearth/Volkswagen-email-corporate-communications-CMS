@@ -4,7 +4,11 @@
       <div
         class="mb-4 bg-white relative"
         :class="[
-          { filled: recipients.length > 0, error: recipientsIsDirthy && recipients.length === 0 },
+          {
+            'is-query-empty': to_query === '',
+            'is-filled': recipients.length > 0,
+            error: recipientsIsDirthy && recipients.length === 0
+          },
           recipientsIsDirthy && recipients.length === 0
             ? 'text-red-600 border-red-600'
             : 'text-gray-500 border-gray-600'
@@ -22,6 +26,7 @@
           :hide-selected="true"
           :show-labels="false"
           @close="recipientsIsDirthy = true"
+          @search-change="onToSearchChange"
         >
           <template v-slot:noResult>Nothing found</template>
           <template v-slot:noOptions>No options available</template>
@@ -96,7 +101,8 @@ export default {
   components: { BaseInputText, BaseInputTextarea, Multiselect },
   data: () => ({
     // TODO: refactor, use vuelidate
-    recipientsIsDirthy: false
+    recipientsIsDirthy: false,
+    to_query: ''
   }),
   props: {
     error: {
@@ -167,7 +173,10 @@ export default {
   },
   methods: {
     ...mapMutations('memo', ['update_to', 'update_description', 'update_date', 'update_subject', 'update_recipients']),
-    ...mapActions('recipient', ['fetch_recipients'])
+    ...mapActions('recipient', ['fetch_recipients']),
+    onToSearchChange(query) {
+      this.to_query = query;
+    }
   },
   mounted() {
     this.fetch_recipients();

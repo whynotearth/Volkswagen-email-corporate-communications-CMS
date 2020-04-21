@@ -91,3 +91,9 @@
 .multiselect__placeholder {
   display: none;
 }
+
+.is-query-empty {
+  .multiselect__content-wrapper {
+    display: none;
+  }
+}
