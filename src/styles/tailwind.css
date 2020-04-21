@@ -1,7 +1,12 @@
 @tailwind base;
+
 @import './base.css';
+
 @tailwind components;
 @tailwind utilities;
 
+@import './emphasis.css';
+@import './typography.css';
+@import './elevation.css';
 @import './animations.css';
 @import './plugin-multiselect.css';

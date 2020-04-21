@@ -2,6 +2,7 @@ const autoprefixer = require('autoprefixer');
 const tailwindcss = require('tailwindcss');
 const postcssNested = require('postcss-nested');
 const postcssPurgecss = require('@fullhuman/postcss-purgecss');
+const pxtorem = require('postcss-pxtorem');
 
 const purgecss = postcssPurgecss({
   content: ['./public/**/*.html', './src/**/*.vue'],
@@ -16,7 +17,13 @@ const purgecss = postcssPurgecss({
   ]
 });
 
+// https://www.npmjs.com/package/postcss-pxtorem
+var pxtoremOptions = {
+  replace: false,
+  rootValue: 16
+};
+
 module.exports = {
-  plugins: [tailwindcss, postcssNested, autoprefixer]
+  plugins: [tailwindcss, postcssNested, pxtorem(pxtoremOptions), autoprefixer]
   // , ...(process.env.NODE_ENV === 'production' ? [purgecss] : [])
 };
