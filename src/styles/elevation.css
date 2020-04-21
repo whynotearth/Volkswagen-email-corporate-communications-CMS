@@ -1,0 +1,43 @@
+.elevation-0 {
+  box-shadow: none;
+}
+
+.elevation-1 {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2), 0 2px 2px rgba(0, 0, 0, 0.12), 0 0 2px rgba(0, 0, 0, 0.14);
+}
+
+.elevation-2 {
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2), 0 3px 4px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.14);
+}
+
+.elevation-3 {
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.2), 0 3px 4px rgba(0, 0, 0, 0.12), 0 3px 3px rgba(0, 0, 0, 0.14);
+}
+
+.elevation-4 {
+  box-shadow: 0 1px 10px rgba(0, 0, 0, 0.2), 0 4px 5px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.14);
+}
+
+.elevation-6 {
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2), 0 1px 18px rgba(0, 0, 0, 0.12), 0 6px 10px rgba(0, 0, 0, 0.14);
+}
+
+.elevation-8 {
+  box-shadow: 0 4px 5px rgba(0, 0, 0, 0.2), 0 3px 14px rgba(0, 0, 0, 0.12), 0 8px 10px rgba(0, 0, 0, 0.14);
+}
+
+.elevation-9 {
+  box-shadow: 0 5px 6px rgba(0, 0, 0, 0.2), 0 3px 16px rgba(0, 0, 0, 0.12), 0 9px 12px rgba(0, 0, 0, 0.14);
+}
+
+.elevation-12 {
+  box-shadow: 0 7px 8px rgba(0, 0, 0, 0.2), 0 5px 22px rgba(0, 0, 0, 0.12), 0 12px 17px rgba(0, 0, 0, 0.14);
+}
+
+.elevation-16 {
+  box-shadow: 0 8px 10px rgba(0, 0, 0, 0.2), 0 6px 30px rgba(0, 0, 0, 0.12), 0 16px 24px rgba(0, 0, 0, 0.14);
+}
+
+.elevation-24 {
+  box-shadow: 0 11px 15px rgba(0, 0, 0, 0.2), 0 9px 46px rgba(0, 0, 0, 0.12), 0 24px 38px rgba(0, 0, 0, 0.14);
+}
