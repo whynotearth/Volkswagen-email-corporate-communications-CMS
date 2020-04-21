@@ -1,10 +1,8 @@
 # Volkswagen email corporate communications CMS
 
-## Branches
+## Contribution
 
-`staging` is our development branch  
-`master` is live production branch  
-For creating new PRs, please select `staging` as the target branch (except hotfix's).
+Please read our [contribution guide](https://github.com/whynotearth/Volkswagen-email-corporate-communications-CMS/wiki/Contribution-guide-for-frontend-developers) and [join discord channel](https://discord.gg/hkQr3q)
 
 ## Project setup
 ```
