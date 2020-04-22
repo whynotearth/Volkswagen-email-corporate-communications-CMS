@@ -10,15 +10,13 @@
         <li
           v-for="stat in stats"
           v-bind:key="stat.distributionGroup"
-          class="flex text-left px-4 py-4"
+          class="flex flex-wrap text-left px-4 py-4"
           @click="selectStat(stat)"
         >
-          <router-link to="/email/group">
-            <div>{{ stat.distributionGroup }}</div>
-            <div class="item-details text-xs pt-1">
-              {{ stat.subscriberCount }} subscribers | {{ stat.openPercent }}% opens | {{ stat.clickPercent }}% clicks
-            </div>
-          </router-link>
+          <div class="w-full">{{ stat.distributionGroup }}</div>
+          <div class="w-full item-details text-xs pt-1">
+            {{ stat.subscriberCount }} subscribers | {{ stat.openPercent }}% opens | {{ stat.clickPercent }}% clicks
+          </div>
         </li>
       </ul>
     </div>
@@ -44,6 +42,7 @@ export default {
     },
     selectStat(payload) {
       this.$store.commit('distributionGroup/selectStat', payload);
+      this.$router.push({ name: 'EmailListGroup' });
     }
   }
 };

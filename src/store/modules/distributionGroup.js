@@ -7,6 +7,7 @@ export default {
     stats: [],
     selectedStat: {},
     recipients: [],
+    selectedEmail: {},
     email: ''
   },
   mutations: {
@@ -18,6 +19,9 @@ export default {
     },
     updateRecipients(state, payload) {
       state.recipients = payload.data;
+    },
+    selectEmail(state, payload) {
+      state.selectedEmail = payload;
     },
     updateEmail(state, payload) {
       state.email = payload;
@@ -32,30 +36,58 @@ export default {
         return new Error('get stats issue');
       }
     },
-    async getRecipients(context, groupName) {
+    async getRecipients(context) {
       try {
-        const data = await DistributionGroupService.recipients({ distributionGroupName: groupName });
+        const data = await DistributionGroupService.recipients({
+          distributionGroupName: context.state.selectedStat.distributionGroup
+        });
         context.commit('updateRecipients', { data });
       } catch (error) {
         return new Error('get recipients issue');
       }
     },
-    async addRecipient(context, groupName, options) {
-      try {
-        const data = await DistributionGroupService.recipients1({ distributionGroupName: groupName }, options);
-      } catch (error) {
-        return new Error('add recipient issue');
-      }
+    addEmail(context) {
+      return new Promise((resolve, reject) => {
+        DistributionGroupService.recipients1({
+          distributionGroupName: context.state.selectedStat.distributionGroup,
+          body: { email: context.state.email }
+        })
+          .then(data => {
+            resolve();
+          })
+          .catch(error => {
+            reject(error);
+          });
+      });
     },
-    async updateRecipient(content, group, options) {
-      try {
-        const data = await DistributionGroupService.recipients2(
-          { distributionGroupName: group.name, recipientId: group.id },
-          options
-        );
-      } catch (error) {
-        return new Error('put recipient issue');
-      }
+    editEmail(context) {
+      return new Promise((resolve, reject) => {
+        DistributionGroupService.recipients2({
+          distributionGroupName: context.state.selectedStat.distributionGroup,
+          recipientId: context.state.selectedEmail.id,
+          body: { email: context.state.email }
+        })
+          .then(data => {
+            resolve();
+          })
+          .catch(error => {
+            reject(error);
+          });
+      });
+    },
+    deleteEmail(context) {
+      return new Promise((resolve, reject) => {
+        DistributionGroupService.recipients3({
+          distributionGroupName: context.state.selectedStat.distributionGroup,
+          recipientId: context.state.selectedEmail.id
+        })
+          .then(data => {
+            resolve();
+          })
+          .catch(error => {
+            reject(error);
+          });
+      });
     }
   },
   getters: {
@@ -67,6 +99,9 @@ export default {
     },
     getRecipients: state => {
       return state.recipients;
+    },
+    selectedEmail: state => {
+      return state.selectedEmail;
     },
     email: state => {
       return state.email;

@@ -10,6 +10,7 @@ import EmailList from '../views/EmailList';
 import EmailListGroup from '../views/EmailListGroup';
 import EmailAdd from '../views/EmailAdd';
 import EmailEdit from '../views/EmailEdit';
+import EmailSelect from '../views/EmailSelect';
 import store from '../store';
 
 Vue.use(VueRouter);
@@ -87,6 +88,14 @@ const routes = [
     path: '/email/edit',
     name: 'EmailEdit',
     component: EmailEdit,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/email/select',
+    name: 'EmailSelect',
+    component: EmailSelect,
     meta: {
       requiresAuth: true
     }
