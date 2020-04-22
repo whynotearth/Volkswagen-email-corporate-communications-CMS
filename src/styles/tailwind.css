@@ -6,6 +6,5 @@
 @tailwind utilities;
 
 @import './typography.css';
-@import './elevation.css';
 @import './animations.css';
 @import './plugin-multiselect.css';
