@@ -1,20 +1,23 @@
 <template>
   <div
-    class="border base-input-text relative rounded"
-    :class="[
-      { 'is-focused': isFocused, 'is-filled': value.length > 0, 'has-icon-before': $slots.iconBefore },
-      error
-        ? 'border-red-600 focus:border-red-600 active:border-red-600'
-        : 'border-gray-600 focus:border-gray-500 active:border-gray-500'
-    ]"
+    class="base-input-text relative rounded"
+    :class="[{ 'is-focused': isFocused, 'is-filled': value.length > 0, 'has-icon-before': $slots.iconBefore }]"
   >
-    <div class="flex">
+    <div
+      class="flex rounded"
+      :class="[
+        hasBorder ? 'border' : '',
+        error
+          ? 'border-red-600 focus:border-red-600 active:border-red-600'
+          : 'border-gray-600 focus:border-gray-500 active:border-gray-500'
+      ]"
+    >
       <div v-if="$slots.iconBefore" class="flex items-center pl-4">
         <slot name="iconBefore" />
       </div>
       <div class="flex-grow">
         <input
-          class="input appearance-none outline-none relative bg-transparent w-full px-4 py-3 focus:shadow-md border-none active:shadow-md"
+          class="input appearance-none outline-none relative bg-transparent w-full px-4 py-3 border-none"
           :id="idName"
           :type="type"
           :value="value"
@@ -22,9 +25,10 @@
           @focus="onFocus"
           :placeholder="placeholder || label"
         />
-        <slot></slot>
       </div>
     </div>
+
+    <slot></slot>
 
     <label
       :for="idName"
@@ -63,6 +67,10 @@ export default {
     idName: {
       type: String,
       default: randomId
+    },
+    hasBorder: {
+      type: Boolean,
+      default: true
     }
   },
   data() {
@@ -91,9 +99,7 @@ export default {
 }
 
 .input {
-  transition: box-shadow 200ms ease-in-out;
   z-index: 2;
-
   &:focus::placeholder {
     color: transparent;
   }
