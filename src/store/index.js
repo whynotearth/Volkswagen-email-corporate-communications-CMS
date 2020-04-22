@@ -9,6 +9,7 @@ import post from './modules/post';
 import memo from './modules/memo';
 import overlay from './modules/overlay';
 import distributionGroup from './modules/distributionGroup';
+import recipient from './modules/recipient';
 import VuexPersistence from 'vuex-persist';
 
 const vuexLocal = new VuexPersistence({
@@ -30,6 +31,7 @@ export default new Vuex.Store({
     memo,
     authKeep,
     distributionGroup,
-    overlay
+    overlay,
+    recipient
   }
 });

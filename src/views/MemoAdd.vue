@@ -33,13 +33,13 @@ export default {
     validationError: false
   }),
   computed: {
-    ...mapGetters('memo', ['get_to', 'get_subject', 'get_date', 'get_description']),
+    ...mapGetters('memo', ['get_to', 'get_subject', 'get_date', 'get_description', 'get_recipients']),
     currentStep() {
       return parseInt(this.step);
     }
   },
   methods: {
-    ...mapActions('memo', ['memo']),
+    ...mapActions('memo', ['memos']),
     ...mapMutations('memo', ['update_response_message']),
     parseInt,
     changeStep(change) {
@@ -75,10 +75,11 @@ export default {
           date: this.get_date,
           description: this.get_description,
           to: this.get_to,
-          subject: this.get_subject
+          subject: this.get_subject,
+          distributionGroup: this.get_recipients.join(',')
         }
       };
-      this.memo({ params })
+      this.memos({ params })
         .then(() => {
           this.$store.dispatch('memo/clear_form_data');
           this.onSuccessSubmit();

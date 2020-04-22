@@ -91,6 +91,11 @@ const customUtils = plugin(function({ addUtilities, theme, variants }) {
   };
 
   const backgroundUtils = {
+    // custom rgba background colors
+    '.bg-secondary-012': {
+      backgroundColor: `${hexToRGBA(theme('colors.secondary'), 0.12)}`
+    },
+
     '.bg-inherit': {
       background: 'inherit'
     },
@@ -121,3 +126,19 @@ const customUtils = plugin(function({ addUtilities, theme, variants }) {
 });
 
 module.exports = [customUtils];
+
+// convert hex to rgba
+function hexToRGBA(hex, alpha) {
+  if (hex.length === 4) {
+    throw new Error(hex + ' <=== dont use 3 digit hex colors');
+  }
+  var r = parseInt(hex.slice(1, 3), 16),
+    g = parseInt(hex.slice(3, 5), 16),
+    b = parseInt(hex.slice(5, 7), 16);
+
+  if (alpha) {
+    return 'rgba(' + r + ', ' + g + ', ' + b + ', ' + alpha + ')';
+  } else {
+    return 'rgb(' + r + ', ' + g + ', ' + b + ')';
+  }
+}

@@ -1,8 +1,14 @@
 import { MemoService } from '@whynotearth/meredith-axios';
 import Vue from 'vue';
-// import { companySlug } from '@/constants/app';
+import { cloneDeep } from 'lodash-es';
 
-const defaultMemoFormData = {};
+const defaultMemoFormData = {
+  to: '',
+  subject: '',
+  description: '',
+  date: '',
+  recipients: []
+};
 
 export default {
   namespaced: true,
@@ -11,7 +17,8 @@ export default {
       to: '',
       subject: '',
       description: '',
-      date: ''
+      date: '',
+      recipients: []
     },
     response_message: {
       type: '', // error, success
@@ -35,17 +42,19 @@ export default {
     update_date(state, payload) {
       Vue.set(state.form_data, 'date', payload);
     },
+    update_recipients(state, payload) {
+      Vue.set(state.form_data, 'recipients', payload);
+    },
     update_form_data(state, payload) {
       Vue.set(state, 'form_data', payload);
     }
   },
   actions: {
     clear_form_data(context) {
-      context.commit('update_form_data', { ...defaultMemoFormData });
-      console.log('defaultMemoFormData', defaultMemoFormData);
+      context.commit('update_form_data', cloneDeep(defaultMemoFormData));
     },
-    async memo(context, payload) {
-      await MemoService.memo(payload.params);
+    async memos(context, payload) {
+      await MemoService.memos(payload.params);
     }
   },
   getters: {
@@ -53,6 +62,7 @@ export default {
     get_subject: state => state.form_data.subject,
     get_description: state => state.form_data.description,
     get_date: state => state.form_data.date,
+    get_recipients: state => state.form_data.recipients,
     get_response_message: state => state.response_message
   }
 };
