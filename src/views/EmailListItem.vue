@@ -1,6 +1,6 @@
 <template>
   <div class="">
-    <BaseAppBarHeader title="Email" :to-link="'/setting/email-list'">
+    <BaseAppBarHeader title="Email" :to-link="backLink">
       <div class="flex-grow inline-block text-right">
         <img
           class="float-right w-5"
@@ -9,7 +9,7 @@
         />
         <ul v-if="isMenu" class="w-1/3 menu shadow-md">
           <li class="px-2 py-3">
-            <router-link :to="`edit/${selectedEmail.id}`">Edit</router-link>
+            <router-link class="block w-full" :to="`${selectedEmail.id}/edit`">Edit</router-link>
           </li>
           <li class="px-2 py-3" @click="deleteEmail()">Delete</li>
         </ul>
@@ -40,7 +40,10 @@ export default {
     };
   },
   computed: {
-    ...mapGetters('distributionGroup', ['selectedEmail'])
+    ...mapGetters('distributionGroup', ['selectedEmail']),
+    backLink() {
+      return `/settings/email-lists/${this.$route.params.groupName}`;
+    }
   },
   methods: {
     toggleMenu() {

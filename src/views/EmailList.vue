@@ -3,7 +3,7 @@
     <BaseAppBarHeader
       :title="titleHeader"
       :to-link="'/settings/email-lists'"
-      :action="{ link: '/settings/email-list/add', label: 'Add New' }"
+      :action="{ link: `${$route.params.groupName}/add`, label: 'Add New' }"
     />
     <div class="flex">
       <ul class="w-full pt-4">
@@ -32,21 +32,28 @@ export default {
   computed: {
     ...mapGetters('distributionGroup', ['getEmails', 'selectedEmailList']),
     titleHeader() {
-      return (this.selectedEmailList && this.selectedEmailList.distributionGroup) || '';
+      return (this.selectedEmailList && this.selectedEmailList.distributionGroup) || this.$route.params.groupName || '';
     }
   },
   mounted() {
-    this.getEmailListGroup();
+    this.getEmailList();
+  },
+  destroyed() {
+    this.updateEmails([]);
   },
   methods: {
-    ...mapMutations('distributionGroup', ['selectEmail']),
-    getEmailListGroup() {
-      this.$store.dispatch('distributionGroup/getEmails');
+    ...mapMutations('distributionGroup', ['selectEmail', 'updateEmails']),
+    getEmailList() {
+      this.$store.dispatch('distributionGroup/getEmails', this.$route.params.groupName);
     },
     choiceEmail(payload) {
       this.selectEmail(payload);
       this.$router.push({
-        name: 'EmailListItem'
+        name: 'EmailListItem',
+        params: {
+          groupName: this.$route.params.groupName,
+          id: payload.id
+        }
       });
     }
   }

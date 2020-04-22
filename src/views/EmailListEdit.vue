@@ -2,7 +2,7 @@
   <div>
     <BaseAppBarHeader
       :title="'Email Add'"
-      :to-link="'/settings/email-list'"
+      :to-link="`/settings/email-lists/${$route.params.groupName}`"
       :action="{ label: 'Finish', link: '', method: 'editEmail' }"
       @editEmail="editEmail"
     />
@@ -34,9 +34,10 @@ import isEmail from 'validator/lib/isEmail';
 import BaseInputText from '@/components/BaseInputText.vue';
 import { required, email } from 'vuelidate/lib/validators';
 import BaseAppBarHeader from '@/components/BaseAppBarHeader.vue';
+import { mapGetters, mapMutations, mapActions } from 'vuex';
 
 export default {
-  name: 'EmailListEmailEdit',
+  name: 'EmailListEdit',
   components: { BaseInputText, BaseAppBarHeader },
   validations: {
     email: {
@@ -50,11 +51,12 @@ export default {
         return this.$store.getters['distributionGroup/selectedEmail'].email;
       },
       set(value) {
-        this.$store.commit('distributionGroup/updateEmail', value);
+        this.updateEmail(value);
       }
     }
   },
   methods: {
+    ...mapMutations('distributionGroup', ['updateEmail']),
     editEmail() {
       this.$store.dispatch('distributionGroup/editEmail').then(() => {
         this.$router.push({ name: 'EmailLists' });

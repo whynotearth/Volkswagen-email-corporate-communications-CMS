@@ -31,21 +31,24 @@ export default {
   components: { BaseAppBarHeader },
   computed: {
     emailList() {
-      return this.$store.getters['distributionGroup/getEmailList'];
+      return this.$store.getters['distributionGroup/getEmailLists'];
     }
   },
   mounted() {
     this.init();
   },
+  destroyed() {
+    this.updateEmailLists([]);
+  },
   methods: {
-    ...mapActions('distributionGroup', ['getEmailList']),
-    ...mapMutations('distributionGroup', ['selectEmailList']),
+    ...mapActions('distributionGroup', ['getEmailLists']),
+    ...mapMutations('distributionGroup', ['selectEmailList', 'updateEmailLists']),
     init() {
-      this.getEmailList();
+      this.getEmailLists();
     },
     choiceEmailList(payload) {
       this.selectEmailList(payload);
-      this.$router.push({ name: 'EmailList' });
+      this.$router.push({ name: 'EmailList', params: { groupName: payload.distributionGroup } });
     }
   }
 };

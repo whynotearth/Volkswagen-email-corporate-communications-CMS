@@ -69,7 +69,7 @@ const routes = [
     }
   },
   {
-    path: '/settings/email-list',
+    path: '/settings/email-lists/:groupName',
     name: 'EmailList',
     component: EmailList,
     meta: {
@@ -77,7 +77,7 @@ const routes = [
     }
   },
   {
-    path: '/settings/email-list/add',
+    path: '/settings/email-lists/:groupName/add',
     name: 'EmailListAdd',
     component: EmailListAdd,
     meta: {
@@ -85,7 +85,7 @@ const routes = [
     }
   },
   {
-    path: '/settings/email-list/edit/:id',
+    path: '/settings/email-lists/:groupName/:id/edit',
     name: 'EmailListEdit',
     component: EmailListEdit,
     meta: {
@@ -93,7 +93,7 @@ const routes = [
     }
   },
   {
-    path: '/settings/email-list/select',
+    path: '/settings/email-lists/:groupName/:id',
     name: 'EmailListItem',
     component: EmailListItem,
     meta: {

@@ -4,15 +4,15 @@ import Vue from 'vue';
 export default {
   namespaced: true,
   state: {
-    emailList: [],
+    emailLists: [],
     selectedEmailList: {},
     emails: [],
     selectedEmail: {},
     email: ''
   },
   mutations: {
-    updateEmailList(state, payload) {
-      state.emailList = payload.data;
+    updateEmailLists(state, payload) {
+      state.emailLists = payload.data;
     },
     selectEmailList(state, payload) {
       state.selectedEmailList = payload;
@@ -28,18 +28,18 @@ export default {
     }
   },
   actions: {
-    async getEmailList(context) {
+    async getEmailLists(context) {
       try {
         const data = await DistributionGroupService.stats();
-        context.commit('updateEmailList', { data });
+        context.commit('updateEmailLists', { data });
       } catch (error) {
         return new Error('get stats issue');
       }
     },
-    async getEmails(context) {
+    async getEmails(context, groupName) {
       try {
         const data = await DistributionGroupService.recipients({
-          distributionGroupName: context.state.selectedEmailList.distributionGroup
+          distributionGroupName: context.state.selectedEmailList.distributionGroup || groupName
         });
         context.commit('updateEmails', { data });
       } catch (error) {
@@ -53,6 +53,7 @@ export default {
           body: { email: context.state.email }
         })
           .then(data => {
+            context.commit('updateEmail', '');
             resolve();
           })
           .catch(error => {
@@ -68,6 +69,7 @@ export default {
           body: { email: context.state.email }
         })
           .then(data => {
+            context.commit('updateEmail', '');
             resolve();
           })
           .catch(error => {
@@ -91,8 +93,8 @@ export default {
     }
   },
   getters: {
-    getEmailList: state => {
-      return state.emailList || [];
+    getEmailLists: state => {
+      return state.emailLists || [];
     },
     selectedEmailList: state => {
       return state.selectedEmailList;
