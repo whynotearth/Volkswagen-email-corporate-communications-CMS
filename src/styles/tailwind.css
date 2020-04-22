@@ -6,5 +6,4 @@
 @tailwind utilities;
 
 @import './typography.css';
-@import './elevation.css';
 @import './animations.css';
