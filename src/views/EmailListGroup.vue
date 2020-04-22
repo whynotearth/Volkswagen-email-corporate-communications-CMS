@@ -3,7 +3,12 @@
     <AppBarHeader :title="titleHeader" :to-link="'/email/list'" :action="{ link: '/email/add', label: 'Add New' }" />
     <div class="flex">
       <ul class="w-full pt-4">
-        <li v-for="item in recipients" :key="item.id" class="flex flex-wrap text-left px-4 py-4" @click="selectEmail(item)">
+        <li
+          v-for="item in recipients"
+          :key="item.id"
+          class="flex flex-wrap text-left px-4 py-4"
+          @click="selectEmail(item)"
+        >
           <div class="w-full">{{ item.email }}</div>
           <div class="w-full item-details text-xs pt-1">
             {{ item.creationDateTime }}

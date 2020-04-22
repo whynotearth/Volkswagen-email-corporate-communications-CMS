@@ -56,10 +56,9 @@ export default {
   },
   methods: {
     addEmail() {
-      this.$store.dispatch('distributionGroup/addEmail')
-        .then(() => {
-          this.$router.push({name: 'EmailList'})
-        });
+      this.$store.dispatch('distributionGroup/addEmail').then(() => {
+        this.$router.push({ name: 'EmailList' });
+      });
     }
   }
 };
