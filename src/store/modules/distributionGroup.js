@@ -4,21 +4,21 @@ import Vue from 'vue';
 export default {
   namespaced: true,
   state: {
-    stats: [],
-    selectedStat: {},
-    recipients: [],
+    emailList: [],
+    selectedEmailList: {},
+    emails: [],
     selectedEmail: {},
     email: ''
   },
   mutations: {
-    updateStats(state, payload) {
-      state.stats = payload.data;
+    updateEmailList(state, payload) {
+      state.emailList = payload.data;
     },
-    selectStat(state, payload) {
-      state.selectedStat = payload;
+    selectEmailList(state, payload) {
+      state.selectedEmailList = payload;
     },
-    updateRecipients(state, payload) {
-      state.recipients = payload.data;
+    updateEmails(state, payload) {
+      state.emails = payload.data;
     },
     selectEmail(state, payload) {
       state.selectedEmail = payload;
@@ -28,20 +28,20 @@ export default {
     }
   },
   actions: {
-    async getStats(context) {
+    async getEmailList(context) {
       try {
         const data = await DistributionGroupService.stats();
-        context.commit('updateStats', { data });
+        context.commit('updateEmailList', { data });
       } catch (error) {
         return new Error('get stats issue');
       }
     },
-    async getRecipients(context) {
+    async getEmails(context) {
       try {
         const data = await DistributionGroupService.recipients({
-          distributionGroupName: context.state.selectedStat.distributionGroup
+          distributionGroupName: context.state.selectedEmailList.distributionGroup
         });
-        context.commit('updateRecipients', { data });
+        context.commit('updateEmails', { data });
       } catch (error) {
         return new Error('get recipients issue');
       }
@@ -49,7 +49,7 @@ export default {
     addEmail(context) {
       return new Promise((resolve, reject) => {
         DistributionGroupService.recipients1({
-          distributionGroupName: context.state.selectedStat.distributionGroup,
+          distributionGroupName: context.state.selectedEmailList.distributionGroup,
           body: { email: context.state.email }
         })
           .then(data => {
@@ -63,7 +63,7 @@ export default {
     editEmail(context) {
       return new Promise((resolve, reject) => {
         DistributionGroupService.recipients2({
-          distributionGroupName: context.state.selectedStat.distributionGroup,
+          distributionGroupName: context.state.selectedEmailList.distributionGroup,
           recipientId: context.state.selectedEmail.id,
           body: { email: context.state.email }
         })
@@ -78,7 +78,7 @@ export default {
     deleteEmail(context) {
       return new Promise((resolve, reject) => {
         DistributionGroupService.recipients3({
-          distributionGroupName: context.state.selectedStat.distributionGroup,
+          distributionGroupName: context.state.selectedEmailList.distributionGroup,
           recipientId: context.state.selectedEmail.id
         })
           .then(data => {
@@ -91,14 +91,14 @@ export default {
     }
   },
   getters: {
-    getStats: state => {
-      return state.stats || [];
+    getEmailList: state => {
+      return state.emailList || [];
     },
-    selectedStat: state => {
-      return state.selectedStat;
+    selectedEmailList: state => {
+      return state.selectedEmailList;
     },
-    getRecipients: state => {
-      return state.recipients;
+    getEmails: state => {
+      return state.emails;
     },
     selectedEmail: state => {
       return state.selectedEmail;

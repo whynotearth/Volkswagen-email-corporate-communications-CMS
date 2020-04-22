@@ -1,6 +1,6 @@
 <template>
   <div class="">
-    <AppBarHeader title="Email" :to-link="'/email/group'">
+    <BaseAppBarHeader title="Email" :to-link="'/setting/email-list'">
       <div class="flex-grow inline-block text-right">
         <img
           class="float-right w-5"
@@ -9,12 +9,12 @@
         />
         <ul v-if="isMenu" class="w-1/3 menu shadow-md">
           <li class="px-2 py-3">
-            <router-link to="/email/edit">Edit</router-link>
+            <router-link :to="`edit/${selectedEmail.id}`">Edit</router-link>
           </li>
           <li class="px-2 py-3" @click="deleteEmail()">Delete</li>
         </ul>
       </div>
-    </AppBarHeader>
+    </BaseAppBarHeader>
     <div class="flex">
       <ul class="w-full pt-4 ">
         <li class="flex flex-wrap text-left px-4 py-4">
@@ -28,20 +28,19 @@
   </div>
 </template>
 <script>
-import AppBarHeader from '@/components/AppBarHeader.vue';
+import BaseAppBarHeader from '@/components/BaseAppBarHeader.vue';
+import { mapGetters } from 'vuex';
 
 export default {
-  name: 'EmailSelect',
-  components: { AppBarHeader },
+  name: 'EmailListItem',
+  components: { BaseAppBarHeader },
   data() {
     return {
       isMenu: false
     };
   },
   computed: {
-    selectedEmail() {
-      return this.$store.getters['distributionGroup/selectedEmail'];
-    }
+    ...mapGetters('distributionGroup', ['selectedEmail'])
   },
   methods: {
     toggleMenu() {
@@ -49,7 +48,7 @@ export default {
     },
     deleteEmail() {
       this.$store.dispatch('distributionGroup/deleteEmail').then(() => {
-        this.$router.push({ name: 'EmailList' });
+        this.$router.push({ name: 'EmailLists' });
       });
     }
   }

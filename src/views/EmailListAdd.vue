@@ -1,8 +1,8 @@
 <template>
   <div>
-    <AppBarHeader
+    <BaseAppBarHeader
       :title="'Email Add'"
-      :to-link="'/email/group'"
+      :to-link="'/settings/email-list'"
       :action="{ label: 'Finish', link: '', method: 'addEmail' }"
       @addEmail="addEmail"
     />
@@ -33,11 +33,11 @@ import store from '@/store';
 import isEmail from 'validator/lib/isEmail';
 import BaseInputText from '@/components/BaseInputText.vue';
 import { required, email } from 'vuelidate/lib/validators';
-import AppBarHeader from '@/components/AppBarHeader.vue';
+import BaseAppBarHeader from '@/components/BaseAppBarHeader.vue';
 
 export default {
-  name: 'EmailAdd',
-  components: { BaseInputText, AppBarHeader },
+  name: 'EmailListAdd',
+  components: { BaseInputText, BaseAppBarHeader },
   validations: {
     email: {
       required,
@@ -57,7 +57,7 @@ export default {
   methods: {
     addEmail() {
       this.$store.dispatch('distributionGroup/addEmail').then(() => {
-        this.$router.push({ name: 'EmailList' });
+        this.$router.push({ name: 'EmailLists' });
       });
     }
   }

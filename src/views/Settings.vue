@@ -1,10 +1,10 @@
 <template>
   <div>
-    <AppBarHeader :title="'Settings'" :to-link="'/'" />
+    <BaseAppBarHeader :title="'Settings'" :to-link="'/'" />
     <div class="flex items-strech items-center shadow-sm px-4 py-3">
       <router-link
         v-if="isAuthenticated"
-        to="/email/campaign"
+        to="settings/campaign"
         class="link-fordward block flex-grow justify-between flex h-full items-center font-semibold cursor-pointer select-none"
       >
         <span class="mr-2 settingsOptions">Email Settings</span>
@@ -81,11 +81,11 @@
 <script>
 import PageNavigation from '@/components/PageNavigation.vue';
 import AuthLogin from '@/components/AuthLogin';
-import AppBarHeader from '@/components/AppBarHeader.vue';
+import BaseAppBarHeader from '@/components/BaseAppBarHeader.vue';
 
 export default {
   name: 'SettingsPage',
-  components: { AppBarHeader },
+  components: { BaseAppBarHeader },
   computed: {
     isAuthenticated() {
       return this.$store.getters['auth/isAuthenticated'];

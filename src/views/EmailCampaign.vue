@@ -1,9 +1,9 @@
 <template>
   <div>
-    <AppBarHeader :title="'Email Campaign'" :to-link="'/settings'" />
+    <BaseAppBarHeader :title="'Email Campaign'" :to-link="'/settings'" />
     <div class="flex items-strech items-center shadow-sm px-4 py-3">
       <router-link
-        to="/email/list"
+        to="email-lists"
         class="link-fordward block flex-grow justify-between flex h-full items-center font-semibold cursor-pointer select-none"
       >
         <span class="mr-2 settingsOptions">Manage Email Lists</span>
@@ -26,7 +26,7 @@
     </div>
     <div class="flex items-strech items-center shadow-sm px-4 py-3">
       <router-link
-        to="/email/list"
+        to="/"
         class="link-fordward block flex-grow justify-between flex h-full items-center font-semibold cursor-pointer select-none"
       >
         <span class="mr-2 settingsOptions">Set Default Email Time</span>
@@ -50,11 +50,11 @@
   </div>
 </template>
 <script>
-import AppBarHeader from '@/components/AppBarHeader.vue';
+import BaseAppBarHeader from '@/components/BaseAppBarHeader.vue';
 
 export default {
   name: 'EmailCampaign',
-  components: { AppBarHeader }
+  components: { BaseAppBarHeader }
 };
 </script>
 

@@ -6,11 +6,11 @@ import AuthLogin from '../views/AuthLogin.vue';
 import MemoAdd from '../views/MemoAdd.vue';
 import Settings from '../views/Settings';
 import EmailCampaign from '../views/EmailCampaign';
+import EmailLists from '../views/EmailLists';
 import EmailList from '../views/EmailList';
-import EmailListGroup from '../views/EmailListGroup';
-import EmailAdd from '../views/EmailAdd';
-import EmailEdit from '../views/EmailEdit';
-import EmailSelect from '../views/EmailSelect';
+import EmailListAdd from '../views/EmailListAdd';
+import EmailListEdit from '../views/EmailListEdit';
+import EmailListItem from '../views/EmailListItem';
 import store from '../store';
 
 Vue.use(VueRouter);
@@ -53,7 +53,7 @@ const routes = [
     }
   },
   {
-    path: '/email/campaign',
+    path: '/settings/campaign',
     name: 'EmailCampaign',
     component: EmailCampaign,
     meta: {
@@ -61,7 +61,15 @@ const routes = [
     }
   },
   {
-    path: '/email/list',
+    path: '/settings/email-lists',
+    name: 'EmailLists',
+    component: EmailLists,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/settings/email-list',
     name: 'EmailList',
     component: EmailList,
     meta: {
@@ -69,33 +77,25 @@ const routes = [
     }
   },
   {
-    path: '/email/group',
-    name: 'EmailListGroup',
-    component: EmailListGroup,
+    path: '/settings/email-list/add',
+    name: 'EmailListAdd',
+    component: EmailListAdd,
     meta: {
       requiresAuth: true
     }
   },
   {
-    path: '/email/add',
-    name: 'EmailAdd',
-    component: EmailAdd,
+    path: '/settings/email-list/edit/:id',
+    name: 'EmailListEdit',
+    component: EmailListEdit,
     meta: {
       requiresAuth: true
     }
   },
   {
-    path: '/email/edit',
-    name: 'EmailEdit',
-    component: EmailEdit,
-    meta: {
-      requiresAuth: true
-    }
-  },
-  {
-    path: '/email/select',
-    name: 'EmailSelect',
-    component: EmailSelect,
+    path: '/settings/email-list/select',
+    name: 'EmailListItem',
+    component: EmailListItem,
     meta: {
       requiresAuth: true
     }
