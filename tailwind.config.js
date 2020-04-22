@@ -28,7 +28,8 @@ module.exports = {
         community: '#52AE31',
         people: '#01B1EC',
         oneteam: '#D9EFFF',
-        answers: '#EDEDED'
+        answers: '#EDEDED',
+        divider: 'rgba(0,0,0,0.12)'
       },
       spacing: {
         '0.5': '0.125rem',

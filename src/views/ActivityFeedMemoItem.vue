@@ -2,12 +2,19 @@
   <div>
     <!-- header -->
     <!-- search input -->
-    <!-- list of memos -->
+    <!-- memo item -->
+    <!-- tabs: opened/unread -->
+    <!-- list of emails -->
+
+    <BaseProgressBar :label="`Open rate: 22%`" :progress="22" />
   </div>
 </template>
 
 <script>
+import BaseProgressBar from '@/components/BaseProgressBar.vue';
+
 export default {
-  name: 'ActivityFeedMemoItem'
+  name: 'ActivityFeedMemoItem',
+  components: { BaseProgressBar }
 };
 </script>

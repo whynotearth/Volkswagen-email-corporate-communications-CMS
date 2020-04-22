@@ -103,6 +103,9 @@ const customUtils = plugin(function({ addUtilities, theme, variants }) {
       background: `radial-gradient(50% 49.2% at 0% 0.8%, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0) 100%), ${theme(
         'colors.primary'
       )}`
+    },
+    '.bg-brand-light-blue-gradient': {
+      background: 'linear-gradient(90deg, #0374F9 0%, #03B3F9 100%)'
     }
   };
 
