@@ -5,6 +5,8 @@ import PostAdd from '../views/PostAdd.vue';
 import AuthLogin from '../views/AuthLogin.vue';
 import MemoAdd from '../views/MemoAdd.vue';
 import Settings from '../views/Settings';
+import ActivityFeedMemoList from '../views/ActivityFeedMemoList.vue';
+import ActivityFeedMemoItem from '../views/ActivityFeedMemoItem.vue';
 import store from '../store';
 
 Vue.use(VueRouter);
@@ -42,6 +44,22 @@ const routes = [
     path: '/settings',
     name: 'Settings',
     component: Settings,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/activity-feed/memos',
+    name: 'ActivityFeedMemoList',
+    component: ActivityFeedMemoList,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/activity-feed/memos/:id',
+    name: 'ActivityFeedMemoItem',
+    component: ActivityFeedMemoItem,
     meta: {
       requiresAuth: true
     }
