@@ -1,7 +1,7 @@
 <template>
   <div class="">
     <BaseAppBarHeader
-      :title="'Email List'"
+      title="Email Lists"
       :to-link="'campaign'"
       :action="{ link: '/email/campaign', label: 'Add New' }"
     />
