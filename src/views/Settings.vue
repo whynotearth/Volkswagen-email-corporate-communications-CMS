@@ -1,7 +1,7 @@
 <template>
   <div>
     <BaseAppBarHeader :title="'Settings'" :to-link="'/'" />
-    <div class="flex items-strech items-center shadow-sm px-4 py-3">
+    <div class="flex items-strech items-center bb-1 px-4 pr-6 py-5">
       <router-link
         v-if="isAuthenticated"
         to="settings/campaign"
@@ -20,12 +20,12 @@
             fill-rule="evenodd"
             clip-rule="evenodd"
             d="M7.4 1.4L6 0L0 6L6 12L7.4 10.6L2.8 6L7.4 1.4Z"
-            fill="currentColor"
+            fill="rgba(0, 0, 0, 0.54)"
           />
         </svg>
       </router-link>
     </div>
-    <div class="flex items-strech items-center shadow-sm px-4 py-3">
+    <div class="flex items-strech items-center bb-1 px-4 pr-6 py-5">
       <router-link
         v-if="isAuthenticated"
         to="/"
@@ -44,12 +44,12 @@
             fill-rule="evenodd"
             clip-rule="evenodd"
             d="M7.4 1.4L6 0L0 6L6 12L7.4 10.6L2.8 6L7.4 1.4Z"
-            fill="currentColor"
+            fill="rgba(0, 0, 0, 0.54)"
           />
         </svg>
       </router-link>
     </div>
-    <div class="flex items-strech items-center shadow-sm px-4 py-3">
+    <div class="flex items-strech items-center bb-1 px-4 pr-6 py-5">
       <a
         v-if="isAuthenticated"
         @click.prevent="logout()"
@@ -70,7 +70,7 @@
             fill-rule="evenodd"
             clip-rule="evenodd"
             d="M7.4 1.4L6 0L0 6L6 12L7.4 10.6L2.8 6L7.4 1.4Z"
-            fill="currentColor"
+            fill="rgba(0, 0, 0, 0.54)"
           />
         </svg>
       </a>
@@ -111,5 +111,8 @@ export default {
   font-weight: normal;
   font-size: 16px;
   line-height: 20px;
+}
+.bb-1 {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
 }
 </style>
