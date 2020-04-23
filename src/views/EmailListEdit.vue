@@ -1,7 +1,7 @@
 <template>
   <div>
     <BaseAppBarHeader
-      :title="'Email Add'"
+      :title="'Email Edit'"
       :to-link="`/settings/email-lists/${$route.params.groupName}`"
       :action="{ label: 'Finish', link: '', method: 'editEmail' }"
       @editEmail="editEmail"
