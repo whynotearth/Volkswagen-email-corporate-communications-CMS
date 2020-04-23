@@ -8,10 +8,10 @@
           src="https://user-images.githubusercontent.com/5694308/78644324-e730da00-78df-11ea-84b2-047e5bf57c2a.png"
         />
         <ul v-if="isMenu" class="w-1/3 menu shadow-md">
-          <li class="px-2 py-3">
+          <li class="px-2 py-3 text-left">
             <router-link class="block w-full" :to="`${selectedEmail.id}/edit`">Edit</router-link>
           </li>
-          <li class="px-2 py-3" @click="deleteEmail()">Delete</li>
+          <li class="px-2 py-3 text-left" @click="deleteEmail()">Delete</li>
         </ul>
       </div>
     </BaseAppBarHeader>
