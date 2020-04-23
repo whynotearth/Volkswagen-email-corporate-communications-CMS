@@ -1,15 +1,15 @@
 <template>
   <div>
     <BaseAppBarHeader :title="'Settings'" :to-link="'/'" />
-    <div class="flex items-strech items-center bb-1 px-4 pr-6 py-5">
+    <div class="flex items-strech items-center bb-1">
       <router-link
         v-if="isAuthenticated"
         to="settings/campaign"
-        class="link-fordward block flex-grow justify-between flex h-full items-center font-semibold cursor-pointer select-none"
+        class="link-fordward block flex-grow justify-between flex h-full items-center cursor-pointer select-none px-4 pr-6 py-5"
       >
-        <span class="mr-2 settingsOptions">Email Settings</span>
+        <span class="mr-2 tg-body-mobile">Email Settings</span>
         <svg
-          class="transform -scale-x-1"
+          class="transform -scale-x-1 text-gray"
           width="8"
           height="12"
           viewBox="0 0 8 12"
@@ -20,20 +20,20 @@
             fill-rule="evenodd"
             clip-rule="evenodd"
             d="M7.4 1.4L6 0L0 6L6 12L7.4 10.6L2.8 6L7.4 1.4Z"
-            fill="rgba(0, 0, 0, 0.54)"
+            fill="currentColor"
           />
         </svg>
       </router-link>
     </div>
-    <div class="flex items-strech items-center bb-1 px-4 pr-6 py-5">
+    <div class="flex items-strech items-center bb-1">
       <router-link
         v-if="isAuthenticated"
         to="/"
-        class="link-fordward block flex-grow justify-between flex h-full items-center font-semibold cursor-pointer select-none"
+        class="link-fordward block flex-grow justify-between flex h-full items-center cursor-pointer select-none px-4 pr-6 py-5"
       >
-        <span class="mr-2 settingsOptions">Memo Activity</span>
+        <span class="mr-2 tg-body-mobile">Memo Activity</span>
         <svg
-          class="transform -scale-x-1"
+          class="transform -scale-x-1 text-gray"
           width="8"
           height="12"
           viewBox="0 0 8 12"
@@ -44,22 +44,22 @@
             fill-rule="evenodd"
             clip-rule="evenodd"
             d="M7.4 1.4L6 0L0 6L6 12L7.4 10.6L2.8 6L7.4 1.4Z"
-            fill="rgba(0, 0, 0, 0.54)"
+            fill="currentColor"
           />
         </svg>
       </router-link>
     </div>
-    <div class="flex items-strech items-center bb-1 px-4 pr-6 py-5">
+    <div class="flex items-strech items-center bb-1">
       <a
         v-if="isAuthenticated"
         @click.prevent="logout()"
         href="#"
-        class="link-fordward block flex-grow justify-between flex h-full items-center font-semibold cursor-pointer select-none"
+        class="link-fordward block flex-grow justify-between flex h-full items-center cursor-pointer select-none px-4 pr-6 py-5"
       >
-        <span class="mr-2 settingsOptions">Log Out</span>
+        <span class="mr-2 tg-body-mobile">Log Out</span>
 
         <svg
-          class="transform -scale-x-1"
+          class="transform -scale-x-1 text-gray"
           width="8"
           height="12"
           viewBox="0 0 8 12"
@@ -70,7 +70,7 @@
             fill-rule="evenodd"
             clip-rule="evenodd"
             d="M7.4 1.4L6 0L0 6L6 12L7.4 10.6L2.8 6L7.4 1.4Z"
-            fill="rgba(0, 0, 0, 0.54)"
+            fill="currentColor"
           />
         </svg>
       </a>
@@ -105,14 +105,11 @@ export default {
 };
 </script>
 <style scoped>
-.settingsOptions {
-  font-family: Work Sans;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 16px;
-  line-height: 20px;
-}
 .bb-1 {
   border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.text-gray {
+  color: rgba(0, 0, 0, 0.54);
 }
 </style>

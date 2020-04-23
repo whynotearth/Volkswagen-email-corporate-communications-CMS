@@ -1,23 +1,23 @@
 <template>
   <div>
     <BaseAppBarHeader
-      title="Email Edit"
+      title="Edit Email"
       :to-link="`/settings/email-lists/${$route.params.groupName}`"
       :action="{ label: 'Finish', link: '', method: 'editEmail' }"
       @editEmail="editEmail"
     />
-    <div class="flex flex-wrap items-strech items-center shadow-sm px-4 py-3">
+    <div class="flex flex-wrap items-strech items-center px-4 py-3">
       <label class="w-full text-left mb-2">Edit:</label>
       <div class="mb-4 w-full">
         <BaseInputText
           class="bg-surface"
           v-model="$v.email.$model"
-          label="Email"
-          placeholder="Email"
+          label="Email Subject Line"
+          placeholder="Email Subject Line"
           :error="$v.email.$dirty && !$v.email.required"
         >
           <span v-if="$v.email.$dirty && !$v.email.required" class="text-xs text-error">
-            Subject is required
+            Email subject line is required
           </span>
           <span v-if="$v.email.$dirty && !$v.email.email" class="text-xs text-error">
             Please enter valid email

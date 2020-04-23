@@ -10,7 +10,7 @@
         <li
           v-for="item in getEmails"
           :key="item.id"
-          class="flex flex-wrap text-left px-4 py-4"
+          class="flex flex-wrap text-left px-4 py-4 cursor-pointer"
           @click="choiceEmail(item)"
         >
           <div class="w-full">{{ item.email }}</div>

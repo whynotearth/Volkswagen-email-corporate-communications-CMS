@@ -10,7 +10,7 @@
         <li
           v-for="item in emailList"
           v-bind:key="item.distributionGroup"
-          class="flex flex-wrap text-left px-4 py-4"
+          class="flex flex-wrap text-left px-4 py-4 cursor-pointer"
           @click="choiceEmailList(item)"
         >
           <div class="w-full">{{ item.distributionGroup }}</div>
