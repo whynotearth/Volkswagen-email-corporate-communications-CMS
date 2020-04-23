@@ -1,7 +1,7 @@
 <template>
   <div>
     <BaseAppBarHeader :title="'Settings'" :to-link="'/'" />
-    <div class="flex items-strech items-center bb-1">
+    <div class="flex items-strech items-center border-b-1 border-divider">
       <router-link
         v-if="isAuthenticated"
         to="settings/campaign"
@@ -25,7 +25,7 @@
         </svg>
       </router-link>
     </div>
-    <div class="flex items-strech items-center bb-1">
+    <div class="flex items-strech items-center border-b-1 border-divider">
       <router-link
         v-if="isAuthenticated"
         to="/"
@@ -49,7 +49,7 @@
         </svg>
       </router-link>
     </div>
-    <div class="flex items-strech items-center bb-1">
+    <div class="flex items-strech items-center border-b-1 border-divider">
       <a
         v-if="isAuthenticated"
         @click.prevent="logout()"
@@ -105,10 +105,6 @@ export default {
 };
 </script>
 <style scoped>
-.bb-1 {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-}
-
 .text-gray {
   color: rgba(0, 0, 0, 0.54);
 }
