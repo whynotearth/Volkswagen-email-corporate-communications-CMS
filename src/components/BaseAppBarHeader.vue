@@ -1,5 +1,5 @@
 <template>
-  <nav class="flex items-strech items-center px-4 py-4 flex-wrap shadow-md">
+  <nav class="flex items-strech items-center px-4 py-4 flex-wrap shadow-header">
     <div class="flex-start mr-3">
       <router-link class="inline-block align-middle" :to="toLink">
         <img src="https://res.cloudinary.com/whynotearth/image/upload/v1587102533/Volkswagen/cms/back_oay5wt.png" />
@@ -56,5 +56,9 @@ export default {
 .action-link {
   color: #03b3f9;
   font-weight: 500;
+}
+
+.shadow-header {
+  box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.2), 0px 4px 5px rgba(0, 0, 0, 0.12), 0px 2px 4px rgba(0, 0, 0, 0.14);
 }
 </style>
