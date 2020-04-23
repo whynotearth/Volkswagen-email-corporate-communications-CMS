@@ -8,14 +8,13 @@
     <div class="text-primary h2-mobile">{{ title }}</div>
     <router-link
       v-if="action && !action.method"
-      class="flex-grow inline-block action-link text-xl text-right"
+      class="flex-grow inline-block action-link tg-h3-mobile text-right"
       :to="action.link"
       >{{ action.label }}</router-link
     >
     <div
       v-if="action && action.method"
-      class="flex-grow inline-block action-link text-xl
-      text-right"
+      class="flex-grow inline-block action-link tg-h3-mobile text-right"
       @click="select()"
     >
       {{ action.label }}
