@@ -12,6 +12,9 @@ module.exports = {
     },
     extend: {
       container: { padding: '1.5rem', center: true },
+      cursor: {
+        inherit: 'inherit'
+      },
       colors: {
         blue: {
           ...colors.blue,

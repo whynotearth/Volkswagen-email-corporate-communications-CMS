@@ -1,6 +1,6 @@
 <template>
   <div class="w-full text-left">
-    <label class="tg-caption-mobile block mb-2" :for="idName">{{ label }}</label>
+    <label class="tg-caption-mobile block mb-2 cursor-inherit" :for="idName">{{ label }}</label>
     <div :id="idName" :class="holderClassNames" class="w-full bg-grey-light rounded-full overflow-x-hidden">
       <div
         :class="progressClassNames"

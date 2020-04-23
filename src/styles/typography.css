@@ -158,7 +158,7 @@
 }
 
 @responsive {
-  .primary {
+  .bg-primary {
     &.em-high,
     .em-high {
       opacity: 0.84;
@@ -175,7 +175,7 @@
     }
   }
 
-  .secondary {
+  .bg-secondary {
     &.em-high,
     .em-high {
       opacity: 0.9;
@@ -192,7 +192,7 @@
     }
   }
 
-  .background {
+  .bg-background {
     &.em-high,
     .em-high {
       opacity: 0.84;
@@ -209,7 +209,7 @@
     }
   }
 
-  .surface {
+  .bg-surface {
     &.em-high,
     .em-high {
       opacity: 0.84;
