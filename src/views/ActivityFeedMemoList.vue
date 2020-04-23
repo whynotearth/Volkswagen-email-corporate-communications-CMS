@@ -3,8 +3,8 @@
     <!-- header -->
     <!-- search input -->
 
-    <div class="m-4">
-      <BaseInputText :hasBorder="false" class="bg-surface shadow-card" v-model="aaaaaaaaaaaaaaa">
+    <div class="p-4">
+      <BaseInputText :hasBorder="false" class="bg-surface shadow-card mb-8" v-model="aaaaaaaaaaaaaaa">
         <template #iconBefore>
           <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
@@ -15,6 +15,33 @@
           </svg>
         </template>
       </BaseInputText>
+
+      <router-link
+        class="background text-left mb-8 block"
+        to="{name: 'ActivityFeedMemoItem'}"
+        v-for="(feedItem, index) in [
+          { title: 'sssssssssss', date: 'dddddddddd' },
+          { title: 's2ssssssssss', date: 'd2ddddddddd' }
+        ]"
+        :key="index"
+      >
+        <div class="flex items-center mb-4">
+          <h2
+            class="tg-body-emphasis-mobile em-high flex-grow whitespace-no-wrap overflow-x-hidden truncate"
+            title="All manager with work from lorem ipsum dolor sit amet"
+          >
+            All manager with work from lorem ipsum dolor sit amet
+          </h2>
+          <div class="tg-caption-mobile em-disabled pl-2 text-right">03/27/2020</div>
+        </div>
+
+        <div class="tg-caption-mobile em-high">To: managers@vw.com</div>
+        <div class="tg-caption-mobile em-disabled whitespace-pre-line mb-4">
+          Dear colleagues, When transitioning to a remote team, leaders should.
+        </div>
+
+        <BaseProgressBar :label="`Open rate: 86%`" :progress="22" />
+      </router-link>
     </div>
 
     <!-- list of memos -->
@@ -23,10 +50,11 @@
 
 <script>
 import BaseInputText from '@/components/BaseInputText.vue';
+import BaseProgressBar from '@/components/BaseProgressBar.vue';
 
 export default {
   name: 'ActivityFeedMemoList',
-  components: { BaseInputText },
+  components: { BaseInputText, BaseProgressBar },
   data: () => ({
     aaaaaaaaaaaaaaa: ''
   })
