@@ -15,7 +15,7 @@
         >
           <div class="w-full">{{ item.email }}</div>
           <div class="w-full item-details text-xs pt-1">
-            {{ item.creationDateTime }}
+            {{ filterFormatDate(item.creationDateTime, 'MMM dd, yyyy') }}
           </div>
         </li>
       </ul>
@@ -25,6 +25,7 @@
 <script>
 import BaseAppBarHeader from '@/components/BaseAppBarHeader.vue';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
+import { formatDate } from '@/helpers.js';
 
 export default {
   name: 'EmailList',
@@ -43,6 +44,10 @@ export default {
   },
   methods: {
     ...mapMutations('distributionGroup', ['selectEmail', 'updateEmails']),
+    filterFormatDate(input, format) {
+      const date = new Date(input);
+      return formatDate(date, format);
+    },
     getEmailList() {
       this.$store.dispatch('distributionGroup/getEmails', this.$route.params.groupName);
     },
