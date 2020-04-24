@@ -5,7 +5,7 @@
       <!-- uploader -->
       <div class="mb-6">
         <div class="pb-6">
-          <input class="max-w-full" type="file" @change="onChangeFile" accept=".csv" />
+          <BaseInputFile accepts=".csv" @change="onChangeFile" />
 
           {{ file && file.name }}
         </div>
@@ -61,13 +61,14 @@
 </template>
 <script>
 import BaseAppBarHeader from '@/components/BaseAppBarHeader.vue';
+import BaseInputFile from '@/components/BaseInputFile.vue';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
 import { ajax } from '@/connection/ajax.js';
 import { sleep } from '@/helpers.js';
 
 export default {
   name: 'EmailLists',
-  components: { BaseAppBarHeader },
+  components: { BaseAppBarHeader, BaseInputFile },
   data: () => ({
     file: undefined
   }),
