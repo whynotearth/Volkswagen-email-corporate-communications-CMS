@@ -12,7 +12,11 @@ module.exports = {
     },
     extend: {
       container: { padding: '1.5rem', center: true },
+      cursor: {
+        inherit: 'inherit'
+      },
       colors: {
+        inherit: 'inherit',
         blue: {
           ...colors.blue,
           '900': '#002F62'
@@ -29,7 +33,7 @@ module.exports = {
         people: '#01B1EC',
         oneteam: '#D9EFFF',
         answers: '#EDEDED',
-        divider: 'rgba(0, 0, 0, 0.12)'
+        divider: 'rgba(0,0,0,0.12)'
       },
       spacing: {
         '0.5': '0.125rem',
@@ -94,13 +98,14 @@ module.exports = {
         '9dp': '0 5px 6px rgba(0, 0, 0, 0.2), 0 3px 16px rgba(0, 0, 0, 0.12), 0 9px 12px rgba(0, 0, 0, 0.14)',
         '12dp': '0 7px 8px rgba(0, 0, 0, 0.2), 0 5px 22px rgba(0, 0, 0, 0.12), 0 12px 17px rgba(0, 0, 0, 0.14)',
         '16dp': '0 8px 10px rgba(0, 0, 0, 0.2), 0 6px 30px rgba(0, 0, 0, 0.12), 0 16px 24px rgba(0, 0, 0, 0.14)',
-        '24dp': '0 11px 15px rgba(0, 0, 0, 0.2), 0 9px 46px rgba(0, 0, 0, 0.12), 0 24px 38px rgba(0, 0, 0, 0.14)'
+        '24dp': '0 11px 15px rgba(0, 0, 0, 0.2), 0 9px 46px rgba(0, 0, 0, 0.12), 0 24px 38px rgba(0, 0, 0, 0.14)',
+        card: '0px 2px 4px rgba(0, 0, 0, 0.25)'
       }
     }
   },
   variants: {
     backgroundColor: ['responsive', 'hover', 'focus', 'active'],
-    borderWidth: ['responsive', 'hover', 'focus', 'active']
+    borderWidth: ['responsive', 'hover', 'focus', 'active', 'last']
   },
   plugins: [...customUtils]
 };
