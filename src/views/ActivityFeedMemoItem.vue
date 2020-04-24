@@ -64,7 +64,46 @@
           </div>
         </BaseTab>
         <BaseTab class="text-left" name="Unread">
-          <span>How much we do it for</span>
+          <div class="px-4 pt-4 bg-background">
+            <div
+              class="mb-4"
+              v-for="(readReportLog, index) in [
+                {
+                  to: 'someone@email22',
+                  recieved: '2020/04/12 9:49 PM',
+                  opened: '2020/04/11 3:30 PM'
+                },
+                {
+                  to: 'someone@email3',
+                  recieved: '2020/04/10 9:49 PM',
+                  opened: '2020/04/11 3:30 PM'
+                },
+                {
+                  to: 'someone@email4',
+                  recieved: '2020/04/10 9:49 PM',
+                  opened: '2020/04/11 3:30 PM'
+                },
+                {
+                  to: 'someone@email5',
+                  recieved: '2020/04/10 9:49 PM',
+                  opened: '2020/04/11 3:30 PM'
+                },
+                {
+                  to: 'someone@email6',
+                  recieved: '2020/04/10 9:49 PM',
+                  opened: '2020/04/11 3:30 PM'
+                },
+                {
+                  to: 'someone@email7',
+                  recieved: '2020/04/10 9:49 PM',
+                  opened: '2020/04/11 3:30 PM'
+                }
+              ]"
+              :key="index"
+            >
+              <ActivityFeedReadReportLog :model="readReportLog" />
+            </div>
+          </div>
         </BaseTab>
       </BaseTabs>
     </template>
