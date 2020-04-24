@@ -13,6 +13,7 @@ import EmailList from '../views/EmailList';
 import EmailListAdd from '../views/EmailListAdd';
 import EmailListEdit from '../views/EmailListEdit';
 import EmailListItem from '../views/EmailListItem';
+import EmailListImport from '../views/EmailListImport';
 import store from '../store';
 
 Vue.use(VueRouter);
@@ -114,6 +115,14 @@ const routes = [
     path: '/settings/email-lists/:groupName/:id',
     name: 'EmailListItem',
     component: EmailListItem,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/settings/email-lists-import',
+    name: 'EmailListImport',
+    component: EmailListImport,
     meta: {
       requiresAuth: true
     }

@@ -28,6 +28,29 @@ export default {
     }
   },
   actions: {
+    async importEmailList(context, { ajax, body }) {
+      // FIXME: there is a bug in swagger-axios-codegen https://github.com/Manweill/swagger-axios-codegen/issues/93
+      // return await DistributionGroupService.distributiongroups1(
+      //   { params: payload },
+      //   { headers: { 'content-type': 'multipart/form-data' } }
+      // );
+
+      return new Promise((resolve, reject) => {
+        var bodyFormData = new FormData();
+        bodyFormData.append('file', body.file);
+
+        let url = '/api/v0/volkswagen/distributiongroups';
+        const configs = {
+          method: 'put',
+          url,
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          },
+          data: bodyFormData
+        };
+        ajax(configs, resolve, reject);
+      });
+    },
     async getEmailLists(context) {
       try {
         const data = await DistributionGroupService.stats();
