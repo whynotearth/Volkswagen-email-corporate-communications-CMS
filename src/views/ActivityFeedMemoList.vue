@@ -1,7 +1,7 @@
 <template>
   <LayoutFixedScrollable>
     <template #header>
-      <BaseAppBarHeader :title="'Activity Feed'" :to-link="'/'" />
+      <BaseAppBarHeader :title="'Activity Feed'" :to-link="'/settings'" />
       <div class="px-2 pt-4 mb-4">
         <ActivityFeedSearchBox />
       </div>
