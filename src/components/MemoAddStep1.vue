@@ -1,8 +1,43 @@
 <template>
   <div class="py-6 flex-grow">
     <div class="container px-4 md:px-6 text-left">
+      <div
+        class="mb-4 bg-white relative"
+        :class="[
+          {
+            'is-query-empty': to_query === '',
+            'is-filled': recipients.length > 0,
+            error: recipientsIsDirthy && recipients.length === 0
+          },
+          recipientsIsDirthy && recipients.length === 0
+            ? 'text-red-600 border-red-600'
+            : 'text-gray-500 border-gray-600'
+        ]"
+      >
+        <label class="multiselect--material-label absolute" v-if="recipients.length > 0" for="memoadd-step1-recipients"
+          >To:</label
+        >
+        <Multiselect
+          id="memoadd-step1-recipients"
+          v-model="recipients"
+          :placeholder="recipients.length === 0 ? 'To:' : ''"
+          :options="get_recipients_available"
+          :multiple="true"
+          :hide-selected="true"
+          :show-labels="false"
+          @close="recipientsIsDirthy = true"
+          @search-change="onToSearchChange"
+        >
+          <template v-slot:noResult>Nothing found</template>
+          <template v-slot:noOptions>No options available</template>
+        </Multiselect>
+        <span v-if="recipientsIsDirthy && recipients.length === 0" class="text-xs text-error">
+          To is required
+        </span>
+      </div>
+
       <BaseInputText
-        class="bg-surface"
+        class="bg-surface mb-4"
         v-model="$v.subject.$model"
         label="Email Subject Line"
         placeholder="Email Subject Line"
@@ -13,9 +48,9 @@
         </span>
       </BaseInputText>
       <BaseInputText
-        class="bg-surface"
+        class="bg-surface mb-4"
         v-model="$v.date.$model"
-        label="MM/DD/YYYY"
+        label="Memo Date"
         placeholder="Memo Date"
         :error="$v.date.$dirty && !$v.date.required"
       >
@@ -24,7 +59,7 @@
         </span>
       </BaseInputText>
       <BaseInputText
-        class="bg-surface"
+        class="bg-surface mb-4"
         v-model="$v.to.$model"
         label="Audience"
         placeholder="Audience"
@@ -52,14 +87,23 @@
   </div>
 </template>
 
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
+
 <script>
 import BaseInputText from '@/components/BaseInputText.vue';
 import BaseInputTextarea from '@/components/BaseInputTextarea.vue';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
 import { required } from 'vuelidate/lib/validators';
+import Multiselect from 'vue-multiselect';
+
 export default {
   name: 'MemoAddStep1',
-  components: { BaseInputText, BaseInputTextarea },
+  components: { BaseInputText, BaseInputTextarea, Multiselect },
+  data: () => ({
+    // TODO: refactor, use vuelidate
+    recipientsIsDirthy: false,
+    to_query: ''
+  }),
   props: {
     error: {
       type: Boolean,
@@ -67,6 +111,9 @@ export default {
     }
   },
   validations: {
+    // recipients: {
+    //   required
+    // },
     subject: {
       required
     },
@@ -81,7 +128,8 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('memo', ['get_to', 'get_subject', 'get_date', 'get_description']),
+    ...mapGetters('memo', ['get_to', 'get_subject', 'get_date', 'get_description', 'get_recipients']),
+    ...mapGetters('recipient', ['get_recipients_available']),
     to: {
       get() {
         return this.get_to;
@@ -113,10 +161,25 @@ export default {
       set(value) {
         this.update_date(value);
       }
+    },
+    recipients: {
+      get() {
+        return this.get_recipients;
+      },
+      set(value) {
+        this.update_recipients(value);
+      }
     }
   },
   methods: {
-    ...mapMutations('memo', ['update_to', 'update_description', 'update_date', 'update_subject'])
+    ...mapMutations('memo', ['update_to', 'update_description', 'update_date', 'update_subject', 'update_recipients']),
+    ...mapActions('recipient', ['fetch_recipients']),
+    onToSearchChange(query) {
+      this.to_query = query;
+    }
+  },
+  mounted() {
+    this.fetch_recipients();
   }
 };
 </script>

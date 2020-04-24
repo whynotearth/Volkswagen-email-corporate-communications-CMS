@@ -1,27 +1,42 @@
 <template>
-  <div class="mb-4 relative">
-    <input
-      class="input appearance-none outline-none relative bg-transparent border rounded w-full px-4 py-3 focus:shadow-md active:shadow-md"
+  <div
+    class="base-input-text relative rounded"
+    :class="[{ 'is-focused': isFocused, 'is-filled': value.length > 0, 'has-icon-before': $slots.iconBefore }]"
+  >
+    <div
+      class="flex rounded"
       :class="[
-        { filled: value.length > 0 },
+        hasBorder ? 'border' : '',
         error
           ? 'border-red-600 focus:border-red-600 active:border-red-600'
           : 'border-gray-600 focus:border-gray-500 active:border-gray-500'
       ]"
-      :id="idName"
-      :type="type"
-      :value="value"
-      @blur="$emit('input', $event.target.value)"
-      :placeholder="placeholder || label"
-    />
+    >
+      <div v-if="$slots.iconBefore" class="flex items-center pl-4">
+        <slot name="iconBefore" />
+      </div>
+      <div class="flex-grow">
+        <input
+          class="input appearance-none outline-none relative bg-transparent w-full px-4 py-3 border-none"
+          :id="idName"
+          :type="type"
+          :value="value"
+          @blur="onBlur"
+          @focus="onFocus"
+          :placeholder="placeholder || label"
+        />
+      </div>
+    </div>
+
+    <slot></slot>
+
     <label
       :for="idName"
-      class="label bg-inherit absolute mb-0 top-0 left-0 mt-3 ml-3 cursor-text"
+      class="bg-inherit label absolute top-0 left-0 cursor-text"
       :class="error ? 'text-red-600' : 'text-gray-500'"
     >
       {{ label }}
     </label>
-    <slot></slot>
   </div>
 </template>
 
@@ -52,20 +67,42 @@ export default {
     idName: {
       type: String,
       default: randomId
+    },
+    hasBorder: {
+      type: Boolean,
+      default: true
     }
   },
   data() {
     return {
+      isFocused: false,
       labelClicked: false
     };
+  },
+  methods: {
+    onBlur($event) {
+      this.isFocused = false;
+      this.$emit('input', $event.target.value);
+    },
+    onFocus($event) {
+      this.isFocused = true;
+    }
   }
 };
 </script>
 
 <style scoped>
+.label {
+  transition: all 200ms ease-out;
+  opacity: 0;
+  z-index: 1;
+}
+
 .input {
-  transition: border 0.2s ease-in-out;
   z-index: 2;
+  &:focus::placeholder {
+    color: transparent;
+  }
 }
 
 /* purgecss start ignore */
@@ -76,36 +113,47 @@ export default {
     background: transparent;
   }
 }
+
 .input:-webkit-autofill {
   -webkit-animation-delay: 1s; /* Safari support - any positive time runs instantly */
   -webkit-animation-name: autofill;
   -webkit-animation-fill-mode: both;
 }
+
 /* purgecss end ignore */
 
-.input:focus + .label,
-.input:active + .label,
-.input.filled + .label {
-  font-size: inherit;
-  transform: translateY(-1.3rem) scale(0.75);
-  transform-origin: left;
-  opacity: 1;
-  display: block;
-  z-index: 3;
-  will-change: transform;
-  transition: transform 200ms ease-out, background-color 50ms ease-out 150ms;
-  border-radius: 100px;
-}
+.base-input-text {
+  .label {
+    transform: translateY(50%) translateX(1rem) scale(1);
+  }
 
-.input:focus::placeholder {
-  color: transparent;
-}
+  &.has-icon-before {
+    .label {
+      transform: translateY(50%) translateX(3rem) scale(1);
+    }
+  }
 
-.label {
-  transition: all 0.2s ease-out;
-  transition: all 200ms;
-  opacity: 0;
-  padding: 0 5px;
-  z-index: 1;
+  &.is-focused,
+  &.is-filled {
+    .label {
+      padding: 0 6px;
+      font-size: inherit;
+      transform: translateY(-50%) translateX(0.75rem) scale(0.75);
+      transform-origin: left;
+      opacity: 1;
+      display: block;
+      z-index: 3;
+      will-change: transform, background-color;
+      transition: transform 200ms ease-out, background-color 50ms ease-out 150ms, padding 0 linear 200ms,
+        opacity 200ms ease-out;
+      border-radius: 100px;
+    }
+
+    &.has-icon-before {
+      .label {
+        transform: translateY(-50%) translateX(3rem) scale(0.75);
+      }
+    }
+  }
 }
 </style>

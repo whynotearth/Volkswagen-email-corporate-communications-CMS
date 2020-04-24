@@ -9,6 +9,13 @@ Please read our [contribution guide](https://github.com/whynotearth/Volkswagen-e
 yarn install
 ```
 
+### VSCode extensions
+
+- Vetur
+- stylelint
+- Prettier
+- TODO Highlight (optional)
+
 ### Compiles and hot-reloads for development
 ```
 yarn run serve

@@ -12,7 +12,11 @@ module.exports = {
     },
     extend: {
       container: { padding: '1.5rem', center: true },
+      cursor: {
+        inherit: 'inherit'
+      },
       colors: {
+        inherit: 'inherit',
         blue: {
           ...colors.blue,
           '900': '#002F62'
@@ -28,11 +32,20 @@ module.exports = {
         community: '#52AE31',
         people: '#01B1EC',
         oneteam: '#D9EFFF',
-        answers: '#EDEDED'
+        answers: '#EDEDED',
+        divider: 'rgba(0,0,0,0.12)'
       },
       spacing: {
         '0.5': '0.125rem',
         '1.5': '0.375rem'
+      },
+      borderWidth: {
+        default: '1px',
+        '0': '0',
+        '1': '1px',
+        '2': '2px',
+        '4': '4px',
+        '8': '8px'
       },
       fontFamily: {
         sans: ['Work Sans', ...defaultTheme.fontFamily.sans]
@@ -50,6 +63,9 @@ module.exports = {
         '5xl': '3rem', // 48
         '6xl': '3.5rem', // 56
         '7xl': '7rem' // 112
+      },
+      zIndex: {
+        '100': '100'
       },
       lineHeight: {
         none: '1',
@@ -71,12 +87,25 @@ module.exports = {
       },
       scale: {
         '-1': '-1'
+      },
+      boxShadow: {
+        '1dp': '0 1px 3px rgba(0, 0, 0, 0.2), 0 2px 2px rgba(0, 0, 0, 0.12), 0 0 2px rgba(0, 0, 0, 0.14)',
+        '2dp': '0 1px 5px rgba(0, 0, 0, 0.2), 0 3px 4px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.14)',
+        '3dp': '0 1px 8px rgba(0, 0, 0, 0.2), 0 3px 4px rgba(0, 0, 0, 0.12), 0 3px 3px rgba(0, 0, 0, 0.14)',
+        '4dp': '0 1px 10px rgba(0, 0, 0, 0.2), 0 4px 5px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.14)',
+        '6dp': '0 3px 5px rgba(0, 0, 0, 0.2), 0 1px 18px rgba(0, 0, 0, 0.12), 0 6px 10px rgba(0, 0, 0, 0.14)',
+        '8dp': '0 4px 5px rgba(0, 0, 0, 0.2), 0 3px 14px rgba(0, 0, 0, 0.12), 0 8px 10px rgba(0, 0, 0, 0.14)',
+        '9dp': '0 5px 6px rgba(0, 0, 0, 0.2), 0 3px 16px rgba(0, 0, 0, 0.12), 0 9px 12px rgba(0, 0, 0, 0.14)',
+        '12dp': '0 7px 8px rgba(0, 0, 0, 0.2), 0 5px 22px rgba(0, 0, 0, 0.12), 0 12px 17px rgba(0, 0, 0, 0.14)',
+        '16dp': '0 8px 10px rgba(0, 0, 0, 0.2), 0 6px 30px rgba(0, 0, 0, 0.12), 0 16px 24px rgba(0, 0, 0, 0.14)',
+        '24dp': '0 11px 15px rgba(0, 0, 0, 0.2), 0 9px 46px rgba(0, 0, 0, 0.12), 0 24px 38px rgba(0, 0, 0, 0.14)',
+        card: '0px 2px 4px rgba(0, 0, 0, 0.25)'
       }
     }
   },
   variants: {
     backgroundColor: ['responsive', 'hover', 'focus', 'active'],
-    borderWidth: ['responsive', 'hover', 'focus', 'active']
+    borderWidth: ['responsive', 'hover', 'focus', 'active', 'last']
   },
   plugins: [...customUtils]
 };
