@@ -6,7 +6,7 @@
       <ActivityFeedSearchBox />
     </div>
 
-    <div class="px-4">
+    <div class="px-4 mb-8">
       <MemoListItem
         :model="{
           subject: 'All manager with work from lorem ipsum dolor sit amet',

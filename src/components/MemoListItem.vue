@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="background text-left mb-8 block">
+    <div class="bg-background text-left block">
       <div class="flex items-center mb-4">
         <h2
           class="tg-body-emphasis-mobile em-high flex-grow whitespace-no-wrap overflow-x-hidden truncate"

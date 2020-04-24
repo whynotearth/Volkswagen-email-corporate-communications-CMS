@@ -6,23 +6,25 @@
       <ActivityFeedSearchBox />
     </div>
 
-    <div class="p-4">
-      <router-link
-        class="cursor-pointer"
-        :to="{ name: 'ActivityFeedMemoItem', params: { id: 111 } }"
-        v-for="(feedItem, index) in [
-          {
-            subject: 'All manager with work from lorem ipsum dolor sit amet',
-            creationDateTime: '0001-01-01T00:00:00',
-            to: 'aaaaaaaud',
-            description: 'bbbbbbbody by mort',
-            OpenPercentage: 85
-          }
-        ]"
-        :key="index"
-      >
-        <MemoListItem :model="feedItem" />
-      </router-link>
+    <div class="px-4 py-8 last:pb-0">
+      <div class="mb-8" v-for="(item, index) in 4" :key="index">
+        <router-link
+          class="cursor-pointer block"
+          :to="{ name: 'ActivityFeedMemoItem', params: { id: 111 } }"
+          v-for="(feedItem, index) in [
+            {
+              subject: 'All manager with work from lorem ipsum dolor sit amet',
+              creationDateTime: '0001-01-01T00:00:00',
+              to: 'aaaaaaaud',
+              description: 'bbbbbbbody by mort',
+              OpenPercentage: 85
+            }
+          ]"
+          :key="index"
+        >
+          <MemoListItem :model="feedItem" />
+        </router-link>
+      </div>
     </div>
 
     <!-- list of memos -->
