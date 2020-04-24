@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="tabs bg-background">
+    <div class="tabs mb-2">
       <ul class="flex justify-start shadow-4dp tg-color-label-mobile">
         <li
           class="block flex-grow"

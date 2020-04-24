@@ -96,8 +96,7 @@ module.exports = {
   },
   variants: {
     backgroundColor: ['responsive', 'hover', 'focus', 'active'],
-    borderWidth: ['responsive', 'hover', 'focus', 'active', 'last'],
-    padding: ['responsive', 'last']
+    borderWidth: ['responsive', 'hover', 'focus', 'active', 'last']
   },
   plugins: [...customUtils]
 };
