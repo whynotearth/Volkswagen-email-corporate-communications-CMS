@@ -1,5 +1,5 @@
 <template>
-  <BaseInputText :hasBorder="false" class="bg-surface shadow-card" v-model="query">
+  <BaseInputText :hasBorder="false" class="bg-surface shadow-card" v-model="query" label="Search" placeholder="Search">
     <template #iconBefore>
       <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path

@@ -11,7 +11,7 @@
       <div class="px-4 pt-4">
         <div class="mb-8" v-for="(item, index) in 4" :key="index">
           <router-link
-            class="cursor-pointer block bg-background"
+            class="cursor-pointer block bg-background text-black hover:text-secondary"
             :to="{ name: 'ActivityFeedMemoItem', params: { id: 111 } }"
             v-for="(feedItem, index) in [
               {
