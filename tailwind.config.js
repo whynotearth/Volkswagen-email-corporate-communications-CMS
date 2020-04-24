@@ -41,7 +41,7 @@ module.exports = {
         '1': '1px',
         '2': '2px',
         '4': '4px',
-        '8': '8px',
+        '8': '8px'
       },
       fontFamily: {
         sans: ['Work Sans', ...defaultTheme.fontFamily.sans]
