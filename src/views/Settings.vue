@@ -1,29 +1,65 @@
 <template>
   <div>
-    <nav class="flex items-strech items-center px-4 py-3 flex-wrap shadow-md">
-      <div class="flex-start mr-3">
-        <router-link class="inline-block" to="/">
-          <img
-            class="mt-1"
-            src="https://res.cloudinary.com/whynotearth/image/upload/v1587102533/Volkswagen/cms/back_oay5wt.png"
+    <BaseAppBarHeader :title="'Settings'" :to-link="'/'" />
+    <div class="flex items-strech items-center border-b-1 border-divider">
+      <router-link
+        v-if="isAuthenticated"
+        to="settings/campaign"
+        class="link-fordward block flex-grow justify-between flex h-full items-center cursor-pointer select-none px-4 pr-6 py-5"
+      >
+        <span class="mr-2 tg-body-mobile">Email Settings</span>
+        <svg
+          class="transform -scale-x-1 text-gray"
+          width="8"
+          height="12"
+          viewBox="0 0 8 12"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M7.4 1.4L6 0L0 6L6 12L7.4 10.6L2.8 6L7.4 1.4Z"
+            fill="currentColor"
           />
-        </router-link>
-      </div>
-      <div class="text-primary h2-mobile">
-        Settings
-      </div>
-    </nav>
-    <div class="flex items-strech items-center shadow-sm px-4 py-3">
+        </svg>
+      </router-link>
+    </div>
+    <div class="flex items-strech items-center border-b-1 border-divider">
+      <router-link
+        v-if="isAuthenticated"
+        to="/"
+        class="link-fordward block flex-grow justify-between flex h-full items-center cursor-pointer select-none px-4 pr-6 py-5"
+      >
+        <span class="mr-2 tg-body-mobile">Memo Activity</span>
+        <svg
+          class="transform -scale-x-1 text-gray"
+          width="8"
+          height="12"
+          viewBox="0 0 8 12"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M7.4 1.4L6 0L0 6L6 12L7.4 10.6L2.8 6L7.4 1.4Z"
+            fill="currentColor"
+          />
+        </svg>
+      </router-link>
+    </div>
+    <div class="flex items-strech items-center border-b-1 border-divider">
       <a
         v-if="isAuthenticated"
         @click.prevent="logout()"
         href="#"
-        class="link-fordward block flex-grow justify-between flex h-full items-center font-semibold cursor-pointer select-none"
+        class="link-fordward block flex-grow justify-between flex h-full items-center cursor-pointer select-none px-4 pr-6 py-5"
       >
-        <span class="mr-2 settingsOptions">Log Out</span>
+        <span class="mr-2 tg-body-mobile">Log Out</span>
 
         <svg
-          class="transform -scale-x-1"
+          class="transform -scale-x-1 text-gray"
           width="8"
           height="12"
           viewBox="0 0 8 12"
@@ -45,10 +81,11 @@
 <script>
 import PageNavigation from '@/components/PageNavigation.vue';
 import AuthLogin from '@/components/AuthLogin';
+import BaseAppBarHeader from '@/components/BaseAppBarHeader.vue';
 
 export default {
   name: 'SettingsPage',
-  // components: { AuthLogin },
+  components: { BaseAppBarHeader },
   computed: {
     isAuthenticated() {
       return this.$store.getters['auth/isAuthenticated'];
@@ -68,11 +105,7 @@ export default {
 };
 </script>
 <style scoped>
-.settingsOptions {
-  font-family: Work Sans;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 16px;
-  line-height: 20px;
+.text-gray {
+  color: rgba(0, 0, 0, 0.54);
 }
 </style>

@@ -38,6 +38,14 @@ module.exports = {
         '0.5': '0.125rem',
         '1.5': '0.375rem'
       },
+      borderWidth: {
+        default: '1px',
+        '0': '0',
+        '1': '1px',
+        '2': '2px',
+        '4': '4px',
+        '8': '8px'
+      },
       fontFamily: {
         sans: ['Work Sans', ...defaultTheme.fontFamily.sans]
       },
