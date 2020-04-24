@@ -3,6 +3,23 @@
     <BaseAppBarHeader title="Add New List" :to-link="'Home'" />
     <div class="text-left py-6 px-4">
       <!-- uploader -->
+      <div class="mb-6">
+        <div class="pb-6">
+          <input class="max-w-full" type="file" @change="onChangeFile" accept=".csv" />
+
+          {{ file && file.name }}
+        </div>
+        <div class="mb-6">
+          <button
+            class="bg-primary w-1/2 md:w-1/4 mx-auto block hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline transition duration-100 ease-in-out transition-all label-mobile"
+            type="button"
+            @click="submit()"
+          >
+            Import
+          </button>
+        </div>
+        <hr />
+      </div>
 
       <!-- descriptions -->
       <p>To prepare your file for import, follow these steps:</p>
@@ -45,16 +62,29 @@
 <script>
 import BaseAppBarHeader from '@/components/BaseAppBarHeader.vue';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
+import { ajax } from '@/connection/ajax.js';
 
 export default {
   name: 'EmailLists',
   components: { BaseAppBarHeader },
-  computed: {},
-  mounted() {},
-  destroyed() {},
+  data: () => ({
+    file: undefined
+  }),
   methods: {
-    ...mapActions('distributionGroup', ['getEmailLists']),
-    ...mapMutations('distributionGroup', ['selectEmailList', 'updateEmailLists'])
+    ...mapActions('distributionGroup', ['getEmailLists', 'importEmailList']),
+    ...mapMutations('distributionGroup', ['selectEmailList', 'updateEmailLists']),
+    onChangeFile(event) {
+      console.log('onChangeFile', event);
+      this.file = event.target.files[0];
+    },
+    submit(event) {
+      this.importEmailList({
+        ajax,
+        body: {
+          file: this.file
+        }
+      });
+    }
   }
 };
 </script>
