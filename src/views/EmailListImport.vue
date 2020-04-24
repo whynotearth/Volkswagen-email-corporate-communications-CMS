@@ -1,6 +1,6 @@
 <template>
   <div class="">
-    <BaseAppBarHeader title="Add New List" :to-link="'Home'" />
+    <BaseAppBarHeader title="Add New List" :to-link="'/settings'" />
     <div class="text-left py-6 px-4">
       <!-- uploader -->
       <div class="mb-6">
@@ -63,6 +63,7 @@
 import BaseAppBarHeader from '@/components/BaseAppBarHeader.vue';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
 import { ajax } from '@/connection/ajax.js';
+import { sleep } from '@/helpers.js';
 
 export default {
   name: 'EmailLists',
@@ -70,19 +71,50 @@ export default {
   data: () => ({
     file: undefined
   }),
+  computed: {
+    // ...mapGetters('distributionGroup', ['getEmailLists']),
+    get_email_lists() {
+      return this.$store.getters['distributionGroup/getEmailLists'];
+    }
+  },
   methods: {
-    ...mapActions('distributionGroup', ['getEmailLists', 'importEmailList']),
+    ...mapActions('distributionGroup', ['importEmailList', 'getEmailLists']),
     ...mapMutations('distributionGroup', ['selectEmailList', 'updateEmailLists']),
     onChangeFile(event) {
-      console.log('onChangeFile', event);
       this.file = event.target.files[0];
     },
     submit(event) {
-      this.importEmailList({
-        ajax,
-        body: {
-          file: this.file
+      try {
+        this.importEmailList({
+          ajax,
+          body: {
+            file: this.file
+          }
+        });
+        this.onSuccessSubmit();
+      } catch (error) {}
+    },
+    async onSuccessSubmit() {
+      this.$store.commit('overlay/updateModel', {
+        title: 'Success!',
+        message: ''
+      });
+
+      await sleep(1000);
+
+      await this.getEmailLists();
+      const groupName = this.get_email_lists[0].distributionGroup;
+
+      await this.$router.push({
+        name: 'EmailList',
+        params: {
+          groupName
         }
+      });
+
+      this.$store.commit('overlay/updateModel', {
+        title: '',
+        message: ''
       });
     }
   }
