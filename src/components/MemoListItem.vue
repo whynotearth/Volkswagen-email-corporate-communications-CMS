@@ -23,10 +23,14 @@
 
 <script>
 import BaseProgressBar from '@/components/BaseProgressBar.vue';
+import { formatDate } from '@/helpers.js';
 
 export default {
   name: 'MemoListItem',
   props: ['model'],
-  components: { BaseProgressBar }
+  components: { BaseProgressBar },
+  methods: {
+    formatDate
+  }
 };
 </script>

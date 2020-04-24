@@ -24,7 +24,8 @@ export default {
       type: '', // error, success
       message: '',
       class: '' // text-error text-success
-    }
+    },
+    memos: []
   },
   mutations: {
     update_response_message(state, payload) {
@@ -47,6 +48,9 @@ export default {
     },
     update_form_data(state, payload) {
       Vue.set(state, 'form_data', payload);
+    },
+    update_memos(state, payload) {
+      Vue.set(state, 'memos', payload);
     }
   },
   actions: {
@@ -55,6 +59,9 @@ export default {
     },
     async memos(context, payload) {
       await MemoService.memos(payload.params);
+    },
+    async fetch_memos(context, payload) {
+      console.log('fetch memos');
     }
   },
   getters: {
@@ -63,6 +70,7 @@ export default {
     get_description: state => state.form_data.description,
     get_date: state => state.form_data.date,
     get_recipients: state => state.form_data.recipients,
-    get_response_message: state => state.response_message
+    get_response_message: state => state.response_message,
+    get_memos: state => state.memos
   }
 };

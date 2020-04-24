@@ -37,9 +37,19 @@ import BaseAppBarHeader from '@/components/BaseAppBarHeader.vue';
 import ActivityFeedSearchBox from '@/components/ActivityFeedSearchBox.vue';
 import MemoListItem from '@/components/MemoListItem.vue';
 import LayoutFixedScrollable from '@/components/LayoutFixedScrollable.vue';
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
   name: 'ActivityFeedMemoList',
-  components: { MemoListItem, BaseAppBarHeader, ActivityFeedSearchBox, LayoutFixedScrollable }
+  components: { MemoListItem, BaseAppBarHeader, ActivityFeedSearchBox, LayoutFixedScrollable },
+  computed: {
+    ...mapGetters('memo', ['get_memos'])
+  },
+  methods: {
+    ...mapActions('memo', ['fetch_memos'])
+  },
+  mounted() {
+    this.fetch_memos;
+  }
 };
 </script>
