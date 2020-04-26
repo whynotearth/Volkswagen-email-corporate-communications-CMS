@@ -8,3 +8,7 @@
 @import './typography.css';
 @import './animations.css';
 @import './plugin-multiselect.css';
+
+.pl-error-message {
+  padding-left: 1.125rem;
+}
