@@ -88,6 +88,14 @@ const routes = [
     }
   },
   {
+    path: '/settings/email-lists/import',
+    name: 'EmailListImport',
+    component: EmailListImport,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
     path: '/settings/email-lists/:groupName',
     name: 'EmailList',
     component: EmailList,
@@ -115,14 +123,6 @@ const routes = [
     path: '/settings/email-lists/:groupName/:id',
     name: 'EmailListItem',
     component: EmailListItem,
-    meta: {
-      requiresAuth: true
-    }
-  },
-  {
-    path: '/settings/email-lists-import',
-    name: 'EmailListImport',
-    component: EmailListImport,
     meta: {
       requiresAuth: true
     }

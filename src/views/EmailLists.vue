@@ -3,7 +3,7 @@
     <BaseAppBarHeader
       title="Email Lists"
       :to-link="'campaign'"
-      :action="{ link: '/email/campaign', label: 'Add New' }"
+      :action="{ link: '/settings/email-lists/import', label: 'Add New' }"
     />
     <div class="flex">
       <ul class="w-full pt-4">
