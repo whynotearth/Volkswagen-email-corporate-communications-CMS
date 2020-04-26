@@ -3,7 +3,7 @@
     <BaseAppBarHeader
       title="Edit Email"
       :to-link="`/settings/email-lists/${$route.params.groupName}`"
-      :action="{ label: 'Finish', link: '', method: 'editEmail' }"
+      :action="{ label: 'Finish', link: '', method: 'editEmail', disabled: $v.email.$invalid }"
       @editEmail="editEmail"
     />
     <div class="flex flex-wrap items-strech items-center px-4 py-3">
