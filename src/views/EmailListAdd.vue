@@ -14,7 +14,7 @@
           v-model="$v.email.$model"
           label="Email Subject Line"
           placeholder="Email Subject Line"
-          :error="$v.email.$dirty && !$v.email.required"
+          :error="$v.email.$dirty && (!$v.email.required || !$v.email.email)"
         >
           <span v-if="$v.email.$dirty && !$v.email.required" class="text-xs text-error pl-4.5">
             Email is required
