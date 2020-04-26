@@ -15,7 +15,7 @@
     <div
       v-if="action && action.method"
       class="flex-grow inline-block action-link tg-h3-mobile text-right cursor-pointer"
-      :class="{'disabled': action.disabled}"
+      :class="{ disabled: action.disabled }"
       @click="select()"
     >
       {{ action.label }}
@@ -59,7 +59,7 @@ export default {
   font-weight: 500;
 }
 .disabled {
-  color: rgba(0,0,0,.38);
+  color: rgba(0, 0, 0, 0.38);
   cursor: default;
 }
 </style>

@@ -55,6 +55,9 @@ export default {
       }
     }
   },
+  destroyed() {
+    this.updateEmail('');
+  },
   methods: {
     ...mapMutations('distributionGroup', ['updateEmail']),
     addEmail() {
