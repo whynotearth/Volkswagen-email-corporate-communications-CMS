@@ -14,12 +14,12 @@
           v-model="$v.email.$model"
           label="Email Subject Line"
           placeholder="Email Subject Line"
-          :error="$v.email.$dirty && !$v.email.required"
+          :error="$v.email.$dirty && (!$v.email.required || !$v.email.email)"
         >
-          <span v-if="$v.email.$dirty && !$v.email.required" class="text-xs text-error">
+          <span v-if="$v.email.$dirty && !$v.email.required" class="text-xs text-error pl-error-message">
             Email is required
           </span>
-          <span v-if="$v.email.$dirty && !$v.email.email" class="text-xs text-error">
+          <span v-if="$v.email.$dirty && !$v.email.email" class="text-xs text-error pl-error-message">
             Please enter valid email
           </span>
         </BaseInputText>
