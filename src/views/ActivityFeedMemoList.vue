@@ -2,20 +2,25 @@
   <LayoutFixedScrollable>
     <template #header>
       <BaseAppBarHeader :title="'Activity Feed'" :to-link="'/settings'" />
-      <div class="px-2 pt-4 mb-4">
-        <ActivityFeedSearchBox />
+
+      <div class="container px-0 md:px-6 text-left">
+        <div class="px-2 pt-4 mb-4">
+          <ActivityFeedSearchBox />
+        </div>
       </div>
     </template>
 
     <template #content>
-      <div class="px-4 pt-4">
-        <div class="mb-8" v-for="memoItem in get_memos" :key="memoItem.id">
-          <router-link
-            class="cursor-pointer block bg-background text-black hover:text-secondary"
-            :to="{ name: 'ActivityFeedMemoItem', params: { id: memoItem.id } }"
-          >
-            <MemoListItem :model="memoItem" />
-          </router-link>
+      <div class="container px-0 md:px-6 text-left">
+        <div class="px-4 pt-4">
+          <div class="mb-8" v-for="memoItem in get_memos" :key="memoItem.id">
+            <router-link
+              class="cursor-pointer block bg-background text-black hover:text-secondary"
+              :to="{ name: 'ActivityFeedMemoItem', params: { id: memoItem.id } }"
+            >
+              <MemoListItem :model="memoItem" />
+            </router-link>
+          </div>
         </div>
       </div>
     </template>

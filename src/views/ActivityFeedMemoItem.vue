@@ -3,39 +3,43 @@
     <template #header>
       <BaseAppBarHeader :title="'Open Rate'" :to-link="'/activity-feed/memos'" />
 
-      <div class="px-2 pt-4 mb-4">
-        <ActivityFeedSearchBox />
+      <div class="container px-0 md:px-6 text-left">
+        <div class="px-2 pt-4 mb-4">
+          <ActivityFeedSearchBox />
+        </div>
       </div>
     </template>
 
     <template #content>
-      <div class="px-4 pb-4 pt-2 bg-background z-10 relative">
-        <MemoOpenRateItem v-if="get(get_stats, `[${id}].memo`)" :model="get(get_stats, `[${id}].memo`)" />
+      <div class="container px-0 md:px-6 text-left">
+        <div class="px-4 pb-4 pt-2 bg-background z-10 relative">
+          <MemoOpenRateItem v-if="get(get_stats, `[${id}].memo`)" :model="get(get_stats, `[${id}].memo`)" />
+        </div>
+        <BaseTabs>
+          <BaseTab class="text-left" name="Opened" :selected="true">
+            <div class="px-4 pt-4 bg-background">
+              <div class="mb-4" v-for="(readReportLog, index) in get(get_stats, `${id}.opened`, [])" :key="index">
+                <ActivityFeedReadReportLog
+                  :deliverDateTime="formatDate(readReportLog.deliverDateTime)"
+                  :openDateTime="formatDate(readReportLog.openDateTime)"
+                  :email="readReportLog.email"
+                />
+              </div>
+            </div>
+          </BaseTab>
+          <BaseTab class="text-left" name="Unread">
+            <div class="px-4 pt-4 bg-background">
+              <div class="mb-4" v-for="(readReportLog, index) in get(get_stats, `${id}.notOpened`, [])" :key="index">
+                <ActivityFeedReadReportLog
+                  :deliverDateTime="formatDate(readReportLog.deliverDateTime)"
+                  :openDateTime="formatDate(readReportLog.openDateTime)"
+                  :email="readReportLog.email"
+                />
+              </div>
+            </div>
+          </BaseTab>
+        </BaseTabs>
       </div>
-      <BaseTabs>
-        <BaseTab class="text-left" name="Opened" :selected="true">
-          <div class="px-4 pt-4 bg-background">
-            <div class="mb-4" v-for="(readReportLog, index) in get(get_stats, `${id}.opened`, [])" :key="index">
-              <ActivityFeedReadReportLog
-                :deliverDateTime="formatDate(readReportLog.deliverDateTime)"
-                :openDateTime="formatDate(readReportLog.openDateTime)"
-                :email="readReportLog.email"
-              />
-            </div>
-          </div>
-        </BaseTab>
-        <BaseTab class="text-left" name="Unread">
-          <div class="px-4 pt-4 bg-background">
-            <div class="mb-4" v-for="(readReportLog, index) in get(get_stats, `${id}.notOpened`, [])" :key="index">
-              <ActivityFeedReadReportLog
-                :deliverDateTime="formatDate(readReportLog.deliverDateTime)"
-                :openDateTime="formatDate(readReportLog.openDateTime)"
-                :email="readReportLog.email"
-              />
-            </div>
-          </div>
-        </BaseTab>
-      </BaseTabs>
     </template>
   </LayoutFixedScrollable>
 </template>
