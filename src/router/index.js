@@ -4,6 +4,16 @@ import Home from '../views/Home.vue';
 import PostAdd from '../views/PostAdd.vue';
 import AuthLogin from '../views/AuthLogin.vue';
 import MemoAdd from '../views/MemoAdd.vue';
+import Settings from '../views/Settings';
+import ActivityFeedMemoList from '../views/ActivityFeedMemoList.vue';
+import ActivityFeedMemoItem from '../views/ActivityFeedMemoItem.vue';
+import EmailCampaign from '../views/EmailCampaign';
+import EmailLists from '../views/EmailLists';
+import EmailList from '../views/EmailList';
+import EmailListAdd from '../views/EmailListAdd';
+import EmailListEdit from '../views/EmailListEdit';
+import EmailListItem from '../views/EmailListItem';
+import EmailListImport from '../views/EmailListImport';
 import store from '../store';
 
 Vue.use(VueRouter);
@@ -35,6 +45,86 @@ const routes = [
     meta: {
       requiresAuth: true,
       needsUserInfo: false
+    }
+  },
+  {
+    path: '/settings',
+    name: 'Settings',
+    component: Settings,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/activity-feed/memos',
+    name: 'ActivityFeedMemoList',
+    component: ActivityFeedMemoList,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/activity-feed/memos/:id',
+    name: 'ActivityFeedMemoItem',
+    component: ActivityFeedMemoItem,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/settings/campaign',
+    name: 'EmailCampaign',
+    component: EmailCampaign,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/settings/email-lists',
+    name: 'EmailLists',
+    component: EmailLists,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/settings/email-lists/import',
+    name: 'EmailListImport',
+    component: EmailListImport,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/settings/email-lists/:groupName',
+    name: 'EmailList',
+    component: EmailList,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/settings/email-lists/:groupName/add',
+    name: 'EmailListAdd',
+    component: EmailListAdd,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/settings/email-lists/:groupName/:id/edit',
+    name: 'EmailListEdit',
+    component: EmailListEdit,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/settings/email-lists/:groupName/:id',
+    name: 'EmailListItem',
+    component: EmailListItem,
+    meta: {
+      requiresAuth: true
     }
   }
 ];
