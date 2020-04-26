@@ -64,14 +64,14 @@ export default {
         DistributionGroupService.recipients({
           distributionGroupName: context.state.selectedEmailList.distributionGroup || groupName
         })
-        .then(data => {
-          context.commit('updateEmails', { data });
-          resolve(data);
-        })
-        .catch(error => {
-          reject(error);
-        });
-      })
+          .then(data => {
+            context.commit('updateEmails', { data });
+            resolve(data);
+          })
+          .catch(error => {
+            reject(error);
+          });
+      });
     },
     addEmail(context) {
       return new Promise((resolve, reject) => {

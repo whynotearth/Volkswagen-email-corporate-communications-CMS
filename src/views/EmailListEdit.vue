@@ -57,15 +57,14 @@ export default {
       }
     }
   },
-  mounted () {
+  mounted() {
     this.init();
   },
   methods: {
     ...mapMutations('distributionGroup', ['selectEmail']),
-    init () {
+    init() {
       if (Object.entries(this.selectedEmail).length === 0) {
-        this.$store.dispatch('distributionGroup/getEmails',
-          this.$route.params.groupName).then((data) => {
+        this.$store.dispatch('distributionGroup/getEmails', this.$route.params.groupName).then(data => {
           const item = data.find(item => item.id == this.$route.params.id);
           this.selectEmail(item);
         });
