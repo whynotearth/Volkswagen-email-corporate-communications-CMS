@@ -1,6 +1,6 @@
 <template>
   <div class="">
-    <BaseAppBarHeader title="Add New List" :to-link="'/settings'" />
+    <BaseAppBarHeader title="Add New List" to-link="/settings/email-lists" />
     <div class="text-left py-6 px-4">
       <!-- uploader -->
       <div class="mb-6">
