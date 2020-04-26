@@ -9,22 +9,12 @@
 
     <template #content>
       <div class="px-4 pt-4">
-        <div class="mb-8" v-for="(item, index) in 4" :key="index">
+        <div class="mb-8" v-for="memoItem in get_memos" :key="memoItem.id">
           <router-link
             class="cursor-pointer block bg-background text-black hover:text-secondary"
-            :to="{ name: 'ActivityFeedMemoItem', params: { id: 111 } }"
-            v-for="(feedItem, index) in [
-              {
-                subject: 'All manager with work from lorem ipsum dolor sit amet',
-                creationDateTime: '0001-01-01T00:00:00',
-                to: 'aaaaaaaud',
-                description: 'bbbbbbbody by mort',
-                OpenPercentage: 85
-              }
-            ]"
-            :key="index"
+            :to="{ name: 'ActivityFeedMemoItem', params: { id: memoItem.id } }"
           >
-            <MemoListItem :model="feedItem" />
+            <MemoListItem :model="memoItem" />
           </router-link>
         </div>
       </div>
@@ -49,7 +39,7 @@ export default {
     ...mapActions('memo', ['fetch_memos'])
   },
   mounted() {
-    this.fetch_memos;
+    this.fetch_memos();
   }
 };
 </script>

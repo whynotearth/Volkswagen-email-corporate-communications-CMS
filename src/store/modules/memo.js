@@ -25,7 +25,8 @@ export default {
       message: '',
       class: '' // text-error text-success
     },
-    memos: []
+    memos: [],
+    stats: {}
   },
   mutations: {
     update_response_message(state, payload) {
@@ -51,17 +52,25 @@ export default {
     },
     update_memos(state, payload) {
       Vue.set(state, 'memos', payload);
+    },
+    update_stats(state, { key, data }) {
+      Vue.set(state.stats, key, data);
     }
   },
   actions: {
     clear_form_data(context) {
       context.commit('update_form_data', cloneDeep(defaultMemoFormData));
     },
-    async memos(context, payload) {
+    async add_memo(context, payload) {
       await MemoService.memos(payload.params);
     },
     async fetch_memos(context, payload) {
-      console.log('fetch memos');
+      const data = await MemoService.memos1();
+      context.commit('update_memos', data);
+    },
+    async fetch_stats(context, payload) {
+      const data = await MemoService.stats(payload);
+      context.commit('update_stats', { key: data.memo.id, data });
     }
   },
   getters: {
@@ -71,6 +80,7 @@ export default {
     get_date: state => state.form_data.date,
     get_recipients: state => state.form_data.recipients,
     get_response_message: state => state.response_message,
-    get_memos: state => state.memos
+    get_memos: state => state.memos,
+    get_stats: state => state.stats
   }
 };

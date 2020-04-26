@@ -67,6 +67,7 @@ const routes = [
     path: '/activity-feed/memos/:id',
     name: 'ActivityFeedMemoItem',
     component: ActivityFeedMemoItem,
+    props: true,
     meta: {
       requiresAuth: true
     }

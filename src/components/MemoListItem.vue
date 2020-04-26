@@ -8,16 +8,15 @@
         {{ model.subject }}
       </h2>
       <div class="tg-caption-mobile text-black em-disabled pl-2 text-right whitespace-no-wrap">
-        {{ model.creationDateTime }}
+        {{ filterFormatDate(model.creationDateTime, 'MM/dd/yyyy') }}
       </div>
     </div>
 
     <div class="tg-caption-mobile em-high text-black">To: {{ model.to }}</div>
-    <div class="tg-caption-mobile em-disabled text-black whitespace-pre-line mb-2">
+    <div class="tg-caption-mobile em-disabled text-black whitespace-pre-line mb-2 h-8 overflow-y-hidden">
       {{ model.description }}
     </div>
-
-    <BaseProgressBar :label="`Open rate: ${model.OpenPercentage}%`" :progress="model.OpenPercentage" />
+    <BaseProgressBar :label="`Open rate: ${model.openPercentage}%`" :progress="model.openPercentage" />
   </div>
 </template>
 
@@ -30,7 +29,10 @@ export default {
   props: ['model'],
   components: { BaseProgressBar },
   methods: {
-    formatDate
+    filterFormatDate(input, format) {
+      const date = new Date(input);
+      return formatDate(date, format);
+    }
   }
 };
 </script>
