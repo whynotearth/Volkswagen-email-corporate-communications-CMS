@@ -88,6 +88,9 @@ module.exports = {
       scale: {
         '-1': '-1'
       },
+      inset: {
+        '1/2': '50%'
+      },
       boxShadow: {
         '1dp': '0 1px 3px rgba(0, 0, 0, 0.2), 0 2px 2px rgba(0, 0, 0, 0.12), 0 0 2px rgba(0, 0, 0, 0.14)',
         '2dp': '0 1px 5px rgba(0, 0, 0, 0.2), 0 3px 4px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.14)',
