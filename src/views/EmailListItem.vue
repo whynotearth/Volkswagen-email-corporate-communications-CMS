@@ -22,7 +22,7 @@
         <li class="flex flex-wrap text-left px-4 py-4">
           <div class="w-full">{{ selectedEmail.email }}</div>
           <div class="w-full item-details text-xs pt-1">
-            {{ selectedEmail.creationDateTime }}
+            {{ filterFormatDate(selectedEmail.creationDateTime, 'MMM dd, yyyy') }}
           </div>
         </li>
       </ul>
@@ -32,6 +32,7 @@
 <script>
 import BaseAppBarHeader from '@/components/BaseAppBarHeader.vue';
 import { mapGetters } from 'vuex';
+import { formatDate } from '@/helpers.js';
 
 export default {
   name: 'EmailListItem',
@@ -48,6 +49,10 @@ export default {
     }
   },
   methods: {
+    filterFormatDate(input, format) {
+      const date = new Date(input);
+      return formatDate(date, format);
+    },
     toggleMenu() {
       this.isMenu = !this.isMenu;
     },
