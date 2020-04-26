@@ -1,28 +1,29 @@
 <template>
-  <svg class="w-full h-full">
-    <!-- background circle -->
-    <circle
-      :stroke-width="strokeWidth"
-      class="text-inactive stroke-current"
-      :cx="centerX"
-      :cy="centerY"
-      :r="radius"
-      fill="transparent"
-    />
-    <!-- progress circle -->
-    <circle
-      :stroke-width="strokeWidth"
-      :class="progressClasses"
-      class="text-button stroke-current"
-      :cx="centerX"
-      :cy="centerY"
-      :r="radius"
-      fill="transparent"
-      :stroke-dasharray="strokeDashArray"
-    />
-    <!-- content inside circle -->
+  <div class="w-full h-full">
+    <svg class="w-full h-full text-divider">
+      <!-- background circle -->
+      <circle
+        :stroke-width="strokeWidth"
+        class="text-inactive stroke-current"
+        :cx="centerX"
+        :cy="centerY"
+        :r="radius"
+        fill="transparent"
+      />
+      <!-- progress circle -->
+      <circle
+        :stroke-width="strokeWidth"
+        :class="progressClasses"
+        class="text-button stroke-current"
+        :cx="centerX"
+        :cy="centerY"
+        :r="radius"
+        fill="transparent"
+        :stroke-dasharray="strokeDashArray"
+      />
+    </svg>
     <slot />
-  </svg>
+  </div>
 </template>
 
 <script>
