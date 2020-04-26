@@ -10,14 +10,14 @@
       <label class="w-full text-left mb-2">Edit:</label>
       <div class="mb-4 w-full">
         <BaseInputText
-          class="bg-surface"
+          class="bg-surface text-left"
           v-model="$v.email.$model"
           label="Email Subject Line"
           placeholder="Email Subject Line"
-          :error="$v.email.$dirty && !$v.email.required"
+          :error="$v.email.$dirty && (!$v.email.required || !$v.email.email)"
         >
           <span v-if="$v.email.$dirty && !$v.email.required" class="text-xs text-error">
-            Email subject line is required
+            Email is required
           </span>
           <span v-if="$v.email.$dirty && !$v.email.email" class="text-xs text-error">
             Please enter valid email
@@ -46,18 +46,36 @@ export default {
     }
   },
   computed: {
+    ...mapGetters('distributionGroup', ['selectedEmail']),
     email: {
       get() {
-        return this.$store.getters['distributionGroup/selectedEmail'].email;
+        return this.selectedEmail.email;
       },
       set(value) {
-        this.updateEmail(value);
+        this.selectedEmail.email = value;
+        this.selectEmail(this.selectedEmail);
       }
     }
   },
+  mounted () {
+    this.init();
+  },
   methods: {
-    ...mapMutations('distributionGroup', ['updateEmail']),
+    ...mapMutations('distributionGroup', ['selectEmail']),
+    init () {
+      if (Object.entries(this.selectedEmail).length === 0) {
+        this.$store.dispatch('distributionGroup/getEmails',
+          this.$route.params.groupName).then((data) => {
+          const item = data.find(item => item.id == this.$route.params.id);
+          this.selectEmail(item);
+        });
+      }
+    },
     editEmail() {
+      this.$v.$touch();
+      if (this.$v.$invalid) {
+        return false;
+      }
       this.$store.dispatch('distributionGroup/editEmail').then(() => {
         this.$router.push({ name: 'EmailLists' });
       });

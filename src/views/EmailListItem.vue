@@ -31,7 +31,7 @@
 </template>
 <script>
 import BaseAppBarHeader from '@/components/BaseAppBarHeader.vue';
-import { mapGetters } from 'vuex';
+import { mapGetters, mapMutations, mapActions } from 'vuex';
 
 export default {
   name: 'EmailListItem',
@@ -47,7 +47,20 @@ export default {
       return `/settings/email-lists/${this.$route.params.groupName}`;
     }
   },
+  mounted() {
+    this.init();
+  },
   methods: {
+    ...mapMutations('distributionGroup', ['selectEmail']),
+    init() {
+      if (Object.entries(this.selectedEmail).length === 0) {
+        this.$store.dispatch('distributionGroup/getEmails',
+          this.$route.params.groupName).then((data) => {
+          const item = data.find(item => item.id == this.$route.params.id);
+          this.selectEmail(item);
+        });
+      }
+    },
     toggleMenu() {
       this.isMenu = !this.isMenu;
     },
