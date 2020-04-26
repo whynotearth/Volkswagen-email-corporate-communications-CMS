@@ -1,6 +1,7 @@
 <template>
   <div class="">
     <BaseAppBarHeader
+      class="sticky top-0 bg-white"
       :title="titleHeader"
       :to-link="'/settings/email-lists'"
       :action="{ link: `${$route.params.groupName}/add`, label: 'Add New' }"
