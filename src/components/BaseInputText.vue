@@ -31,6 +31,7 @@
     <slot></slot>
 
     <label
+      v-show="!$slots.iconBefore"
       :for="idName"
       class="bg-inherit label absolute top-0 left-0 cursor-text"
       :class="error ? 'text-red-600' : 'text-gray-500'"
