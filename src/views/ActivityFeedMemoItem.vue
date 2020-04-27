@@ -3,109 +3,43 @@
     <template #header>
       <BaseAppBarHeader :title="'Open Rate'" :to-link="'/activity-feed/memos'" />
 
-      <div class="px-2 pt-4 mb-4">
-        <ActivityFeedSearchBox />
+      <div class="container px-0 md:px-6 text-left">
+        <div class="px-2 pt-4 mb-4">
+          <ActivityFeedSearchBox />
+        </div>
       </div>
     </template>
 
     <template #content>
-      <div class="px-4 pb-4 pt-2 bg-background z-10 relative">
-        <MemoListItem
-          :model="{
-            subject: 'All manager with work from lorem ipsum dolor sit amet',
-            creationDateTime: '0001-01-01T00:00:00',
-            to: 'aaaaaaaud',
-            description: 'bbbbbbbody by mort',
-            OpenPercentage: 15
-          }"
-        />
+      <div class="container px-0 md:px-6 text-left">
+        <div class="px-4 pb-4 pt-2 bg-background z-10 relative">
+          <MemoOpenRateItem v-if="get(get_stats, `[${id}].memo`)" :model="get(get_stats, `[${id}].memo`)" />
+        </div>
+        <BaseTabs>
+          <BaseTab class="text-left" name="Opened" :selected="true">
+            <div class="px-4 pt-4 bg-background">
+              <div class="mb-4" v-for="(readReportLog, index) in get(get_stats, `${id}.opened`, [])" :key="index">
+                <ActivityFeedReadReportLog
+                  :deliverDateTime="formatDate(readReportLog.deliverDateTime)"
+                  :openDateTime="formatDate(readReportLog.openDateTime)"
+                  :email="readReportLog.email"
+                />
+              </div>
+            </div>
+          </BaseTab>
+          <BaseTab class="text-left" name="Unread">
+            <div class="px-4 pt-4 bg-background">
+              <div class="mb-4" v-for="(readReportLog, index) in get(get_stats, `${id}.notOpened`, [])" :key="index">
+                <ActivityFeedReadReportLog
+                  :deliverDateTime="formatDate(readReportLog.deliverDateTime)"
+                  :openDateTime="formatDate(readReportLog.openDateTime)"
+                  :email="readReportLog.email"
+                />
+              </div>
+            </div>
+          </BaseTab>
+        </BaseTabs>
       </div>
-      <BaseTabs>
-        <BaseTab class="text-left" name="Opened" :selected="true">
-          <div class="px-4 pt-4 bg-background">
-            <div
-              class="mb-4"
-              v-for="(readReportLog, index) in [
-                {
-                  to: 'someone@email',
-                  recieved: '2020/04/10 9:49 PM',
-                  opened: '2020/04/11 3:30 PM'
-                },
-                {
-                  to: 'someone@email',
-                  recieved: '2020/04/10 9:49 PM',
-                  opened: '2020/04/11 3:30 PM'
-                },
-                {
-                  to: 'someone@email',
-                  recieved: '2020/04/10 9:49 PM',
-                  opened: '2020/04/11 3:30 PM'
-                },
-                {
-                  to: 'someone@email',
-                  recieved: '2020/04/10 9:49 PM',
-                  opened: '2020/04/11 3:30 PM'
-                },
-                {
-                  to: 'someone@email',
-                  recieved: '2020/04/10 9:49 PM',
-                  opened: '2020/04/11 3:30 PM'
-                },
-                {
-                  to: 'someone@email',
-                  recieved: '2020/04/10 9:49 PM',
-                  opened: '2020/04/11 3:30 PM'
-                }
-              ]"
-              :key="index"
-            >
-              <ActivityFeedReadReportLog :model="readReportLog" />
-            </div>
-          </div>
-        </BaseTab>
-        <BaseTab class="text-left" name="Unread">
-          <div class="px-4 pt-4 bg-background">
-            <div
-              class="mb-4"
-              v-for="(readReportLog, index) in [
-                {
-                  to: 'someone@email22',
-                  recieved: '2020/04/12 9:49 PM',
-                  opened: '2020/04/11 3:30 PM'
-                },
-                {
-                  to: 'someone@email3',
-                  recieved: '2020/04/10 9:49 PM',
-                  opened: '2020/04/11 3:30 PM'
-                },
-                {
-                  to: 'someone@email4',
-                  recieved: '2020/04/10 9:49 PM',
-                  opened: '2020/04/11 3:30 PM'
-                },
-                {
-                  to: 'someone@email5',
-                  recieved: '2020/04/10 9:49 PM',
-                  opened: '2020/04/11 3:30 PM'
-                },
-                {
-                  to: 'someone@email6',
-                  recieved: '2020/04/10 9:49 PM',
-                  opened: '2020/04/11 3:30 PM'
-                },
-                {
-                  to: 'someone@email7',
-                  recieved: '2020/04/10 9:49 PM',
-                  opened: '2020/04/11 3:30 PM'
-                }
-              ]"
-              :key="index"
-            >
-              <ActivityFeedReadReportLog :model="readReportLog" />
-            </div>
-          </div>
-        </BaseTab>
-      </BaseTabs>
     </template>
   </LayoutFixedScrollable>
 </template>
@@ -115,9 +49,12 @@ import BaseAppBarHeader from '@/components/BaseAppBarHeader.vue';
 import BaseTabs from '@/components/BaseTabs.vue';
 import BaseTab from '@/components/BaseTab.vue';
 import ActivityFeedSearchBox from '@/components/ActivityFeedSearchBox.vue';
-import MemoListItem from '@/components/MemoListItem.vue';
+import MemoOpenRateItem from '@/components/MemoOpenRateItem.vue';
 import ActivityFeedReadReportLog from '@/components/ActivityFeedReadReportLog.vue';
 import LayoutFixedScrollable from '@/components/LayoutFixedScrollable.vue';
+import { mapGetters, mapActions } from 'vuex';
+import { get } from 'lodash-es';
+import { formatDate } from '@/helpers.js';
 
 export default {
   name: 'ActivityFeedMemoItem',
@@ -127,8 +64,24 @@ export default {
     BaseTabs,
     BaseTab,
     ActivityFeedSearchBox,
-    MemoListItem,
+    MemoOpenRateItem,
     ActivityFeedReadReportLog
+  },
+  props: ['id'],
+  computed: {
+    ...mapGetters('memo', ['get_stats'])
+  },
+  methods: {
+    ...mapActions('memo', ['fetch_stats']),
+    get,
+    formatDate(dateString) {
+      return formatDate(dateString, 'yyyy/MM/dd h:mm aaa');
+    }
+  },
+  mounted() {
+    this.fetch_stats({
+      memoId: this.id
+    });
   }
 };
 </script>

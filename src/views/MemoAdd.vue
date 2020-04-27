@@ -39,7 +39,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions('memo', ['memos']),
+    ...mapActions('memo', ['add_memo']),
     ...mapMutations('memo', ['update_response_message']),
     parseInt,
     changeStep(change) {
@@ -79,7 +79,7 @@ export default {
           distributionGroup: this.get_recipients.join(',')
         }
       };
-      this.memos({ params })
+      this.add_memo({ params })
         .then(() => {
           this.$store.dispatch('memo/clear_form_data');
           this.onSuccessSubmit();

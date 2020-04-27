@@ -76,6 +76,9 @@ export function APIPath(path) {
 }
 
 export function formatDate(inputDate, dateFormat = 'ddd, D MMM') {
+  if (!inputDate) {
+    return '';
+  }
   return format(inputDate, dateFormat);
 }
 

@@ -1,14 +1,14 @@
-<template>
+<template functional>
   <div>
-    <div class="tg-body-mobile em-high mb-2">To: {{ model.to }}</div>
-    <div class="tg-caption-mobile em-disabled">Recieved: {{ model.recieved }}</div>
-    <div class="tg-caption-mobile em-disabled">Opened: {{ model.opened }}</div>
+    <div class="tg-body-mobile em-high mb-2">To: {{ props.email }}</div>
+    <div class="tg-caption-mobile em-disabled">Recieved: {{ props.deliverDateTime }}</div>
+    <div v-if="openDateTime" class="tg-caption-mobile em-disabled">Opened: {{ props.openDateTime }}</div>
   </div>
 </template>
 
 <script>
 export default {
   name: 'ActivityFeedReadReportLog',
-  props: ['model']
+  props: ['email', 'deliverDateTime', 'openDateTime']
 };
 </script>
