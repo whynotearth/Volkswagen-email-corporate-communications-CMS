@@ -1,20 +1,24 @@
 <template>
-  <div>
-    <div class="tabs mb-2">
-      <ul class="flex justify-start shadow-4dp tg-color-label-mobile">
-        <li
-          class="block flex-grow"
-          v-for="(tab, index) in tabs"
-          :class="{ 'is-active border-b-2 border-secondary': tab.isActive }"
-          :key="index"
-        >
-          <a class="block p-4" :href="tab.href" @click.prevent="selectTab(tab)">{{ tab.name }}</a>
-        </li>
-      </ul>
+  <div class="tabs">
+    <div class="shadow-4dp mb-2">
+      <div class="container px-0 md:px-6">
+        <ul class="flex tg-color-label-mobile">
+          <li
+            class="block flex-grow"
+            v-for="(tab, index) in tabs"
+            :class="{ 'is-active border-b-2 border-secondary': tab.isActive }"
+            :key="index"
+          >
+            <a class="block p-4 text-center" :href="tab.href" @click.prevent="selectTab(tab)">{{ tab.name }}</a>
+          </li>
+        </ul>
+      </div>
     </div>
 
     <div class="tabs-details">
-      <slot></slot>
+      <div class="container px-0 md:px-6">
+        <slot></slot>
+      </div>
     </div>
   </div>
 </template>
