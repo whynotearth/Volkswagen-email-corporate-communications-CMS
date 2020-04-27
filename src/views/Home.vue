@@ -17,9 +17,16 @@
         <div v-if="isAuthenticated">
           <router-link
             :to="{ name: 'MemoAdd' }"
-            class="block bg-secondary w-full hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline transition duration-100 ease-in-out transition-all label-mobile"
+            class="block bg-secondary w-full hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline transition duration-100 ease-in-out transition-all label-mobile mb-6"
           >
             Compose New Memo
+          </router-link>
+
+          <router-link
+            :to="{ name: 'ActivityFeedMemoList' }"
+            class="block bg-secondary w-full hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline transition duration-100 ease-in-out transition-all label-mobile"
+          >
+            View Stats
           </router-link>
         </div>
 
