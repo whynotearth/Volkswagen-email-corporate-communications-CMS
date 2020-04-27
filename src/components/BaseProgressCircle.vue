@@ -21,8 +21,8 @@
         fill="transparent"
         :stroke-dasharray="strokeDashArray"
       />
+      <slot />
     </svg>
-    <slot />
   </div>
 </template>
 
