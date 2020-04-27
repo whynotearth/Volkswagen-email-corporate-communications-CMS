@@ -3,11 +3,11 @@
     <template #header>
       <BaseAppBarHeader :title="'Activity Feed'" :to-link="'/settings'" />
 
-      <div class="container px-0 md:px-6 text-left">
+      <!-- <div class="container px-0 md:px-6 text-left">
         <div class="px-2 pt-4 mb-4">
           <ActivityFeedSearchBox />
         </div>
-      </div>
+      </div> -->
     </template>
 
     <template #content>
@@ -29,14 +29,15 @@
 
 <script>
 import BaseAppBarHeader from '@/components/BaseAppBarHeader.vue';
-import ActivityFeedSearchBox from '@/components/ActivityFeedSearchBox.vue';
+// import ActivityFeedSearchBox from '@/components/ActivityFeedSearchBox.vue';
 import MemoListItem from '@/components/MemoListItem.vue';
 import LayoutFixedScrollable from '@/components/LayoutFixedScrollable.vue';
 import { mapGetters, mapActions } from 'vuex';
 
 export default {
   name: 'ActivityFeedMemoList',
-  components: { MemoListItem, BaseAppBarHeader, ActivityFeedSearchBox, LayoutFixedScrollable },
+  // ActivityFeedSearchBox
+  components: { MemoListItem, BaseAppBarHeader, LayoutFixedScrollable },
   computed: {
     ...mapGetters('memo', ['get_memos'])
   },

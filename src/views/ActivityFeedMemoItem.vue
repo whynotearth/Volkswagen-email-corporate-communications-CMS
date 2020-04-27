@@ -3,11 +3,11 @@
     <template #header>
       <BaseAppBarHeader :title="'Open Rate'" :to-link="'/activity-feed/memos'" />
 
-      <div class="container px-0 md:px-6">
+      <!-- <div class="container px-0 md:px-6">
         <div class="px-2 pt-4 mb-4">
           <ActivityFeedSearchBox />
         </div>
-      </div>
+      </div> -->
     </template>
 
     <template #content>
@@ -51,7 +51,7 @@
 import BaseAppBarHeader from '@/components/BaseAppBarHeader.vue';
 import BaseTabs from '@/components/BaseTabs.vue';
 import BaseTab from '@/components/BaseTab.vue';
-import ActivityFeedSearchBox from '@/components/ActivityFeedSearchBox.vue';
+// import ActivityFeedSearchBox from '@/components/ActivityFeedSearchBox.vue';
 import MemoOpenRateItem from '@/components/MemoOpenRateItem.vue';
 import ActivityFeedReadReportLog from '@/components/ActivityFeedReadReportLog.vue';
 import LayoutFixedScrollable from '@/components/LayoutFixedScrollable.vue';
@@ -66,7 +66,7 @@ export default {
     BaseAppBarHeader,
     BaseTabs,
     BaseTab,
-    ActivityFeedSearchBox,
+    // ActivityFeedSearchBox,
     MemoOpenRateItem,
     ActivityFeedReadReportLog
   },
