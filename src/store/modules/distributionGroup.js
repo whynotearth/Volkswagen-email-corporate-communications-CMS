@@ -59,15 +59,19 @@ export default {
         return new Error('get stats issue');
       }
     },
-    async getEmails(context, groupName) {
-      try {
-        const data = await DistributionGroupService.recipients({
+    getEmails(context, groupName) {
+      return new Promise((resolve, reject) => {
+        DistributionGroupService.recipients({
           distributionGroupName: context.state.selectedEmailList.distributionGroup || groupName
-        });
-        context.commit('updateEmails', { data });
-      } catch (error) {
-        return new Error('get recipients issue');
-      }
+        })
+          .then(data => {
+            context.commit('updateEmails', { data });
+            resolve(data);
+          })
+          .catch(error => {
+            reject(error);
+          });
+      });
     },
     addEmail(context) {
       return new Promise((resolve, reject) => {
@@ -89,7 +93,7 @@ export default {
         DistributionGroupService.recipients2({
           distributionGroupName: context.state.selectedEmailList.distributionGroup,
           recipientId: context.state.selectedEmail.id,
-          body: { email: context.state.email }
+          body: { email: context.state.selectedEmail.email }
         })
           .then(data => {
             context.commit('updateEmail', '');

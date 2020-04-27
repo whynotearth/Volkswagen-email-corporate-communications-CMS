@@ -1,6 +1,6 @@
 <template>
   <div class="text-left block">
-    <div class="flex items-center mb-4">
+    <div class="flex items-center mb-1">
       <h2
         class="tg-body-emphasis-mobile em-high text-inherit flex-grow whitespace-no-wrap overflow-x-hidden truncate transition transition-colors duration-100"
         :title="model.subject"
@@ -12,10 +12,7 @@
       </div>
     </div>
 
-    <div class="tg-caption-mobile em-high text-black">To: {{ model.to }}</div>
-    <div class="tg-caption-mobile em-disabled text-black whitespace-pre-line mb-2 h-8 overflow-hidden">
-      {{ model.description }}
-    </div>
+    <div class="tg-caption-mobile em-medium text-black mb-2">To: {{ model.to }}</div>
     <BaseProgressBar :label="`Open rate: ${model.openPercentage}%`" :progress="model.openPercentage" />
   </div>
 </template>
@@ -25,7 +22,7 @@ import BaseProgressBar from '@/components/BaseProgressBar.vue';
 import { formatDate } from '@/helpers.js';
 
 export default {
-  name: 'MemoListItem',
+  name: 'MemoOpenRateItem',
   props: ['model'],
   components: { BaseProgressBar },
   methods: {

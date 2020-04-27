@@ -67,6 +67,7 @@ const routes = [
     path: '/activity-feed/memos/:id',
     name: 'ActivityFeedMemoItem',
     component: ActivityFeedMemoItem,
+    props: true,
     meta: {
       requiresAuth: true
     }
@@ -83,6 +84,14 @@ const routes = [
     path: '/settings/email-lists',
     name: 'EmailLists',
     component: EmailLists,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/settings/email-lists/import',
+    name: 'EmailListImport',
+    component: EmailListImport,
     meta: {
       requiresAuth: true
     }
@@ -115,14 +124,6 @@ const routes = [
     path: '/settings/email-lists/:groupName/:id',
     name: 'EmailListItem',
     component: EmailListItem,
-    meta: {
-      requiresAuth: true
-    }
-  },
-  {
-    path: '/settings/email-lists-import',
-    name: 'EmailListImport',
-    component: EmailListImport,
     meta: {
       requiresAuth: true
     }

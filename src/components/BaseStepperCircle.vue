@@ -1,17 +1,10 @@
 <template>
   <div class="w-100 flex items-center h-20">
-    <div class="w-16 h-16">
-      <BaseProgressCircle :centerX="32" :centerY="32" :radius="30" :percentageProgress="percentageProgress">
-        <text
-          x="50%"
-          y="50%"
-          dominant-baseline="middle"
-          text-anchor="middle"
-          class="progress-circle--content text-black text-sm fill-current stroke-0"
-        >
-          {{ progressText }}
-        </text>
-      </BaseProgressCircle>
+    <div class="w-16 h-16 relative">
+      <BaseProgressCircle :centerX="32" :centerY="32" :radius="30" :percentageProgress="percentageProgress" />
+      <div class="text-xs absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 whitespace-no-wrap">
+        {{ progressText }}
+      </div>
     </div>
     <div class="flex-grow text-right flex items-end flex-col justify-center">
       <h3 class="text-primary mb-2 h2-mobile">{{ stepHeader(currentStep) }}</h3>

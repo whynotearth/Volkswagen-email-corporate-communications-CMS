@@ -2,30 +2,25 @@
   <LayoutFixedScrollable>
     <template #header>
       <BaseAppBarHeader :title="'Activity Feed'" :to-link="'/settings'" />
-      <div class="px-2 pt-4 mb-4">
-        <ActivityFeedSearchBox />
-      </div>
+
+      <!-- <div class="container px-0 md:px-6 text-left">
+        <div class="px-2 pt-4 mb-4">
+          <ActivityFeedSearchBox />
+        </div>
+      </div> -->
     </template>
 
     <template #content>
-      <div class="px-4 pt-4">
-        <div class="mb-8" v-for="(item, index) in 4" :key="index">
-          <router-link
-            class="cursor-pointer block bg-background text-black hover:text-secondary"
-            :to="{ name: 'ActivityFeedMemoItem', params: { id: 111 } }"
-            v-for="(feedItem, index) in [
-              {
-                subject: 'All manager with work from lorem ipsum dolor sit amet',
-                creationDateTime: '0001-01-01T00:00:00',
-                to: 'aaaaaaaud',
-                description: 'bbbbbbbody by mort',
-                OpenPercentage: 85
-              }
-            ]"
-            :key="index"
-          >
-            <MemoListItem :model="feedItem" />
-          </router-link>
+      <div class="container px-0 md:px-6 text-left">
+        <div class="px-4 pt-4">
+          <div class="mb-8" v-for="memoItem in get_memos" :key="memoItem.id">
+            <router-link
+              class="cursor-pointer block bg-background text-black hover:text-secondary"
+              :to="{ name: 'ActivityFeedMemoItem', params: { id: memoItem.id } }"
+            >
+              <MemoListItem :model="memoItem" />
+            </router-link>
+          </div>
         </div>
       </div>
     </template>
@@ -34,14 +29,15 @@
 
 <script>
 import BaseAppBarHeader from '@/components/BaseAppBarHeader.vue';
-import ActivityFeedSearchBox from '@/components/ActivityFeedSearchBox.vue';
+// import ActivityFeedSearchBox from '@/components/ActivityFeedSearchBox.vue';
 import MemoListItem from '@/components/MemoListItem.vue';
 import LayoutFixedScrollable from '@/components/LayoutFixedScrollable.vue';
 import { mapGetters, mapActions } from 'vuex';
 
 export default {
   name: 'ActivityFeedMemoList',
-  components: { MemoListItem, BaseAppBarHeader, ActivityFeedSearchBox, LayoutFixedScrollable },
+  // ActivityFeedSearchBox
+  components: { MemoListItem, BaseAppBarHeader, LayoutFixedScrollable },
   computed: {
     ...mapGetters('memo', ['get_memos'])
   },
@@ -49,7 +45,7 @@ export default {
     ...mapActions('memo', ['fetch_memos'])
   },
   mounted() {
-    this.fetch_memos;
+    this.fetch_memos();
   }
 };
 </script>
