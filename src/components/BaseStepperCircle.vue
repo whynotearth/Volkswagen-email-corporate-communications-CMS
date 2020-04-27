@@ -2,7 +2,7 @@
   <div class="w-100 flex items-center h-20">
     <div class="w-16 h-16 relative">
       <BaseProgressCircle :centerX="32" :centerY="32" :radius="30" :percentageProgress="percentageProgress" />
-      <div class="whitespace-no-wrap text-xs absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+      <div class="text-xs absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 whitespace-no-wrap">
         {{ progressText }}
       </div>
     </div>
