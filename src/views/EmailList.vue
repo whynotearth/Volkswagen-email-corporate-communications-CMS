@@ -16,7 +16,7 @@
         >
           <div class="w-full">{{ item.email }}</div>
           <div class="w-full item-details text-xs pt-1">
-            {{ filterFormatDate(item.creationDateTime, 'MMM dd, yyyy') }}
+            {{ formatDate(item.creationDateTime, 'M/d/yyyy') }}
           </div>
         </li>
       </ul>
@@ -45,10 +45,7 @@ export default {
   },
   methods: {
     ...mapMutations('distributionGroup', ['selectEmail', 'updateEmails']),
-    filterFormatDate(input, format) {
-      const date = new Date(input);
-      return formatDate(date, format);
-    },
+    formatDate,
     getEmailList() {
       this.$store.dispatch('distributionGroup/getEmails', this.$route.params.groupName);
     },

@@ -23,8 +23,8 @@
           <div class="px-4 pt-4 bg-background">
             <div class="mb-4" v-for="(readReportLog, index) in get(get_stats, `${id}.opened`, [])" :key="index">
               <ActivityFeedReadReportLog
-                :deliverDateTime="formatDate(readReportLog.deliverDateTime)"
-                :openDateTime="formatDate(readReportLog.openDateTime)"
+                :deliverDateTime="formatDate(readReportLog.deliverDateTime, 'M/d/yyyy h:mm aaa')"
+                :openDateTime="formatDate(readReportLog.openDateTime, 'M/d/yyyy h:mm aaa')"
                 :email="readReportLog.email"
               />
             </div>
@@ -34,9 +34,10 @@
           <div class="px-4 pt-4 bg-background">
             <div class="mb-4" v-for="(readReportLog, index) in get(get_stats, `${id}.notOpened`, [])" :key="index">
               <ActivityFeedReadReportLog
-                :deliverDateTime="formatDate(readReportLog.deliverDateTime)"
-                :openDateTime="formatDate(readReportLog.openDateTime)"
+                :deliverDateTime="formatDate(readReportLog.deliverDateTime, 'M/d/yyyy h:mm aaa')"
+                :openDateTime="formatDate(readReportLog.openDateTime, 'M/d/yyyy h:mm aaa')"
                 :email="readReportLog.email"
+                hideOpened="1"
               />
             </div>
           </div>
@@ -76,9 +77,7 @@ export default {
   methods: {
     ...mapActions('memo', ['fetch_stats']),
     get,
-    formatDate(dateString) {
-      return formatDate(dateString, 'yyyy/MM/dd h:mm aaa');
-    }
+    formatDate
   },
   mounted() {
     this.fetch_stats({

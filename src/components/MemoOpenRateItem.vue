@@ -8,7 +8,7 @@
         {{ model.subject }}
       </h2>
       <div class="tg-caption-mobile text-black em-disabled pl-2 text-right whitespace-no-wrap">
-        {{ filterFormatDate(model.creationDateTime, 'MM/dd/yyyy') }}
+        {{ formatDate(model.creationDateTime, 'M/d/yyyy') }}
       </div>
     </div>
 
@@ -26,10 +26,7 @@ export default {
   props: ['model'],
   components: { BaseProgressBar },
   methods: {
-    filterFormatDate(input, format) {
-      const date = new Date(input);
-      return formatDate(date, format);
-    }
+    formatDate
   }
 };
 </script>
