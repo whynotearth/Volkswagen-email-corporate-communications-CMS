@@ -19,6 +19,7 @@
 }
 
 .multiselect__select {
+  display: none;
   height: 48px;
   z-index: 1;
 }
