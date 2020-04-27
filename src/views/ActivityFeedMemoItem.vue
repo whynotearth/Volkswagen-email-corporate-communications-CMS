@@ -34,6 +34,7 @@
                   :deliverDateTime="formatDate(readReportLog.deliverDateTime)"
                   :openDateTime="formatDate(readReportLog.openDateTime)"
                   :email="readReportLog.email"
+                  hideOpened="1"
                 />
               </div>
             </div>

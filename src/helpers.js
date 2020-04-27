@@ -79,6 +79,9 @@ export function formatDate(inputDate, dateFormat = 'ddd, D MMM') {
   if (!inputDate) {
     return '';
   }
+  if (typeof inputDate === 'string') {
+    inputDate = new Date(inputDate);
+  }
   return format(inputDate, dateFormat);
 }
 
