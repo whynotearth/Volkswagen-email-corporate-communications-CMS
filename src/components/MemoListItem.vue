@@ -13,7 +13,7 @@
     </div>
 
     <div class="tg-caption-mobile em-high text-black">To: {{ model.to }}</div>
-    <div class="tg-caption-mobile em-disabled text-black whitespace-pre-line mb-2 h-8 overflow-y-hidden">
+    <div class="tg-caption-mobile em-disabled text-black whitespace-pre-line mb-2 h-8 overflow-hidden">
       {{ model.description }}
     </div>
     <BaseProgressBar :label="`Open rate: ${model.openPercentage}%`" :progress="model.openPercentage" />
