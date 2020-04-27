@@ -9,6 +9,10 @@
 @import './animations.css';
 @import './plugin-multiselect.css';
 
+.pl-error-message {
+  padding-left: 1.125rem;
+}
+
 .fade-enter-active,
 .fade-leave-active {
   transition-duration: 0.3s;
