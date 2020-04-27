@@ -22,7 +22,7 @@
         <li class="flex flex-wrap text-left px-4 py-4">
           <div class="w-full">{{ selectedEmail.email }}</div>
           <div class="w-full item-details text-xs pt-1">
-            {{ filterFormatDate(selectedEmail.creationDateTime, 'MMM dd, yyyy') }}
+            {{ formatDate(selectedEmail.creationDateTime, 'M/d/yyyy') }}
           </div>
         </li>
       </ul>
@@ -53,6 +53,7 @@ export default {
   },
   methods: {
     ...mapMutations('distributionGroup', ['selectEmail']),
+    formatDate,
     init() {
       if (Object.entries(this.selectedEmail).length === 0) {
         this.$store.dispatch('distributionGroup/getEmails', this.$route.params.groupName).then(data => {
@@ -60,10 +61,6 @@ export default {
           this.selectEmail(item);
         });
       }
-    },
-    filterFormatDate(input, format) {
-      const date = new Date(input);
-      return formatDate(date, format);
     },
     toggleMenu() {
       this.isMenu = !this.isMenu;
