@@ -24,7 +24,7 @@
         </svg>
       </router-link>
     </div>
-    <div class="flex items-strech items-center border-b-1 border-divider">
+    <!-- <div class="flex items-strech items-center border-b-1 border-divider">
       <router-link
         to="/"
         class="link-fordward block flex-grow justify-between flex h-full items-center cursor-pointer select-none px-4 pr-6 py-5"
@@ -46,7 +46,7 @@
           />
         </svg>
       </router-link>
-    </div>
+    </div> -->
   </div>
 </template>
 <script>
