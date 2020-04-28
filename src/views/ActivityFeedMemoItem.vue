@@ -14,7 +14,7 @@
       <div class="bg-background z-10 relative">
         <div class="container px-0 md:px-6">
           <div class="px-4 pb-4 pt-2">
-            <MemoOpenRateItem v-if="get(get_stats, `[${id}].memo`)" :model="get(get_stats, `[${id}].memo`)" />
+            <MemoListItem v-if="get(get_stats, `[${id}].memo`)" :model="get(get_stats, `[${id}].memo`)" />
           </div>
         </div>
       </div>
@@ -52,7 +52,7 @@ import BaseAppBarHeader from '@/components/BaseAppBarHeader.vue';
 import BaseTabs from '@/components/BaseTabs.vue';
 import BaseTab from '@/components/BaseTab.vue';
 // import ActivityFeedSearchBox from '@/components/ActivityFeedSearchBox.vue';
-import MemoOpenRateItem from '@/components/MemoOpenRateItem.vue';
+import MemoListItem from '@/components/MemoListItem.vue';
 import ActivityFeedReadReportLog from '@/components/ActivityFeedReadReportLog.vue';
 import LayoutFixedScrollable from '@/components/LayoutFixedScrollable.vue';
 import { mapGetters, mapActions } from 'vuex';
@@ -67,7 +67,7 @@ export default {
     BaseTabs,
     BaseTab,
     // ActivityFeedSearchBox,
-    MemoOpenRateItem,
+    MemoListItem,
     ActivityFeedReadReportLog
   },
   props: ['id'],
