@@ -16,7 +16,7 @@
         >
           <div class="w-full">{{ item.email }}</div>
           <div class="w-full item-details text-xs pt-1">
-            {{ formatDate(item.creationDateTime, 'M/d/yyyy') }}
+            {{ formatDate(item.creationDateTime, 'dd MMM, yyyy') }}
           </div>
         </li>
       </ul>

@@ -75,7 +75,7 @@ export function APIPath(path) {
   return BASE_API + path;
 }
 
-export function formatDate(inputDate, dateFormat = 'ddd, D MMM') {
+export function formatDate(inputDate, dateFormat = 'dd MMM, yyyy') {
   if (!inputDate) {
     return '';
   }
