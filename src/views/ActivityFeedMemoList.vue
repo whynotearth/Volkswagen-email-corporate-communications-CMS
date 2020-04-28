@@ -1,7 +1,7 @@
 <template>
   <LayoutFixedScrollable>
     <template #header>
-      <BaseAppBarHeader :title="'Memo Stats'" :to-link="'/settings'" />
+      <BaseAppBarHeader :title="'Memo Stats'" :to-link="'/'" />
 
       <!-- <div class="container px-0 md:px-6 text-left">
         <div class="px-2 pt-4 mb-4">
