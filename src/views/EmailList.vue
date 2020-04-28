@@ -1,36 +1,43 @@
 <template>
-  <div class="">
-    <BaseAppBarHeader
-      class="sticky top-0 bg-white"
-      :title="titleHeader"
-      :to-link="'/settings/email-lists'"
-      :action="{ link: `${$route.params.groupName}/add`, label: 'Add New' }"
-    />
-    <div class="flex">
-      <ul class="container px-0 md:px-6 pt-4">
-        <li
-          v-for="item in getEmails"
-          :key="item.id"
-          class="flex flex-wrap text-left px-4 py-4 cursor-pointer"
-          @click="choiceEmail(item)"
-        >
-          <div class="w-full">{{ item.email }}</div>
-          <div class="w-full item-details text-xs pt-1">
-            {{ formatDate(item.creationDateTime, 'dd MMM, yyyy') }}
-          </div>
-        </li>
-      </ul>
-    </div>
-  </div>
+  <LayoutFixedScrollable>
+    <template #content>
+      <div class="">
+        <BaseAppBarHeader
+          class="sticky top-0 bg-white"
+          :title="titleHeader"
+          :to-link="'/settings/email-lists'"
+          :action="{ link: `${$route.params.groupName}/add`, label: 'Add New' }"
+        />
+        <div class="flex">
+          <ul class="container px-0 md:px-6 pt-4">
+            <li
+              v-for="item in getEmails"
+              :key="item.id"
+              class="flex flex-wrap text-left px-4 py-4 cursor-pointer"
+              @click="choiceEmail(item)"
+            >
+              <div class="w-full">{{ item.email }}</div>
+              <div class="w-full item-details text-xs pt-1">
+                {{ formatDate(item.creationDateTime, 'dd MMM, yyyy') }}
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <NavigationBottom />
+    </template>
+  </LayoutFixedScrollable>
 </template>
 <script>
 import BaseAppBarHeader from '@/components/BaseAppBarHeader.vue';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
 import { formatDate } from '@/helpers.js';
+import LayoutFixedScrollable from '@/components/LayoutFixedScrollable';
+import NavigationBottom from '@/components/BaseNavigationBottom';
 
 export default {
   name: 'EmailList',
-  components: { BaseAppBarHeader },
+  components: { BaseAppBarHeader, NavigationBottom, LayoutFixedScrollable },
   computed: {
     ...mapGetters('distributionGroup', ['getEmails', 'selectedEmailList']),
     titleHeader() {
