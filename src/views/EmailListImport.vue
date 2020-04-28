@@ -1,17 +1,12 @@
 <template>
-  <div class="">
+  <div>
     <BaseAppBarHeader title="Import" to-link="/settings/email-lists" />
 
     <div class="container px-0 md:px-6">
       <div class="text-left py-6 px-4">
         <p class="mb-6">
           Please upload your contact file below. A template file can be downloaded
-          <a
-            class="text-secondary underline"
-            download
-            href="https://res.cloudinary.com/whynotearth/raw/upload/v1588083489/Volkswagen/cms/Distribution_List_Template_ggqdjp.csv"
-            >here</a
-          >.
+          <router-link class="text-secondary underline" :to="{ name: 'EmailListImportHelp' }">here</router-link>.
         </p>
 
         <!-- uploader -->
