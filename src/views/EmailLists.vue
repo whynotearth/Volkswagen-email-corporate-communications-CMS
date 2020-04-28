@@ -6,7 +6,7 @@
       :action="{ link: '/settings/email-lists/import', label: 'Add New' }"
     />
     <div class="flex">
-      <ul class="w-full pt-4">
+      <ul class="container px-0 md:px-6 pt-4">
         <li
           v-for="item in emailList"
           v-bind:key="item.distributionGroup"

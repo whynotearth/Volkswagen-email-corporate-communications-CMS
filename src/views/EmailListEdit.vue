@@ -6,7 +6,8 @@
       :action="{ label: 'Finish', link: '', method: 'editEmail', disabled: $v.email.$invalid }"
       @editEmail="editEmail"
     />
-    <div class="flex flex-wrap items-strech items-center px-4 py-3">
+    <div class="container px-6 py-3">
+     <div class="flex flex-wrap items-strech items-center">
       <label class="w-full text-left mb-2">Edit:</label>
       <div class="mb-4 w-full">
         <BaseInputText
@@ -24,6 +25,7 @@
           </span>
         </BaseInputText>
       </div>
+     </div>    
     </div>
   </div>
 </template>
