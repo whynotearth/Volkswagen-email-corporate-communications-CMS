@@ -54,7 +54,7 @@ export default {
 </script>
 
 <style scoped>
-  .mb-h1-mobile {
-    margin-bottom: 56px;
-  }
+.mb-h1-mobile {
+  margin-bottom: 56px;
+}
 </style>
