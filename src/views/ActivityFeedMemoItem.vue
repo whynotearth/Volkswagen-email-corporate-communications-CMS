@@ -43,6 +43,7 @@
           </div>
         </BaseTab>
       </BaseTabs>
+      <NavigationBottom />
     </template>
   </LayoutFixedScrollable>
 </template>
@@ -55,6 +56,7 @@ import BaseTab from '@/components/BaseTab.vue';
 import MemoListItem from '@/components/MemoListItem.vue';
 import ActivityFeedReadReportLog from '@/components/ActivityFeedReadReportLog.vue';
 import LayoutFixedScrollable from '@/components/LayoutFixedScrollable.vue';
+import NavigationBottom from '@/components/BaseNavigationBottom';
 import { mapGetters, mapActions } from 'vuex';
 import { get } from 'lodash-es';
 import { formatDate } from '@/helpers.js';
@@ -68,7 +70,8 @@ export default {
     BaseTab,
     // ActivityFeedSearchBox,
     MemoListItem,
-    ActivityFeedReadReportLog
+    ActivityFeedReadReportLog,
+    NavigationBottom
   },
   props: ['id'],
   computed: {
