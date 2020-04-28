@@ -1,6 +1,7 @@
 <template>
   <div class="">
     <BaseAppBarHeader
+      class="sticky top-0 bg-white"
       :title="titleHeader"
       :to-link="'/settings/email-lists'"
       :action="{ link: `${$route.params.groupName}/add`, label: 'Add New' }"
@@ -15,7 +16,7 @@
         >
           <div class="w-full">{{ item.email }}</div>
           <div class="w-full item-details text-xs pt-1">
-            {{ filterFormatDate(item.creationDateTime, 'MMM dd, yyyy') }}
+            {{ formatDate(item.creationDateTime, 'dd MMM, yyyy') }}
           </div>
         </li>
       </ul>
@@ -44,10 +45,7 @@ export default {
   },
   methods: {
     ...mapMutations('distributionGroup', ['selectEmail', 'updateEmails']),
-    filterFormatDate(input, format) {
-      const date = new Date(input);
-      return formatDate(date, format);
-    },
+    formatDate,
     getEmailList() {
       this.$store.dispatch('distributionGroup/getEmails', this.$route.params.groupName);
     },

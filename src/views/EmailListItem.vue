@@ -22,7 +22,7 @@
         <li class="flex flex-wrap text-left px-4 py-4">
           <div class="w-full">{{ selectedEmail.email }}</div>
           <div class="w-full item-details text-xs pt-1">
-            {{ selectedEmail.creationDateTime }}
+            {{ formatDate(selectedEmail.creationDateTime, 'M/d/yyyy') }}
           </div>
         </li>
       </ul>
@@ -31,7 +31,8 @@
 </template>
 <script>
 import BaseAppBarHeader from '@/components/BaseAppBarHeader.vue';
-import { mapGetters } from 'vuex';
+import { mapGetters, mapMutations, mapActions } from 'vuex';
+import { formatDate } from '@/helpers.js';
 
 export default {
   name: 'EmailListItem',
@@ -47,7 +48,20 @@ export default {
       return `/settings/email-lists/${this.$route.params.groupName}`;
     }
   },
+  mounted() {
+    this.init();
+  },
   methods: {
+    ...mapMutations('distributionGroup', ['selectEmail']),
+    formatDate,
+    init() {
+      if (Object.entries(this.selectedEmail).length === 0) {
+        this.$store.dispatch('distributionGroup/getEmails', this.$route.params.groupName).then(data => {
+          const item = data.find(item => item.id == this.$route.params.id);
+          this.selectEmail(item);
+        });
+      }
+    },
     toggleMenu() {
       this.isMenu = !this.isMenu;
     },

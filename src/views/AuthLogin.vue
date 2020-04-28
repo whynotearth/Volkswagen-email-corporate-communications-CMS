@@ -9,7 +9,7 @@
             alt=""
           />
         </div>
-        <h1 class="h1-mobile md:h1 mb-20 text-white">Welcome to Jumpstart</h1>
+        <h1 class="h1-mobile md:h1 mb-20 text-white">Welcome!</h1>
         <AuthLogin @success="onSuccess" />
       </div>
     </div>

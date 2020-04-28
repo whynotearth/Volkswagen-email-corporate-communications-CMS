@@ -37,7 +37,7 @@
       </div>
 
       <BaseInputText
-        class="bg-surface"
+        class="bg-surface mb-4"
         v-model="$v.subject.$model"
         label="Email Subject Line"
         placeholder="Email Subject Line"
@@ -48,7 +48,7 @@
         </span>
       </BaseInputText>
       <BaseInputText
-        class="bg-surface"
+        class="bg-surface mb-4"
         v-model="$v.date.$model"
         label="Memo Date"
         placeholder="Memo Date"
@@ -59,7 +59,7 @@
         </span>
       </BaseInputText>
       <BaseInputText
-        class="bg-surface"
+        class="bg-surface mb-4"
         v-model="$v.to.$model"
         label="Audience"
         placeholder="Audience"
