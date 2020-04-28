@@ -7,7 +7,7 @@
       :action="{ link: `${$route.params.groupName}/add`, label: 'Add New' }"
     />
     <div class="flex">
-      <ul class="w-full pt-4">
+      <ul class="container px-0 md:px-6 pt-4">
         <li
           v-for="item in getEmails"
           :key="item.id"
@@ -16,7 +16,7 @@
         >
           <div class="w-full">{{ item.email }}</div>
           <div class="w-full item-details text-xs pt-1">
-            {{ formatDate(item.creationDateTime, 'M/d/yyyy') }}
+            {{ formatDate(item.creationDateTime, 'dd MMM, yyyy') }}
           </div>
         </li>
       </ul>

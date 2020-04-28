@@ -14,7 +14,7 @@
       <div class="bg-background z-10 relative">
         <div class="container px-0 md:px-6">
           <div class="px-4 pb-4 pt-2">
-            <MemoOpenRateItem v-if="get(get_stats, `[${id}].memo`)" :model="get(get_stats, `[${id}].memo`)" />
+            <MemoListItem v-if="get(get_stats, `[${id}].memoList`)" :model="get(get_stats, `[${id}].memoList`)" />
           </div>
         </div>
       </div>
@@ -23,8 +23,8 @@
           <div class="px-4 pt-4 bg-background">
             <div class="mb-4" v-for="(readReportLog, index) in get(get_stats, `${id}.opened`, [])" :key="index">
               <ActivityFeedReadReportLog
-                :deliverDateTime="formatDate(readReportLog.deliverDateTime, 'M/d/yyyy h:mm aaa')"
-                :openDateTime="formatDate(readReportLog.openDateTime, 'M/d/yyyy h:mm aaa')"
+                :deliverDateTime="formatDate(readReportLog.deliverDateTime, 'dd MMM, yyyy h:mm aaa')"
+                :openDateTime="formatDate(readReportLog.openDateTime, 'dd MMM, yyyy h:mm aaa')"
                 :email="readReportLog.email"
               />
             </div>
@@ -34,8 +34,8 @@
           <div class="px-4 pt-4 bg-background">
             <div class="mb-4" v-for="(readReportLog, index) in get(get_stats, `${id}.notOpened`, [])" :key="index">
               <ActivityFeedReadReportLog
-                :deliverDateTime="formatDate(readReportLog.deliverDateTime, 'M/d/yyyy h:mm aaa')"
-                :openDateTime="formatDate(readReportLog.openDateTime, 'M/d/yyyy h:mm aaa')"
+                :deliverDateTime="formatDate(readReportLog.deliverDateTime, 'dd MMM, yyyy h:mm aaa')"
+                :openDateTime="formatDate(readReportLog.openDateTime, 'dd MMM, yyyy h:mm aaa')"
                 :email="readReportLog.email"
                 hideOpened="1"
               />
@@ -52,7 +52,7 @@ import BaseAppBarHeader from '@/components/BaseAppBarHeader.vue';
 import BaseTabs from '@/components/BaseTabs.vue';
 import BaseTab from '@/components/BaseTab.vue';
 // import ActivityFeedSearchBox from '@/components/ActivityFeedSearchBox.vue';
-import MemoOpenRateItem from '@/components/MemoOpenRateItem.vue';
+import MemoListItem from '@/components/MemoListItem.vue';
 import ActivityFeedReadReportLog from '@/components/ActivityFeedReadReportLog.vue';
 import LayoutFixedScrollable from '@/components/LayoutFixedScrollable.vue';
 import { mapGetters, mapActions } from 'vuex';
@@ -67,7 +67,7 @@ export default {
     BaseTabs,
     BaseTab,
     // ActivityFeedSearchBox,
-    MemoOpenRateItem,
+    MemoListItem,
     ActivityFeedReadReportLog
   },
   props: ['id'],

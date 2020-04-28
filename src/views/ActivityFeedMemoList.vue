@@ -1,7 +1,7 @@
 <template>
   <LayoutFixedScrollable>
     <template #header>
-      <BaseAppBarHeader :title="'Activity Feed'" :to-link="'/settings'" />
+      <BaseAppBarHeader :title="'Memo Stats'" :to-link="'/settings'" />
 
       <!-- <div class="container px-0 md:px-6 text-left">
         <div class="px-2 pt-4 mb-4">
@@ -23,6 +23,7 @@
           </div>
         </div>
       </div>
+      <NavigationBottom />
     </template>
   </LayoutFixedScrollable>
 </template>
@@ -33,11 +34,12 @@ import BaseAppBarHeader from '@/components/BaseAppBarHeader.vue';
 import MemoListItem from '@/components/MemoListItem.vue';
 import LayoutFixedScrollable from '@/components/LayoutFixedScrollable.vue';
 import { mapGetters, mapActions } from 'vuex';
+import NavigationBottom from '@/components/BaseNavigationBottom';
 
 export default {
   name: 'ActivityFeedMemoList',
   // ActivityFeedSearchBox
-  components: { MemoListItem, BaseAppBarHeader, LayoutFixedScrollable },
+  components: { MemoListItem, BaseAppBarHeader, LayoutFixedScrollable, NavigationBottom },
   computed: {
     ...mapGetters('memo', ['get_memos'])
   },
