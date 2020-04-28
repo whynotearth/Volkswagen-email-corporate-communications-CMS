@@ -9,7 +9,7 @@
         {{ model.subject }}
       </h2>
       <div class="tg-caption-mobile text-black em-disabled pl-2 text-right whitespace-no-wrap">
-        {{ formatDate(model.creationDateTime, 'M/d/yyyy') }}
+        {{ formatDate(model.creationDateTime, 'dd MMM, yyyy') }}
       </div>
     </div>
 
