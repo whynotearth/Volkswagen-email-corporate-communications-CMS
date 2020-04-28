@@ -21,7 +21,10 @@
               : 'border-gray-600 focus:border-gray-500 active:border-gray-500'
           ]"
         >
-          Upload Files
+          <span v-if="files.length === 0">{{ placeholder }}</span>
+          <div v-else>
+            <BaseChip v-for="(file, index) in files" :key="index" :text="file.name" />
+          </div>
         </div>
         <!-- <label
           :for="idName"
@@ -45,8 +48,11 @@
 
 <script>
 // import { randomId } from '@/helpers.js';
+import BaseChip from '@/components/BaseChip.vue';
+
 export default {
   name: 'BaseInputFile',
+  components: { BaseChip },
   props: {
     label: {
       type: String,
