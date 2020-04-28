@@ -14,7 +14,7 @@
       <div class="bg-background z-10 relative">
         <div class="container px-0 md:px-6">
           <div class="px-4 pb-4 pt-2">
-            <MemoListItem v-if="get(get_stats, `[${id}].memo`)" :model="get(get_stats, `[${id}].memo`)" />
+            <MemoListItem v-if="get(get_stats, `[${id}].memoList`)" :model="get(get_stats, `[${id}].memoList`)" />
           </div>
         </div>
       </div>

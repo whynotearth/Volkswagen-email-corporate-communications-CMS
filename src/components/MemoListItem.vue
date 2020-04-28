@@ -17,8 +17,8 @@
     <div class="mb-4">
       <BaseProgressBar :progress="model.openPercentage">
         <template #label>
-          <span class="tg-caption-mobile em-high text-black mr-2">Open rate: ${{ model.openPercentage }}%</span>
-          <span class="tg-caption-mobile em-medium text-black">(234/267)</span>
+          <span class="tg-caption-mobile em-high text-black mr-2">Open rate: {{ model.openPercentage }}%</span>
+          <span class="tg-caption-mobile em-medium text-black">({{ model.openCount }}/{{ model.sentCount }})</span>
         </template>
       </BaseProgressBar>
     </div>
@@ -43,31 +43,7 @@
     </div>
     <div class="flex flex-wrap pt-2">
       <div class="mb-1 mr-1">
-        <BaseChip text="Communications" />
-      </div>
-      <div class="mb-1 mr-1">
-        <BaseChip text="Communications" />
-      </div>
-      <div class="mb-1 mr-1">
-        <BaseChip text="Communications" />
-      </div>
-      <div class="mb-1 mr-1">
-        <BaseChip text="Communications" />
-      </div>
-      <div class="mb-1 mr-1">
-        <BaseChip text="Communications" />
-      </div>
-      <div class="mb-1 mr-1">
-        <BaseChip text="Communications" />
-      </div>
-      <div class="mb-1 mr-1">
-        <BaseChip text="Communications" />
-      </div>
-      <div class="mb-1 mr-1">
-        <BaseChip text="Communications" />
-      </div>
-      <div class="mb-1 mr-1">
-        <BaseChip text="Communications" />
+        <BaseChip :text="model.distributionGroup" />
       </div>
     </div>
   </div>

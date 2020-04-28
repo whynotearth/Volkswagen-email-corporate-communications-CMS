@@ -70,7 +70,7 @@ export default {
     },
     async fetch_stats(context, payload) {
       const data = await MemoService.stats(payload);
-      context.commit('update_stats', { key: data.memo.id, data });
+      context.commit('update_stats', { key: data.memoList.id, data });
     }
   },
   getters: {
