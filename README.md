@@ -1,5 +1,7 @@
 # Volkswagen email corporate communications CMS
 
+A corperate email service with robust tracking, fully customizable, geared for large enterprises. Currently live in production for Volkswagen.
+
 ## Contribution
 
 Please read our [contribution guide](https://github.com/whynotearth/Volkswagen-email-corporate-communications-CMS/wiki/Contribution-guide-for-frontend-developers) and [join discord channel](https://discord.gg/hkQr3q)
