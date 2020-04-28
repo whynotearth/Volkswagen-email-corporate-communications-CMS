@@ -8,7 +8,7 @@
       Import New Group
     </router-link>
     <div class="flex">
-      <ul class="w-full">
+      <ul class="container px-0 md:px-6">
         <li
           v-for="item in emailList"
           v-bind:key="item.distributionGroup"
