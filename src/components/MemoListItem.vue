@@ -13,18 +13,8 @@
       </div>
     </div>
 
-    <!-- progress -->
-    <div class="mb-4">
-      <BaseProgressBar :progress="model.openPercentage">
-        <template #label>
-          <span class="tg-caption-mobile em-high text-black mr-2">Open rate: {{ model.openPercentage }}%</span>
-          <span class="tg-caption-mobile em-medium text-black">({{ model.openCount }}/{{ model.sentCount }})</span>
-        </template>
-      </BaseProgressBar>
-    </div>
-
     <!-- contents -->
-    <div class="flex flex-no-wrap">
+    <div class="flex flex-no-wrap mb-4">
       <div class="w-20 mr-2 flex-shrink-0">
         <img
           src="https://res.cloudinary.com/whynotearth/image/upload/v1588074840/Volkswagen/cms/Internal_Memo_kbc8ys.png"
@@ -35,17 +25,27 @@
       <div class="flex-grow flex flex-col overflow-hidden">
         <div class="flex-grow overflow-hidden">
           <div class="tg-caption-mobile em-high text-black">To: {{ model.to }}</div>
-          <div class="tg-caption-mobile em-disabled text-black whitespace-pre-line mb-2 pt-2 overflow-hidden">
+          <div
+            class="memo-list-item--description tg-caption-mobile em-disabled text-black whitespace-pre-line mb-2 pt-2 overflow-hidden"
+          >
             {{ model.description }}
+          </div>
+        </div>
+
+        <div class="flex flex-wrap">
+          <div class="mb-1 mr-1">
+            <BaseChip :text="model.distributionGroup" />
           </div>
         </div>
       </div>
     </div>
-    <div class="flex flex-wrap pt-2">
-      <div class="mb-1 mr-1">
-        <BaseChip :text="model.distributionGroup" />
-      </div>
-    </div>
+
+    <BaseProgressBar :progress="model.openPercentage">
+      <template #label>
+        <span class="tg-caption-mobile em-high text-black mr-2">Open rate: {{ model.openPercentage }}%</span>
+        <span class="tg-caption-mobile em-medium text-black">({{ model.openCount }}/{{ model.sentCount }})</span>
+      </template>
+    </BaseProgressBar>
   </div>
 </template>
 
@@ -63,3 +63,9 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.memo-list-item--description {
+  height: 56px;
+}
+</style>

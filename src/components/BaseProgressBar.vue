@@ -1,6 +1,8 @@
 <template>
   <div class="w-full text-left">
-    <label v-if="$slots.label" class="block mb-2 cursor-inherit" :for="idName"><slot name="label"/></label>
+    <label v-if="$slots.label" class="progress-bar--label block mb-1 cursor-inherit" :for="idName"
+      ><slot name="label"
+    /></label>
     <div :id="idName" :class="holderClassNames" class="w-full bg-grey-light rounded-full overflow-x-hidden">
       <div
         :class="progressClassNames"
@@ -34,3 +36,9 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.progress-bar--label {
+  line-height: 8px;
+}
+</style>
