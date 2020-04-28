@@ -1,6 +1,6 @@
 <template>
   <div class="">
-    <BaseAppBarHeader title="Add New List" to-link="/settings/email-lists" />
+    <BaseAppBarHeader title="Import" to-link="/settings/email-lists" />
 
     <div class="container px-0 md:px-6">
       <div class="text-left py-6 px-4">
@@ -17,13 +17,25 @@
         <!-- uploader -->
         <div class="mb-6">
           <div class="pb-6">
-            <BaseInputFile :files="files" placeholder="Upload Files" accepts=".csv" @change="onChangeFile" />
+            <BaseInputFile
+              :error="Boolean(error)"
+              :files="files"
+              placeholder="Upload Files"
+              accepts=".csv"
+              @change="onChangeFile"
+            >
+              <template v-if="error" #error>
+                <span class="text-xs text-error">
+                  {{ error }}
+                </span>
+              </template>
+            </BaseInputFile>
           </div>
           <div class="mb-6">
             <div class="max-w-xs mx-auto">
               <div class=" mx-12">
                 <button
-                  :class="{ 'bg-gray': files.length === 0 }"
+                  :class="{ 'bg-gray': !files }"
                   class="bg-secondary w-full block hover:bg-blue-500 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline transition duration-100 ease-in-out transition-all label-mobile"
                   type="button"
                   @click="submit()"
@@ -44,12 +56,14 @@ import BaseInputFile from '@/components/BaseInputFile.vue';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
 import { ajax } from '@/connection/ajax.js';
 import { sleep } from '@/helpers.js';
+import { get } from 'lodash-es';
 
 export default {
   name: 'EmailLists',
   components: { BaseAppBarHeader, BaseInputFile },
   data: () => ({
-    files: []
+    files: undefined,
+    error: ''
   }),
   computed: {
     // ...mapGetters('distributionGroup', ['getEmailLists']),
@@ -57,22 +71,39 @@ export default {
       return this.$store.getters['distributionGroup/getEmailLists'];
     }
   },
+  mounted() {
+    this.error = '';
+  },
   methods: {
     ...mapActions('distributionGroup', ['importEmailList', 'getEmailLists']),
     ...mapMutations('distributionGroup', ['selectEmailList', 'updateEmailLists']),
     onChangeFile(event) {
-      this.files = event.target.files;
+      const files = event.target.files;
+      if (files.length > 0) {
+        this.files = event.target.files;
+      }
     },
-    submit(event) {
+    async submit(event) {
+      if (!this.files) {
+        this.error = 'Please upload a valid .csv file.';
+        return;
+      }
       try {
-        this.importEmailList({
+        await this.importEmailList({
           ajax,
           body: {
             file: this.files[0]
           }
         });
         this.onSuccessSubmit();
-      } catch (error) {}
+      } catch (error) {
+        this.error = 'An error occured!';
+        try {
+          this.error = error.response.data.message;
+        } catch (e) {
+          //
+        }
+      }
     },
     async onSuccessSubmit() {
       this.$store.commit('overlay/updateModel', {
