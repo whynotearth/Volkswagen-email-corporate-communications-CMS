@@ -1,7 +1,7 @@
 <template>
   <LayoutFixedScrollable>
     <template #content>
-      <div class="bg-white flex items-center justify-center min-h-full relative">
+      <div class="flex items-center justify-center min-h-full relative">
         <div class="w-full">
           <router-link v-if="isAuthenticated" to="/settings" class="absolute top-0 right-0 text-white p-4 text-sm">
             <img src="https://res.cloudinary.com/whynotearth/image/upload/v1587275972/Volkswagen/cms/wheel_2_rk5nr4.png" />
