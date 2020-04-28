@@ -14,17 +14,18 @@
         </router-link>
       </li>
     </ul>
-    <BottomNavIcon class="bottom-nav-icon"/>
-    <div class="flex content-center toggle-button bg-secondary shadow-6dp"
-      @click="toggleMenu()">
-      <AddIcon class="m-auto ease-in-out" :class="{'rotate-45': isOpen}"/>
+    <BottomNavIcon class="bottom-nav-icon" />
+    <div class="flex content-center toggle-button bg-secondary shadow-6dp" @click="toggleMenu()">
+      <AddIcon class="m-auto ease-in-out" :class="{ 'rotate-45': isOpen }" />
       <ul v-if="isOpen" class="toggle-menu list-none">
         <li class="flex whitespace-no-wrap text-white text-xs">
           <router-link to="/memo/add" class="flex items-center">
             Internal Memo
-            <div class="rounded-full h-10 w-10 flex items-center justify-center bg-secondary ml-2
-              shadow-6dp">
-              <MemoIcon class="m-auto"/>
+            <div
+              class="rounded-full h-10 w-10 flex items-center justify-center bg-secondary ml-2
+              shadow-6dp"
+            >
+              <MemoIcon class="m-auto" />
             </div>
           </router-link>
         </li>
@@ -45,13 +46,13 @@ export default {
   name: 'NavigationBottom',
   components: { AddIcon, HomeIcon, MemoIcon, EmailIcon, BottomNavIcon },
   props: {},
-  data () {
+  data() {
     return {
       isOpen: false
-    }
+    };
   },
   methods: {
-    toggleMenu () {
+    toggleMenu() {
       this.isOpen = !this.isOpen;
     }
   }
@@ -77,7 +78,7 @@ export default {
   right: 10px;
 }
 .rotate-45 {
-  transform: rotate(45deg); 
+  transform: rotate(45deg);
 }
 .overlay {
   position: fixed;
@@ -85,12 +86,12 @@ export default {
   height: 100%;
   top: 0;
   z-index: -1;
-  background: rgba(0, 0, 0, .54);
+  background: rgba(0, 0, 0, 0.54);
 }
 .router-link-exact-active {
-  color: #03B3F9; 
+  color: #03b3f9;
 }
 .router-link-exact-active svg path {
-  fill: #03B3F9!important;
+  fill: #03b3f9 !important;
 }
 </style>

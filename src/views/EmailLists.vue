@@ -1,26 +1,34 @@
 <template>
   <div class="">
     <BaseAppBarHeader title="Distribution Groups" :to-link="'campaign'" />
-    <router-link
-      :to="{ name: 'EmailListImport' }"
-      class="block bg-secondary my-6 mx-12 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline transition duration-100 ease-in-out transition-all label-mobile"
-    >
-      Import New Group
-    </router-link>
-    <div class="flex">
-      <ul class="w-full">
-        <li
-          v-for="item in emailList"
-          v-bind:key="item.distributionGroup"
-          class="flex flex-wrap text-left px-4 py-4 cursor-pointer"
-          @click="choiceEmailList(item)"
-        >
-          <div class="w-full">{{ item.distributionGroup }}</div>
-          <div class="w-full item-details text-xs pt-1">
-            {{ item.subscriberCount }} subscribers | {{ item.openPercent }}% opens | {{ item.clickPercent }}% clicks
-          </div>
-        </li>
-      </ul>
+
+    <div class="container px-0 md:px-6">
+      <div class="max-w-xs mx-auto">
+        <div class=" mx-12">
+          <router-link
+            :to="{ name: 'EmailListImport' }"
+            class="w-full block bg-secondary my-6 mx-12 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline transition duration-100 ease-in-out transition-all label-mobile"
+          >
+            Import New Group
+          </router-link>
+        </div>
+      </div>
+
+      <div class="flex">
+        <ul>
+          <li
+            v-for="item in emailList"
+            v-bind:key="item.distributionGroup"
+            class="flex flex-wrap text-left px-4 py-4 cursor-pointer"
+            @click="choiceEmailList(item)"
+          >
+            <div class="w-full">{{ item.distributionGroup }}</div>
+            <div class="w-full item-details text-xs pt-1">
+              {{ item.subscriberCount }} subscribers | {{ item.openPercent }}% opens | {{ item.clickPercent }}% clicks
+            </div>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </template>

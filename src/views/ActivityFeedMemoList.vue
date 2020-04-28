@@ -23,7 +23,7 @@
           </div>
         </div>
       </div>
-      <NavigationBottom  />
+      <NavigationBottom />
     </template>
   </LayoutFixedScrollable>
 </template>
@@ -34,7 +34,7 @@ import BaseAppBarHeader from '@/components/BaseAppBarHeader.vue';
 import MemoListItem from '@/components/MemoListItem.vue';
 import LayoutFixedScrollable from '@/components/LayoutFixedScrollable.vue';
 import { mapGetters, mapActions } from 'vuex';
-import NavigationBottom from '@/components/BaseNavigationBottom'
+import NavigationBottom from '@/components/BaseNavigationBottom';
 
 export default {
   name: 'ActivityFeedMemoList',

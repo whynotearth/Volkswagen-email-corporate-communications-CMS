@@ -19,6 +19,7 @@ module.exports = {
         inherit: 'inherit',
         blue: {
           ...colors.blue,
+          '500': '#008ec6',
           '900': '#002F62'
         },
         primary: '#011D51',
