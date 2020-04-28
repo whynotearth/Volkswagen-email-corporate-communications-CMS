@@ -21,7 +21,7 @@
       >
         {{ action.label }}
       </div>
-      <slot></slot> 
+      <slot></slot>
     </div>
   </nav>
 </template>

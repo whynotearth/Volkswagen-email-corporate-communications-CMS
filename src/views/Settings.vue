@@ -1,8 +1,8 @@
 <template>
   <div>
     <BaseAppBarHeader title="Settings" :to-link="'/'" />
-      <div class="container px-0 md:px-6">
-       <div class="flex items-strech items-center border-b-1 border-divider">
+    <div class="container px-0 md:px-6">
+      <div class="flex items-strech items-center border-b-1 border-divider">
         <router-link
           v-if="isAuthenticated"
           to="settings/campaign"
