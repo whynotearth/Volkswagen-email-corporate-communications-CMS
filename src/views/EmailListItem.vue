@@ -2,23 +2,23 @@
   <div class="">
     <BaseAppBarHeader title="Email" :to-link="backLink">
       <div class="flex-grow inline-block text-right">
-        <a href="#">
+        <a href="#" class="relative">
           <img
             class="float-right w-5 cursor-pointer"
             @click="toggleMenu()"
             src="https://user-images.githubusercontent.com/5694308/78644324-e730da00-78df-11ea-84b2-047e5bf57c2a.png"
           />
+          <ul v-if="isMenu" class="menu shadow-8dp">
+            <li class="text-left">
+              <router-link class="px-2 py-3 block w-full" :to="`${selectedEmail.id}/edit`">Edit</router-link>
+            </li>
+            <li class="px-2 py-3 text-left cursor-pointer" @click="deleteEmail()">Delete</li>
+          </ul>
         </a>
-        <ul v-if="isMenu" class="w-1/3 menu shadow-8dp">
-          <li class="text-left">
-            <router-link class="px-2 py-3 block w-full" :to="`${selectedEmail.id}/edit`">Edit</router-link>
-          </li>
-          <li class="px-2 py-3 text-left cursor-pointer" @click="deleteEmail()">Delete</li>
-        </ul>
       </div>
     </BaseAppBarHeader>
     <div class="flex">
-      <ul class="w-full pt-4 ">
+      <ul class="container px-0 md:px-6 pt-4">
         <li class="flex flex-wrap text-left px-4 py-4">
           <div class="w-full">{{ selectedEmail.email }}</div>
           <div class="w-full item-details text-xs pt-1">
@@ -81,10 +81,10 @@ export default {
 
 .menu {
   position: absolute;
-  float: right;
-  top: 60px;
+  top: 46px;
   background: white;
   border-radius: 4px;
-  right: 0;
+  right: -30px;
+  width: 114px;
 }
 </style>

@@ -1,12 +1,14 @@
 <template>
   <div class="">
-    <BaseAppBarHeader
-      title="Email Lists"
-      :to-link="'campaign'"
-      :action="{ link: '/settings/email-lists/import', label: 'Add New' }"
-    />
+    <BaseAppBarHeader title="Distribution Groups" :to-link="'campaign'" />
+    <router-link
+      :to="{ name: 'EmailListImport' }"
+      class="block bg-secondary my-6 mx-12 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline transition duration-100 ease-in-out transition-all label-mobile"
+    >
+      Import New Group
+    </router-link>
     <div class="flex">
-      <ul class="w-full pt-4">
+      <ul class="container px-0 md:px-6">
         <li
           v-for="item in emailList"
           v-bind:key="item.distributionGroup"
