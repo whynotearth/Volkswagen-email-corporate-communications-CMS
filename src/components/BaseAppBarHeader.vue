@@ -1,5 +1,5 @@
 <template>
-  <nav class="flex items-strech items-center px-4 py-4 flex-wrap shadow-4dp">
+  <nav class="flex items-strech items-center px-4 py-4 flex-wrap shadow-4dp z-10">
     <div class="flex-start mr-3">
       <router-link class="inline-block align-middle" :to="toLink">
         <img src="https://res.cloudinary.com/whynotearth/image/upload/v1587102533/Volkswagen/cms/back_oay5wt.png" />

@@ -1,6 +1,6 @@
 <template>
   <div class="w-full text-left">
-    <label class="tg-caption-mobile em-high text-black block mb-2 cursor-inherit" :for="idName">{{ label }}</label>
+    <label v-if="$slots.label" class="block mb-2 cursor-inherit" :for="idName"><slot name="label"/></label>
     <div :id="idName" :class="holderClassNames" class="w-full bg-grey-light rounded-full overflow-x-hidden">
       <div
         :class="progressClassNames"
@@ -26,9 +26,6 @@ export default {
     progress: {
       type: Number,
       default: 0
-    },
-    label: {
-      type: String
     },
     idName: {
       type: String,
