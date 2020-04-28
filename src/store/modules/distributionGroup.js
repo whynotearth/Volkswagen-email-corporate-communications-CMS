@@ -35,21 +35,19 @@ export default {
       //   { headers: { 'content-type': 'multipart/form-data' } }
       // );
 
-      return new Promise((resolve, reject) => {
-        var bodyFormData = new FormData();
-        bodyFormData.append('file', body.file);
+      var bodyFormData = new FormData();
+      bodyFormData.append('file', body.file);
 
-        let url = '/api/v0/volkswagen/distributiongroups';
-        const configs = {
-          method: 'put',
-          url,
-          headers: {
-            'Content-Type': 'multipart/form-data'
-          },
-          data: bodyFormData
-        };
-        ajax(configs, resolve, reject);
-      });
+      let url = '/api/v0/volkswagen/distributiongroups';
+      const configs = {
+        method: 'put',
+        url,
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        },
+        data: bodyFormData
+      };
+      return ajax(configs);
     },
     async getEmailLists(context) {
       try {
