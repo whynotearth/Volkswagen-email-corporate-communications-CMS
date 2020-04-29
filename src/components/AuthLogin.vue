@@ -3,7 +3,7 @@
     <form ref="form" name="Login" @submit.prevent="" class="pt-6 pb-8 mb-4 text-left">
       <div class="mb-4">
         <BaseInputText
-          class="bg-primary text-white"
+          class="bg-surface" 
           v-model="$v.email.$model"
           label="Email"
           placeholder="Email"
@@ -19,7 +19,7 @@
       </div>
       <div class="mb-4">
         <BaseInputText
-          class="bg-primary text-white"
+          class="bg-surface" 
           v-model="$v.password.$model"
           label="Password"
           placeholder="Password"
