@@ -20,7 +20,7 @@
           </ul>
           <img
             class="bottom-nav-icon"
-            src="https://res.cloudinary.com/whynotearth/image/upload/v1588091363/Volkswagen/cms/Bottom_Nav_utgvw8.png"
+            src="https://res.cloudinary.com/whynotearth/image/upload/v1588090427/Volkswagen/cms/Bottom_Nav_2x_vzwf6q.svg"
           />
           <div class="flex content-center toggle-button bg-secondary shadow-6dp" @click="toggleMenu()">
             <AddIcon class="m-auto ease-in-out" :class="{ 'rotate-45': isOpen }" />
@@ -71,8 +71,7 @@ export default {
 
 <style scoped>
 .bottom-nav-icon {
-  position: relative;
-  float: right;
+  height: 56px;
 }
 .toggle-button {
   width: 56px;
