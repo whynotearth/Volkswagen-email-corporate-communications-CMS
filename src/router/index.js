@@ -15,7 +15,7 @@ import EmailListEdit from '../views/EmailListEdit';
 import EmailListItem from '../views/EmailListItem';
 import EmailListImport from '../views/EmailListImport';
 import EmailListImportHelp from '../views/EmailListImportHelp';
-import Dashboard from '../views/Dashboard/Dashboard';
+import Dashboard from '../views/Dashboard';
 import store from '../store';
 
 Vue.use(VueRouter);

@@ -8,14 +8,14 @@
               src="https://res.cloudinary.com/whynotearth/image/upload/v1588066712/Volkswagen/cms/wheel_eqhded.svg"
             />
           </router-link>
-          <div class="max-w-sm mx-auto px-12">
-            <div class="mb-4">
-              <UserCard />
+          <div class="max-w-sm mx-auto">
+            <div class="">
+              <UserCard class=""/>
             </div>
-            <div class="mb-4">
+            <div class="">
               <TodaysEmail />
             </div>
-            <div class="mb-4">
+            <div class="">
               <SmartSuggestions />
             </div>
           </div>
