@@ -119,7 +119,7 @@ export default {
   @screen md {
     border-left: 24px solid;
     border-right: 24px solid;
+    @apply border-primary;
   }
-  @apply border-primary;
 }
 </style>
