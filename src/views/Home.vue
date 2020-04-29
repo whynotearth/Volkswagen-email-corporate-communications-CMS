@@ -36,8 +36,10 @@
             <AuthLogin v-if="!isAuthenticated" />
           </div>
         </div>
-        <NavigationBottom v-if="isAuthenticated" />
       </div>
+    </template>
+    <template #footer v-if="isAuthenticated">
+      <NavigationBottom />
     </template>
   </LayoutFixedScrollable>
 </template>

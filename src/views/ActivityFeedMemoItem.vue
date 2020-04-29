@@ -43,6 +43,8 @@
           </div>
         </BaseTab>
       </BaseTabs>
+    </template>
+    <template #footer>
       <NavigationBottom />
     </template>
   </LayoutFixedScrollable>
