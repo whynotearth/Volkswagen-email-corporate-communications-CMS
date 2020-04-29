@@ -2,7 +2,7 @@
   <LayoutFixedScrollable>
     <template #content>
       <div class="">
-        <BaseAppBarHeader title="Distribution Groups" :to-link="'campaign'" />
+        <BaseAppBarHeader title="Distribution Groups" :to-link="{ name: 'Settings' }" />
 
         <div class="container px-0 md:px-6">
           <div class="max-w-xs mx-auto">
