@@ -59,7 +59,7 @@
               href="#"
               class="link-fordward block flex-grow justify-between flex h-full items-center cursor-pointer select-none px-4 pr-6 py-5"
             >
-              <span class="mr-2 tg-body-mobile">Log Out</span>
+              <span class="mr-2 tg-body-mobile text-error">Log Out</span>
 
               <svg
                 class="transform -scale-x-1 text-gray"
