@@ -1,5 +1,5 @@
 <template>
-  <div class="px-4 my-6">
+  <div class="flex flex-col items-center px-4 my-6">
     <div>
       <h2>Hi Xavier, here's your Jumpstart email for the day.</h2>
     </div>
@@ -8,7 +8,7 @@
     </div>
     <div>
       <h2>Daily Email will automatically send in</h2>
-      <div class="counter my-2">
+      <div class="counter my-2 text-center">
         <BaseCounter :date="new Date('Jun 20, 2021 20:20:20')" />
       </div>
     </div>

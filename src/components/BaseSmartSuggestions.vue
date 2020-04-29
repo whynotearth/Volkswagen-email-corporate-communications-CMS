@@ -4,7 +4,7 @@
       <h2>Smart Suggestions</h2>
     </div>
     <div class="px-2 py-2">
-      <SmartSuggestionCard v-for="(n, key) in 5" :key="key"  class="my-2" />
+      <SmartSuggestionCard v-for="(n, key) in 5" :key="key" class="my-2" />
       <div class="more-button flex justify-between">
         <p>See all smart suggestions.</p>
         <img
