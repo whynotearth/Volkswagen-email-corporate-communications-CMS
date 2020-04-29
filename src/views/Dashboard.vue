@@ -15,7 +15,7 @@
             <div class="">
               <TodayEmail />
             </div>
-            <div class="">
+            <div class="mb-8">
               <SmartSuggestions />
             </div>
           </div>
