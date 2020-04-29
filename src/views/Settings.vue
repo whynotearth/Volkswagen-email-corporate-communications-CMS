@@ -6,7 +6,6 @@
         <div class="container px-0 md:px-6">
           <div class="flex items-strech items-center border-b-1 border-divider">
             <router-link
-              v-if="isAuthenticated"
               :to="{ name: 'EmailLists' }"
               class="link-fordward block flex-grow justify-between flex h-full items-center cursor-pointer select-none px-4 pr-6 py-5"
             >
@@ -30,7 +29,6 @@
           </div>
           <div class="flex items-strech items-center border-b-1 border-divider">
             <a
-              v-if="isAuthenticated"
               @click.prevent="logout()"
               href="#"
               class="link-fordward block flex-grow justify-between flex h-full items-center cursor-pointer select-none px-4 pr-6 py-5"
@@ -53,7 +51,6 @@
                 />
               </svg>
             </a>
-            <!-- <AuthLogin v-if="!isAuthenticated" /> -->
           </div>
         </div>
       </div>
@@ -73,11 +70,6 @@ import NavigationBottom from '@/components/BaseNavigationBottom';
 export default {
   name: 'SettingsPage',
   components: { BaseAppBarHeader, NavigationBottom, LayoutFixedScrollable },
-  computed: {
-    isAuthenticated() {
-      return this.$store.getters['auth/isAuthenticated'];
-    }
-  },
   methods: {
     async logout() {
       try {
