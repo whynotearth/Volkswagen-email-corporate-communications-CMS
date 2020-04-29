@@ -30,6 +30,8 @@
           </div>
         </div>
       </div>
+    </template>
+    <template #footer>
       <NavigationBottom />
     </template>
   </LayoutFixedScrollable>
