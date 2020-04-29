@@ -7,7 +7,6 @@ import MemoAdd from '../views/MemoAdd.vue';
 import Settings from '../views/Settings';
 import ActivityFeedMemoList from '../views/ActivityFeedMemoList.vue';
 import ActivityFeedMemoItem from '../views/ActivityFeedMemoItem.vue';
-import EmailCampaign from '../views/EmailCampaign';
 import EmailLists from '../views/EmailLists';
 import EmailList from '../views/EmailList';
 import EmailListAdd from '../views/EmailListAdd';
@@ -70,14 +69,6 @@ const routes = [
     name: 'ActivityFeedMemoItem',
     component: ActivityFeedMemoItem,
     props: true,
-    meta: {
-      requiresAuth: true
-    }
-  },
-  {
-    path: '/settings/campaign',
-    name: 'EmailCampaign',
-    component: EmailCampaign,
     meta: {
       requiresAuth: true
     }
