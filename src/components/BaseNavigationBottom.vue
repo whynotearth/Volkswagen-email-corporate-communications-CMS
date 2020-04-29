@@ -2,42 +2,44 @@
   <nav class="flex w-full fixed bottom-0 bg-transparent z-20">
     <div class="flex flex-auto">
       <div class=" bg-primary flex-1"></div>
-      <div class="container flex relative px-0">
-        <ul class="flex-auto text-left menu list-none bg-primary px-2 md:px-0">
-          <li class="text-white inline-block m-2 mb-1 text-xs">
-            <router-link class="router-link" to="/">
-              <HomeIcon class="m-auto" />
-              Home
-            </router-link>
-          </li>
-          <li class="text-white inline-block m-2 mb-1 text-xs">
-            <router-link class="router-link" to="/activity-feed/memos">
-              <EmailIcon class="m-auto" />
-              Memo Stats
-            </router-link>
-          </li>
-        </ul>
-        <img
-          class="bottom-nav-icon"
-          src="https://res.cloudinary.com/whynotearth/image/upload/v1588091363/Volkswagen/cms/Bottom_Nav_utgvw8.png"
-        />
-        <div class="flex content-center toggle-button bg-secondary shadow-6dp" @click="toggleMenu()">
-          <AddIcon class="m-auto ease-in-out" :class="{ 'rotate-45': isOpen }" />
-          <ul v-if="isOpen" class="toggle-menu list-none">
-            <li class="flex whitespace-no-wrap text-white text-xs">
-              <router-link to="/memo/add" class="flex items-center">
-                Internal Memo
-                <div
-                  class="rounded-full h-10 w-10 flex items-center justify-center bg-secondary ml-2
-                  shadow-6dp"
-                >
-                  <MemoIcon class="m-auto" />
-                </div>
+      <div class="container container--border px-0">
+        <div class="flex relative">
+          <ul class="flex-auto text-left menu list-none bg-primary px-2 md:px-0">
+            <li class="text-white inline-block m-2 mb-1 text-xs">
+              <router-link class="router-link" to="/">
+                <HomeIcon class="m-auto" />
+                Home
+              </router-link>
+            </li>
+            <li class="text-white inline-block m-2 mb-1 text-xs">
+              <router-link class="router-link" to="/activity-feed/memos">
+                <EmailIcon class="m-auto" />
+                Memo Stats
               </router-link>
             </li>
           </ul>
+          <img
+            class="bottom-nav-icon"
+            src="https://res.cloudinary.com/whynotearth/image/upload/v1588091363/Volkswagen/cms/Bottom_Nav_utgvw8.png"
+          />
+          <div class="flex content-center toggle-button bg-secondary shadow-6dp" @click="toggleMenu()">
+            <AddIcon class="m-auto ease-in-out" :class="{ 'rotate-45': isOpen }" />
+            <ul v-if="isOpen" class="toggle-menu list-none">
+              <li class="flex whitespace-no-wrap text-white text-xs">
+                <router-link to="/memo/add" class="flex items-center">
+                  Internal Memo
+                  <div
+                    class="rounded-full h-10 w-10 flex items-center justify-center bg-secondary ml-2
+                  shadow-6dp"
+                  >
+                    <MemoIcon class="m-auto" />
+                  </div>
+                </router-link>
+              </li>
+            </ul>
+          </div>
+          <div v-if="isOpen" class="overlay"></div>
         </div>
-        <div v-if="isOpen" class="overlay"></div>
       </div>
       <div class=" bg-primary flex-1"></div>
     </div>
@@ -113,9 +115,11 @@ export default {
   fill: white;
   fill-opacity: 0.54;
 }
-@media (min-width: 928px) {
-  .container {
-    max-width: 880px;
+.container--border {
+  @screen md {
+    border-left: 24px solid;
+    border-right: 24px solid;
   }
+  @apply border-primary;
 }
 </style>
