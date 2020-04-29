@@ -1,5 +1,5 @@
 <template>
-  <div class="flex justify-around mx-4">
+  <div class="grid grid-flow-col mx-4">
     <UserEmailInfoBoxItem
       :emailInfo="{
         name: 'Opens',
