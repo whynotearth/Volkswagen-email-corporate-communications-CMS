@@ -46,10 +46,13 @@
           </div>
         </div>
       </div>
+    </template>
+    <template #footer>
       <NavigationBottom />
     </template>
   </LayoutFixedScrollable>
 </template>
+
 <script>
 import BaseAppBarHeader from '@/components/BaseAppBarHeader.vue';
 import BaseInputFile from '@/components/BaseInputFile.vue';
