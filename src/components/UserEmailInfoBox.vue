@@ -27,14 +27,14 @@ import UserEmailInfoBoxItem from './UserEmailInfoBoxItem';
 
 export default {
   name: 'UserEmailInfoBox',
-  components: { UserEmailInfoBoxItem },
+  components: { UserEmailInfoBoxItem }
 };
 </script>
 
 <style>
-  .email-info-middle-item--border {
-    border-left: 1px solid;
-    border-right: 1px solid;
-    border-color: rgba(255, 255, 255, 0.18);
-  }
+.email-info-middle-item--border {
+  border-left: 1px solid;
+  border-right: 1px solid;
+  border-color: rgba(255, 255, 255, 0.18);
+}
 </style>

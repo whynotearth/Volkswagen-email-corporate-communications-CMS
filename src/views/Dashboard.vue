@@ -10,10 +10,10 @@
           </router-link>
           <div class="max-w-sm mx-auto">
             <div class="">
-              <UserCard class=""/>
+              <UserCard class="" />
             </div>
             <div class="">
-              <TodaysEmail />
+              <TodayEmail />
             </div>
             <div class="">
               <SmartSuggestions />
@@ -33,7 +33,7 @@ import store from '@/store';
 import NavigationBottom from '@/components/BaseNavigationBottom';
 import LayoutFixedScrollable from '@/components/LayoutFixedScrollable';
 import UserCard from '@/components/BaseUserCard';
-import TodaysEmail from '@/components/BaseTodaysEmail';
+import TodayEmail from '@/components/TodayEmail';
 import SmartSuggestions from '@/components/BaseSmartSuggestions';
 
 export default {
@@ -42,7 +42,7 @@ export default {
     NavigationBottom,
     LayoutFixedScrollable,
     UserCard,
-    TodaysEmail,
+    TodayEmail,
     SmartSuggestions
   },
   computed: {},
