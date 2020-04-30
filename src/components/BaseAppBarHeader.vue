@@ -6,7 +6,7 @@
           <img src="https://res.cloudinary.com/whynotearth/image/upload/v1587102533/Volkswagen/cms/back_oay5wt.png" />
         </router-link>
       </div>
-      <div class="text-primary h2-mobile">{{ title }}</div>
+      <div class="text-primary h2-mobile truncate">{{ title }}</div>
       <router-link
         v-if="action && !action.method"
         class="flex-grow inline-block action-link tg-h3-mobile text-right"
