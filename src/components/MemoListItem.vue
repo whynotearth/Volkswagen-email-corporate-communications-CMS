@@ -33,8 +33,8 @@
         </div>
 
         <div class="flex flex-wrap">
-          <div class="mb-1 mr-1">
-            <BaseChip :text="model.distributionGroup" />
+          <div class="mb-1 mr-1" v-for="(distributionGroup, index) in model.distributionGroups" :key="index">
+            <BaseChip :text="distributionGroup" />
           </div>
         </div>
       </div>
