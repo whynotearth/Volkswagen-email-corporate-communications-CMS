@@ -6,7 +6,7 @@
     <div :id="idName" :class="holderClassNames" class="w-full bg-grey-light rounded-full overflow-x-hidden">
       <div
         :class="progressClassNames"
-        class="text-xs leading-none py-1 text-center text-white rounded-full transition-t difftransform duration-300 w-full"
+        class="text-xs leading-none py-1 text-center text-white rounded-full transition-transform duration-300 w-full"
         :style="{ transform: `translateX(-${100 - progressWidth}%)` }"
       ></div>
     </div>
