@@ -26,7 +26,7 @@ export default {
   components: { AuthLogin },
   computed: {
     isAuthenticated() {
-      return this.$store.getters['auth/isAuthenticated'];
+      return this.$store.getters['authKeep/isAuthenticated'];
     }
   },
   methods: {
