@@ -34,15 +34,15 @@ export default {
       default: randomId
     }
   },
-  data () {
+  data() {
     return {
       progressWidth: 0
-    }
+    };
   },
   mounted() {
     setTimeout(() => {
       this.progressWidth = this.progress;
-    },0)
+    }, 0);
   }
 };
 </script>
