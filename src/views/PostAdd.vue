@@ -107,8 +107,15 @@ export default {
           this.onSuccessSubmit();
         })
         .catch(error => {
+          let message = 'An error occured!';
+          try {
+            message = error.response.data.message;
+          } catch (error) {
+            //
+          }
+
           this.update_response_message({
-            message: error.response.data.title,
+            message: message,
             type: 'error',
             class: 'text-error'
           });

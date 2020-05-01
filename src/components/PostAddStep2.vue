@@ -2,6 +2,7 @@
   <div class="py-6 flex-grow">
     <div class="container px-4 md:px-6 text-left">
       <BaseInputText
+        v-if="isFieldRequired('headline')"
         class="bg-surface mb-4"
         v-model="$v.headline.$model"
         label="Headline"
@@ -17,6 +18,7 @@
       </BaseInputText>
 
       <BaseInputTextarea
+        v-if="isFieldRequired('description')"
         class="body-1-mobile bg-surface"
         v-model="$v.description.$model"
         label="Description"
@@ -32,6 +34,7 @@
       </BaseInputTextarea>
 
       <BaseInputText
+        v-if="isFieldRequired('price')"
         class="bg-surface mb-4"
         v-model="$v.price.$model"
         label="Price"
@@ -47,6 +50,7 @@
       </BaseInputText>
 
       <BaseInputText
+        v-if="isFieldRequired('eventDate')"
         class="bg-surface mb-4"
         v-model="$v.eventDate.$model"
         label="Date/Time"
@@ -71,31 +75,43 @@ import { mapGetters, mapMutations, mapActions } from 'vuex';
 import { required, decimal, maxLength, requiredIf } from 'vuelidate/lib/validators';
 import { mustBeDate } from '@/validations.js';
 
+// Answers at a glance, One Team: Headline, Description
+// Event: Headline, Description, Price, Date/Time, Images
+// Plant, Priority, People, Community: Headline, Description, Image
+
 export default {
   name: 'PostAddStep2',
   components: { BaseInputText, BaseInputTextarea },
   validations: {
     headline: {
-      required,
+      required: requiredIf(context => {
+        return context.isFieldRequired('headline');
+      }),
       maxLength: maxLength(80)
     },
     description: {
-      required,
+      required: requiredIf(context => {
+        return context.isFieldRequired('description');
+      }),
       maxLength: maxLength(750)
     },
     price: {
-      required,
+      required: requiredIf(context => {
+        return context.isFieldRequired('price');
+      }),
       decimal
     },
-    // date: {
-    //   required
-    // },
     eventDate: {
       required: requiredIf(function(context) {
-        return ['Event'].includes(context.get_selected_category.name);
+        return context.isFieldRequired('eventDate');
       }),
       mustBeDate
     }
+    // images: {
+    //   required: requiredIf(function(context) {
+    //     return context.isFieldRequired('images');
+    //   })
+    // }
   },
   mounted() {
     this.fetch_categories();
@@ -109,7 +125,30 @@ export default {
       'update_price',
       'update_eventDate',
       'update_images'
-    ])
+    ]),
+    isFieldRequired(fieldName) {
+      const categoryName = this.get_selected_category.name;
+      let isRequired = false;
+      switch (categoryName) {
+        case 'Events':
+          isRequired = ['headline', 'description', 'price', 'eventDate', 'images'].includes(fieldName);
+          break;
+        case 'One Team':
+        case 'Answers At A Glance':
+          isRequired = ['headline', 'description'].includes(fieldName);
+          break;
+        case 'Priority':
+        case 'People':
+        case 'Community':
+        case 'Plant':
+          isRequired = ['headline', 'description', 'images'].includes(fieldName);
+          break;
+
+        default:
+          break;
+      }
+      return isRequired;
+    }
   },
   computed: {
     ...mapGetters('post', [
@@ -137,14 +176,6 @@ export default {
         this.update_description(value);
       }
     },
-    // date: {
-    //   get() {
-    //     return this.get_date;
-    //   },
-    //   set(value) {
-    //     this.update_date(value);
-    //   }
-    // },
     price: {
       get() {
         return this.get_price;
@@ -160,15 +191,15 @@ export default {
       set(value) {
         this.update_eventDate(value);
       }
-    },
-    images: {
-      get() {
-        return this.get_images;
-      },
-      set(value) {
-        this.update_images(value);
-      }
     }
+    // images: {
+    //   get() {
+    //     return this.get_images;
+    //   },
+    //   set(value) {
+    //     this.update_images(value);
+    //   }
+    // }
   }
 };
 </script>

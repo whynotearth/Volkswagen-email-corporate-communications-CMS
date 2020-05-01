@@ -8,6 +8,7 @@ const defaultPostFormData = {
   date: '',
   price: undefined,
   eventDate: '',
+  // this is filelist
   images: [],
   selected_category: {}
 };
