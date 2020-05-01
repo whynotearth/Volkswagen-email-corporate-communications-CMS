@@ -1,5 +1,5 @@
 <template>
-  <div class="counter--color">
+  <div class="text-secondary">
     <span>{{ counter }}</span>
   </div>
 </template>
@@ -30,9 +30,10 @@ export default {
   methods: {
     updateCounter() {
       const now = new Date().getTime();
-      const diff = this.date - now;
+      const date = new Date(this.date).getTime();
+      const diff = date - now;
 
-      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const hours = Math.floor(diff / (1000 * 60 * 60));
       const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
       const secs = Math.floor((diff % (1000 * 60)) / 1000);
 
@@ -46,8 +47,4 @@ export default {
 };
 </script>
 
-<style>
-.counter--color {
-  color: #03b3f9;
-}
-</style>
+<style></style>

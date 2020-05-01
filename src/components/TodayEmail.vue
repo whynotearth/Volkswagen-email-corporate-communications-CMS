@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col items-center px-4 my-6">
+  <div class="flex flex-col items-center text-center px-4 my-6">
     <div>
       <h2>Hi Xavier, here's your Jumpstart email for the day.</h2>
     </div>
@@ -7,9 +7,9 @@
       Image Component will be replaced here
     </div>
     <div>
-      <h2>Daily Email will automatically send in</h2>
-      <div class="counter my-2 text-center">
-        <BaseCounter :date="new Date('Jun 20, 2021 20:20:20')" />
+      <h2 class="tg-h2-mobile text-primary">Daily Email will automatically send in</h2>
+      <div class="counter tg-h2-mobile my-2 text-center">
+        <BaseCounter date="Jan 5, 2021 15:37:25" />
       </div>
     </div>
     <div>
@@ -23,19 +23,9 @@ import BaseButton from './BaseButton';
 import BaseCounter from './BaseCounter';
 
 export default {
-  name: 'Todays Email',
+  name: 'Today Email',
   components: { BaseButton, BaseCounter }
 };
 </script>
 
-<style scoped>
-h2,
-.counter {
-  font-family: Work Sans;
-  font-style: normal;
-  font-weight: 600;
-  font-size: 22px;
-  line-height: 26px;
-  color: #011d51;
-}
-</style>
+<style scoped></style>

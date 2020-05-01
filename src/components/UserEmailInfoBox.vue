@@ -11,7 +11,7 @@
         name: 'Open Rate',
         total: 142
       }"
-      classes="email-info-middle-item--border mx-2 px-2"
+      classes="border-l border-r email-info-middle-item--border-color mx-2 px-2"
     />
     <UserEmailInfoBoxItem
       :emailInfo="{
@@ -31,10 +31,8 @@ export default {
 };
 </script>
 
-<style>
-.email-info-middle-item--border {
-  border-left: 1px solid;
-  border-right: 1px solid;
+<style scoped>
+.email-info-middle-item--border-color {
   border-color: rgba(255, 255, 255, 0.18);
 }
 </style>

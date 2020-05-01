@@ -1,24 +1,18 @@
 <template>
   <LayoutFixedScrollable>
     <template #content>
-      <div class="bg-white flex justify-center min-h-full relative">
+      <div class="min-h-full relative bg-background">
+        <router-link to="/settings" class="absolute top-0 right-0 p-4 text-sm">
+          <img src="https://res.cloudinary.com/whynotearth/image/upload/v1588066712/Volkswagen/cms/wheel_eqhded.svg" />
+        </router-link>
+        <div class="bg-brand-gradient ">
+          <UserCard class="w-full relative container px-0" />
+        </div>
         <div class="w-full relative container px-0 text-left">
-          <router-link to="/settings" class="absolute top-0 right-0 p-4 text-sm">
-            <img
-              src="https://res.cloudinary.com/whynotearth/image/upload/v1588066712/Volkswagen/cms/wheel_eqhded.svg"
-            />
-          </router-link>
-          <div class="">
-            <div class="">
-              <UserCard class="" />
-            </div>
-            <div class="">
-              <TodayEmail />
-            </div>
-            <div class="mb-8">
-              <SmartSuggestions />
-            </div>
-          </div>
+          <TodayEmail />
+        </div>
+        <div class="mb-8">
+          <SmartSuggestions />
         </div>
       </div>
     </template>
@@ -50,8 +44,4 @@ export default {
 };
 </script>
 
-<style scoped>
-.mb-h1-mobile {
-  margin-bottom: 56px;
-}
-</style>
+<style scoped></style>
