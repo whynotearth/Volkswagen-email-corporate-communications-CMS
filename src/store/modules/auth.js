@@ -1,7 +1,7 @@
 import { AuthenticationService } from '@whynotearth/meredith-axios';
-import { APIPath } from '@/helpers';
+import { APIPath, setDocumentClassesOnToggleDialog } from '@/helpers';
+import { ajax } from '@/connection/ajax.js';
 import store from '@/store';
-import { setDocumentClassesOnToggleDialog } from '@/helpers';
 
 const authStates = {
   'auth-login': { title: 'Log In' },
@@ -12,6 +12,10 @@ const authStates = {
 
 const defaultState = {
   email: '',
+  recoveryEmail: '',
+  token: '',
+  newPassword: '',
+  confirmPassword: '',
   password: '',
   status: '',
   loading: false,
@@ -40,8 +44,20 @@ export default {
     email: state => {
       return state.email;
     },
+    recoveryEmail: state => {
+      return state.recoveryEmail;
+    },
+    token: state => {
+      return state.token;
+    },
     password: state => {
       return state.password;
+    },
+    newPassword: state => {
+      return state.newPassword;
+    },
+    confirmPassword: state => {
+      return state.confirmPassword;
     },
     loading: state => {
       return state.loading;
@@ -74,6 +90,18 @@ export default {
     },
     updateEmail(state, payload) {
       state.email = payload;
+    },
+    updateRecoveryEmail(state, payload) {
+      state.recoveryEmail = payload;
+    },
+    updateToken(state, payload) {
+      state.token = payload;
+    },
+    updateNewPassword(state, payload) {
+      state.newPassword = payload;
+    },
+    updateConfirmPassword(state, payload) {
+      state.confirmPassword = payload;
     },
     updatePassword(state, payload) {
       state.password = payload;
@@ -196,9 +224,48 @@ export default {
       });
     },
     sendResetPasswordLink(context) {
-      // context.commit('updateLoading', true)
-      // AuthenticationService.sendResetPasswordLink
-      // TODO: send reset password link
+      context.commit('updateLoading', true);
+      const url = '/api/v0/authentication/forgotpassword';
+      const body = {
+        email: context.state.recoveryEmail
+      };
+
+      const configs = {
+        method: 'post',
+        url,
+        data: body
+      };
+
+      ajax(configs)
+        .then(response => response)
+        .catch(error => {
+          context.commit('updateLoginError', error.response.data.error);
+          context.commit('updateLoading', false);
+        });
+    },
+    setNewPassword(context) {
+      context.commit('updateLoading', true);
+
+      const url = '/api/v0/authentication/forgotpassword';
+      const body = {
+        email: context.state.recoveryEmail,
+        token: context.state.token,
+        password: context.state.password,
+        confirmPassword: context.state.confirmPassword
+      };
+
+      const configs = {
+        method: 'post',
+        url,
+        data: body
+      };
+
+      ajax(configs)
+        .then(response => response)
+        .catch(error => {
+          context.commit('updateLoginError', error.response.data.error);
+          context.commit('updateLoading', false);
+        });
     },
     logout(context) {
       context.commit('updateLoading', true);
