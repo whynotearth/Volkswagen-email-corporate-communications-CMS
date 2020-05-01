@@ -36,7 +36,7 @@ export default {
   validations: {
     date: {
       required,
-      mustBeDate
+      mustBeDate: value => mustBeDate({ value, isOptional: false })
     }
   },
   props: {

@@ -92,12 +92,12 @@ export default {
     submit() {
       const params = {
         body: {
-          date: formatISODate(this.get_date),
+          date: this.get_date ? formatISODate(this.get_date) : undefined,
           categoryId: this.get_selected_category.id,
           headline: this.get_headline,
           description: this.get_description,
           price: this.get_price,
-          eventDate: formatISODate(this.get_eventDate),
+          eventDate: this.get_eventDate ? formatISODate(this.get_eventDate) : undefined,
           images: this.get_images
         }
       };

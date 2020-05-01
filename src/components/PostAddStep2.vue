@@ -102,10 +102,7 @@ export default {
       decimal
     },
     eventDate: {
-      required: requiredIf(function(context) {
-        return context.isFieldRequired('eventDate');
-      }),
-      mustBeDate
+      mustBeDate: value => mustBeDate({ value })
     }
     // images: {
     //   required: requiredIf(function(context) {
