@@ -1,19 +1,22 @@
-import { PostService } from '@whynotearth/meredith-axios';
+import { PostService, PostCategoryService } from '@whynotearth/meredith-axios';
 import Vue from 'vue';
 import { cloneDeep } from 'lodash-es';
 
 const defaultPostFormData = {
-  to: '',
-  subject: '',
+  headline: '',
   description: '',
   date: '',
-  recipients: []
+  price: undefined,
+  eventDate: '',
+  images: [],
+  categoryId: undefined
 };
 
 export default {
   namespaced: true,
   state: {
     form_data: cloneDeep(defaultPostFormData),
+    categories: [],
     response_message: {
       type: '', // error, success
       message: '',
@@ -22,24 +25,33 @@ export default {
     posts: []
   },
   mutations: {
+    update_categories(state, payload) {
+      state.categories = payload;
+    },
+    update_headline(state, payload) {
+      Vue.set(state.form_data, 'headline', payload);
+    },
+    update_description(state, payload) {
+      Vue.set(state.form_data, 'description', payload);
+    },
+    update_date(state, payload) {
+      Vue.set(state.form_data, 'date', payload);
+    },
+    update_price(state, payload) {
+      Vue.set(state.form_data, 'price', payload);
+    },
+    update_eventDate(state, payload) {
+      Vue.set(state.form_data, 'eventDate', payload);
+    },
+    update_images(state, payload) {
+      Vue.set(state.form_data, 'images', payload);
+    },
+    update_categoryId(state, payload) {
+      Vue.set(state.form_data, 'categoryId', payload);
+    },
     update_response_message(state, payload) {
       Vue.set(state, 'response_message', payload);
     },
-    // update_to(state, payload) {
-    //   Vue.set(state.form_data, 'to', payload);
-    // },
-    // update_subject(state, payload) {
-    //   Vue.set(state.form_data, 'subject', payload);
-    // },
-    // update_description(state, payload) {
-    //   Vue.set(state.form_data, 'description', payload);
-    // },
-    // update_date(state, payload) {
-    //   Vue.set(state.form_data, 'date', payload);
-    // },
-    // update_recipients(state, payload) {
-    //   Vue.set(state.form_data, 'recipients', payload);
-    // },
     update_form_data(state, payload) {
       Vue.set(state, 'form_data', payload);
     },
@@ -54,6 +66,12 @@ export default {
     async add_post(context, payload) {
       await PostService.posts(payload.params);
     },
+    async fetch_categories(context) {
+      const data = await PostCategoryService.categories();
+      console.log('data', data);
+
+      context.commit('update_categories', data);
+    },
     async fetch_posts(context, payload) {
       // payload should be like {params: { date }}
       const data = await PostService.posts1(payload.params);
@@ -61,13 +79,15 @@ export default {
     }
   },
   getters: {
-    get_to: state => state.form_data.to,
-    get_subject: state => state.form_data.subject,
+    get_headline: state => state.form_data.headline,
     get_description: state => state.form_data.description,
     get_date: state => state.form_data.date,
-    get_recipients: state => state.form_data.recipients,
+    get_price: state => state.form_data.price,
+    get_eventDate: state => state.form_data.eventDate,
+    get_images: state => state.form_data.images,
+    get_categoryId: state => 111,
     get_response_message: state => state.response_message,
-    get_memos: state => state.memos,
-    get_stats: state => state.stats
+    get_posts: state => state.posts,
+    get_categories: state => state.categories
   }
 };
