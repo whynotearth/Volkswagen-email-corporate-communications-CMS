@@ -19,7 +19,7 @@
     "lodash-es": "4.17.15",
     "pretty-quick": "^2.0.1",
     "register-service-worker": "1.6.2",
-    "tailwindcss": "1.2.0",
+    "tailwindcss": "1.4.0",
     "validator": "13.0.0",
     "vue": "2.6.11",
     "vue-multiselect": "2.1.6",

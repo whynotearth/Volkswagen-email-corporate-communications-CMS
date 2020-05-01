@@ -88,10 +88,10 @@ export default {
   },
   computed: {
     isAuthenticated() {
-      return this.$store.getters['auth/isAuthenticated'];
+      return this.$store.getters['authKeep/isAuthenticated'];
     },
     user() {
-      return this.$store.getters['auth/user'];
+      return this.$store.getters['authKeep/user'];
     }
   }
 };

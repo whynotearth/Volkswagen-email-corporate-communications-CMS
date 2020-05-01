@@ -3,21 +3,23 @@
     <template #content>
       <div class="">
         <BaseAppBarHeader title="Email" :to-link="backLink">
-          <div class="flex-grow inline-block text-right">
-            <a href="#" class="relative">
-              <img
-                class="float-right w-5 cursor-pointer"
-                @click="toggleMenu()"
-                src="https://user-images.githubusercontent.com/5694308/78644324-e730da00-78df-11ea-84b2-047e5bf57c2a.png"
-              />
-              <ul v-if="isMenu" class="menu shadow-8dp">
-                <li class="text-left">
-                  <router-link class="px-2 py-3 block w-full" :to="`${selectedEmail.id}/edit`">Edit</router-link>
-                </li>
-                <li class="px-2 py-3 text-left cursor-pointer" @click="deleteEmail()">Delete</li>
-              </ul>
-            </a>
-          </div>
+          <template #menu>
+            <div class="flex-grow inline-block text-right">
+              <a href="#" class="relative">
+                <img
+                  class="float-right w-5 cursor-pointer"
+                  @click="toggleMenu()"
+                  src="https://user-images.githubusercontent.com/5694308/78644324-e730da00-78df-11ea-84b2-047e5bf57c2a.png"
+                />
+                <ul v-if="isMenu" class="menu shadow-8dp">
+                  <li class="text-left">
+                    <router-link class="px-2 py-3 block w-full" :to="`${selectedEmail.id}/edit`">Edit</router-link>
+                  </li>
+                  <li class="px-2 py-3 text-left cursor-pointer" @click="deleteEmail()">Delete</li>
+                </ul>
+              </a>
+            </div>
+          </template>
         </BaseAppBarHeader>
         <div class="flex">
           <ul class="container px-0 md:px-6 pt-4">
