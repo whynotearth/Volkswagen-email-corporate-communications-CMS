@@ -11,7 +11,7 @@ module.exports = {
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'vue/no-unused-components': 'warn',
-    indent: ['warn', 2],
+    indent: ['warn', 2, { SwitchCase: 1 }],
     quotes: ['warn', 'single'],
     // TODO remove
     'no-useless-catch': 'off',
