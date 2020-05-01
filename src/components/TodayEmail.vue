@@ -27,7 +27,7 @@ import BaseButton from './BaseButton';
 import BaseCounter from './BaseCounter';
 
 export default {
-  name: 'Today Email',
+  name: 'TodaysEmail',
   components: { BaseButton, BaseCounter }
 };
 </script>

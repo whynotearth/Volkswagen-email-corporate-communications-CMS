@@ -9,7 +9,7 @@ export default {
   name: 'BaseCounter',
   props: {
     date: {
-      type: Date,
+      type: String,
       required: true
     }
   },

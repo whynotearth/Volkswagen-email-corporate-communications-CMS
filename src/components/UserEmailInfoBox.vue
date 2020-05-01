@@ -32,7 +32,7 @@ export default {
 </script>
 
 <style scoped>
-.email-info-middle-item--border-color {
-  border-color: rgba(255, 255, 255, 0.18);
+::v-deep .email-info-middle-item--border-color {
+  border-color: rgba(255, 255, 255, 0.18) !important;
 }
 </style>
