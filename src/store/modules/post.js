@@ -9,7 +9,7 @@ const defaultPostFormData = {
   price: undefined,
   eventDate: '',
   images: [],
-  categoryId: undefined
+  selected_category: {}
 };
 
 export default {
@@ -46,8 +46,8 @@ export default {
     update_images(state, payload) {
       Vue.set(state.form_data, 'images', payload);
     },
-    update_categoryId(state, payload) {
-      Vue.set(state.form_data, 'categoryId', payload);
+    update_selected_category(state, payload) {
+      Vue.set(state.form_data, 'selected_category', payload);
     },
     update_response_message(state, payload) {
       Vue.set(state, 'response_message', payload);
@@ -68,8 +68,6 @@ export default {
     },
     async fetch_categories(context) {
       const data = await PostCategoryService.categories();
-      console.log('data', data);
-
       context.commit('update_categories', data);
     },
     async fetch_posts(context, payload) {
@@ -79,13 +77,13 @@ export default {
     }
   },
   getters: {
+    get_date: state => state.form_data.date,
     get_headline: state => state.form_data.headline,
     get_description: state => state.form_data.description,
-    get_date: state => state.form_data.date,
     get_price: state => state.form_data.price,
     get_eventDate: state => state.form_data.eventDate,
     get_images: state => state.form_data.images,
-    get_categoryId: state => 111,
+    get_selected_category: state => state.form_data.selected_category,
     get_response_message: state => state.response_message,
     get_posts: state => state.posts,
     get_categories: state => state.categories

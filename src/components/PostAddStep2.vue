@@ -56,6 +56,9 @@
         <span v-if="$v.eventDate.$dirty && !$v.eventDate.required" class="text-xs text-error">
           Date/Time is required
         </span>
+        <span v-if="$v.eventDate.$dirty && !$v.eventDate.mustBeDate" class="text-xs text-error">
+          Date/Time is invalid. Example: 2020-12-24 7:30 pm
+        </span>
       </BaseInputText>
     </div>
   </div>
@@ -66,7 +69,7 @@ import BaseInputText from '@/components/BaseInputText.vue';
 import BaseInputTextarea from '@/components/BaseInputTextarea.vue';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
 import { required, decimal, maxLength, requiredIf } from 'vuelidate/lib/validators';
-const CATEGORY_EVENT = 111;
+import { mustBeDate } from '@/validations.js';
 
 export default {
   name: 'PostAddStep2',
@@ -84,13 +87,14 @@ export default {
       required,
       decimal
     },
-    date: {
-      required
-    },
+    // date: {
+    //   required
+    // },
     eventDate: {
       required: requiredIf(function(context) {
-        return context.get_categoryId === CATEGORY_EVENT;
-      })
+        return ['Event'].includes(context.get_selected_category.name);
+      }),
+      mustBeDate
     }
   },
   mounted() {
@@ -111,11 +115,10 @@ export default {
     ...mapGetters('post', [
       'get_headline',
       'get_description',
-      'get_date',
       'get_price',
       'get_eventDate',
       'get_images',
-      'get_categoryId',
+      'get_selected_category',
       'get_categories'
     ]),
     headline: {
@@ -134,14 +137,14 @@ export default {
         this.update_description(value);
       }
     },
-    date: {
-      get() {
-        return this.get_date;
-      },
-      set(value) {
-        this.update_date(value);
-      }
-    },
+    // date: {
+    //   get() {
+    //     return this.get_date;
+    //   },
+    //   set(value) {
+    //     this.update_date(value);
+    //   }
+    // },
     price: {
       get() {
         return this.get_price;
@@ -169,12 +172,3 @@ export default {
   }
 };
 </script>
-
-<style scoped>
-.text-gray {
-  color: rgba(0, 0, 0, 0.38);
-}
-.active {
-  background: rgba(3, 179, 249, 0.12);
-}
-</style>
