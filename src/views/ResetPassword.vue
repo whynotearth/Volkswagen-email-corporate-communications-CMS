@@ -2,7 +2,7 @@
   <div>
     <BaseAppBarHeader :title="'Reset Password'" :to-link="'/login'" />
     <div class="reset-content">
-      <span class="reset-title">Please input your email:</span>
+      <span class="reset-title tg-body-mobile">Please input your email:</span>
     </div>
     <div class="reset-content-form">
       <form ref="form" name="reset-password" @submit.prevent="" class="pt-6 pb-8 mb-4 text-left">
@@ -23,7 +23,7 @@
           </BaseInputText>
         </div>
         <div class="reset-submit" @click="submit()">
-          <button class="reset_button">sent reset email</button>
+          <button class="reset_button text-white bg-primary">sent reset email</button>
         </div>
       </form>
     </div>
@@ -51,10 +51,7 @@ export default {
   },
   methods: {
     cleanup() {
-      this.newPassword = '';
       this.recoveryEmail = '';
-      this.confirmPassword = '';
-      this.token = '';
     },
     updateActiveState(value) {
       this.$store.dispatch('auth/updateActiveState', value);
@@ -109,6 +106,14 @@ export default {
   margin-top: -20px;
 }
 
+@media only screen and (min-width: 600px) {
+  .reset-content,
+  .reset-content-form {
+    margin-right: 275px;
+    margin-left: 275px;
+  }
+}
+
 .reset-content-form,
 .reset-submit {
   text-align: center;
@@ -117,9 +122,7 @@ export default {
   margin-top: 22px;
   margin-left: 80px;
   margin-right: 80px;
-  background: #011d51;
   border-radius: 23px;
-  color: #fff;
   padding-top: 12px;
   padding-bottom: 12px;
   padding-left: 8px;
@@ -133,10 +136,6 @@ export default {
 }
 
 .reset-title {
-  font-family: Work Sans;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 16px;
   text-align: left;
 }
 </style>

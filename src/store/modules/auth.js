@@ -224,19 +224,15 @@ export default {
       });
     },
     sendResetPasswordLink(context) {
+      const host = window.location.origin;
       context.commit('updateLoading', true);
-      const url = '/api/v0/authentication/forgotpassword';
-      const body = {
-        email: context.state.recoveryEmail
-      };
-
-      const configs = {
-        method: 'post',
-        url,
-        data: body
-      };
-
-      ajax(configs)
+      AuthenticationService.forgotpassword({
+        body: {
+          companySlug: process.env.VUE_APP_COMPANY_SLUG,
+          email: context.state.recoveryEmail,
+          returnUrl: `${host}/new-password`
+        }
+      })
         .then(response => response)
         .catch(error => {
           context.commit('updateLoginError', error.response.data.error);
@@ -244,23 +240,18 @@ export default {
         });
     },
     setNewPassword(context) {
+      const host = window.location.origin;
       context.commit('updateLoading', true);
-
-      const url = '/api/v0/authentication/forgotpassword';
-      const body = {
-        email: context.state.recoveryEmail,
-        token: context.state.token,
-        password: context.state.password,
-        confirmPassword: context.state.confirmPassword
-      };
-
-      const configs = {
-        method: 'post',
-        url,
-        data: body
-      };
-
-      ajax(configs)
+      AuthenticationService.forgotpasswordreset({
+        body: {
+          email: context.state.recoveryEmail,
+          token: context.state.token,
+          password: context.state.newPassword,
+          confirmPassword: context.state.confirmPassword,
+          companySlug: process.env.VUE_APP_COMPANY_SLUG,
+          returnUrl: `${host}/login`
+        }
+      })
         .then(response => response)
         .catch(error => {
           context.commit('updateLoginError', error.response.data.error);

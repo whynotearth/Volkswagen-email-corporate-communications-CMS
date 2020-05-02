@@ -1,7 +1,7 @@
 <template>
-  <div class="loading">
+  <div class="loading bk-linear-gradient">
     <LogoBrand />
-    <span class="loading-message">{{ message }}</span>
+    <span class="loading-message tg-h3-mobile text-white">{{ message }}</span>
     {{ newPath }}
   </div>
 </template>
@@ -29,12 +29,10 @@ export default {
     redirect() {
       if (this.reset) {
         this.message = 'Your password reset email is on the way!';
-        setTimeout(() => this.$router.push({ name: 'NewPassword' }), 3000);
       }
 
       if (this.confirmReset) {
         this.message = 'Your password has been reset!';
-        setTimeout(() => this.$router.push({ name: 'AuthLogin' }), 3000);
       }
     }
   },
@@ -48,7 +46,6 @@ export default {
 
 <style scoped>
 .loading {
-  background: radial-gradient(50% 49.2% at 0% 0.8%, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0) 100%), #011d51;
   width: 100%;
   height: 100%;
   display: flex;
@@ -58,12 +55,8 @@ export default {
 }
 
 .loading-message {
-  font-weight: 500;
-  font-size: 20px;
-  line-height: 25px;
-  margin-top: 28px;
-  margin-right: 33px;
-  margin-left: 33px;
-  color: #fff;
+  margin-top: 24px;
+  margin-right: 32px;
+  margin-left: 32px;
 }
 </style>

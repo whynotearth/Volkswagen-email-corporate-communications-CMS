@@ -2,7 +2,7 @@
   <div>
     <BaseAppBarHeader :title="'Set New Password'" :to-link="'/reset-password'" />
     <div class="reset-content">
-      <span class="reset-title">Enter new password:</span>
+      <span class="reset-title tg-body-mobile">Enter new password:</span>
     </div>
     <div class="reset-content-form">
       <form ref="form" name="reset-password" @submit.prevent="" class="pt-6 pb-8 mb-4 text-left">
@@ -16,7 +16,7 @@
             :error="$v.newPassword.$dirty && !$v.newPassword.required"
           >
             <span v-if="$v.newPassword.$dirty && !$v.newPassword.required" class="text-xs text-error">
-              Confirm Password is required
+              New Password is required
             </span>
           </BaseInputText>
         </div>
@@ -32,38 +32,13 @@
             <span v-if="$v.confirmPassword.$dirty && !$v.confirmPassword.required" class="text-xs text-error">
               Confirm Password is required
             </span>
-          </BaseInputText>
-        </div>
-        <div class="mb-4">
-          <BaseInputText
-            class="bg-surface"
-            v-model="$v.token.$model"
-            label="Token"
-            placeholder="Token"
-            type="text"
-            :error="$v.token.$dirty && !$v.token.required"
-          >
-            <span v-if="$v.token.$dirty && !$v.token.required" class="text-xs text-error">
-              Confirm Password is required
+            <span v-if="showMessage" class="text-xs text-error">
+              Password don't match
             </span>
           </BaseInputText>
         </div>
-        <BaseInputText
-          class="bg-surface"
-          v-model="$v.recoveryEmail.$model"
-          label="Email"
-          placeholder="Email"
-          :error="$v.recoveryEmail.$dirty && (!$v.recoveryEmail.required || !$v.recoveryEmail.email)"
-        >
-          <span v-if="$v.recoveryEmail.$dirty && !$v.recoveryEmail.required" class="text-xs text-error">
-            Email is required
-          </span>
-          <span v-if="$v.recoveryEmail.$dirty && !$v.recoveryEmail.email" class="text-xs text-error">
-            Please enter valid email
-          </span>
-        </BaseInputText>
         <div class="reset-submit">
-          <button @click="submit()" class="reset_button">Reset Password</button>
+          <button @click="submit()" class="reset_button text-white bg-primary">Reset Password</button>
         </div>
       </form>
     </div>
@@ -74,7 +49,7 @@
 import store from '@/store';
 import BaseAppBarHeader from '@/components/BaseAppBarHeader';
 import BaseInputText from '@/components/BaseInputText';
-import { required } from 'vuelidate/lib/validators';
+import { required, password } from 'vuelidate/lib/validators';
 
 export default {
   name: 'NewPassword',
@@ -93,16 +68,17 @@ export default {
       required
     }
   },
-  beforeDestroy() {
-    this.cleanup();
+  data() {
+    return {
+      showMessage: false
+    };
+  },
+  created() {
+    const urlParams = new URLSearchParams(window.location.search);
+    this.token = urlParams.get('token');
+    this.recoveryEmail = urlParams.get('email');
   },
   methods: {
-    cleanup() {
-      this.newPassword = '';
-      this.recoveryEmail = '';
-      this.confirmPassword = '';
-      this.token = '';
-    },
     onSuccess() {
       this.$router.push({
         name: 'VolkswagenLoadMessage',
@@ -111,14 +87,21 @@ export default {
         }
       });
     },
+
     submit() {
       this.$v.$touch();
       if (this.$v.$invalid) {
         return false;
       }
-      this.newPasswordRecovery().then(() => {
-        this.onSuccess();
-      });
+
+      if (this.passwordMatch) {
+        this.showMessage = true;
+        return;
+      } else {
+        this.newPasswordRecovery().then(() => {
+          this.onSuccess();
+        });
+      }
     },
     async newPasswordRecovery() {
       await this.$store.dispatch('auth/setNewPassword');
@@ -130,6 +113,9 @@ export default {
     }
   },
   computed: {
+    passwordMatch() {
+      return this.confirmPassword !== this.newPassword;
+    },
     newPassword: {
       get() {
         return this.$store.getters['auth/newPassword'];
@@ -182,6 +168,14 @@ export default {
   margin-top: -20px;
 }
 
+@media only screen and (min-width: 600px) {
+  .reset-content,
+  .reset-content-form {
+    margin-right: 275px;
+    margin-left: 275px;
+  }
+}
+
 .reset-content-form,
 .reset-submit {
   text-align: center;
@@ -190,9 +184,7 @@ export default {
   margin-top: 22px;
   margin-left: 80px;
   margin-right: 80px;
-  background: #011d51;
   border-radius: 23px;
-  color: #fff;
   padding-top: 12px;
   padding-bottom: 12px;
   padding-left: 8px;
@@ -206,10 +198,6 @@ export default {
 }
 
 .reset-title {
-  font-family: Work Sans;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 16px;
   text-align: left;
 }
 </style>
