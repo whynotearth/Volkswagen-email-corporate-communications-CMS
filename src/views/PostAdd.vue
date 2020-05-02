@@ -32,6 +32,12 @@
               placeholder="Write post content"
             />
           </div>
+          <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="PostAddImageUpload">
+              Images
+            </label>
+            <ImageUpload v-model="images" />
+          </div>
         </div>
         <div class="flex items-center justify-between">
           <button
@@ -49,14 +55,16 @@
 
 <script>
 import PageNavigation from '@/components/PageNavigation.vue';
+import ImageUpload from '@/components/ImageUpload/ImageUpload.vue';
 
 export default {
-  components: { PageNavigation },
+  components: { PageNavigation, ImageUpload },
   name: 'PostAddPage',
   data() {
     return {
       headline: '',
-      content: ''
+      content: '',
+      images: []
     };
   },
   methods: {
