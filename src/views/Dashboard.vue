@@ -1,0 +1,47 @@
+<template>
+  <LayoutFixedScrollable>
+    <template #content>
+      <div class="min-h-full relative bg-background">
+        <router-link to="/settings" class="absolute top-0 right-0 p-4 text-sm">
+          <img src="https://res.cloudinary.com/whynotearth/image/upload/v1588066712/Volkswagen/cms/wheel_eqhded.svg" />
+        </router-link>
+        <div class="bg-brand-gradient ">
+          <UserCard class="w-full relative container px-0" />
+        </div>
+        <div class="w-full relative container px-0 text-left">
+          <TodayEmail />
+        </div>
+        <div class="mb-8">
+          <SmartSuggestions />
+        </div>
+      </div>
+    </template>
+    <template #footer>
+      <NavigationBottom />
+    </template>
+  </LayoutFixedScrollable>
+</template>
+
+<script>
+import store from '@/store';
+import NavigationBottom from '@/components/BaseNavigationBottom';
+import LayoutFixedScrollable from '@/components/LayoutFixedScrollable';
+import UserCard from '@/components/BaseUserCard';
+import TodayEmail from '@/components/TodayEmail';
+import SmartSuggestions from '@/components/BaseSmartSuggestions';
+
+export default {
+  name: 'Dashboard',
+  components: {
+    NavigationBottom,
+    LayoutFixedScrollable,
+    UserCard,
+    TodayEmail,
+    SmartSuggestions
+  },
+  computed: {},
+  methods: {}
+};
+</script>
+
+<style scoped></style>
