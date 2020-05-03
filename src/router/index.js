@@ -15,6 +15,8 @@ import EmailListItem from '../views/EmailListItem';
 import EmailListImport from '../views/EmailListImport';
 import EmailListImportHelp from '../views/EmailListImportHelp';
 import Dashboard from '../views/Dashboard';
+import ActivityFeedJumpStartList from '../views/ActivityFeedJumpStartList.vue';
+import ActivityFeedJumpStartItem from '../views/ActivityFeedJumpStartItem.vue';
 import store from '../store';
 
 Vue.use(VueRouter);
@@ -134,6 +136,23 @@ const routes = [
     path: '/dashboard',
     name: 'Dashboard',
     component: Dashboard,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/activity-feed/jump-starts',
+    name: 'ActivityFeedJumpStartList',
+    component: ActivityFeedJumpStartList,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/activity-feed/jump-starts/:id',
+    name: 'ActivityFeedJumpStartItem',
+    component: ActivityFeedJumpStartItem,
+    props: true,
     meta: {
       requiresAuth: true
     }
