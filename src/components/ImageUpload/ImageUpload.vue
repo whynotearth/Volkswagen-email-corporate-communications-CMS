@@ -2,7 +2,7 @@
   <div class="bg-background">
     <div class="mb-2">
       <div class="">
-        <h3 class="tg-body-mobile em-medium">Images</h3>
+        <h3 class="text-black tg-body-mobile em-high">Images</h3>
       </div>
     </div>
     <div class="flex flex-wrap -mx-1">
