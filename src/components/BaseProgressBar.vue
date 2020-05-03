@@ -7,7 +7,7 @@
       <div
         :class="progressClassNames"
         class="text-xs leading-none py-1 text-center text-white rounded-full transition-transform duration-300 w-full"
-        :style="{ transform: `translateX(-${100 - progress}%)` }"
+        :style="{ transform: `translateX(-${100 - progressWidth}%)` }"
       ></div>
     </div>
   </div>
@@ -33,6 +33,16 @@ export default {
       type: String,
       default: randomId
     }
+  },
+  data() {
+    return {
+      progressWidth: 0
+    };
+  },
+  mounted() {
+    setTimeout(() => {
+      this.progressWidth = this.progress;
+    }, 0);
   }
 };
 </script>

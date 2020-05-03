@@ -76,7 +76,7 @@ export default {
           description: this.get_description,
           to: this.get_to,
           subject: this.get_subject,
-          distributionGroup: this.get_recipients.join(',')
+          distributionGroups: this.get_recipients
         }
       };
       this.add_memo({ params })

@@ -64,6 +64,9 @@
           Date/Time is invalid. Example: 2020-12-24 7:30 pm
         </span>
       </BaseInputText>
+
+      <hr class="bg-background border-black em-low -mx-4 sm:mx-0 mb-4" />
+      <ImageUpload v-if="isFieldRequired('images')" v-model="images" />
     </div>
   </div>
 </template>
@@ -71,6 +74,7 @@
 <script>
 import BaseInputText from '@/components/BaseInputText.vue';
 import BaseInputTextarea from '@/components/BaseInputTextarea.vue';
+import ImageUpload from '@/components/ImageUpload/ImageUpload.vue';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
 import { required, decimal, maxLength, requiredIf } from 'vuelidate/lib/validators';
 import { mustBeDate } from '@/validations.js';
@@ -81,7 +85,12 @@ import { mustBeDate } from '@/validations.js';
 
 export default {
   name: 'PostAddStep2',
-  components: { BaseInputText, BaseInputTextarea },
+  components: { BaseInputText, BaseInputTextarea, ImageUpload },
+  data() {
+    return {
+      images: []
+    };
+  },
   validations: {
     headline: {
       required: requiredIf(context => {
