@@ -7,7 +7,7 @@
   >
     <div class="px-0 overflow-y-auto flex flex-col h-full narrow-scrollbars">
       <SelectEmailDate v-if="currentStep === 1" ref="formStep1" :error="validationError" />
-      <DraftEmail v-if="currentStep === 2" ref="formStep2" :error="validationError" />
+      <DraftEmail v-if="currentStep === 2" />
       <ScheduleEmail v-if="currentStep === 3" ref="formStep3" :error="validationError" />
       <SelectRecipents v-if="currentStep === 4" ref="formStep4" :error="validationError" />
     </div>
@@ -23,7 +23,7 @@ import SelectRecipents from '@/components/Email/SelectRecipents.vue';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
 
 export default {
-  name: 'EmailDraft',
+  name: 'Email',
   components: { StepperManager, SelectEmailDate, DraftEmail, ScheduleEmail, SelectRecipents },
   props: {
     step: {
@@ -70,6 +70,7 @@ export default {
     },
 
     processValidations(change) {
+      if (this.currentStep !== 1) return true;
       this.$refs['formStep' + this.currentStep].$v.$touch();
       if (this.$refs['formStep' + this.currentStep].$v.$invalid) {
         this.validationError = true;
