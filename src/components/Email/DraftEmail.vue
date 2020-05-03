@@ -3,7 +3,6 @@
     <div class="container px-4 text-left">
       <div class="bg-brand-gradient h-full p-8">
         <div class="bg-white mx-auto max-w-sm">
-          <!-- https://stagingapi.whynot.earth/api/v0/volkswagen/jumpstart/preview?postIds=25&postIds=26&postIds=27 -->
           <img :src="previewLink" />
         </div>
       </div>
@@ -43,6 +42,7 @@ export default {
   mounted() {
     if (!this.get_email_date) return this.$router.push({ name: 'Email', params: { step: 1 } });
     this.fetch_posts({ params: { date: formatISODate(this.get_email_date) } });
+    this.debounced_preview();
   },
   methods: {
     ...mapActions('post', ['fetch_posts']),
@@ -75,7 +75,7 @@ export default {
   },
   computed: {
     ...mapGetters('post', ['get_posts']),
-    ...mapGetters('email', ['get_email_date', 'get_postIds', 'get_preview'])
+    ...mapGetters('email', ['get_email_date', 'get_postIds'])
   }
 };
 </script>
