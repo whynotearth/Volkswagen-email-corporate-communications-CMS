@@ -1,0 +1,82 @@
+<template>
+  <div class="post mb-4 mt-8 md:mx-8 cursor-pointer" @click="$emit('clicked')">
+    <div
+      class="flex justify-center w-full flex shadow-8dp relative"
+      :class="active ? 'border-3 border-secondary' : 'border-2'"
+      :style="`border-color: #${post.category.color}`"
+    >
+      <div class="absolute bg-white left-0 ml-5 -mt-4 p-1">
+        <img :src="post.category.image" alt="catg" draggable="false" class="h-4 w-4 object-contain" />
+      </div>
+      <div class="px-2 py-5">
+        <img :src="post.image" alt="post" draggable="false" class="h-16 object-contain" />
+      </div>
+      <div class="w-56 my-auto text-lg">
+        {{ post.description | truncate }}
+      </div>
+      <div class="my-auto text-right relative outline-none">
+        <More class="cursor-pointer" @click="toggleMenu" />
+        <div v-show="menu" class="absolute top-0 right-0 text-left bg-white shadow-8dp rounded-md mr-5 py-2 text-base">
+          <router-link to="/edit" class="block py-2 px-4 leading-5 hover:text-secondary cursor-pointer">
+            Edit
+          </router-link>
+          <router-link to="/delete" class="block py-2 px-4 leading-5 hover:text-error cursor-pointer">
+            Delete
+          </router-link>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import More from '@/assets/more.svg';
+
+export default {
+  name: 'Post',
+  components: { More },
+  props: {
+    post: {
+      type: Object
+    },
+    active: {
+      type: Boolean,
+      default: false
+    }
+  },
+  data() {
+    return {
+      menu: false
+    };
+  },
+  methods: {
+    hideMenu() {
+      this.menu = false;
+    },
+    showMenu() {
+      this.menu = true;
+    },
+    toggleMenu() {
+      if (this.menu) {
+        this.hideMenu();
+      } else {
+        this.showMenu();
+      }
+    }
+  },
+  filters: {
+    truncate: function(value) {
+      if (value.length < 51) return value;
+      else return value.slice(0, 51) + '...';
+    }
+  }
+};
+</script>
+
+<style scoped>
+.post {
+  max-width: 328px;
+  min-height: 104px;
+  max-height: 113px;
+}
+</style>
