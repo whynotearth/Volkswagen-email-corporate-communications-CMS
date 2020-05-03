@@ -13,6 +13,7 @@ const defaultMemoFormData = {
 export default {
   namespaced: true,
   state: {
+    // TODO: use form_data: cloneDeep(defaultMemoFormData),
     form_data: {
       to: '',
       subject: '',
