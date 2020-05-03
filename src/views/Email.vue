@@ -21,6 +21,7 @@ import DraftEmail from '@/components/Email/DraftEmail.vue';
 import ScheduleEmail from '@/components/Email/ScheduleEmail.vue';
 import SelectRecipents from '@/components/Email/SelectRecipents.vue';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
+import { sleep } from '@/helpers.js';
 
 export default {
   name: 'Email',
@@ -33,17 +34,21 @@ export default {
   data() {
     return {
       steps: ['SelectEmailDate', 'Draft Email', 'Schedule Email', 'Select Recipents'],
-      showResult: false,
-      validationError: false
+      showResult: false
     };
   },
   computed: {
+    ...mapGetters('email', ['get_email_date', 'get_postIds', 'get_email_recipients', 'get_schedule_time']),
     currentStep() {
       return parseInt(this.step);
     }
   },
   methods: {
+    ...mapActions('email', ['create_jumpstart', 'clear_email_data']),
+    ...mapMutations('email', ['update_response_message']),
     changeStep(change) {
+      this.update_response_message({ message: '' });
+
       const newStep = this.currentStep + change;
 
       // go forward
@@ -55,7 +60,7 @@ export default {
       // exit
       const wantToExit = newStep < 1;
       if (wantToExit) {
-        this.$store.dispatch('post/clear_form_data');
+        this.clear_email_data();
         return this.$router.push({ name: 'Home' });
       }
 
@@ -71,11 +76,48 @@ export default {
 
     processValidations(change) {
       this.$refs['formStep' + this.currentStep].$v.$touch();
-      if (this.$refs['formStep' + this.currentStep].$v.$invalid) {
-        this.validationError = true;
-        return false;
-      }
+      if (this.$refs['formStep' + this.currentStep].$v.$invalid) return false;
       return true;
+    },
+    submit() {
+      let total_time = new Date(this.get_email_date + this.get_schedule_time).toISOString;
+      const params = {
+        body: {
+          dateTime: total_time,
+          postIds: this.get_postIds,
+          distributionGroups: this.get_email_recipients
+        }
+      };
+      this.create_jumpstart({ params })
+        .then(() => {
+          this.clear_email_data();
+          this.onSuccessSubmit();
+        })
+        .catch(error => {
+          this.update_response_message({
+            message: error.response.data.message,
+            type: 'error',
+            class: 'text-error'
+          });
+        });
+    },
+
+    async onSuccessSubmit() {
+      this.$store.commit('overlay/updateModel', {
+        title: 'Success!',
+        message: ''
+      });
+
+      await sleep(1000);
+
+      await this.$router.push({
+        name: 'Home'
+      });
+
+      this.$store.commit('overlay/updateModel', {
+        title: '',
+        message: ''
+      });
     }
   }
 };
