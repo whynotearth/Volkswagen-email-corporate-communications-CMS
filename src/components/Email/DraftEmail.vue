@@ -21,18 +21,12 @@
 <script>
 import Post from '@/components/Email/Post.vue';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
-import { required } from 'vuelidate/lib/validators';
 import { formatISODate } from '@/helpers.js';
 
 export default {
   name: 'DraftEmail',
   components: {
     Post
-  },
-  validations: {
-    selected_posts: {
-      required
-    }
   },
   props: {
     error: {
