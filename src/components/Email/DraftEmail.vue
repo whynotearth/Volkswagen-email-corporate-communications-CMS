@@ -2,7 +2,10 @@
   <div class="py-6 flex-grow">
     <div class="container px-4 text-left">
       <div class="bg-brand-gradient h-full p-8">
-        <img :src="`data:image/jpeg;base64,${get_preview}`" class="bg-white h-64 mx-auto w-40" />
+        <div class="bg-white mx-auto max-w-sm">
+          <!-- https://stagingapi.whynot.earth/api/v0/volkswagen/jumpstart/preview?postIds=25&postIds=26&postIds=27 -->
+          <img :src="previewLink" />
+        </div>
       </div>
       <h2 class="text-primary font-bold text-xl">Rearrange the Jumpstart</h2>
       <div class="flex flex-wrap justify-between">
@@ -26,6 +29,7 @@ import { debounce } from 'lodash-es';
 
 export default {
   name: 'DraftEmail',
+  data: () => ({ previewLink: '' }),
   components: {
     Post
   },
@@ -38,18 +42,25 @@ export default {
   mounted() {
     if (!this.get_email_date) return this.$router.push({ name: 'Email', params: { step: 1 } });
     this.fetch_posts({ params: { date: formatISODate(this.get_email_date) } });
-    this.fetch_preview({ params: { postIds: this.get_postIds } });
   },
   methods: {
     ...mapActions('post', ['fetch_posts']),
-    ...mapActions('email', ['fetch_preview']),
     ...mapMutations('email', ['update_postIds']),
+    updatePreviewLink() {
+      const base = 'https://stagingapi.whynot.earth/api/v0/volkswagen/jumpstart/preview';
+      const url = new URL(base);
+
+      this.get_postIds.forEach(postId => {
+        url.searchParams.append('postIds', postId);
+      });
+      this.previewLink = url.href;
+    },
     debounced_preview: debounce(
       function() {
-        this.fetch_preview({ params: { postIds: [...this.get_postIds] } });
+        this.updatePreviewLink();
       },
-      350,
-      { maxWait: 1000 }
+      3000,
+      { maxWait: 3000 }
     ),
     addPost(post) {
       if (this.get_postIds.length < 6) {

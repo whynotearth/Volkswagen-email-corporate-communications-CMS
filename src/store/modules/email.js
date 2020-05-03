@@ -15,21 +15,6 @@ export default {
     update_postIds(state, payload) {
       let i = state.postIds.indexOf(payload);
       i !== -1 ? state.postIds.splice(i, 1) : state.postIds.push(payload);
-    },
-    update_preview(state, payload) {
-      state.preview_img = payload;
-    },
-    change_loading(state, payload) {
-      state.loading = payload;
-    }
-  },
-  actions: {
-    fetch_preview({ commit }, payload) {
-      commit('change_loading', true);
-      JumpStartService.preview(payload.params).then(response => {
-        commit('update_preview', response);
-        commit('change_loading', false);
-      });
     }
   },
   getters: {
