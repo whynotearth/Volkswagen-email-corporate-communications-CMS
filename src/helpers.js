@@ -1,5 +1,5 @@
 import { BASE_API } from '@/connection/api';
-import { format } from 'date-fns';
+import { format, formatISO } from 'date-fns';
 import { startCase, toLower } from 'lodash-es';
 import store from './store';
 
@@ -83,6 +83,16 @@ export function formatDate(inputDate, dateFormat = 'dd MMM, yyyy') {
     inputDate = new Date(inputDate);
   }
   return format(inputDate, dateFormat);
+}
+
+export function formatISODate(inputDate) {
+  if (!inputDate) {
+    console.error('formatISO: Invalid Date');
+  }
+  if (typeof inputDate === 'string') {
+    inputDate = new Date(inputDate);
+  }
+  return formatISO(inputDate);
 }
 
 export function cardDate(date) {

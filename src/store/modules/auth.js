@@ -3,12 +3,6 @@ import { APIPath } from '@/helpers';
 import store from '@/store';
 import { setDocumentClassesOnToggleDialog } from '@/helpers';
 
-const defaultUser = {
-  id: 0,
-  isAuthenticated: false,
-  userName: ''
-};
-
 const authStates = {
   'auth-login': { title: 'Log In' },
   'auth-forgot-password': { title: 'Reset Password' },
@@ -20,7 +14,6 @@ const defaultState = {
   email: '',
   password: '',
   status: '',
-  user: defaultUser,
   loading: false,
   loginError: '',
   registerError: '',
@@ -49,12 +42,6 @@ export default {
     },
     password: state => {
       return state.password;
-    },
-    user: state => {
-      return state.user;
-    },
-    isAuthenticated: state => {
-      return state.user.isAuthenticated;
     },
     loading: state => {
       return state.loading;
@@ -97,9 +84,6 @@ export default {
     updateLoading(state, payload) {
       state.loading = payload;
     },
-    updateUser(state, payload) {
-      state.user = payload;
-    },
     updateReturnUrl(state, payload) {
       state.returnURL = payload;
     },
@@ -112,6 +96,7 @@ export default {
           state[key] = defaultState[key];
         }
       }
+      // NOTE: auth/logout also triggers authKeep/clear from store-moderator
     }
   },
   actions: {
@@ -120,9 +105,6 @@ export default {
     },
     updateReturnUrl(context, payload) {
       context.commit('updateReturnUrl', payload);
-    },
-    updateUser(context, payload) {
-      context.commit('updateUser', payload);
     },
     updateDialog(context, payload) {
       const dialog = {
@@ -223,7 +205,6 @@ export default {
 
       return AuthenticationService.logout().then(async () => {
         context.commit('updateLoading', false);
-        store.dispatch('authKeep/clear');
         context.commit('logout');
       });
     },
@@ -232,7 +213,7 @@ export default {
         const params = {};
         const options = {};
         const user = await AuthenticationService.ping(params, options);
-        await context.dispatch('updateUser', user);
+        await store.dispatch('authKeep/updateUser', user);
       } catch (error) {
         const isStatus401 = error.response.status;
         if (isStatus401) {

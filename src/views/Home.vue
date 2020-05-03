@@ -56,7 +56,7 @@ export default {
   components: { AuthLogin, NavigationBottom, LayoutFixedScrollable },
   computed: {
     isAuthenticated() {
-      return this.$store.getters['auth/isAuthenticated'];
+      return this.$store.getters['authKeep/isAuthenticated'];
     }
   },
   methods: {}

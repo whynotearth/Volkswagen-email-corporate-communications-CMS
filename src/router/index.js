@@ -14,6 +14,7 @@ import EmailListEdit from '../views/EmailListEdit';
 import EmailListItem from '../views/EmailListItem';
 import EmailListImport from '../views/EmailListImport';
 import EmailListImportHelp from '../views/EmailListImportHelp';
+import Dashboard from '../views/Dashboard';
 import store from '../store';
 
 Vue.use(VueRouter);
@@ -30,9 +31,10 @@ const routes = [
     component: AuthLogin
   },
   {
-    path: '/posts/add',
+    path: '/posts/add/:step?',
     name: 'PostAdd',
     component: PostAdd,
+    props: true,
     meta: {
       requiresAuth: true
     }
@@ -127,6 +129,14 @@ const routes = [
     meta: {
       requiresAuth: true
     }
+  },
+  {
+    path: '/dashboard',
+    name: 'Dashboard',
+    component: Dashboard,
+    meta: {
+      requiresAuth: true
+    }
   }
 ];
 
@@ -137,6 +147,8 @@ const router = new VueRouter({
 });
 
 router.beforeEach(async (to, from, next) => {
+  // needsUserInfo IS DEPRECATED
+  // TODO: REMOVE
   if (!to.meta.needsUserInfo) {
     next();
   }
@@ -152,6 +164,8 @@ router.beforeEach(async (to, from, next) => {
     }
   }
 
+  // DEPRECATED
+  // TODO: REMOVE
   if (to.meta.needsUserInfo) {
     // wait for user info, then go to route
     next();
