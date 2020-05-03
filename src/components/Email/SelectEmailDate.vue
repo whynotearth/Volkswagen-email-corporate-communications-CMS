@@ -2,7 +2,7 @@
   <div class="py-6 flex-grow">
     <div class="container px-4 text-left">
       <BaseDropdown placeholder="Select date" :options="dates" v-model="$v.email_date.$model" />
-      <p v-if="$v.$invalid" v-show="error" class="font-bold text-error px-4 mb-4">
+      <p v-if="$v.email_date.$error" class="text-xs text-error">
         Please select a date.
       </p>
     </div>
@@ -17,12 +17,6 @@ import { mapGetters, mapMutations } from 'vuex';
 export default {
   name: 'SelectEmailDate',
   components: { BaseDropdown },
-  props: {
-    error: {
-      type: Boolean,
-      default: false
-    }
-  },
   validations: {
     email_date: {
       required
