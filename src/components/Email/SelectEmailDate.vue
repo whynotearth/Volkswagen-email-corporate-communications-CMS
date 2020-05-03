@@ -1,21 +1,26 @@
 <template>
   <div class="py-6 flex-grow">
-    <div class="container px-4 text-left">
-      <BaseDropdown placeholder="Select date" :options="dates" v-model="$v.email_date.$model">
-        <template #title="{ selectedOption }">
-          <span v-if="selectedOption">
-            {{ formatDate(selectedOption) }}
-          </span>
-        </template>
-        <template #option="{ option }">
-          <span>
-            {{ formatDate(option) }}
-          </span>
-        </template>
-      </BaseDropdown>
-      <p v-if="$v.email_date.$error" class="text-xs text-error">
-        Please select a date.
-      </p>
+    <div class="container px-4 text-left flex">
+      <div class="leading-5 py-5">
+        Schedule
+      </div>
+      <div class="flex-auto">
+        <BaseDropdown placeholder="Select date" :options="dates" v-model="$v.email_date.$model">
+          <template #title="{ selectedOption }">
+            <span v-if="selectedOption">
+              {{ formatDate(selectedOption) }}
+            </span>
+          </template>
+          <template #option="{ option }">
+            <span>
+              {{ formatDate(option) }}
+            </span>
+          </template>
+        </BaseDropdown>
+        <p v-if="$v.email_date.$error" class="text-xs text-error">
+          Please select a date.
+        </p>
+      </div>
     </div>
   </div>
 </template>

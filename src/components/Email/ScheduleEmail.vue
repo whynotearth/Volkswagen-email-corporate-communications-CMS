@@ -1,24 +1,31 @@
 <template>
   <div class="py-6 flex-grow">
     <div class="container px-4 text-left">
-      <BaseDropdown placeholder="Schedule time" :options="time_slots" v-model="$v.schedule_time.$model">
-        <template #title="{ selectedOption }">
-          <span v-if="time_slots.length === 0" class="text-gray-500">
-            No time slots!
-          </span>
-          <span v-else-if="selectedOption">
-            {{ millisecondToTime(selectedOption) }}
-          </span>
-        </template>
-        <template #option="{ option }">
-          <span>
-            {{ millisecondToTime(option) }}
-          </span>
-        </template>
-      </BaseDropdown>
-      <p v-if="$v.schedule_time.$error" class="text-xs text-error">
-        Please select time.
-      </p>
+      <div class="flex relative">
+        <div class="leading-5 py-5">
+          Schedule
+        </div>
+        <div class="flex-auto">
+          <BaseDropdown placeholder="Schedule time" :options="time_slots" v-model="$v.schedule_time.$model">
+            <template #title="{ selectedOption }">
+              <span v-if="time_slots.length === 0" class="text-gray-500">
+                No time slots!
+              </span>
+              <span v-else-if="selectedOption">
+                {{ millisecondToTime(selectedOption) }}
+              </span>
+            </template>
+            <template #option="{ option }">
+              <span>
+                {{ millisecondToTime(option) }}
+              </span>
+            </template>
+          </BaseDropdown>
+        </div>
+        <p v-if="$v.schedule_time.$error" class="text-xs text-error">
+          Please select time.
+        </p>
+      </div>
       <div class="bg-brand-gradient h-full p-8">
         <div class="mx-auto max-w-sm">
           <img v-if="get_preview_link.length > 0" :src="get_preview_link" />
@@ -92,7 +99,7 @@ export default {
       minutes = minutes < 10 ? '0' + minutes : minutes;
 
       return hours + ':' + minutes;
-    },
+    }
   }
 };
 </script>
