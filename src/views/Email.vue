@@ -33,7 +33,7 @@ export default {
   },
   data() {
     return {
-      steps: ['SelectEmailDate', 'Draft Email', 'Schedule Email', 'Select Recipents'],
+      steps: ['Select Email Date', 'Draft Email', 'Schedule Email', 'Select Recipents'],
       showResult: false
     };
   },
