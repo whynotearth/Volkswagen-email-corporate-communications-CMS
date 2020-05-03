@@ -10,8 +10,8 @@
           v-for="post in get_posts"
           :key="post.id"
           :post="post"
-          @clicked="update_postIds(post.id)"
-          :active="get_postIds.indexOf(post.id)"
+          @clicked="addPost(post.id)"
+          :active="isActive(post.id)"
         />
       </div>
     </div>
@@ -46,7 +46,14 @@ export default {
   },
   methods: {
     ...mapActions('post', ['fetch_posts']),
-    ...mapMutations('email', ['update_postIds'])
+    ...mapMutations('email', ['update_postIds']),
+    addPost(post) {
+      if (this.get_postIds.length < 6) this.update_postIds(post);
+      return;
+    },
+    isActive(id) {
+      return this.get_postIds.indexOf(id);
+    }
   },
   computed: {
     ...mapGetters('post', ['get_posts']),
