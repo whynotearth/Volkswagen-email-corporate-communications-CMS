@@ -13,7 +13,7 @@
             </li>
             <li class="text-white inline-block m-2 mb-1 text-xs">
               <router-link class="router-link" to="/activity-feed/memos">
-                <EmailIcon class="m-auto" />
+                <MemoStatslIcon class="m-auto" />
                 Memo Stats
               </router-link>
             </li>
@@ -25,7 +25,7 @@
           <div class="flex content-center toggle-button bg-secondary shadow-6dp" @click="toggleMenu()">
             <AddIcon class="m-auto ease-in-out" :class="{ 'rotate-45': isOpen }" />
             <ul v-if="isOpen" class="toggle-menu list-none">
-              <li class="flex whitespace-no-wrap text-white text-xs">
+              <li class="flex whitespace-no-wrap text-white text-xs justify-end my-2">
                 <router-link to="/memo/add" class="flex items-center">
                   Internal Memo
                   <div
@@ -33,6 +33,28 @@
                   shadow-6dp"
                   >
                     <MemoIcon class="m-auto" />
+                  </div>
+                </router-link>
+              </li>
+              <li class="flex whitespace-no-wrap text-white text-xs justify-end my-3">
+                <router-link to="/posts/add" class="flex items-center">
+                  Post
+                  <div
+                    class="rounded-full h-10 w-10 flex items-center justify-center bg-secondary ml-2
+                  shadow-6dp"
+                  >
+                    <PostIcon class="m-auto" />
+                  </div>
+                </router-link>
+              </li>
+              <li class="flex whitespace-no-wrap text-white text-xs justify-end my-2">
+                <router-link to="/" class="flex items-center">
+                  Email
+                  <div
+                    class="rounded-full h-10 w-10 flex items-center justify-center bg-secondary ml-2
+                  shadow-6dp"
+                  >
+                    <EmailIcon class="m-auto" />
                   </div>
                 </router-link>
               </li>
@@ -50,11 +72,13 @@
 import AddIcon from '@/assets/add.svg';
 import HomeIcon from '@/assets/home.svg';
 import MemoIcon from '@/assets/memo.svg';
+import MemoStatslIcon from '@/assets/memo-stats.svg';
+import PostIcon from '@/assets/post.svg';
 import EmailIcon from '@/assets/email.svg';
 
 export default {
   name: 'NavigationBottom',
-  components: { AddIcon, HomeIcon, MemoIcon, EmailIcon },
+  components: { AddIcon, HomeIcon, MemoIcon, MemoStatslIcon, PostIcon, EmailIcon },
   props: {},
   data() {
     return {
@@ -83,7 +107,7 @@ export default {
 }
 .toggle-menu {
   position: absolute;
-  top: -50px;
+  top: -170px;
   right: 10px;
 }
 .rotate-45 {
