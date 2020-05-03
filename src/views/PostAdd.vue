@@ -18,7 +18,6 @@ import StepperManager from '@/components/StepperManager.vue';
 import PostAddStep1 from '@/components/PostAddStep1.vue';
 import PostAddStep2 from '@/components/PostAddStep2.vue';
 import PostAddStep3 from '@/components/PostAddStep3.vue';
-import ImageUpload from '@/components/ImageUpload/ImageUpload.vue';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
 import { sleep, formatISODate } from '@/helpers.js';
 
