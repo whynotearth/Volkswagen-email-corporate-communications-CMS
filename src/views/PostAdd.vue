@@ -5,11 +5,11 @@
     :options="{ submitText: 'Finish', isLastStep: currentStep === steps.length }"
     @changeStep="changeStep"
   >
-    <div class="px-0 overflow-y-auto flex flex-col h-full narrow-scrollbars">
+    <div v-if="currentStep !== 3" class="px-0 overflow-y-auto flex flex-col h-full narrow-scrollbars">
       <PostAddStep1 v-if="currentStep === 1" ref="formStep1" :error="validationError" />
       <PostAddStep2 v-if="currentStep === 2" ref="formStep2" :error="validationError" />
-      <PostAddStep3 v-if="currentStep === 3" :error="validationError" />
     </div>
+    <PostAddStep3 v-if="currentStep === 3" :error="validationError" />
   </StepperManager>
 </template>
 
