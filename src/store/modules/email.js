@@ -1,9 +1,11 @@
-import { PostService, PostCategoryService } from '@whynotearth/meredith-axios';
+import { JumpStartService } from '@whynotearth/meredith-axios';
 
 export default {
   namespaced: true,
   state: {
+    loading: false,
     email_date: '',
+    preview_img: null,
     postIds: []
   },
   mutations: {
@@ -13,11 +15,26 @@ export default {
     update_postIds(state, payload) {
       let i = state.postIds.indexOf(payload);
       i !== -1 ? state.postIds.splice(i, 1) : state.postIds.push(payload);
+    },
+    update_preview(state, payload) {
+      state.preview_img = payload;
+    },
+    change_loading(state, payload) {
+      state.loading = payload;
     }
   },
-  actions: {},
+  actions: {
+    fetch_preview({ commit }, payload) {
+      commit('change_loading', true);
+      JumpStartService.preview(payload.params).then(response => {
+        commit('update_preview', response);
+        commit('change_loading', false);
+      });
+    }
+  },
   getters: {
     get_email_date: state => state.email_date,
-    get_postIds: state => state.postIds
+    get_postIds: state => state.postIds,
+    get_preview: state => state.preview_img
   }
 };
