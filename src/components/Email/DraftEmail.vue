@@ -1,7 +1,9 @@
 <template>
   <div class="py-6 flex-grow">
     <div class="container px-4 text-left">
-      <div class="h-64 bg-brand-gradient"></div>
+      <div class="bg-brand-gradient h-full p-8">
+        <div class="bg-white h-64 mx-auto w-40"></div>
+      </div>
       <h2 class="text-primary font-bold text-xl">Rearrange the Jumpstart</h2>
       <div class="flex flex-wrap justify-between">
         <Post
