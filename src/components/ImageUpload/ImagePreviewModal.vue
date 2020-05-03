@@ -1,6 +1,6 @@
 <template>
   <div
-    class="modal overflow-hidden fixed bg-gray-300 bg-opacity-50 inset-0 flex justify-center items-center"
+    class="modal modal-backdrop z-50 overflow-hidden fixed inset-0 flex justify-center items-center"
     @click="closeModal"
   >
     <div class="modal-content w-screen h-screen sm:h-auto sm:w-auto">
@@ -37,4 +37,8 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.modal-backdrop {
+  background: rgba(0, 0, 0, 0.54);
+}
+</style>

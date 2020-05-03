@@ -65,7 +65,8 @@
         </span>
       </BaseInputText>
 
-      <ImageUpload v-model="images" />
+      <hr class="bg-background border-black em-low mb-4" />
+      <ImageUpload v-if="isFieldRequired('images')" v-model="images" />
     </div>
   </div>
 </template>

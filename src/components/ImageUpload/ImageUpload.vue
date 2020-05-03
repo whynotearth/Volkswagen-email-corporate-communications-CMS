@@ -1,19 +1,26 @@
 <template>
-  <div class="flex flex-wrap -mx-1">
-    <ImageInput v-model="images" />
-    <ImagePreview
-      :selectImage="selectImage"
-      v-for="(image, index) in imagesToPreview"
-      :key="index"
-      :image="image"
-      :index="index"
-    />
-    <ImageModal
-      v-if="selectedImageInfo.src && selectedImageInfo.index >= 0"
-      @deleteImage="deleteImage"
-      @resetSelectedImage="resetSelectedImage"
-      :image.sync="selectedImageInfo"
-    />
+  <div class="bg-background">
+    <div class="mb-2">
+      <div class="">
+        <h3 class="tg-body-mobile em-medium">Images</h3>
+      </div>
+    </div>
+    <div class="flex flex-wrap -mx-1">
+      <ImageInput v-model="images" />
+      <ImagePreview
+        :selectImage="selectImage"
+        v-for="(image, index) in imagesToPreview"
+        :key="index"
+        :image="image"
+        :index="index"
+      />
+      <ImageModal
+        v-if="selectedImageInfo.src && selectedImageInfo.index >= 0"
+        @deleteImage="deleteImage"
+        @resetSelectedImage="resetSelectedImage"
+        :image.sync="selectedImageInfo"
+      />
+    </div>
   </div>
 </template>
 
