@@ -1368,9 +1368,9 @@
     "@xtuc/long" "4.2.2"
 
 "@whynotearth/meredith-axios@*":
-  version "1.0.14"
-  resolved "https://registry.yarnpkg.com/@whynotearth/meredith-axios/-/meredith-axios-1.0.14.tgz#bd3f038f210f34cd39d0dff9813770f3437cd805"
-  integrity sha512-9esnnShOXUVjEkKZJy4rEaICWbzYiRmqjCSJ6NJ0yAu6q6MBi7iCHRdElU6BU7m+6AczZXTEmNziPJtfmhW0rg==
+  version "1.0.15"
+  resolved "https://registry.yarnpkg.com/@whynotearth/meredith-axios/-/meredith-axios-1.0.15.tgz#43a5a59b57637057ec60787a6a1be3d38c87a01c"
+  integrity sha512-EVZR70vqP7E0WWwuHGzn0QchR29odRof88Is9If8I6IeyO93L5Eohv8lWcbBkAHH5vxGYbcprs33mcId498LNw==
   dependencies:
     swagger-axios-codegen "^0.10.3"
 
