@@ -40,12 +40,10 @@ export default {
   },
   mounted() {
     if (!this.get_email_date) return this.$router.push({ name: 'Email', params: { step: 1 } });
-    this.update_posts([]);
     this.fetch_posts({ params: { date: formatISODate(this.get_email_date) } });
   },
   methods: {
     ...mapActions('post', ['fetch_posts']),
-    ...mapMutations('post', ['update_posts']),
     ...mapMutations('email', ['update_postIds'])
   },
   computed: {

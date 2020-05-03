@@ -72,6 +72,7 @@ export default {
       context.commit('update_categories', data);
     },
     async fetch_posts({ commit }, payload) {
+      commit('update_posts', []);
       const data = await PostService.posts1(payload.params);
       commit('update_posts', data);
     }
