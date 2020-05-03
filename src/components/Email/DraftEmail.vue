@@ -8,6 +8,9 @@
         </div>
       </div>
       <h2 class="text-primary font-bold text-xl">Rearrange the Jumpstart</h2>
+      <span v-if="$v.get_postIds.$error" class="text-xs text-error">
+        Please select atleast one post.
+      </span>
       <div class="flex flex-wrap justify-between">
         <Post
           v-for="post in get_posts"
@@ -25,6 +28,7 @@
 import Post from '@/components/Email/Post.vue';
 import Logo from '@/assets/white_logo.svg';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
+import { required } from 'vuelidate/lib/validators';
 import { formatISODate } from '@/helpers.js';
 import { debounce } from 'lodash-es';
 
@@ -34,10 +38,9 @@ export default {
     Post,
     Logo
   },
-  props: {
-    error: {
-      type: Boolean,
-      default: false
+  validations: {
+    get_postIds: {
+      required
     }
   },
   mounted() {
