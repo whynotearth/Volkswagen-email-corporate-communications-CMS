@@ -2,8 +2,9 @@
   <div class="py-6 flex-grow">
     <div class="container px-4 text-left">
       <div class="bg-brand-gradient h-full p-8">
-        <div class="bg-white mx-auto max-w-sm">
-          <img :src="previewLink" />
+        <div class="mx-auto max-w-sm">
+          <img v-if="previewLink.length > 0" :src="previewLink" />
+          <Logo v-else class="mx-auto" />
         </div>
       </div>
       <h2 class="text-primary font-bold text-xl">Rearrange the Jumpstart</h2>
@@ -22,6 +23,7 @@
 
 <script>
 import Post from '@/components/Email/Post.vue';
+import Logo from '@/assets/white_logo.svg';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
 import { formatISODate } from '@/helpers.js';
 import { debounce } from 'lodash-es';
@@ -31,7 +33,8 @@ export default {
   name: 'DraftEmail',
   data: () => ({ previewLink: '' }),
   components: {
-    Post
+    Post,
+    Logo
   },
   props: {
     error: {
