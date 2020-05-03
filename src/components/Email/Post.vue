@@ -18,7 +18,7 @@
         {{ post.description | truncate }}
       </div>
       <div class="my-auto text-right relative outline-none">
-        <More class="cursor-pointer" @click="toggleMenu" />
+        <More class="cursor-pointer" @click.stop.prevent="toggleMenu" />
         <div v-show="menu" class="absolute top-0 right-0 text-left bg-white shadow-8dp rounded-md mr-5 py-2 text-base">
           <router-link to="/edit" class="block py-2 px-4 leading-5 hover:text-secondary cursor-pointer">
             Edit
