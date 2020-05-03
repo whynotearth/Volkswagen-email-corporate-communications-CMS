@@ -1,7 +1,7 @@
 <template>
   <div class="post mb-4 mt-8 cursor-pointer" @click="$emit('clicked')">
     <div
-      class="flex justify-center w-full flex shadow-8dp relative"
+      class="flex justify-between w-full flex shadow-8dp relative"
       :style="active !== -1 ? '' : `border-color: #${post.category.color}`"
       :class="active !== -1 ? 'border-3 border-secondary' : 'border-2'"
     >
@@ -14,7 +14,7 @@
       <div class="px-2 py-5">
         <img :src="post.image || post.category.image" alt="post" draggable="false" class="h-16 object-contain" />
       </div>
-      <div class="w-56 my-auto text-lg">
+      <div class="w-full my-auto text-lg">
         {{ post.description | truncate }}
       </div>
       <div class="my-auto text-right relative outline-none">
@@ -78,7 +78,7 @@ export default {
 
 <style scoped>
 .post {
-  max-width: 328px;
+  width: 328px;
   min-height: 104px;
   max-height: 113px;
 }
