@@ -3,7 +3,7 @@
     <div class="container px-4 text-left">
       <div class="bg-brand-gradient h-full p-8">
         <div class="mx-auto max-w-sm">
-          <img v-if="previewLink.length > 0" :src="previewLink" />
+          <img v-if="get_preview_link.length > 0" :src="get_preview_link" />
           <Logo v-else class="mx-auto" />
         </div>
       </div>
@@ -27,11 +27,9 @@ import Logo from '@/assets/white_logo.svg';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
 import { formatISODate } from '@/helpers.js';
 import { debounce } from 'lodash-es';
-import { BASE_API } from '@/connection/api.js';
 
 export default {
   name: 'DraftEmail',
-  data: () => ({ previewLink: '' }),
   components: {
     Post,
     Logo
@@ -49,19 +47,10 @@ export default {
   },
   methods: {
     ...mapActions('post', ['fetch_posts']),
-    ...mapMutations('email', ['update_postIds']),
-    updatePreviewLink() {
-      const base = `${BASE_API}/api/v0/volkswagen/jumpstart/preview`;
-      const url = new URL(base);
-
-      this.get_postIds.forEach(postId => {
-        url.searchParams.append('postIds', postId);
-      });
-      this.previewLink = url.href;
-    },
+    ...mapMutations('email', ['update_postIds', 'update_preview_link']),
     debounced_preview: debounce(
       function() {
-        this.updatePreviewLink();
+        this.update_preview_link();
       },
       3000,
       { maxWait: 3000 }
@@ -78,7 +67,7 @@ export default {
   },
   computed: {
     ...mapGetters('post', ['get_posts']),
-    ...mapGetters('email', ['get_email_date', 'get_postIds'])
+    ...mapGetters('email', ['get_email_date', 'get_postIds', 'get_preview_link'])
   }
 };
 </script>
