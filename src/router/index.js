@@ -31,9 +31,10 @@ const routes = [
     component: AuthLogin
   },
   {
-    path: '/posts/add',
+    path: '/posts/add/:step?',
     name: 'PostAdd',
     component: PostAdd,
+    props: true,
     meta: {
       requiresAuth: true
     }
@@ -146,6 +147,8 @@ const router = new VueRouter({
 });
 
 router.beforeEach(async (to, from, next) => {
+  // needsUserInfo IS DEPRECATED
+  // TODO: REMOVE
   if (!to.meta.needsUserInfo) {
     next();
   }
@@ -161,6 +164,8 @@ router.beforeEach(async (to, from, next) => {
     }
   }
 
+  // DEPRECATED
+  // TODO: REMOVE
   if (to.meta.needsUserInfo) {
     // wait for user info, then go to route
     next();
