@@ -5,7 +5,6 @@ export default {
   state: {
     loading: false,
     email_date: '',
-    preview_img: null,
     postIds: []
   },
   mutations: {
@@ -19,7 +18,6 @@ export default {
   },
   getters: {
     get_email_date: state => state.email_date,
-    get_postIds: state => state.postIds,
-    get_preview: state => state.preview_img
+    get_postIds: state => state.postIds
   }
 };

@@ -26,6 +26,7 @@ import Post from '@/components/Email/Post.vue';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
 import { formatISODate } from '@/helpers.js';
 import { debounce } from 'lodash-es';
+import { BASE_API } from '@/connection/api.js';
 
 export default {
   name: 'DraftEmail',
@@ -47,7 +48,7 @@ export default {
     ...mapActions('post', ['fetch_posts']),
     ...mapMutations('email', ['update_postIds']),
     updatePreviewLink() {
-      const base = 'https://stagingapi.whynot.earth/api/v0/volkswagen/jumpstart/preview';
+      const base = `${BASE_API}/api/v0/volkswagen/jumpstart/preview`;
       const url = new URL(base);
 
       this.get_postIds.forEach(postId => {
