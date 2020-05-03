@@ -5,7 +5,6 @@
       name="upload-image"
       accept="image/png, image/jpeg"
       type="file"
-      multiple
       @change="handleFileUpload"
       class="hidden"
       :key="uploadKey"
