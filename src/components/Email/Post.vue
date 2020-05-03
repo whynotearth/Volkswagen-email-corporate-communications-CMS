@@ -5,9 +5,9 @@
       :style="active !== -1 ? '' : `border-color: #${post.category.color}`"
       :class="active !== -1 ? 'border-3 border-secondary' : 'border-2'"
     >
-      <div class="absolute bg-white left-0 ml-5 -mt-4 p-1">
-        <div v-if="active !== -1" class="rounded-full h-4 w-4 bg-secondary object-contain text-xs text-white">
-          {{ active }}
+      <div class="absolute bg-white left-0 ml-5 -mt-4 p-1 rounded-full">
+        <div v-if="active !== -1" class="rounded-full h-4 w-4 bg-secondary px-1 object-contain text-xs text-white">
+          {{ active + 1 }}
         </div>
         <img v-else :src="post.category.image" alt="catg" draggable="false" class="h-4 w-4 object-contain" />
       </div>
