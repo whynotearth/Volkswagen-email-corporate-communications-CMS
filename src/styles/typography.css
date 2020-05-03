@@ -212,6 +212,11 @@
     .em-disabled {
       opacity: 0.38;
     }
+
+    &.em-low,
+    .em-low {
+      opacity: 0.12;
+    }
   }
 
   .bg-surface {
