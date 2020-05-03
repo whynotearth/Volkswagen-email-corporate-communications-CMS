@@ -80,7 +80,7 @@ export default {
       return true;
     },
     submit() {
-      let total_time = new Date(this.get_email_date + this.get_schedule_time).toISOString;
+      let total_time = new Date(this.get_email_date + this.get_schedule_time).toISOString();
       const params = {
         body: {
           dateTime: total_time,
