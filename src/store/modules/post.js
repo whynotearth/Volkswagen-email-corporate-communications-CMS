@@ -71,10 +71,9 @@ export default {
       const data = await PostCategoryService.categories();
       context.commit('update_categories', data);
     },
-    async fetch_posts(context, payload) {
-      // payload should be like {params: { date }}
+    async fetch_posts({ commit }, payload) {
       const data = await PostService.posts1(payload.params);
-      context.commit('update_posts', data);
+      commit('update_posts', data);
     }
   },
   getters: {
