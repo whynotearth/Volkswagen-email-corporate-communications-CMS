@@ -18,10 +18,18 @@ export default {
       state.schedule_time = payload;
     },
     update_postIds(state, payload) {
-      let i = state.postIds.indexOf(payload);
-      i !== -1 ? state.postIds.splice(i, 1) : state.postIds.push(payload);
+      if (!payload) {
+        state.postIds.splice(0, state.postIds.length);
+      } else {
+        let i = state.postIds.indexOf(payload);
+        i !== -1 ? state.postIds.splice(i, 1) : state.postIds.push(payload);
+      }
     },
-    update_preview_link(state) {
+    update_preview_link(state, payload) {
+      if (payload === '') {
+        state.preview_link = '';
+        return false;
+      }
       const base = `${BASE_API}/api/v0/volkswagen/jumpstart/preview`;
       const url = new URL(base);
       state.postIds.forEach(postId => {
