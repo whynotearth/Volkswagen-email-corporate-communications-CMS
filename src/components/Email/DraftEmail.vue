@@ -3,13 +3,13 @@
     <div class="container px-4 text-left">
       <div class="h-64 bg-brand-gradient"></div>
       <h2 class="text-primary font-bold text-xl">Rearrange the Jumpstart</h2>
-      <div class="flex flex-wrap justify-center">
+      <div class="flex flex-wrap justify-between">
         <Post
           v-for="post in get_posts"
           :key="post.id"
           :post="post"
           @clicked="update_postIds(post.id)"
-          :active="get_postIds.has(post.id)"
+          :active="get_postIds.indexOf(post.id)"
         />
       </div>
     </div>
@@ -39,6 +39,7 @@ export default {
     }
   },
   mounted() {
+    if (!this.get_email_date) return this.$router.push({ name: 'Email', params: { step: 1 } });
     this.update_posts([]);
     this.fetch_posts({ params: { date: formatISODate(this.get_email_date) } });
   },
