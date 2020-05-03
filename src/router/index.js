@@ -14,6 +14,7 @@ import EmailListEdit from '../views/EmailListEdit';
 import EmailListItem from '../views/EmailListItem';
 import EmailListImport from '../views/EmailListImport';
 import EmailListImportHelp from '../views/EmailListImportHelp';
+import Email from '@/views/Email';
 import store from '../store';
 
 Vue.use(VueRouter);
@@ -68,6 +69,15 @@ const routes = [
     path: '/activity-feed/memos/:id',
     name: 'ActivityFeedMemoItem',
     component: ActivityFeedMemoItem,
+    props: true,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/email/:step?',
+    name: 'Email',
+    component: Email,
     props: true,
     meta: {
       requiresAuth: true
