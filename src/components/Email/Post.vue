@@ -1,15 +1,18 @@
 <template>
-  <div class="post mb-4 mt-8 md:mx-8 cursor-pointer" @click="$emit('clicked')">
+  <div class="post mb-4 mt-8 cursor-pointer" @click="$emit('clicked')">
     <div
       class="flex justify-center w-full flex shadow-8dp relative"
-      :class="active ? 'border-3 border-secondary' : 'border-2'"
-      :style="`border-color: #${post.category.color}`"
+      :style="active !== -1 ? '' : `border-color: #${post.category.color}`"
+      :class="active !== -1 ? 'border-3 border-secondary' : 'border-2'"
     >
       <div class="absolute bg-white left-0 ml-5 -mt-4 p-1">
-        <img :src="post.category.image" alt="catg" draggable="false" class="h-4 w-4 object-contain" />
+        <div v-if="active !== -1" class="rounded-full h-4 w-4 bg-secondary object-contain text-xs text-white">
+          {{ active }}
+        </div>
+        <img v-else :src="post.category.image" alt="catg" draggable="false" class="h-4 w-4 object-contain" />
       </div>
       <div class="px-2 py-5">
-        <img :src="post.image" alt="post" draggable="false" class="h-16 object-contain" />
+        <img :src="post.image || post.category.image" alt="post" draggable="false" class="h-16 object-contain" />
       </div>
       <div class="w-56 my-auto text-lg">
         {{ post.description | truncate }}
@@ -40,8 +43,8 @@ export default {
       type: Object
     },
     active: {
-      type: Boolean,
-      default: false
+      type: Number,
+      default: -1
     }
   },
   data() {
