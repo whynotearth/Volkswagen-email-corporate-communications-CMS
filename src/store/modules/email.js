@@ -4,14 +4,15 @@ export default {
   namespaced: true,
   state: {
     email_date: '',
-    postIds: new Set()
+    postIds: []
   },
   mutations: {
     update_email_date(state, payload) {
       state.email_date = payload;
     },
     update_postIds(state, payload) {
-      state.postIds.add(payload);
+      let i = state.postIds.indexOf(payload);
+      i !== -1 ? state.postIds.splice(i, 1) : state.postIds.push(payload);
     }
   },
   actions: {},
