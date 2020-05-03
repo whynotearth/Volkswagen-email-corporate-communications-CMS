@@ -8,18 +8,31 @@
         </div>
       </div>
       <h2 class="text-primary font-bold text-xl">Rearrange the Jumpstart</h2>
-      <span v-if="$v.get_postIds.$error" class="text-xs text-error">
-        Please select atleast one post.
-      </span>
-      <div class="flex flex-wrap justify-between">
-        <Post
-          v-for="post in get_posts"
-          :key="post.id"
-          :post="post"
-          @clicked="addPost(post.id)"
-          :active="isActive(post.id)"
-        />
-      </div>
+      <template v-if="get_posts.length === 0">
+        <span class="block my-2">
+          No posts available!
+          <br />
+          Click
+          <router-link :to="{ name: 'PostAdd', params: { step: 1 } }" class="text-secondary underline">
+            here
+          </router-link>
+          to create one
+        </span>
+      </template>
+      <template v-else>
+        <span v-if="$v.get_postIds.$error" class="text-xs text-error">
+          Please select atleast one post.
+        </span>
+        <div class="flex flex-wrap justify-between">
+          <Post
+            v-for="post in get_posts"
+            :key="post.id"
+            :post="post"
+            @clicked="addPost(post.id)"
+            :active="isActive(post.id)"
+          />
+        </div>
+      </template>
     </div>
   </div>
 </template>
@@ -46,7 +59,6 @@ export default {
   mounted() {
     if (!this.get_email_date) return this.$router.push({ name: 'Email', params: { step: 1 } });
     this.fetch_posts({ params: { date: formatISODate(this.get_email_date) } });
-    this.debounced_preview();
   },
   methods: {
     ...mapActions('post', ['fetch_posts']),
