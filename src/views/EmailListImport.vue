@@ -22,7 +22,7 @@
                   @change="onChangeFile"
                 >
                   <template v-if="error" #error>
-                    <span class="text-xs text-error">
+                    <span class="text-xs text-error pl-error-message">
                       {{ error }}
                     </span>
                   </template>
