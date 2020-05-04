@@ -2,9 +2,6 @@
   <div class="py-6 flex-grow">
     <div class="container px-4 text-left">
       <div class="flex relative">
-        <div class="leading-5 py-5">
-          Schedule
-        </div>
         <div class="flex-auto">
           <BaseDropdown placeholder="Schedule time" :options="time_slots" v-model="$v.schedule_time.$model">
             <template #title="{ selectedOption }">
@@ -12,7 +9,10 @@
                 No time slots!
               </span>
               <span v-else-if="selectedOption">
-                {{ millisecondToTime(selectedOption) }}
+                Schedule
+                <span class="ml-2 em-medium">
+                  {{ millisecondToTime(selectedOption) }}
+                </span>
               </span>
             </template>
             <template #option="{ option }">
