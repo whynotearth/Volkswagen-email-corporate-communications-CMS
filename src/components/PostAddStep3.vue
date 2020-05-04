@@ -42,7 +42,7 @@
           <div class="w-full tg-h2-mobile text-black py-3">
             {{ get_headline }}
           </div>
-          <div class="w-full tg-body-mobile text-black em-high">
+          <div class="w-full tg-body-mobile text-black em-high whitespace-pre-line break-words">
             {{ get_description }}
           </div>
         </div>
