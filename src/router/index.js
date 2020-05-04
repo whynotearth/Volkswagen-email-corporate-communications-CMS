@@ -76,8 +76,8 @@ const routes = [
     }
   },
   {
-    path: '/email/:step?',
-    name: 'Email',
+    path: '/emails/add/:step?',
+    name: 'EmailsAdd',
     component: Email,
     props: true,
     meta: {

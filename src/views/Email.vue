@@ -24,7 +24,7 @@ import { mapGetters, mapMutations, mapActions } from 'vuex';
 import { sleep } from '@/helpers.js';
 
 export default {
-  name: 'Email',
+  name: 'EmailsAdd',
   components: { StepperManager, SelectEmailDate, DraftEmail, ScheduleEmail, SelectRecipents },
   props: {
     step: {
@@ -71,7 +71,7 @@ export default {
       }
 
       // back or forward
-      this.$router.push({ name: 'Email', params: { step: newStep } });
+      this.$router.push({ name: 'EmailsAdd', params: { step: newStep } });
     },
 
     processValidations(change) {

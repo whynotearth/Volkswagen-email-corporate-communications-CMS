@@ -64,7 +64,7 @@ export default {
     };
   },
   mounted() {
-    if (!this.get_schedule_time) return this.$router.push({ name: 'Email', params: { step: 3 } });
+    if (!this.get_schedule_time) return this.$router.push({ name: 'EmailsAdd', params: { step: 3 } });
     this.fetch_recipients();
   },
   computed: {

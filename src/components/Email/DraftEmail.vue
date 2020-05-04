@@ -1,7 +1,7 @@
 <template>
-  <div class="py-6 flex-grow">
+  <div class="flex-grow">
     <div class="container px-4 text-left">
-      <div class="bg-brand-gradient h-full p-8">
+      <div class="bg-brand-gradient h-full p-8 -mx-4 md:m-0">
         <div class="mx-auto max-w-sm">
           <img v-if="get_preview_link.length > 0" :src="get_preview_link" />
           <Logo v-else class="mx-auto" />
@@ -23,7 +23,7 @@
         <span v-if="$v.get_postIds.$error" class="text-xs text-error">
           Please select atleast one post.
         </span>
-        <div class="flex flex-wrap justify-between">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-4">
           <Post
             v-for="post in get_posts"
             :key="post.id"
@@ -42,7 +42,6 @@ import Post from '@/components/Email/Post.vue';
 import Logo from '@/assets/white_logo.svg';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
 import { required } from 'vuelidate/lib/validators';
-import { formatISODate } from '@/helpers.js';
 import { debounce } from 'lodash-es';
 
 export default {
@@ -57,11 +56,9 @@ export default {
     }
   },
   mounted() {
-    if (!this.get_email_date) return this.$router.push({ name: 'Email', params: { step: 1 } });
-    this.fetch_posts({ params: { date: formatISODate(this.get_email_date) } });
+    if (!this.get_email_date) return this.$router.push({ name: 'EmailsAdd', params: { step: 1 } });
   },
   methods: {
-    ...mapActions('post', ['fetch_posts']),
     ...mapMutations('email', ['update_postIds', 'update_preview_link']),
     debounced_preview: debounce(
       function() {
