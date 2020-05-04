@@ -1,7 +1,7 @@
 <template>
   <div class="post my-2 cursor-pointer" @click="$emit('clicked')">
     <div
-      class="flex justify-between w-full flex shadow-8dp relative"
+      class="flex justify-between w-full flex shadow-8dp relative break-words"
       :style="active !== -1 ? '' : `border-color: #${post.category.color}`"
       :class="active !== -1 ? 'border-3 border-secondary' : 'border-2'"
     >
@@ -11,10 +11,10 @@
         </div>
         <img v-else :src="post.category.image" alt="catg" draggable="false" class="h-4 w-4 object-contain" />
       </div>
-      <div class="px-2 py-5">
-        <img :src="post.image || post.category.image" alt="post" draggable="false" class="h-16 object-contain" />
+      <div class="px-2 py-5 flex-shrink-0 w-16">
+        <img :src="post.image || post.category.image" alt="post" draggable="false" />
       </div>
-      <div class="w-full my-auto text-lg break-all mx-2">
+      <div class="w-full my-auto text-lg break-all mx-2 py-4">
         {{ post.description | truncate }}
       </div>
       <!-- Disabled for MVP -->
