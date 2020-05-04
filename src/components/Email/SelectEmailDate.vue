@@ -57,7 +57,7 @@ export default {
     dates() {
       let d = new Date();
       d.setHours(0, 0, 0, 0);
-      d = d.getTime() + 86400000;
+      d = d.getTime();
       let days = [];
       for (let i = 0; i < 3; i++) {
         let a = d + i * 86400000;
