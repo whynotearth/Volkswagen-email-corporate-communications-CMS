@@ -9,10 +9,10 @@
         placeholder="Headline"
         :error="$v.headline.$dirty && $v.headline.$invalid"
       >
-        <span v-if="$v.headline.$dirty && !$v.headline.required" class="text-xs text-error">
+        <span v-if="$v.headline.$dirty && !$v.headline.required" class="text-xs text-error pl-error-message">
           Headline is required
         </span>
-        <span v-if="$v.headline.$dirty && !$v.headline.maxLength" class="text-xs text-error">
+        <span v-if="$v.headline.$dirty && !$v.headline.maxLength" class="text-xs text-error pl-error-message">
           Headline should be less than 80 characters
         </span>
       </BaseInputText>
@@ -25,10 +25,10 @@
         placeholder="Put the content of your post here."
         :error="$v.description.$dirty && $v.description.$invalid"
       >
-        <span v-if="$v.description.$dirty && !$v.description.required" class="text-xs text-error">
+        <span v-if="$v.description.$dirty && !$v.description.required" class="text-xs text-error pl-error-message">
           Description is required
         </span>
-        <span v-if="$v.description.$dirty && !$v.description.maxLength" class="text-xs text-error">
+        <span v-if="$v.description.$dirty && !$v.description.maxLength" class="text-xs text-error pl-error-message">
           Description should be less than 750 characters
         </span>
       </BaseInputTextarea>
@@ -41,10 +41,10 @@
         placeholder="Price"
         :error="$v.price.$dirty && $v.price.$invalid"
       >
-        <span v-if="$v.price.$dirty && !$v.price.required" class="text-xs text-error">
+        <span v-if="$v.price.$dirty && !$v.price.required" class="text-xs text-error pl-error-message">
           Price is required
         </span>
-        <span v-if="$v.price.$dirty && !$v.price.decimal" class="text-xs text-error">
+        <span v-if="$v.price.$dirty && !$v.price.decimal" class="text-xs text-error pl-error-message">
           Price is not a valid number
         </span>
       </BaseInputText>
@@ -57,13 +57,16 @@
         placeholder="20 March, 2020, 7:00 PM"
         :error="$v.eventDate.$dirty && $v.eventDate.$invalid"
       >
-        <span v-if="$v.eventDate.$dirty && !$v.eventDate.required" class="text-xs text-error">
+        <span v-if="$v.eventDate.$dirty && !$v.eventDate.required" class="text-xs text-error pl-error-message">
           Date/Time is required
         </span>
-        <span v-if="$v.eventDate.$dirty && !$v.eventDate.mustBeDate" class="text-xs text-error">
+        <span v-if="$v.eventDate.$dirty && !$v.eventDate.mustBeDate" class="text-xs text-error pl-error-message">
           Date/Time is invalid. Example: 2020-12-24 7:30 pm
         </span>
       </BaseInputText>
+
+      <hr class="bg-background border-black em-low -mx-4 sm:mx-0 mb-4" />
+      <ImageUpload v-if="isFieldRequired('images')" v-model="images" />
     </div>
   </div>
 </template>
@@ -71,6 +74,7 @@
 <script>
 import BaseInputText from '@/components/BaseInputText.vue';
 import BaseInputTextarea from '@/components/BaseInputTextarea.vue';
+import ImageUpload from '@/components/ImageUpload/ImageUpload.vue';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
 import { required, decimal, maxLength, requiredIf } from 'vuelidate/lib/validators';
 import { mustBeDate } from '@/validations.js';
@@ -81,7 +85,12 @@ import { mustBeDate } from '@/validations.js';
 
 export default {
   name: 'PostAddStep2',
-  components: { BaseInputText, BaseInputTextarea },
+  components: { BaseInputText, BaseInputTextarea, ImageUpload },
+  data() {
+    return {
+      images: []
+    };
+  },
   validations: {
     headline: {
       required: requiredIf(context => {
