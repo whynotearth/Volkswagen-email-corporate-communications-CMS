@@ -29,7 +29,8 @@
 import BaseDropdown from '@/components/BaseDropdown';
 import { formatDate } from '@/helpers.js';
 import { required } from 'vuelidate/lib/validators';
-import { mapGetters, mapMutations } from 'vuex';
+import { mapGetters, mapMutations, mapActions } from 'vuex';
+import { formatISODate } from '@/helpers.js';
 
 export default {
   name: 'SelectEmailDate',
@@ -46,7 +47,9 @@ export default {
         return this.get_email_date;
       },
       set(value) {
+        this.clear_email_data();
         this.update_email_date(value);
+        this.fetch_posts({ params: { date: formatISODate(value) } });
       }
     },
     dates() {
@@ -63,6 +66,8 @@ export default {
   },
   methods: {
     ...mapMutations('email', ['update_email_date']),
+    ...mapActions('email', ['clear_email_data']),
+    ...mapActions('post', ['fetch_posts']),
     formatDate(payload) {
       return formatDate(payload);
     }
