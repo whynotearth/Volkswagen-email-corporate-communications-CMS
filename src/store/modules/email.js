@@ -52,8 +52,10 @@ export default {
       }
     },
     update_preview_link(state, payload) {
-      state.preview_link = '';
-      if (payload === '') return false;
+      if (payload === '') {
+        state.preview_link = payload;
+        return false;
+      }
       const base = `${BASE_API}/api/v0/volkswagen/jumpstart/preview`;
       const url = new URL(base);
       state.postIds.forEach(postId => {

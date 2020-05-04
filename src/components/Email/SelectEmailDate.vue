@@ -42,6 +42,11 @@ export default {
       required
     }
   },
+  mounted() {
+    if (this.get_email_date) {
+      this.fetch_posts({ params: { date: formatISODate(this.get_email_date) } });
+    }
+  },
   computed: {
     ...mapGetters('email', ['get_email_date']),
     email_date: {
@@ -57,7 +62,7 @@ export default {
     dates() {
       let d = new Date();
       d.setHours(0, 0, 0, 0);
-      d = d.getTime() + 86400000;
+      d = d.getTime();
       let days = [];
       for (let i = 0; i < 3; i++) {
         let a = d + i * 86400000;
