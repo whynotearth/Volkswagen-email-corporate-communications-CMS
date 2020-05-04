@@ -42,7 +42,6 @@ import Post from '@/components/Email/Post.vue';
 import Logo from '@/assets/white_logo.svg';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
 import { required } from 'vuelidate/lib/validators';
-import { formatISODate } from '@/helpers.js';
 import { debounce } from 'lodash-es';
 
 export default {
@@ -58,10 +57,8 @@ export default {
   },
   mounted() {
     if (!this.get_email_date) return this.$router.push({ name: 'Email', params: { step: 1 } });
-    this.fetch_posts({ params: { date: formatISODate(this.get_email_date) } });
   },
   methods: {
-    ...mapActions('post', ['fetch_posts']),
     ...mapMutations('email', ['update_postIds', 'update_preview_link']),
     debounced_preview: debounce(
       function() {
