@@ -73,7 +73,7 @@ export default {
       let time = [];
       if (this.get_email_date) {
         let d = new Date(this.get_email_date);
-        let start = 1000;
+        let start = 800;
         let end = 2400;
         let startHours = Math.floor(start / 100) * 3600000;
         let endHours = Math.floor(end / 100) * 3600000;
