@@ -1,20 +1,36 @@
 <template>
   <div>
-    <div @click="showDropdown = !showDropdown" class="w-full p-5 mb-2 cursor-pointer">
-      <img
-        :src="icon"
-        v-if="icon"
-        alt="icon"
-        class="inline-block align-baseline mr-4 h-5 w-5 -mb-0.5 pointer-events-none"
-      />
-      <span class="inline-block truncate w-4/5" :class="selectedOption ? '' : 'text-gray-500'">
-        <slot name="title" :selectedOption="selectedOption">
-          {{ selectedOption || placeholder }}
-        </slot>
-      </span>
-      <div class="h-full float-right ">
-        <Down class="inline-block pointer-events-none" />
+    <div @click="toggleDropdown()" class="flex items-strech items-center border-b-1 border-divider bg-surface">
+      <div
+        class="container relative md:px-6 block flex-grow justify-between flex h-full
+      items-center select-none px-4 pr-6 py-5"
+      >
+        <span class="tg-body-mobile">
+          <slot name="title" :selectedOption="selectedOption">
+            {{ selectedOption || placeholder }}
+          </slot>
+        </span>
+        <Down class="transform scale-x-1 text-gray" :class="{ 'rotate-180': showDropdown }" />
+        <ul v-if="showDropdown" class="dropdown shadow-8dp mx-2 md:mx-6 z-10 py-2">
+          <li
+            class="text-left"
+            :class="{ active: selectedOption === option }"
+            v-for="(option, index) in options"
+            :key="index"
+            @click="selectOption(option)"
+          >
+            <div class="tg-body-mobile p-4 block w-full cursor-pointer">
+              <slot name="option" :option="option">{{ option }}</slot>
+            </div>
+          </li>
+        </ul>
       </div>
+    </div>
+    <!--
+      </div>
+
+      <span class="inline-block truncate w-4/5" :class="selectedOption ? '' : 'text-gray-500'">
+      </span>
     </div>
     <div v-if="showDropdown" class="dropdown mt-2 w-48 w-full rounded-lg shadow-xl overflow-x-hidden overflow-y-auto">
       <div
@@ -23,9 +39,8 @@
         :key="index"
         @click="updateDay(option)"
       >
-        <slot name="option" :option="option">{{ option }}</slot>
       </div>
-    </div>
+    </div>-->
   </div>
 </template>
 
@@ -64,9 +79,11 @@ export default {
     };
   },
   methods: {
-    updateDay(option) {
+    toggleDropdown() {
+      this.showDropdown = !this.showDropdown;
+    },
+    selectOption(option) {
       this.$emit('updateSelectedOption', option);
-      this.showDropdown = false;
     }
   }
 };
@@ -74,18 +91,20 @@ export default {
 
 <style scoped>
 .dropdown {
-  max-height: 13rem;
+  height: 224px;
+  position: absolute;
+  top: 54px;
+  background: white;
+  border-radius: 4px;
+  right: 0;
+  left: 0;
+  overflow-y: scroll;
 }
-.dropdown::-webkit-scrollbar {
-  width: 3px;
-  padding: 2px 0;
+
+.rotate-180 {
+  transform: rotate(180deg);
 }
-.dropdown::-webkit-scrollbar-track {
-  background: #ddd;
-  box-shadow: none;
-}
-.dropdown::-webkit-scrollbar-thumb {
-  background: #666;
-  outline: transparent;
+.active {
+  background: rgba(3, 179, 249, 0.12);
 }
 </style>
