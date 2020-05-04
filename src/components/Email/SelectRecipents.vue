@@ -1,7 +1,8 @@
 <template>
   <div>
     <div class="py-6 flex-grow">
-      <div class="container px-4 text-left">
+      <div class="container px-4 text-left bg-surface">
+        <div class="tg-body-mobile mb-2 em-error">Send to:</div>
         <div
           class="mb-4 bg-white relative"
           :class="[
