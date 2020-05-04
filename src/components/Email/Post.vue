@@ -1,7 +1,7 @@
 <template>
-  <div class="post mb-4 mt-8 cursor-pointer" @click="$emit('clicked')">
+  <div class="post my-2 cursor-pointer" @click="$emit('clicked')">
     <div
-      class="flex justify-between w-full flex shadow-8dp relative"
+      class="flex justify-between w-full flex shadow-8dp relative break-words"
       :style="active !== -1 ? '' : `border-color: #${post.category.color}`"
       :class="active !== -1 ? 'border-3 border-secondary' : 'border-2'"
     >
@@ -11,13 +11,14 @@
         </div>
         <img v-else :src="post.category.image" alt="catg" draggable="false" class="h-4 w-4 object-contain" />
       </div>
-      <div class="px-2 py-5">
-        <img :src="post.image || post.category.image" alt="post" draggable="false" class="h-16 object-contain" />
+      <div class="px-2 py-5 flex-shrink-0 w-16">
+        <img :src="post.image || post.category.image" alt="post" draggable="false" />
       </div>
-      <div class="w-full my-auto text-lg">
+      <div class="w-full my-auto text-lg break-all mx-2 py-4">
         {{ post.description | truncate }}
       </div>
-      <div class="my-auto text-right relative outline-none">
+      <!-- Disabled for MVP -->
+      <!-- <div class="my-auto text-right relative outline-none">
         <More class="cursor-pointer" @click.stop.prevent="toggleMenu" />
         <div v-show="menu" class="absolute top-0 right-0 text-left bg-white shadow-8dp rounded-md mr-5 py-2 text-base">
           <router-link to="/edit" class="block py-2 px-4 leading-5 hover:text-secondary cursor-pointer">
@@ -27,17 +28,17 @@
             Delete
           </router-link>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
 
 <script>
-import More from '@/assets/more.svg';
+// import More from '@/assets/more.svg';
 
 export default {
   name: 'Post',
-  components: { More },
+  // components: { More },
   props: {
     post: {
       type: Object
@@ -78,7 +79,6 @@ export default {
 
 <style scoped>
 .post {
-  width: 328px;
   min-height: 104px;
   max-height: 113px;
 }
