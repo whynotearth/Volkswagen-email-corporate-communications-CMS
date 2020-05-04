@@ -15,7 +15,7 @@
         <img :src="post.image || post.category.image" alt="post" draggable="false" />
       </div>
       <div class="w-full my-auto text-lg break-all mx-2 py-4">
-        {{ post.description | truncate }}
+        {{ post.headline | truncate }}
       </div>
       <!-- Disabled for MVP -->
       <!-- <div class="my-auto text-right relative outline-none">
