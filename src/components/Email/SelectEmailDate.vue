@@ -1,14 +1,14 @@
 <template>
-  <div class="py-6 flex-grow">
-    <div class="container px-4 text-left flex">
-      <div class="leading-5 py-5">
-        Schedule
-      </div>
+  <div class="py-2 flex-grow">
+    <div class="container px-0 md:px-4 text-left flex">
       <div class="flex-auto">
         <BaseDropdown placeholder="Select date" :options="dates" v-model="$v.email_date.$model">
           <template #title="{ selectedOption }">
-            <span v-if="selectedOption">
-              {{ formatDate(selectedOption) }}
+            <span v-if="selectedOption" class="tg-body-mobile">
+              Schedule
+              <span class="ml-2 text-black em-medium">
+                {{ formatDate(selectedOption, 'dd MMM, yyyy') }}
+              </span>
             </span>
           </template>
           <template #option="{ option }">
@@ -68,9 +68,7 @@ export default {
     ...mapMutations('email', ['update_email_date']),
     ...mapActions('email', ['clear_email_data']),
     ...mapActions('post', ['fetch_posts']),
-    formatDate(payload) {
-      return formatDate(payload);
-    }
+    formatDate
   }
 };
 </script>
