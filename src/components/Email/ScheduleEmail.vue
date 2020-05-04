@@ -82,6 +82,7 @@ export default {
         let startTime = startHours + startMinutes;
         let endTime = endHours + endMinutes;
         d.setHours(0, 0, 0, 0);
+        if (Date.now() > d.getTime()) startTime = Date.now() - d.getTime() + 900000;
         for (let i = startTime; i <= endTime; i += 900000) {
           time.push(i);
         }
