@@ -79,7 +79,7 @@ export function formatDate(inputDate, dateFormat = 'dd MMM, yyyy') {
   if (!inputDate) {
     return '';
   }
-  if (typeof inputDate === 'string') {
+  if (typeof inputDate === ('string' || 'number')) {
     inputDate = new Date(inputDate);
   }
   return format(inputDate, dateFormat);
@@ -89,7 +89,7 @@ export function formatISODate(inputDate) {
   if (!inputDate) {
     console.error('formatISO: Invalid Date');
   }
-  if (typeof inputDate === 'string') {
+  if (typeof inputDate === ('string' || 'number')) {
     inputDate = new Date(inputDate);
   }
   return formatISO(inputDate);
