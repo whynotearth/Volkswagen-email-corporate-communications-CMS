@@ -48,7 +48,7 @@
                 </router-link>
               </li>
               <li class="flex whitespace-no-wrap text-white text-xs justify-end my-2">
-                <router-link to="/emails/add" class="flex items-center">
+                <router-link to="/email/1" class="flex items-center">
                   Email
                   <div
                     class="rounded-full h-10 w-10 flex items-center justify-center bg-secondary ml-2
