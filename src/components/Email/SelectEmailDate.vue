@@ -1,5 +1,5 @@
 <template>
-  <div class="py-6 flex-grow">
+  <div class="py-2 flex-grow">
     <div class="container px-0 md:px-4 text-left flex">
       <div class="flex-auto">
         <BaseDropdown placeholder="Select date" :options="dates" v-model="$v.email_date.$model">
