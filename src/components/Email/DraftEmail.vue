@@ -1,7 +1,7 @@
 <template>
-  <div class="py-6 flex-grow">
+  <div class="flex-grow">
     <div class="container px-4 text-left">
-      <div class="bg-brand-gradient h-full p-8">
+      <div class="bg-brand-gradient h-full p-8 -mx-4 md:m-0">
         <div class="mx-auto max-w-sm">
           <img v-if="get_preview_link.length > 0" :src="get_preview_link" />
           <Logo v-else class="mx-auto" />
