@@ -1,0 +1,78 @@
+<template>
+  <div class="py-6 flex-grow">
+    <div class="container px-4 text-left flex">
+      <div class="leading-5 py-5">
+        Schedule
+      </div>
+      <div class="flex-auto">
+        <BaseDropdown placeholder="Select date" :options="dates" v-model="$v.email_date.$model">
+          <template #title="{ selectedOption }">
+            <span v-if="selectedOption">
+              {{ formatDate(selectedOption) }}
+            </span>
+          </template>
+          <template #option="{ option }">
+            <span>
+              {{ formatDate(option) }}
+            </span>
+          </template>
+        </BaseDropdown>
+        <p v-if="$v.email_date.$error" class="text-xs text-error">
+          Please select a date.
+        </p>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import BaseDropdown from '@/components/BaseDropdown';
+import { formatDate } from '@/helpers.js';
+import { required } from 'vuelidate/lib/validators';
+import { mapGetters, mapMutations, mapActions } from 'vuex';
+import { formatISODate } from '@/helpers.js';
+
+export default {
+  name: 'SelectEmailDate',
+  components: { BaseDropdown },
+  validations: {
+    email_date: {
+      required
+    }
+  },
+  computed: {
+    ...mapGetters('email', ['get_email_date']),
+    email_date: {
+      get() {
+        return this.get_email_date;
+      },
+      set(value) {
+        this.clear_email_data();
+        this.update_email_date(value);
+        this.fetch_posts({ params: { date: formatISODate(value) } });
+      }
+    },
+    dates() {
+      let d = new Date();
+      d.setHours(0, 0, 0, 0);
+      d = d.getTime() + 86400000;
+      let days = [];
+      for (let i = 0; i < 7; i++) {
+        let a = d + i * 86400000;
+        days.push(a);
+      }
+      return days;
+    }
+  },
+  methods: {
+    ...mapMutations('email', ['update_email_date']),
+    ...mapActions('email', ['clear_email_data']),
+    ...mapActions('post', ['fetch_posts']),
+    formatDate(payload) {
+      return formatDate(payload);
+    }
+  }
+};
+</script>
+
+<style></style>
