@@ -1,5 +1,5 @@
 <template>
-  <div class="post mb-4 mt-8 cursor-pointer" @click="$emit('clicked')">
+  <div class="post my-2 cursor-pointer" @click="$emit('clicked')">
     <div
       class="flex justify-between w-full flex shadow-8dp relative"
       :style="active !== -1 ? '' : `border-color: #${post.category.color}`"
@@ -14,7 +14,7 @@
       <div class="px-2 py-5">
         <img :src="post.image || post.category.image" alt="post" draggable="false" class="h-16 object-contain" />
       </div>
-      <div class="w-full my-auto text-lg">
+      <div class="w-full my-auto text-lg break-all mx-2">
         {{ post.description | truncate }}
       </div>
       <!-- Disabled for MVP -->
@@ -79,7 +79,6 @@ export default {
 
 <style scoped>
 .post {
-  width: 328px;
   min-height: 104px;
   max-height: 113px;
 }
