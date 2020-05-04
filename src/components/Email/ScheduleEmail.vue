@@ -57,7 +57,7 @@ export default {
     }
   },
   mounted() {
-    if (!this.get_preview_link) return this.$router.push({ name: 'Email', params: { step: 2 } });
+    if (!this.get_preview_link) return this.$router.push({ name: 'EmailsAdd', params: { step: 2 } });
   },
   computed: {
     ...mapGetters('email', ['get_schedule_time', 'get_preview_link', 'get_email_date']),
