@@ -38,7 +38,7 @@
           <div class="flex items-center justify-center w-8 h-8 rounded-full bg-white circle-icon">
             <img class="m-auto w-4 h-4" :src="get_selected_category.image" />
           </div>
-          <img class="m-auto w-16" :src="get_selected_category.image" />
+          <!-- <img class="m-auto w-16" :src="get_selected_category.image" /> -->
           <div class="w-full tg-h2-mobile text-black py-3">
             {{ get_headline }}
           </div>
