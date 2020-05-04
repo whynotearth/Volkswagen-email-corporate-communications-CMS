@@ -1,25 +1,27 @@
 <template>
   <div class="py-2 flex-grow">
-    <div class="container px-0 md:px-4 text-left flex">
-      <div class="flex-auto">
-        <BaseDropdown placeholder="Select date" :options="dates" v-model="$v.email_date.$model">
-          <template #title="{ selectedOption }">
-            <span v-if="selectedOption" class="tg-body-mobile">
-              Schedule
-              <span class="ml-2 text-black em-medium">
-                {{ formatDate(selectedOption, 'dd MMM, yyyy') }}
+    <div class="container px-4 text-left">
+      <div class="flex relative">
+        <div class="flex-auto">
+          <BaseDropdown placeholder="Select date" :options="dates" v-model="$v.email_date.$model">
+            <template #title="{ selectedOption }">
+              <span v-if="selectedOption">
+                Schedule
+                <span class="ml-2 em-medium">
+                  {{ formatDate(selectedOption) }}
+                </span>
               </span>
-            </span>
-          </template>
-          <template #option="{ option }">
-            <span>
-              {{ formatDate(option) }}
-            </span>
-          </template>
-        </BaseDropdown>
-        <p v-if="$v.email_date.$error" class="text-xs text-error">
-          Please select a date.
-        </p>
+            </template>
+            <template #option="{ option }">
+              <span>
+                {{ formatDate(option) }}
+              </span>
+            </template>
+          </BaseDropdown>
+          <p v-if="$v.email_date.$error" class="text-xs text-error">
+            Please select a date.
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -55,9 +57,9 @@ export default {
     dates() {
       let d = new Date();
       d.setHours(0, 0, 0, 0);
-      d = d.getTime() + 86400000;
+      d = d.getTime();
       let days = [];
-      for (let i = 0; i < 7; i++) {
+      for (let i = 0; i < 3; i++) {
         let a = d + i * 86400000;
         days.push(a);
       }
