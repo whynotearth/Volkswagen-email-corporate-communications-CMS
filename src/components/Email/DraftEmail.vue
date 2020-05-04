@@ -23,6 +23,9 @@
         <span v-if="$v.get_postIds.$error" class="text-xs text-error">
           Please select atleast one post.
         </span>
+        <span v-else-if="$v.get_preview_link.$error" class="text-xs text-error">
+          Selecting an "answers at a glance" post is required.
+        </span>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-4">
           <Post
             v-for="post in get_posts"
@@ -53,6 +56,9 @@ export default {
   validations: {
     get_postIds: {
       required
+    },
+    get_preview_link: {
+      required
     }
   },
   mounted() {
@@ -69,7 +75,9 @@ export default {
     ),
     addPost(post) {
       if (this.get_postIds.length < 6) {
+        this.$v.$reset();
         this.update_postIds(post);
+        this.update_preview_link('');
         this.debounced_preview();
       }
     },
