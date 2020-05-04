@@ -23,7 +23,7 @@
         <span v-if="$v.get_postIds.$error" class="text-xs text-error">
           Please select atleast one post.
         </span>
-        <div class="flex flex-wrap justify-between">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-4">
           <Post
             v-for="post in get_posts"
             :key="post.id"
