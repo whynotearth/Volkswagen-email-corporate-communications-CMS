@@ -34,11 +34,11 @@
 </template>
 
 <script>
-import More from '@/assets/more.svg';
+// import More from '@/assets/more.svg';
 
 export default {
   name: 'Post',
-  components: { More },
+  // components: { More },
   props: {
     post: {
       type: Object
