@@ -43,11 +43,13 @@
   height: 22px;
   display: block;
   margin-top: 3px;
-  margin-right: 3px;
+  margin-right: 4px;
   transition: none;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.38);
 
   &::after {
-    @apply text-primary;
+    @apply text-white;
   }
 }
 
