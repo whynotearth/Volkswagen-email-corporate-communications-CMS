@@ -104,6 +104,7 @@ export default {
 .rotate-180 {
   transform: rotate(180deg);
 }
+.dropdown li:hover,
 .active {
   background: rgba(3, 179, 249, 0.12);
 }
