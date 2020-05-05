@@ -75,6 +75,12 @@ export default {
       commit('update_posts', []);
       const data = await PostService.posts1(payload.params);
       commit('update_posts', data);
+    },
+    async put_post(context, payload) {
+      await PostService.posts2(payload.params);
+    },
+    async delete_post(context, payload) {
+      await PostService.posts3(payload);
     }
   },
   getters: {

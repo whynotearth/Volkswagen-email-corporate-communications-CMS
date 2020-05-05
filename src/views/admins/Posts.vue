@@ -3,7 +3,11 @@
     <BaseAppBarHeader title="Articles" to-link="/" />
     <BaseTabs>
       <BaseTab name="TODAY" selected="true">
-        <PostItem v-for="(post, index) in get_posts" :key="index" :model="post" />
+        <template v-for="(post, index) in get_posts">
+          <router-link :key="index" :to="{ name: 'AdminPostsItem', params: { id: post.id } }">
+            <PostItem :model="post" />
+          </router-link>
+        </template>
       </BaseTab>
       <BaseTab name="UPCOMING">
         Upcoming posts as soon as possible

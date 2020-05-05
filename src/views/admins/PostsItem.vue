@@ -1,0 +1,288 @@
+<template>
+  <div class="flex-grow">
+    <BaseAppBarHeader :title="get_headline" to-link="/admin/posts" />
+    <div class="container px-4 md:px-6 py-6 text-left">
+      <BaseInputText
+        v-if="isFieldRequired('headline')"
+        class="bg-surface mb-4"
+        v-model="$v.headline.$model"
+        label="Question"
+        placeholder="Question"
+        :error="$v.headline.$dirty && $v.headline.$invalid"
+      >
+        <span v-if="$v.headline.$dirty && !$v.headline.required" class="text-xs text-error pl-error-message">
+          Question is required
+        </span>
+        <span v-if="$v.headline.$dirty && !$v.headline.maxLength" class="text-xs text-error pl-error-message">
+          Question should be less than 80 characters
+        </span>
+      </BaseInputText>
+
+      <BaseInputTextarea
+        v-if="isFieldRequired('description')"
+        class="body-1-mobile bg-surface"
+        v-model="$v.description.$model"
+        label="Answer"
+        placeholder="Put the content of your post here."
+        :error="$v.description.$dirty && $v.description.$invalid"
+      >
+        <span v-if="$v.description.$dirty && !$v.description.required" class="text-xs text-error pl-error-message">
+          Answer is required
+        </span>
+        <span v-if="$v.description.$dirty && !$v.description.maxLength" class="text-xs text-error pl-error-message">
+          Answer should be less than 750 characters
+        </span>
+      </BaseInputTextarea>
+
+      <BaseInputText
+        v-if="isFieldRequired('price')"
+        class="bg-surface mb-4"
+        v-model="$v.price.$model"
+        label="Price"
+        placeholder="Price"
+        :error="$v.price.$dirty && $v.price.$invalid"
+      >
+        <span v-if="$v.price.$dirty && !$v.price.required" class="text-xs text-error pl-error-message">
+          Price is required
+        </span>
+        <span v-if="$v.price.$dirty && !$v.price.decimal" class="text-xs text-error pl-error-message">
+          Price is not a valid number
+        </span>
+      </BaseInputText>
+
+      <BaseInputText
+        v-if="isFieldRequired('eventDate')"
+        class="bg-surface mb-4"
+        v-model="$v.eventDate.$model"
+        label="Date/Time"
+        placeholder="20 March, 2020, 7:00 PM"
+        :error="$v.eventDate.$dirty && $v.eventDate.$invalid"
+      >
+        <span v-if="$v.eventDate.$dirty && !$v.eventDate.required" class="text-xs text-error pl-error-message">
+          Date/Time is required
+        </span>
+        <span v-if="$v.eventDate.$dirty && !$v.eventDate.mustBeDate" class="text-xs text-error pl-error-message">
+          Date/Time is invalid. Example: 2020-12-24 7:30 pm
+        </span>
+      </BaseInputText>
+
+      <p v-if="get_response_message.message" class="font-bold px-4 mb-4" :class="get_response_message.class">
+        {{ get_response_message.message }}
+      </p>
+
+      <div
+        class="block text-center bg-secondary w-full hover:bg-blue-700 text-white font-bold py-2
+           px-4 rounded-full focus:outline-none focus:shadow-outline transition duration-100
+           ease-in-out transition-all label-mobile my-6 cursor-pointer"
+        @click="submit()"
+      >
+        Save
+      </div>
+      <div
+        class="block text-center m-auto text-error font-bold label-mobile my-6 w-16
+           cursor-pointer"
+        @click="deleteItem()"
+      >
+        DELETE
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import BaseAppBarHeader from '@/components/BaseAppBarHeader.vue';
+import BaseInputText from '@/components/BaseInputText.vue';
+import BaseInputTextarea from '@/components/BaseInputTextarea.vue';
+import { mapGetters, mapMutations, mapActions } from 'vuex';
+import { required, decimal, maxLength, requiredIf } from 'vuelidate/lib/validators';
+import { mustBeDate } from '@/validations.js';
+import { formatISODate } from '@/helpers.js';
+
+export default {
+  name: 'AdminPostsItem',
+  components: {
+    BaseAppBarHeader,
+    BaseInputText,
+    BaseInputTextarea
+  },
+  validations: {
+    headline: {
+      required: requiredIf(context => {
+        return context.isFieldRequired('headline');
+      }),
+      maxLength: maxLength(80)
+    },
+    description: {
+      required: requiredIf(context => {
+        return context.isFieldRequired('description');
+      }),
+      maxLength: maxLength(750)
+    },
+    price: {
+      required: requiredIf(context => {
+        return context.isFieldRequired('price');
+      }),
+      decimal
+    },
+    eventDate: {
+      mustBeDate: value => mustBeDate({ value })
+    }
+  },
+  computed: {
+    ...mapGetters('post', [
+      'get_headline',
+      'get_description',
+      'get_price',
+      'get_eventDate',
+      'get_posts',
+      'get_response_message',
+      'get_date'
+    ]),
+    postId() {
+      return this.$route.params.id;
+    },
+    headline: {
+      get() {
+        return this.get_headline;
+      },
+      set(value) {
+        this.update_headline(value);
+      }
+    },
+    description: {
+      get() {
+        return this.get_description;
+      },
+      set(value) {
+        this.update_description(value);
+      }
+    },
+    price: {
+      get() {
+        return this.get_price;
+      },
+      set(value) {
+        this.update_price(value);
+      }
+    },
+    eventDate: {
+      get() {
+        return this.get_eventDate;
+      },
+      set(value) {
+        this.update_eventDate(value);
+      }
+    },
+    selectedPost() {
+      return this.get_posts.find(item => {
+        return item.id === this.postId;
+      });
+    }
+  },
+  mounted() {
+    this.initialForm();
+  },
+  destroyed() {
+    this.$store.dispatch('post/clear_form_data');
+    this.update_response_message({
+      message: ''
+    });
+  },
+  methods: {
+    ...mapActions('post', ['put_post', 'delete_post']),
+    ...mapMutations('post', [
+      'update_headline',
+      'update_description',
+      'update_date',
+      'update_price',
+      'update_eventDate',
+      'update_response_message'
+    ]),
+    initialForm() {
+      this.update_headline(this.selectedPost.headline);
+      this.update_description(this.selectedPost.description);
+      this.update_date(this.selectedPost.date);
+      this.update_price(this.selectedPost.price);
+      this.update_eventDate(this.selectedPost.eventDate);
+    },
+    isFieldRequired(fieldName) {
+      const categoryName = this.selectedPost.category.name;
+      let isRequired = false;
+      switch (categoryName) {
+        case 'Events':
+          isRequired = ['headline', 'description', 'price', 'eventDate', 'images'].includes(fieldName);
+          break;
+        case 'One Team':
+        case 'Answers At A Glance':
+          isRequired = ['headline', 'description'].includes(fieldName);
+          break;
+        case 'Priority':
+        case 'People':
+        case 'Community':
+        case 'Plant':
+          isRequired = ['headline', 'description', 'images'].includes(fieldName);
+          break;
+
+        default:
+          break;
+      }
+      return isRequired;
+    },
+    submit() {
+      const data = {
+        postId: this.postId,
+        body: {
+          date: this.get_date ? formatISODate(new Date()) : undefined,
+          categoryId: this.selectedPost.category.id,
+          headline: this.get_headline,
+          description: this.get_description,
+          price: this.get_price,
+          eventDate: this.get_eventDate ? formatISODate(this.get_eventDate) : undefined
+          //images: this.get_images
+        }
+      };
+      this.put_post({ data })
+        .then(() => {
+          this.$store.dispatch('post/clear_form_data');
+        })
+        .catch(error => {
+          let message = 'An error occured!';
+          try {
+            message = error.response.data.message;
+          } catch (error) {
+            message = 'Unknown error!';
+          }
+
+          this.update_response_message({
+            message: message,
+            type: 'error',
+            class: 'text-error'
+          });
+        });
+    },
+    deleteItem() {
+      const data = {
+        postId: this.postId
+      };
+      this.delete_post(data)
+        .then(() => {
+          this.$router.push({ name: 'AdminPosts' });
+        })
+        .catch(error => {
+          let message = 'An error occured!';
+          try {
+            message = error.response.data.message;
+          } catch (error) {
+            message = 'Unknown error!';
+          }
+
+          this.update_response_message({
+            message: message,
+            type: 'error',
+            class: 'text-error'
+          });
+        });
+    }
+  }
+};
+</script>
