@@ -5,15 +5,15 @@
         v-if="isFieldRequired('headline')"
         class="bg-surface mb-4"
         v-model="$v.headline.$model"
-        label="Headline"
-        placeholder="Headline"
+        label="Question"
+        placeholder="Question"
         :error="$v.headline.$dirty && $v.headline.$invalid"
       >
         <span v-if="$v.headline.$dirty && !$v.headline.required" class="text-xs text-error pl-error-message">
-          Headline is required
+          Question is required
         </span>
         <span v-if="$v.headline.$dirty && !$v.headline.maxLength" class="text-xs text-error pl-error-message">
-          Headline should be less than 80 characters
+          Question should be less than 80 characters
         </span>
       </BaseInputText>
 
@@ -21,15 +21,15 @@
         v-if="isFieldRequired('description')"
         class="body-1-mobile bg-surface"
         v-model="$v.description.$model"
-        label="Description"
-        placeholder="Put the content of your post here."
+        label="Answer"
+        placeholder="Answer"
         :error="$v.description.$dirty && $v.description.$invalid"
       >
         <span v-if="$v.description.$dirty && !$v.description.required" class="text-xs text-error pl-error-message">
-          Description is required
+          Answer is required
         </span>
         <span v-if="$v.description.$dirty && !$v.description.maxLength" class="text-xs text-error pl-error-message">
-          Description should be less than 750 characters
+          Answer should be less than 750 characters
         </span>
       </BaseInputTextarea>
 
