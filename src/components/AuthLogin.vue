@@ -9,10 +9,10 @@
           placeholder="Email"
           :error="$v.email.$dirty && (!$v.email.required || !$v.email.email)"
         >
-          <span v-if="$v.email.$dirty && !$v.email.required" class="text-xs text-error">
+          <span v-if="$v.email.$dirty && !$v.email.required" class="text-xs text-error pl-error-message">
             Email is required
           </span>
-          <span v-if="$v.email.$dirty && !$v.email.email" class="text-xs text-error">
+          <span v-if="$v.email.$dirty && !$v.email.email" class="text-xs text-error pl-error-message">
             Please enter valid email
           </span>
         </BaseInputText>
@@ -26,7 +26,7 @@
           type="password"
           :error="$v.password.$dirty && !$v.password.required"
         >
-          <span v-if="$v.password.$dirty && !$v.password.required" class="text-xs text-error">
+          <span v-if="$v.password.$dirty && !$v.password.required" class="text-xs text-error pl-error-message">
             Password is required
           </span>
         </BaseInputText>

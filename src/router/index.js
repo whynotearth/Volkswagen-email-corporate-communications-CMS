@@ -14,6 +14,7 @@ import EmailListEdit from '../views/EmailListEdit';
 import EmailListItem from '../views/EmailListItem';
 import EmailListImport from '../views/EmailListImport';
 import EmailListImportHelp from '../views/EmailListImportHelp';
+import Email from '@/views/Email';
 import Dashboard from '../views/Dashboard';
 import ActivityFeedJumpStartList from '../views/ActivityFeedJumpStartList.vue';
 import ActivityFeedJumpStartItem from '../views/ActivityFeedJumpStartItem.vue';
@@ -71,6 +72,15 @@ const routes = [
     path: '/activity-feed/memos/:id',
     name: 'ActivityFeedMemoItem',
     component: ActivityFeedMemoItem,
+    props: true,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/emails/add/:step?',
+    name: 'EmailsAdd',
+    component: Email,
     props: true,
     meta: {
       requiresAuth: true

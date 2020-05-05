@@ -31,7 +31,7 @@
           <template v-slot:noResult>Nothing found</template>
           <template v-slot:noOptions>No options available</template>
         </Multiselect>
-        <span v-if="recipientsIsDirthy && recipients.length === 0" class="text-xs text-error">
+        <span v-if="recipientsIsDirthy && recipients.length === 0" class="text-xs text-error pl-error-message">
           To is required
         </span>
       </div>
@@ -43,7 +43,7 @@
         placeholder="Email Subject Line"
         :error="$v.subject.$dirty && !$v.subject.required"
       >
-        <span v-if="$v.subject.$dirty && !$v.subject.required" class="text-xs text-error">
+        <span v-if="$v.subject.$dirty && !$v.subject.required" class="text-xs text-error pl-error-message">
           Subject is required
         </span>
       </BaseInputText>
@@ -54,7 +54,7 @@
         placeholder="Memo Date"
         :error="$v.date.$dirty && !$v.date.required"
       >
-        <span v-if="$v.date.$dirty && !$v.date.required" class="text-xs text-error">
+        <span v-if="$v.date.$dirty && !$v.date.required" class="text-xs text-error pl-error-message">
           Date is required
         </span>
       </BaseInputText>
@@ -65,7 +65,7 @@
         placeholder="Audience"
         :error="$v.to.$dirty && !$v.to.required"
       >
-        <span v-if="$v.to.$dirty && !$v.to.required" class="text-xs text-error">
+        <span v-if="$v.to.$dirty && !$v.to.required" class="text-xs text-error pl-error-message">
           Audience is required
         </span>
       </BaseInputText>
@@ -76,11 +76,11 @@
         placeholder="Memo Body"
         :error="$v.description.$dirty && !$v.description.required"
       >
-        <span v-if="$v.description.$dirty && !$v.description.required" class="text-xs text-error">
+        <span v-if="$v.description.$dirty && !$v.description.required" class="text-xs text-error pl-error-message">
           Description is required
         </span>
       </BaseInputTextarea>
-      <span v-if="$v.$invalid" v-show="error" class="font-bold text-error">
+      <span v-if="$v.$invalid" v-show="error" class="font-bold text-error pl-error-message">
         Please fill the memo form properly.
       </span>
     </div>

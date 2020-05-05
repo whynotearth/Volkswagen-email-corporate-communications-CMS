@@ -7,6 +7,7 @@ import loading from './modules/loading';
 import snackbar from './modules/snackbar';
 import post from './modules/post';
 import memo from './modules/memo';
+import email from './modules/email';
 import overlay from './modules/overlay';
 import distributionGroup from './modules/distributionGroup';
 import recipient from './modules/recipient';
@@ -29,6 +30,7 @@ export default new Vuex.Store({
     category,
     post,
     memo,
+    email,
     authKeep,
     distributionGroup,
     overlay,
