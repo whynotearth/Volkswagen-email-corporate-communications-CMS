@@ -102,6 +102,7 @@ export default {
 .bottom-nav-icon {
   height: 56px;
 }
+
 .toggle-button {
   width: 56px;
   height: 56px;
@@ -109,32 +110,51 @@ export default {
   position: absolute;
   top: -30px;
   right: 16px;
+  opacity: 1;
 }
+
+.toggle-button:hover {
+  background: #fd3995;
+  transition: background ease-in 0.6s;
+}
+
+.toggle-button:active {
+  background: #ffffff;
+  transition: background ease-in 0.6s;
+  transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
 .toggle-menu {
   position: absolute;
   top: -37px;
   right: 23px;
 }
+
 .ease-in-out {
-  transition: transform ease-in 0.2s;
+  transition: all ease-in 0.2s;
 }
+
 .rotate-45 {
   transform: rotate(45deg);
 }
+
 ul.toggle-menu > li {
   position: absolute;
   top: 0;
   right: 0;
   transition: all 0.2s ease;
 }
+
 ul.toggle-menu.opened > li:nth-child(1) {
-  transition-duration: 150ms;
+  transition-duration: 450ms;
   top: -70px;
 }
+
 ul.toggle-menu.opened > li:nth-child(2) {
-  transition-duration: 250ms;
+  transition-duration: 450ms;
   top: -130px;
 }
+
 .arrange {
   display: flex;
   justify-content: space-evenly;
@@ -149,22 +169,27 @@ ul.toggle-menu.opened > li:nth-child(2) {
   z-index: -1;
   background: rgba(0, 0, 0, 0.54);
 }
+
 .router-link-exact-active {
   color: #03b3f9 !important;
   opacity: 1 !important;
 }
+
 .router-link-exact-active svg path {
   fill: #03b3f9 !important;
   fill-opacity: 1 !important;
 }
+
 .router-link {
   color: white;
   opacity: 0.54;
 }
+
 .router-link svg path {
   fill: white;
   fill-opacity: 0.54;
 }
+
 .container--border {
   @screen md {
     border-left: 24px solid;
