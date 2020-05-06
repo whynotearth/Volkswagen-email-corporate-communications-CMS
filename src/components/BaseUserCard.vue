@@ -4,17 +4,20 @@
       <UserAvatar :src="'https://www.callart.com.tr/public/assets/img/blog/avatar.png'" :alt="'user-image'" />
       <h1 class="tg-h1-mobile em-high text-white my-2">Xavier Jasso</h1>
     </div>
-    <EmailInfoBox />
+    <!--<EmailInfoBox />-->
   </div>
 </template>
 
 <script>
 import UserAvatar from './BaseUserAvatar';
-import EmailInfoBox from './UserEmailInfoBox';
+//import EmailInfoBox from './UserEmailInfoBox';
 
 export default {
   name: 'UserCard',
-  components: { UserAvatar, EmailInfoBox }
+  components: {
+    UserAvatar
+    //  EmailInfoBox
+  }
 };
 </script>
 
