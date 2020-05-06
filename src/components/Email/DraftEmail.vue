@@ -15,10 +15,13 @@
         </span>
       </template>
       <template v-else>
-        <span v-if="$v.get_postIds.$error" class="text-xs text-error">
+        <span v-if="$v.get_selected_posts.$error" class="text-xs text-error">
           Please select atleast one post.
         </span>
-        <span v-else-if="$v.get_preview_link.$error" class="text-xs text-error">
+        <span
+          v-else-if="!get_selected_posts.some(post => post.category.slug === 'answers-at-a-glance')"
+          class="text-xs text-error"
+        >
           Selecting an "answers at a glance" post is required.
         </span>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-4">
@@ -26,8 +29,8 @@
             v-for="post in get_posts"
             :key="post.id"
             :post="post"
-            @clicked="addPost(post.id)"
-            :active="isActive(post.id)"
+            @clicked="addPost(post)"
+            :active="isActive(post)"
           />
         </div>
       </template>
@@ -37,22 +40,15 @@
 
 <script>
 import Post from '@/components/Email/Post.vue';
-import Logo from '@/assets/white_logo.svg';
+import EmailPreview from '@/components/Email/EmailPreview.vue';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
 import { required } from 'vuelidate/lib/validators';
-import { debounce } from 'lodash-es';
 
 export default {
   name: 'DraftEmail',
-  components: {
-    Post,
-    Logo
-  },
+  components: { Post, EmailPreview },
   validations: {
-    get_postIds: {
-      required
-    },
-    get_preview_link: {
+    get_selected_posts: {
       required
     }
   },
@@ -60,29 +56,23 @@ export default {
     if (!this.get_email_date) return this.$router.push({ name: 'EmailsAdd', params: { step: 1 } });
   },
   methods: {
-    ...mapMutations('email', ['update_postIds', 'update_preview_link']),
-    debounced_preview: debounce(
-      function() {
-        this.update_preview_link();
-      },
-      3000,
-      { maxWait: 3000 }
-    ),
+    ...mapActions('email', ['debounced_preview']),
+    ...mapMutations('email', ['update_selected_posts', 'update_preview_link']),
     addPost(post) {
-      if (this.get_postIds.length < 6) {
+      if (this.get_selected_posts.length < 6) {
         this.$v.$reset();
-        this.update_postIds(post);
+        this.update_selected_posts(post);
         this.update_preview_link('');
         this.debounced_preview();
       }
     },
-    isActive(id) {
-      return this.get_postIds.indexOf(id);
+    isActive(post) {
+      return this.get_selected_posts.indexOf(post);
     }
   },
   computed: {
     ...mapGetters('post', ['get_posts']),
-    ...mapGetters('email', ['get_email_date', 'get_postIds', 'get_preview_link'])
+    ...mapGetters('email', ['get_email_date', 'get_selected_posts'])
   }
 };
 </script>
