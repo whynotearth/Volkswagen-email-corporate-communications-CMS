@@ -43,12 +43,11 @@ export default {
     }
   },
   mounted() {
-    if (this.get_email_date) {
-      this.fetch_posts({ params: { date: formatISODate(this.get_email_date) } });
-    }
+    if (this.get_email_date) this.prefillPosts(this.get_email_date);
   },
   computed: {
     ...mapGetters('email', ['get_email_date']),
+    ...mapGetters('post', ['get_posts']),
     email_date: {
       get() {
         return this.get_email_date;
@@ -56,7 +55,7 @@ export default {
       set(value) {
         this.clear_email_data();
         this.update_email_date(value);
-        this.fetch_posts({ params: { date: formatISODate(value) } });
+        this.prefillPosts(value);
       }
     },
     dates() {
@@ -72,12 +71,22 @@ export default {
     }
   },
   methods: {
-    ...mapMutations('email', ['update_email_date']),
-    ...mapActions('email', ['clear_email_data']),
+    ...mapMutations('email', ['update_email_date', 'update_selected_posts']),
+    ...mapActions('email', ['clear_email_data', 'debounced_preview']),
     ...mapActions('post', ['fetch_posts']),
-    formatDate
+    formatDate,
+    prefillPosts(date) {
+      this.update_selected_posts();
+      this.fetch_posts({ params: { date: formatISODate(date) } }).then(() => {
+        let i, post;
+        for (i = 0; i < 5; i++) {
+          post = this.get_posts[i];
+          if (post) this.update_selected_posts(post);
+          else break;
+        }
+        this.debounced_preview();
+      });
+    }
   }
 };
 </script>
-
-<style></style>

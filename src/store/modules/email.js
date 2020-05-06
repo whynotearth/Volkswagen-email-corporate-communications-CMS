@@ -1,5 +1,6 @@
 import { JumpStartService } from '@whynotearth/meredith-axios';
 import { BASE_API } from '@/connection/api.js';
+import { debounce } from 'lodash-es';
 
 export default {
   namespaced: true,
@@ -8,7 +9,7 @@ export default {
     email_date: null,
     schedule_time: null,
     preview_link: '',
-    postIds: [],
+    selected_posts: [],
     email_recipients: [],
     response_message: {
       type: '', // error, success
@@ -19,7 +20,7 @@ export default {
   getters: {
     get_email_date: state => state.email_date,
     get_schedule_time: state => state.schedule_time,
-    get_postIds: state => state.postIds,
+    get_selected_posts: state => state.selected_posts,
     get_preview_link: state => state.preview_link,
     get_email_recipients: state => state.email_recipients,
     get_response_message: state => state.response_message
@@ -32,9 +33,16 @@ export default {
       commit('update_email_date', null);
       commit('update_schedule_time', null);
       commit('update_preview_link', '');
-      commit('update_postIds'); // Passing no payload just clears the postIds array
+      commit('update_selected_posts'); // Passing no payload just clears the selected_posts array
       commit('update_email_recipients', []);
-    }
+    },
+    debounced_preview: debounce(
+      function({ commit }) {
+        commit('update_preview_link');
+      },
+      3000,
+      { maxWait: 3000 }
+    )
   },
   mutations: {
     update_email_date(state, payload) {
@@ -43,12 +51,12 @@ export default {
     update_schedule_time(state, payload) {
       state.schedule_time = payload;
     },
-    update_postIds(state, payload) {
+    update_selected_posts(state, payload) {
       if (!payload) {
-        state.postIds.splice(0, state.postIds.length);
+        state.selected_posts.splice(0, state.selected_posts.length);
       } else {
-        let i = state.postIds.indexOf(payload);
-        i !== -1 ? state.postIds.splice(i, 1) : state.postIds.push(payload);
+        let i = state.selected_posts.indexOf(payload);
+        i !== -1 ? state.selected_posts.splice(i, 1) : state.selected_posts.push(payload);
       }
     },
     update_preview_link(state, payload) {
@@ -58,8 +66,8 @@ export default {
       }
       const base = `${BASE_API}/api/v0/volkswagen/jumpstart/preview`;
       const url = new URL(base);
-      state.postIds.forEach(postId => {
-        url.searchParams.append('postIds', postId);
+      state.selected_posts.forEach(post => {
+        url.searchParams.append('postIds', post.id);
       });
       state.preview_link = url.href;
     },
