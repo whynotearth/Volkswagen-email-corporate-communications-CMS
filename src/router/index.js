@@ -16,6 +16,7 @@ import EmailListImport from '../views/EmailListImport';
 import EmailListImportHelp from '../views/EmailListImportHelp';
 import Email from '@/views/Email';
 import Dashboard from '../views/Dashboard';
+import AdminsJumpStart from '../views/admins/JumpStart';
 import store from '../store';
 
 Vue.use(VueRouter);
@@ -144,6 +145,14 @@ const routes = [
     path: '/dashboard',
     name: 'Dashboard',
     component: Dashboard,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/admin/jumpstart',
+    name: 'AdminsJumpStart',
+    component: AdminsJumpStart,
     meta: {
       requiresAuth: true
     }
