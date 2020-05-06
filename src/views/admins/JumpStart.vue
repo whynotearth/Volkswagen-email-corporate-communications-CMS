@@ -1,7 +1,9 @@
 <template>
   <div class="">
     <BaseAppBarHeader title="Blue Delta" :to-link="{ name: 'Dashboard' }" />
-    <div class="flex">
+    <div class="flex flex-col py-3">
+      <JumpStartItem />
+      <JumpStartItem />
       <JumpStartItem />
     </div>
   </div>
