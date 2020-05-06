@@ -77,7 +77,7 @@ export default {
       commit('update_posts', data);
     },
     async put_post(context, payload) {
-      await PostService.posts2(payload.params);
+      await PostService.posts2(payload);
     },
     async delete_post(context, payload) {
       await PostService.posts3(payload);

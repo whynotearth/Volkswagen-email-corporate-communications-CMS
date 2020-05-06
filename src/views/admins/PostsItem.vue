@@ -241,8 +241,9 @@ export default {
           //images: this.get_images
         }
       };
-      this.put_post({ data })
+      this.put_post(data)
         .then(() => {
+          this.$router.push({ name: 'AdminPosts' });
           this.$store.dispatch('post/clear_form_data');
         })
         .catch(error => {
