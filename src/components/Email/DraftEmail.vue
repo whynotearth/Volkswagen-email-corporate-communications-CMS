@@ -1,12 +1,7 @@
 <template>
   <div class="flex-grow">
-    <div class="container px-4 text-left">
-      <div class="bg-brand-gradient h-full p-8 -mx-4 md:m-0">
-        <div class="mx-auto max-w-sm">
-          <img v-if="get_preview_link.length > 0" :src="get_preview_link" @error="update_preview_link('')" />
-          <Logo v-else class="mx-auto" />
-        </div>
-      </div>
+    <div class="container px-4 text-left h-full">
+      <EmailPreview @error="$v.$touch()" />
       <h2 class="text-primary font-bold text-xl">Rearrange the Jumpstart</h2>
       <template v-if="get_posts.length === 0">
         <span class="block my-2">
