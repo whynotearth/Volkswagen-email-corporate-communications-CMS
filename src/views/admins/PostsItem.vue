@@ -2,19 +2,28 @@
   <div class="flex-grow">
     <BaseAppBarHeader :title="get_headline" to-link="/admin/posts" />
     <div class="container px-4 md:px-6 py-6 text-left">
+      <div class="flex items-center pb-5 bg-surface">
+        <div class="w-8 h-8">
+          <img :src="selectedPost.category.image" alt="" />
+        </div>
+        <div class="flex-auto pl-4">
+          <div class="w-full body-1-mobile">{{ selectedPost.category.name }}</div>
+          <div class="w-full text-xs text-black em-disabled">{{ selectedPost.category.description }}</div>
+        </div>
+      </div>
       <BaseInputText
         v-if="isFieldRequired('headline')"
         class="bg-surface mb-4"
         v-model="$v.headline.$model"
-        label="Question"
-        placeholder="Question"
+        :label="stringHeadlineByCategoryName"
+        :placeholder="stringHeadlineByCategoryName"
         :error="$v.headline.$dirty && $v.headline.$invalid"
       >
         <span v-if="$v.headline.$dirty && !$v.headline.required" class="text-xs text-error pl-error-message">
-          Question is required
+          {{ stringHeadlineByCategoryName }} is required
         </span>
         <span v-if="$v.headline.$dirty && !$v.headline.maxLength" class="text-xs text-error pl-error-message">
-          Question should be less than 80 characters
+          {{ stringHeadlineByCategoryName }} should be less than 80 characters
         </span>
       </BaseInputText>
 
@@ -22,15 +31,15 @@
         v-if="isFieldRequired('description')"
         class="body-1-mobile bg-surface"
         v-model="$v.description.$model"
-        label="Answer"
-        placeholder="Put the content of your post here."
+        :label="stringDescriptionByCategoryName"
+        :placeholder="stringDescriptionByCategoryName"
         :error="$v.description.$dirty && $v.description.$invalid"
       >
         <span v-if="$v.description.$dirty && !$v.description.required" class="text-xs text-error pl-error-message">
-          Answer is required
+          {{ stringDescriptionByCategoryName }} is required
         </span>
         <span v-if="$v.description.$dirty && !$v.description.maxLength" class="text-xs text-error pl-error-message">
-          Answer should be less than 750 characters
+          {{ stringDescriptionByCategoryName }} should be less than 750 characters
         </span>
       </BaseInputTextarea>
 
@@ -66,6 +75,25 @@
         </span>
       </BaseInputText>
 
+      <div class="border-divider border-b-1 w-full my-5"></div>
+
+      <div class="w-full text-left py-3 tg-body-mobile">Schedule Article</div>
+      <BaseInputText
+        v-if="isFieldRequired('date')"
+        class="bg-surface mb-4"
+        v-model="$v.date.$model"
+        label="Date/Time"
+        placeholder="20 March, 2020, 7:00 PM"
+        :error="$v.date.$dirty && $v.date.$invalid"
+      >
+        <span v-if="$v.date.$dirty && !$v.date.required" class="text-xs text-error pl-error-message">
+          Date/Time is required
+        </span>
+        <span v-if="$v.date.$dirty && !$v.date.mustBeDate" class="text-xs text-error pl-error-message">
+          Date/Time is invalid. Example: 2020-12-24 7:30 pm
+        </span>
+      </BaseInputText>
+
       <p v-if="get_response_message.message" class="font-bold px-4 mb-4" :class="get_response_message.class">
         {{ get_response_message.message }}
       </p>
@@ -73,7 +101,7 @@
       <div
         class="block text-center bg-secondary w-full hover:bg-blue-700 text-white font-bold py-2
            px-4 rounded-full focus:outline-none focus:shadow-outline transition duration-100
-           ease-in-out transition-all label-mobile my-6 cursor-pointer"
+           ease-in-out transition-all label-mobile my-6 cursor-pointer mt-16"
         @click="submit()"
       >
         Save
@@ -96,7 +124,7 @@ import BaseInputTextarea from '@/components/BaseInputTextarea.vue';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
 import { required, decimal, maxLength, requiredIf } from 'vuelidate/lib/validators';
 import { mustBeDate } from '@/validations.js';
-import { formatISODate } from '@/helpers.js';
+import { formatISODate, formatDate } from '@/helpers.js';
 
 export default {
   name: 'AdminPostsItem',
@@ -126,6 +154,9 @@ export default {
     },
     eventDate: {
       mustBeDate: value => mustBeDate({ value })
+    },
+    date: {
+      mustBeDate: value => mustBeDate({ value })
     }
   },
   computed: {
@@ -138,8 +169,14 @@ export default {
       'get_response_message',
       'get_date'
     ]),
+    stringHeadlineByCategoryName() {
+      return this.selectedPost.name === 'Answers At A Glance' ? 'Question' : 'Headline';
+    },
+    stringDescriptionByCategoryName() {
+      return this.selectedPost.name === 'Answers At A Glance' ? 'Answer' : 'Description';
+    },
     postId() {
-      return this.$route.params.id;
+      return parseInt(this.$route.params.id);
     },
     headline: {
       get() {
@@ -173,6 +210,14 @@ export default {
         this.update_eventDate(value);
       }
     },
+    date: {
+      get() {
+        return this.get_date;
+      },
+      set(value) {
+        this.update_date(value);
+      }
+    },
     selectedPost() {
       return this.get_posts.find(item => {
         return item.id === this.postId;
@@ -189,13 +234,14 @@ export default {
     });
   },
   methods: {
-    ...mapActions('post', ['put_post', 'delete_post']),
+    ...mapActions('post', ['fetch_post', 'put_post', 'delete_post']),
     ...mapMutations('post', [
       'update_headline',
       'update_description',
       'update_date',
       'update_price',
       'update_eventDate',
+      'update_date',
       'update_response_message'
     ]),
     initialForm() {
@@ -203,24 +249,28 @@ export default {
       this.update_description(this.selectedPost.description);
       this.update_date(this.selectedPost.date);
       this.update_price(this.selectedPost.price);
-      this.update_eventDate(this.selectedPost.eventDate);
+      this.update_eventDate(formatDate(this.selectedPost.eventDate));
+      this.update_date(formatDate(this.selectedPost.date));
     },
     isFieldRequired(fieldName) {
+      if (!this.selectedPost) {
+        return false;
+      }
       const categoryName = this.selectedPost.category.name;
       let isRequired = false;
       switch (categoryName) {
         case 'Events':
-          isRequired = ['headline', 'description', 'price', 'eventDate', 'images'].includes(fieldName);
+          isRequired = ['headline', 'description', 'price', 'eventDate', 'images', 'date'].includes(fieldName);
           break;
         case 'One Team':
         case 'Answers At A Glance':
-          isRequired = ['headline', 'description'].includes(fieldName);
+          isRequired = ['headline', 'description', 'date'].includes(fieldName);
           break;
         case 'Priority':
         case 'People':
         case 'Community':
         case 'Plant':
-          isRequired = ['headline', 'description', 'images'].includes(fieldName);
+          isRequired = ['headline', 'description', 'images', 'date'].includes(fieldName);
           break;
 
         default:
@@ -232,7 +282,7 @@ export default {
       const data = {
         postId: this.postId,
         body: {
-          date: this.get_date ? formatISODate(new Date()) : undefined,
+          date: this.get_date ? formatISODate(this.get_date) : undefined,
           categoryId: this.selectedPost.category.id,
           headline: this.get_headline,
           description: this.get_description,
