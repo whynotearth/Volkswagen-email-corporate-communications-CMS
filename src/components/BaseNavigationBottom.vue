@@ -114,7 +114,7 @@ export default {
 }
 
 .toggle-button:hover {
-  background: #fd3995;
+  background: #03b3f9;
   transition: background ease-in 0.6s;
 }
 
