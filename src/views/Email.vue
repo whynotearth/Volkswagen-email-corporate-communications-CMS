@@ -6,10 +6,12 @@
     @changeStep="changeStep"
   >
     <div class="px-0 overflow-y-auto flex flex-col h-full narrow-scrollbars">
-      <SelectEmailDate v-if="currentStep === 1" ref="formStep1" />
-      <DraftEmail v-if="currentStep === 2" ref="formStep2" />
-      <ScheduleEmail v-if="currentStep === 3" ref="formStep3" />
-      <SelectRecipents v-if="currentStep === 4" ref="formStep4" />
+      <transition name="fade" mode="out-in">
+        <SelectEmailDate v-if="currentStep === 1" ref="formStep1" />
+        <DraftEmail v-if="currentStep === 2" ref="formStep2" />
+        <ScheduleEmail v-if="currentStep === 3" ref="formStep3" />
+        <SelectRecipents v-if="currentStep === 4" ref="formStep4" />
+      </transition>
     </div>
   </StepperManager>
 </template>
@@ -38,7 +40,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters('email', ['get_email_date', 'get_postIds', 'get_email_recipients', 'get_schedule_time']),
+    ...mapGetters('email', ['get_email_date', 'get_selected_posts', 'get_email_recipients', 'get_schedule_time']),
     currentStep() {
       return parseInt(this.step);
     }
@@ -84,7 +86,7 @@ export default {
       const params = {
         body: {
           dateTime: total_time,
-          postIds: this.get_postIds,
+          postIds: this.get_selected_posts.map(post => post.id),
           distributionGroups: this.get_email_recipients
         }
       };
