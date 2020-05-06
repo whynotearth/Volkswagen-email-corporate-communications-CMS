@@ -34,7 +34,7 @@
             class="h-56px"
             src="https://res.cloudinary.com/whynotearth/image/upload/v1588090427/Volkswagen/cms/Bottom_Nav_2x_vzwf6q.svg"
           />
-          <ul :class="{ 'opened': isOpen }" class="absolute toggle-menu list-none">
+          <ul :class="{ opened: isOpen }" class="absolute toggle-menu list-none">
             <li class="absolute top-0 right-0 flex whitespace-no-wrap text-white text-xs justify-end my-3">
               <router-link to="/posts/add" class="flex items-center">
                 Article
@@ -58,7 +58,10 @@
               </router-link>
             </li>
           </ul>
-          <div class="absolute flex content-center w-56px h-56px opacity-100 rounded-full toggle-button bg-secondary shadow-6dp" @click="toggleMenu()">
+          <div
+            class="absolute flex content-center w-56px h-56px opacity-100 rounded-full toggle-button bg-secondary shadow-6dp"
+            @click="toggleMenu()"
+          >
             <AddIcon class="m-auto ease-in-out" :class="{ 'rotate-45': isOpen }" />
           </div>
           <div v-if="isOpen" class="fixed w-full h-full top-0 left-0 -z-1 bg-opacity-50 bg-black"></div>
