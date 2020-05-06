@@ -5,15 +5,15 @@
         v-if="isFieldRequired('headline')"
         class="bg-surface mb-4"
         v-model="$v.headline.$model"
-        label="Question"
-        placeholder="Question"
+        :label="stringHeadlineByCategoryName"
+        :placeholder="stringHeadlineByCategoryName"
         :error="$v.headline.$dirty && $v.headline.$invalid"
       >
         <span v-if="$v.headline.$dirty && !$v.headline.required" class="text-xs text-error pl-error-message">
-          Question is required
+          {{ stringHeadlineByCategoryName }} is required
         </span>
         <span v-if="$v.headline.$dirty && !$v.headline.maxLength" class="text-xs text-error pl-error-message">
-          Question should be less than 80 characters
+          {{ stringHeadlineByCategoryName }} should be less than 80 characters
         </span>
       </BaseInputText>
 
@@ -21,15 +21,15 @@
         v-if="isFieldRequired('description')"
         class="body-1-mobile bg-surface"
         v-model="$v.description.$model"
-        label="Answer"
-        placeholder="Answer"
+        :label="stringDescriptionByCategoryName"
+        :placeholder="stringDescriptionByCategoryName"
         :error="$v.description.$dirty && $v.description.$invalid"
       >
         <span v-if="$v.description.$dirty && !$v.description.required" class="text-xs text-error pl-error-message">
-          Answer is required
+          {{ stringDescriptionByCategoryName }} is required
         </span>
         <span v-if="$v.description.$dirty && !$v.description.maxLength" class="text-xs text-error pl-error-message">
-          Answer should be less than 750 characters
+          {{ stringDescriptionByCategoryName }} should be less than 750 characters
         </span>
       </BaseInputTextarea>
 
@@ -170,6 +170,12 @@ export default {
       'get_selected_category',
       'get_categories'
     ]),
+    stringHeadlineByCategoryName() {
+      return this.get_selected_category.name === 'Answers At A Glance' ? 'Question' : 'Headline';
+    },
+    stringDescriptionByCategoryName() {
+      return this.get_selected_category.name === 'Answers At A Glance' ? 'Answer' : 'Description';
+    },
     headline: {
       get() {
         return this.get_headline;
