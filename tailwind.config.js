@@ -67,6 +67,7 @@ module.exports = {
         '7xl': '7rem' // 112
       },
       zIndex: {
+        '-1': '-1',
         '100': '100'
       },
       lineHeight: {
@@ -105,6 +106,12 @@ module.exports = {
         '16dp': '0 8px 10px rgba(0, 0, 0, 0.2), 0 6px 30px rgba(0, 0, 0, 0.12), 0 16px 24px rgba(0, 0, 0, 0.14)',
         '24dp': '0 11px 15px rgba(0, 0, 0, 0.2), 0 9px 46px rgba(0, 0, 0, 0.12), 0 24px 38px rgba(0, 0, 0, 0.14)',
         card: '0px 2px 4px rgba(0, 0, 0, 0.25)'
+      },
+      width: {
+        '56px': '56px'
+      },
+      height: {
+        '56px': '56px'
       }
     }
   },
