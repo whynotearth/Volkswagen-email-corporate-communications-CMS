@@ -59,7 +59,7 @@
             </li>
           </ul>
           <div
-            class="absolute flex content-center w-56px h-56px opacity-100 rounded-full toggle-button bg-secondary shadow-6dp"
+            class="absolute flex content-center w-56px h-56px opacity-100 rounded-full cursor-pointer toggle-button bg-secondary shadow-6dp"
             @click="toggleMenu()"
           >
             <AddIcon class="m-auto ease-in-out" :class="{ 'rotate-45': isOpen }" />
