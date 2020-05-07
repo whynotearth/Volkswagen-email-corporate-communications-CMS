@@ -2,7 +2,7 @@
   <LayoutFixedScrollable>
     <template #content>
       <div class="min-h-full relative bg-background">
-        <router-link to="/settings" class="absolute top-0 right-0 p-4 text-sm">
+        <router-link to="/settings" class="absolute top-0 right-0 p-4 text-sm z-10">
           <img
             src="https://res.cloudinary.com/whynotearth/image/upload/v1588775654/Volkswagen/cms/wheel_2_prifka.svg"
           />
