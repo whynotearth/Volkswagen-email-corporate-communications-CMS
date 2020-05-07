@@ -6,25 +6,25 @@
         <div class="flex relative">
           <ul class="flex-auto flex justify-around text-left menu list-none bg-primary px-2 md:px-0">
             <li class="text-white inline-block m-2 mb-1 text-xs">
-              <router-link class="text-white router-link" to="/">
+              <router-link class="text-white router-link" :to="{ name: 'Home' }">
                 <HomeIcon class="m-auto" />
                 Home
               </router-link>
             </li>
             <li class="text-white inline-block m-2 mb-1 text-xs">
-              <router-link class="text-white router-link" to="/activity-feed/memos">
+              <router-link class="text-white router-link" :to="{ name: 'ActivityFeedMemoList' }">
                 <StatsIcon class="m-auto" />
                 Stats
               </router-link>
             </li>
             <li class="text-white inline-block m-2 mb-1 text-xs">
-              <router-link class="text-white router-link" to="/activity-feed/memos">
+              <router-link class="text-white router-link" :to="{ name: 'EmailsAdd' }">
                 <MemoStatslIcon class="m-auto" />
                 Blue Delta
               </router-link>
             </li>
             <li class="text-white inline-block m-2 mb-1 text-xs">
-              <router-link class="text-white router-link" to="/activity-feed/memos">
+              <router-link class="text-white router-link" :to="{ name: 'PostAdd' }">
                 <BookingIcon class="m-auto" />
                 Article
               </router-link>
@@ -36,7 +36,7 @@
           />
           <ul :class="{ opened: isOpen }" class="absolute toggle-menu list-none">
             <li class="absolute top-0 right-0 flex whitespace-no-wrap text-white text-xs justify-end my-3">
-              <router-link to="/posts/add" class="flex items-center">
+              <router-link :to="{ name: 'PostAdd' }" class="flex items-center">
                 Article
                 <div
                   class="rounded-full h-10 w-10 flex items-center justify-center bg-secondary ml-2
@@ -47,7 +47,7 @@
               </router-link>
             </li>
             <li class="absolute top-0 right-0 flex whitespace-no-wrap text-white text-xs justify-end my-2">
-              <router-link to="/memo/add" class="flex items-center">
+              <router-link :to="{ name: 'MemoAdd' }" class="flex items-center">
                 Memo
                 <div
                   class="rounded-full h-10 w-10 flex items-center justify-center bg-secondary ml-2
