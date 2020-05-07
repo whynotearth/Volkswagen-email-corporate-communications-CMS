@@ -12,7 +12,7 @@
               </router-link>
             </li>
             <li class="text-white inline-block m-2 mb-1 text-xs">
-              <router-link class="text-white router-link" :to="{ name: 'ActivityFeedMemoList' }">
+              <router-link class="text-white router-link" :to="{ name: 'Stats' }">
                 <StatsIcon class="m-auto" />
                 Stats
               </router-link>
@@ -90,7 +90,13 @@ export default {
       isOpen: false,
       showNavbar: true,
       lastScrollPosition: 0,
-      scrollValue: 0
+      scrollValue: 0,
+      activeClass: {
+        home: 'opacity-100',
+        stats: 'opacity-100',
+        blue: 'opacity-100',
+        archive: 'opacity-100'
+      }
     };
   },
   methods: {
