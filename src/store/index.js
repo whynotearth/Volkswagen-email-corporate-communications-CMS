@@ -5,7 +5,7 @@ import authKeep from './modules/authKeep';
 import category from './modules/category';
 import loading from './modules/loading';
 import snackbar from './modules/snackbar';
-import post from './modules/post';
+import article from './modules/article';
 import memo from './modules/memo';
 import email from './modules/email';
 import overlay from './modules/overlay';
@@ -15,7 +15,7 @@ import VuexPersistence from 'vuex-persist';
 
 const vuexLocal = new VuexPersistence({
   storage: window.localStorage,
-  modules: ['memo', 'post', 'authKeep'],
+  modules: ['memo', 'article', 'authKeep'],
   key: 'store'
 });
 
@@ -28,7 +28,7 @@ export default new Vuex.Store({
     loading,
     auth,
     category,
-    post,
+    article,
     memo,
     email,
     authKeep,

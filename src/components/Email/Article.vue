@@ -1,7 +1,7 @@
 <template>
   <div
-    class="post flex justify-between w-full flex shadow-8dp relative break-words my-2 cursor-pointer"
-    :style="active !== -1 ? '' : `border-color: #${post.category.color}`"
+    class="article flex justify-between w-full flex shadow-8dp relative break-words my-2 cursor-pointer"
+    :style="active !== -1 ? '' : `border-color: #${article.category.color}`"
     :class="active !== -1 ? 'border-3 border-secondary' : 'border-2'"
     @click="$emit('clicked')"
   >
@@ -9,13 +9,13 @@
       <div v-if="active !== -1" class="rounded-full h-4 w-4 bg-secondary px-1 text-xs text-white">
         {{ active + 1 }}
       </div>
-      <img v-else :src="post.category.image" alt="catg" draggable="false" class="h-4 w-4 object-contain" />
+      <img v-else :src="article.category.image" alt="catg" draggable="false" class="h-4 w-4 object-contain" />
     </div>
     <div class="px-2 py-5 flex-shrink-0 w-16">
-      <img :src="post.image || post.category.image" alt="post" draggable="false" />
+      <img :src="article.image || article.category.image" alt="article" draggable="false" />
     </div>
     <div class="w-full my-auto mx-2 text-lg break-all">
-      {{ post.headline | truncate }}
+      {{ article.headline | truncate }}
     </div>
     <!-- Disabled for MVP -->
     <!-- <div class="my-auto text-right relative outline-none">
@@ -36,10 +36,10 @@
 // import More from '@/assets/more.svg';
 
 export default {
-  name: 'Post',
+  name: 'Article',
   // components: { More },
   props: {
-    post: {
+    article: {
       type: Object
     },
     active: {
@@ -77,7 +77,7 @@ export default {
 </script>
 
 <style scoped>
-.post {
+.article {
   min-height: 104px;
   max-height: 113px;
 }

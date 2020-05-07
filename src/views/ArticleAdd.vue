@@ -6,24 +6,24 @@
     @changeStep="changeStep"
   >
     <div v-if="currentStep !== 3" class="px-0 overflow-y-auto flex flex-col h-full narrow-scrollbars">
-      <PostAddStep1 v-if="currentStep === 1" ref="formStep1" :error="validationError" />
-      <PostAddStep2 v-if="currentStep === 2" ref="formStep2" :error="validationError" />
+      <ArticleAddStep1 v-if="currentStep === 1" ref="formStep1" :error="validationError" />
+      <ArticleAddStep2 v-if="currentStep === 2" ref="formStep2" :error="validationError" />
     </div>
-    <PostAddStep3 v-if="currentStep === 3" :error="validationError" />
+    <ArticleAddStep3 v-if="currentStep === 3" :error="validationError" />
   </StepperManager>
 </template>
 
 <script>
 import StepperManager from '@/components/StepperManager.vue';
-import PostAddStep1 from '@/components/PostAddStep1.vue';
-import PostAddStep2 from '@/components/PostAddStep2.vue';
-import PostAddStep3 from '@/components/PostAddStep3.vue';
+import ArticleAddStep1 from '@/components/ArticleAddStep1.vue';
+import ArticleAddStep2 from '@/components/ArticleAddStep2.vue';
+import ArticleAddStep3 from '@/components/ArticleAddStep3.vue';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
 import { sleep, formatISODate } from '@/helpers.js';
 
 export default {
-  name: 'PostAdd',
-  components: { StepperManager, PostAddStep1, PostAddStep2, PostAddStep3 },
+  name: 'ArticleAdd',
+  components: { StepperManager, ArticleAddStep1, ArticleAddStep2, ArticleAddStep3 },
   props: {
     step: {
       default: 1
@@ -31,13 +31,13 @@ export default {
   },
   data() {
     return {
-      steps: ['Choose Category', 'New Post', 'Schedule Post'],
+      steps: ['Choose Category', 'New Article', 'Schedule Article'],
       showResult: false,
       validationError: false
     };
   },
   computed: {
-    ...mapGetters('post', [
+    ...mapGetters('article', [
       'get_date',
       'get_headline',
       'get_description',
@@ -51,8 +51,8 @@ export default {
     }
   },
   methods: {
-    ...mapActions('post', ['add_post']),
-    ...mapMutations('post', ['update_response_message']),
+    ...mapActions('article', ['add_article']),
+    ...mapMutations('article', ['update_response_message']),
     changeStep(change) {
       this.update_response_message({ message: '' });
       const newStep = this.currentStep + change;
@@ -66,7 +66,7 @@ export default {
       // exit
       const wantToExit = newStep < 1;
       if (wantToExit) {
-        this.$store.dispatch('post/clear_form_data');
+        this.$store.dispatch('article/clear_form_data');
         return this.$router.push({ name: 'Home' });
       }
 
@@ -77,7 +77,7 @@ export default {
       }
 
       // back or forward
-      this.$router.push({ name: 'PostAdd', params: { step: newStep } });
+      this.$router.push({ name: 'ArticleAdd', params: { step: newStep } });
     },
 
     processValidations(change) {
@@ -104,9 +104,9 @@ export default {
           images: this.get_images
         }
       };
-      this.add_post({ params })
+      this.add_article({ params })
         .then(() => {
-          this.$store.dispatch('post/clear_form_data');
+          this.$store.dispatch('article/clear_form_data');
           this.onSuccessSubmit();
         })
         .catch(error => {

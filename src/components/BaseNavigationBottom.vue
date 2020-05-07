@@ -24,7 +24,7 @@
               </router-link>
             </li>
             <li class="text-white inline-block m-2 mb-1 text-xs">
-              <router-link class="text-white router-link" :to="{ name: 'PostAdd' }">
+              <router-link class="text-white router-link" :to="{ name: 'ArticleAdd' }">
                 <BookingIcon class="m-auto" />
                 Article
               </router-link>
@@ -36,13 +36,13 @@
           />
           <ul :class="{ opened: isOpen }" class="absolute toggle-menu list-none">
             <li class="absolute top-0 right-0 flex whitespace-no-wrap text-white text-xs justify-end my-3">
-              <router-link :to="{ name: 'PostAdd' }" class="flex items-center">
+              <router-link :to="{ name: 'ArticleAdd' }" class="flex items-center">
                 Article
                 <div
                   class="rounded-full h-10 w-10 flex items-center justify-center bg-secondary ml-2
                 shadow-6dp"
                 >
-                  <PostIcon class="m-auto" />
+                  <ArticleIcon class="m-auto" />
                 </div>
               </router-link>
             </li>
@@ -77,13 +77,13 @@ import AddIcon from '@/assets/add.svg';
 import HomeIcon from '@/assets/home.svg';
 import MemoIcon from '@/assets/memo.svg';
 import MemoStatslIcon from '@/assets/memo-stats.svg';
-import PostIcon from '@/assets/post.svg';
+import ArticleIcon from '@/assets/article.svg';
 import BookingIcon from '@/assets/booking.svg';
 import StatsIcon from '@/assets/stats.svg';
 
 export default {
   name: 'NavigationBottom',
-  components: { AddIcon, HomeIcon, MemoIcon, MemoStatslIcon, PostIcon, BookingIcon, StatsIcon },
+  components: { AddIcon, HomeIcon, MemoIcon, MemoStatslIcon, ArticleIcon, BookingIcon, StatsIcon },
   props: {},
   data() {
     return {
