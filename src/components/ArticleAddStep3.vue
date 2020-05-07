@@ -60,7 +60,7 @@ import { mapGetters, mapMutations, mapActions } from 'vuex';
 import { formatDate } from '@/helpers.js';
 
 export default {
-  name: 'PostAddStep3',
+  name: 'ArticleAddStep3',
   components: { ArrowDown },
   props: {
     error: {
@@ -77,14 +77,14 @@ export default {
     this.update_date(this.dates[0]);
   },
   methods: {
-    ...mapMutations('post', ['update_date']),
+    ...mapMutations('article', ['update_date']),
     formatDate,
     toggleDropdown() {
       this.isOpenDropdown = !this.isOpenDropdown;
     }
   },
   computed: {
-    ...mapGetters('post', [
+    ...mapGetters('article', [
       'get_date',
       'get_response_message',
       'get_selected_category',

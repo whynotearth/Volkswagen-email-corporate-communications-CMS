@@ -23,7 +23,7 @@ import DraftEmail from '@/components/Email/DraftEmail.vue';
 import ScheduleEmail from '@/components/Email/ScheduleEmail.vue';
 import SelectRecipents from '@/components/Email/SelectRecipents.vue';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
-import { sleep } from '@/helpers.js';
+import { sleep, formatISODate } from '@/helpers.js';
 
 export default {
   name: 'EmailsAdd',
@@ -40,7 +40,13 @@ export default {
     };
   },
   computed: {
-    ...mapGetters('email', ['get_email_date', 'get_selected_posts', 'get_email_recipients', 'get_schedule_time']),
+    ...mapGetters('email', [
+      'get_email_date',
+      'get_selected_articles',
+      'get_email_recipients',
+      'get_schedule_time',
+      'get_selected_jumpstart'
+    ]),
     currentStep() {
       return parseInt(this.step);
     }
@@ -82,11 +88,14 @@ export default {
       return true;
     },
     submit() {
-      let total_time = new Date(this.get_email_date + this.get_schedule_time).toISOString();
+      console.log(formatISODate(this.get_email_date));
+      const date = new Date(this.get_email_date.split('T')[0]).getTime();
+      let total_time = new Date(date + this.get_schedule_time).toISOString();
       const params = {
         body: {
+          jumpStartId: this.get_selected_jumpstart.id,
           dateTime: total_time,
-          postIds: this.get_selected_posts.map(post => post.id),
+          articleIds: this.get_selected_articles.map(article => article.id),
           distributionGroups: this.get_email_recipients
         }
       };

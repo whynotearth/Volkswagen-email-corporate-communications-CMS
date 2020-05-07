@@ -3,7 +3,12 @@
     <div class="container px-4 text-left">
       <div class="flex relative">
         <div class="flex-auto">
-          <BaseDropdown placeholder="Select date" :options="dates" v-model="$v.email_date.$model">
+          <BaseDropdown
+            v-if="get_jumpstarts.length"
+            placeholder="Select date"
+            :options="dates"
+            v-model="$v.email_date.$model"
+          >
             <template #title="{ selectedOption }">
               <span v-if="selectedOption">
                 Schedule
@@ -18,8 +23,19 @@
               </span>
             </template>
           </BaseDropdown>
-          <p v-if="$v.email_date.$error" class="text-xs text-error">
+          <p v-if="$v.email_date.$error && get_jumpstarts.length" class="text-xs text-error">
             Please select a date.
+          </p>
+          <p v-if="!get_jumpstarts.length && !isLoading">
+            <span class="block my-2">
+              No articles available!
+              <br />
+              Click
+              <router-link :to="{ name: 'ArticleAdd', params: { step: 1 } }" class="text-secondary underline">
+                here
+              </router-link>
+              to create one
+            </span>
           </p>
         </div>
       </div>
@@ -29,10 +45,9 @@
 
 <script>
 import BaseDropdown from '@/components/BaseDropdown';
-import { formatDate } from '@/helpers.js';
 import { required } from 'vuelidate/lib/validators';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
-import { formatISODate } from '@/helpers.js';
+import { formatISODate, formatDate } from '@/helpers.js';
 
 export default {
   name: 'SelectEmailDate',
@@ -43,45 +58,55 @@ export default {
     }
   },
   mounted() {
-    if (this.get_email_date) this.prefillPosts(this.get_email_date);
+    this.init();
   },
   computed: {
-    ...mapGetters('email', ['get_email_date']),
-    ...mapGetters('post', ['get_posts']),
+    ...mapGetters('email', ['get_email_date', 'get_jumpstarts']),
+    ...mapGetters('loading', ['isLoading']),
     email_date: {
       get() {
         return this.get_email_date;
       },
       set(value) {
+        console.log(value);
         this.clear_email_data();
         this.update_email_date(value);
-        this.prefillPosts(value);
+        this.prefillArticles(value);
       }
     },
     dates() {
-      let d = new Date();
-      d.setHours(0, 0, 0, 0);
-      d = d.getTime();
-      let days = [];
-      for (let i = 0; i < 3; i++) {
-        let a = d + i * 86400000;
-        days.push(a);
-      }
-      return days;
+      if (!this.get_jumpstarts.length) return [];
+      const dates = [];
+      this.get_jumpstarts.forEach(jumpstart => {
+        dates.push(jumpstart.dateTime);
+      });
+      return dates;
     }
   },
   methods: {
-    ...mapMutations('email', ['update_email_date', 'update_selected_posts']),
-    ...mapActions('email', ['clear_email_data', 'debounced_preview']),
-    ...mapActions('post', ['fetch_posts']),
+    ...mapMutations('email', ['update_email_date', 'update_selected_articles', 'update_selected_jumpstart']),
+    ...mapActions('email', ['clear_email_data', 'debounced_preview', 'fetch_jumpstarts']),
     formatDate,
-    prefillPosts(date) {
-      this.update_selected_posts();
-      this.fetch_posts({ params: { date: formatISODate(date) } }).then(() => {
-        let i, post;
+    formatISODate,
+    init() {
+      if (this.get_email_date) {
+        this.prefillArticles(this.get_email_date);
+      } else {
+        this.fetch_jumpstarts();
+      }
+    },
+    prefillArticles(date) {
+      this.update_selected_articles();
+      this.fetch_jumpstarts().then(() => {
+        let i, article, selectedJumpstart;
+        const selectedDate = this.get_email_date;
+        selectedJumpstart = this.get_jumpstarts.find(item => {
+          return item.dateTime == selectedDate;
+        });
+        this.update_selected_jumpstart(selectedJumpstart);
         for (i = 0; i < 5; i++) {
-          post = this.get_posts[i];
-          if (post) this.update_selected_posts(post);
+          article = selectedJumpstart.articles[i];
+          if (article) this.update_selected_articles(article);
           else break;
         }
         this.debounced_preview();
