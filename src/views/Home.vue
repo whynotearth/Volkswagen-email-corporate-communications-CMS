@@ -1,13 +1,16 @@
 <template>
   <LayoutFixedScrollable>
+    <template #header>
+      <BaseAppBarHeader :title="'Stats'" :to="{ name: 'Dashboard' }" />
+    </template>
     <template #content>
       <div class="bg-white flex items-center justify-center min-h-full relative">
         <div class="w-full">
-          <router-link v-if="isAuthenticated" to="/settings" class="absolute top-0 right-0 p-4 text-sm">
+          <!-- <router-link v-if="isAuthenticated" to="/settings" class="absolute top-0 right-0 p-4 text-sm">
             <img
               src="https://res.cloudinary.com/whynotearth/image/upload/v1588066712/Volkswagen/cms/wheel_eqhded.svg"
             />
-          </router-link>
+          </router-link> -->
           <div class="max-w-sm mx-auto px-12">
             <div class="mb-4">
               <img
@@ -49,11 +52,12 @@ import store from '@/store';
 import isEmail from 'validator/lib/isEmail';
 import AuthLogin from '@/components/AuthLogin';
 import LayoutFixedScrollable from '@/components/LayoutFixedScrollable';
+import BaseAppBarHeader from '@/components/BaseAppBarHeader.vue';
 import NavigationBottom from '@/components/BaseNavigationBottom';
 
 export default {
   name: 'LoginPage',
-  components: { AuthLogin, NavigationBottom, LayoutFixedScrollable },
+  components: { AuthLogin, BaseAppBarHeader, NavigationBottom, LayoutFixedScrollable },
   computed: {
     isAuthenticated() {
       return this.$store.getters['authKeep/isAuthenticated'];
