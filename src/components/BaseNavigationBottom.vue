@@ -31,7 +31,7 @@
             </li>
           </ul>
           <img
-            class="h-56px"
+            class="h-14"
             src="https://res.cloudinary.com/whynotearth/image/upload/v1588090427/Volkswagen/cms/Bottom_Nav_2x_vzwf6q.svg"
           />
           <ul :class="{ opened: isOpen }" class="absolute toggle-menu list-none">
@@ -59,10 +59,10 @@
             </li>
           </ul>
           <div
-            class="absolute flex content-center w-56px h-56px opacity-100 rounded-full cursor-pointer toggle-button bg-secondary shadow-6dp"
+            class="absolute flex content-center w-14 h-14 opacity-100 rounded-full cursor-pointer toggle-button bg-secondary shadow-6dp"
             @click="toggleMenu()"
           >
-            <AddIcon class="m-auto ease-in-out" :class="{ 'rotate-45': isOpen }" />
+            <AddIcon class="m-auto ease-in-out" :class="{ 'transform rotate-45': isOpen }" />
           </div>
           <div v-if="isOpen" class="fixed w-full h-full top-0 left-0 -z-1 bg-opacity-50 bg-black"></div>
         </div>
@@ -113,7 +113,7 @@ export default {
 }
 
 .toggle-button:active {
-  background: #ffffff;
+  background: #fff;
   transition: background ease-in 0.6s;
   transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
@@ -125,10 +125,6 @@ export default {
 
 .ease-in-out {
   transition: all ease-in 0.2s;
-}
-
-.rotate-45 {
-  transform: rotate(45deg);
 }
 
 ul.toggle-menu > li {
@@ -158,6 +154,7 @@ ul.toggle-menu.opened > li:nth-child(2) {
   @screen md {
     border-left: 24px solid;
     border-right: 24px solid;
+
     @apply border-primary;
   }
 }
