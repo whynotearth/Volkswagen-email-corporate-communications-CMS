@@ -13,7 +13,7 @@
 
 <script>
 import Logo from '@/assets/white_logo.svg';
-import { mapGetters, mapMutations } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
   name: 'EmailPreview',
@@ -27,7 +27,7 @@ export default {
     ...mapGetters('email', ['get_preview_link'])
   },
   methods: {
-    ...mapMutations('email', ['update_preview_link']),
+    ...mapActions('email', ['update_preview_link']),
     onLoad() {
       this.showLogo = false;
     },
