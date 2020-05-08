@@ -13,7 +13,7 @@
     }
   },
   "dependencies": {
-    "@whynotearth/meredith-axios": "^1.0.16",
+    "@whynotearth/meredith-axios": "^1.0.17",
     "core-js": "3.6.4",
     "date-fns": "2.12.0",
     "lodash-es": "4.17.15",
