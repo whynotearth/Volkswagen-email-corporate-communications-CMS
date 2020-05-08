@@ -93,14 +93,18 @@ export default {
     },
 
     submit() {
+      const date_time = this.get_date ? new Date(formatISODate(this.get_date)).toISOString() : undefined;
+      const event_date_time = this.get_eventDate
+        ? new Date(formatISODate(this.get_eventDate)).toISOString()
+        : undefined;
       const params = {
         body: {
-          date: this.get_date ? formatISODate(this.get_date) : undefined,
+          date: date_time,
           categoryId: this.get_selected_category.id,
           headline: this.get_headline,
           description: this.get_description,
           price: this.get_price,
-          eventDate: this.get_eventDate ? formatISODate(this.get_eventDate) : undefined,
+          eventDate: event_date_time,
           images: this.get_images
         }
       };
