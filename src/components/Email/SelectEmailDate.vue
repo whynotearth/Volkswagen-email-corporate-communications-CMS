@@ -68,7 +68,6 @@ export default {
         return this.get_email_date;
       },
       set(value) {
-        console.log(value);
         this.clear_email_data();
         this.update_email_date(value);
         this.prefillArticles(value);
@@ -77,8 +76,10 @@ export default {
     dates() {
       if (!this.get_jumpstarts.length) return [];
       const dates = [];
+      let date;
       this.get_jumpstarts.forEach(jumpstart => {
-        dates.push(jumpstart.dateTime);
+        date = new Date(jumpstart.dateTime).getTime();
+        dates.push(date);
       });
       return dates;
     }
@@ -101,7 +102,7 @@ export default {
         let i, article, selectedJumpstart;
         const selectedDate = this.get_email_date;
         selectedJumpstart = this.get_jumpstarts.find(item => {
-          return item.dateTime == selectedDate;
+          return formatISODate(item.dateTime) === formatISODate(selectedDate);
         });
         this.update_selected_jumpstart(selectedJumpstart);
         this.update_articles(selectedJumpstart.articles);
