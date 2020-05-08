@@ -46,6 +46,7 @@ export default {
     ...mapActions('email', ['debounced_preview', 'update_preview_link', 'update_selected_articles']),
     addArticle(article) {
       if (this.get_selected_articles.length < 6) {
+        // FIXME: 6 items get selected and after that clicking on selected item doesn't remove it
         this.$v.$reset();
         this.update_selected_articles(article);
         this.update_preview_link('');
