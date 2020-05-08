@@ -11,6 +11,7 @@ export default {
     schedule_time: null,
     preview_link: '',
     selected_jumpstart: {},
+    articles: [],
     selected_articles: [],
     email_recipients: [],
     jumpstarts: [],
@@ -28,7 +29,8 @@ export default {
     get_preview_link: state => state.preview_link,
     get_email_recipients: state => state.email_recipients,
     get_jumpstarts: state => state.jumpstarts,
-    get_response_message: state => state.response_message
+    get_response_message: state => state.response_message,
+    get_articles: state => state.articles
   },
   actions: {
     async create_jumpstart({ commit }, payload) {
@@ -90,6 +92,9 @@ export default {
     },
     update_response_message(state, payload) {
       state.response_message = payload;
+    },
+    update_articles(state, payload) {
+      state.articles = payload;
     }
   }
 };

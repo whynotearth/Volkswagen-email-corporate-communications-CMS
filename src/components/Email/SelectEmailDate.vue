@@ -104,6 +104,7 @@ export default {
           return item.dateTime == selectedDate;
         });
         this.update_selected_jumpstart(selectedJumpstart);
+        this.update_articles(selectedJumpstart.articles);
         for (i = 0; i < 5; i++) {
           article = selectedJumpstart.articles[i];
           if (article) this.update_selected_articles(article);
