@@ -10,21 +10,7 @@
               class="link-fordward block flex-grow justify-between flex h-full items-center cursor-pointer select-none px-4 pr-6 py-5"
             >
               <span class="mr-2 tg-body-mobile">My Account</span>
-              <svg
-                class="transform -scale-x-1 text-gray"
-                width="8"
-                height="12"
-                viewBox="0 0 8 12"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  fill-rule="evenodd"
-                  clip-rule="evenodd"
-                  d="M7.4 1.4L6 0L0 6L6 12L7.4 10.6L2.8 6L7.4 1.4Z"
-                  fill="currentColor"
-                />
-              </svg>
+              <ArrowRightIcon />
             </router-link>
           </div>
           <div class="flex items-strech items-center border-b-1 border-divider">
@@ -33,21 +19,7 @@
               class="link-fordward block flex-grow justify-between flex h-full items-center cursor-pointer select-none px-4 pr-6 py-5"
             >
               <span class="mr-2 tg-body-mobile">Blue Delta Settings</span>
-              <svg
-                class="transform -scale-x-1 text-gray"
-                width="8"
-                height="12"
-                viewBox="0 0 8 12"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  fill-rule="evenodd"
-                  clip-rule="evenodd"
-                  d="M7.4 1.4L6 0L0 6L6 12L7.4 10.6L2.8 6L7.4 1.4Z"
-                  fill="currentColor"
-                />
-              </svg>
+              <ArrowRightIcon />
             </router-link>
           </div>
           <div class="flex items-strech items-center border-b-1 border-divider">
@@ -56,21 +28,7 @@
               class="link-fordward block flex-grow justify-between flex h-full items-center cursor-pointer select-none px-4 pr-6 py-5"
             >
               <span class="mr-2 tg-body-mobile">Distribution Groups</span>
-              <svg
-                class="transform -scale-x-1 text-gray"
-                width="8"
-                height="12"
-                viewBox="0 0 8 12"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  fill-rule="evenodd"
-                  clip-rule="evenodd"
-                  d="M7.4 1.4L6 0L0 6L6 12L7.4 10.6L2.8 6L7.4 1.4Z"
-                  fill="currentColor"
-                />
-              </svg>
+              <ArrowRightIcon />
             </router-link>
           </div>
           <div class="flex items-strech items-center border-b-1 border-divider">
@@ -80,22 +38,7 @@
               class="link-fordward block flex-grow justify-between flex h-full items-center cursor-pointer select-none px-4 pr-6 py-5"
             >
               <span class="mr-2 tg-body-mobile text-error">Log Out</span>
-
-              <svg
-                class="transform -scale-x-1 text-gray"
-                width="8"
-                height="12"
-                viewBox="0 0 8 12"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  fill-rule="evenodd"
-                  clip-rule="evenodd"
-                  d="M7.4 1.4L6 0L0 6L6 12L7.4 10.6L2.8 6L7.4 1.4Z"
-                  fill="currentColor"
-                />
-              </svg>
+              <ArrowRightIcon />
             </a>
           </div>
         </div>
@@ -112,10 +55,11 @@ import AuthLogin from '@/components/AuthLogin';
 import BaseAppBarHeader from '@/components/BaseAppBarHeader.vue';
 import LayoutFixedScrollable from '@/components/LayoutFixedScrollable';
 import NavigationBottom from '@/components/BaseNavigationBottom';
+import ArrowRightIcon from '@/assets/arrow-right.svg';
 
 export default {
   name: 'SettingsPage',
-  components: { BaseAppBarHeader, NavigationBottom, LayoutFixedScrollable },
+  components: { BaseAppBarHeader, NavigationBottom, LayoutFixedScrollable, ArrowRightIcon },
   methods: {
     async logout() {
       try {
