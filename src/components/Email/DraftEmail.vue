@@ -15,7 +15,7 @@
         </span>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-4">
           <Article
-            v-for="article in get_selected_articles"
+            v-for="article in get_articles"
             :key="article.id"
             :article="article"
             @clicked="addArticle(article)"
@@ -59,7 +59,8 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('email', ['get_email_date', 'get_selected_articles'])
+    ...mapGetters('email', ['get_email_date', 'get_selected_articles']),
+    ...mapGetters('email', ['get_articles'])
   }
 };
 </script>
