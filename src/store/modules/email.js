@@ -40,16 +40,33 @@ export default {
       commit('update_jumpstarts', data);
       store.commit('loading/loading', false);
     },
-    clear_email_data({ commit }) {
+    update_selected_articles({ state }, payload) {
+      if (!payload) {
+        state.selected_articles.splice(0, state.selected_articles.length);
+      } else {
+        let i = state.selected_articles.indexOf(payload);
+        i !== -1 ? state.selected_articles.splice(i, 1) : state.selected_articles.push(payload);
+      }
+    },
+    update_preview_link({ state }, payload) {
+      if (payload === '') {
+        state.preview_link = payload;
+        return false;
+      }
+      const base = `${BASE_API}/api/v0/volkswagen/jumpstart/${state.selected_jumpstart.id}/preview`;
+      const url = new URL(base);
+      state.preview_link = url.href;
+    },
+    clear_email_data({ commit, dispatch }) {
       commit('update_email_date', null);
       commit('update_schedule_time', null);
-      commit('update_preview_link', '');
-      commit('update_selected_articles'); // Passing no payload just clears the selected_articles array
       commit('update_email_recipients', []);
+      dispatch('update_preview_link', '');
+      dispatch('update_selected_articles'); // Passing no payload just clears the selected_articles array
     },
     debounced_preview: debounce(
-      function({ commit }) {
-        commit('update_preview_link');
+      function({ dispatch }) {
+        dispatch('update_preview_link');
       },
       3000,
       { maxWait: 3000 }
@@ -65,25 +82,8 @@ export default {
     update_jumpstarts(state, payload) {
       state.jumpstarts = payload;
     },
-    update_selected_articles(state, payload) {
-      if (!payload) {
-        state.selected_articles.splice(0, state.selected_articles.length);
-      } else {
-        let i = state.selected_articles.indexOf(payload);
-        i !== -1 ? state.selected_articles.splice(i, 1) : state.selected_articles.push(payload);
-      }
-    },
     update_selected_jumpstart(state, payload) {
       state.selected_jumpstart = payload;
-    },
-    update_preview_link(state, payload) {
-      if (payload === '') {
-        state.preview_link = payload;
-        return false;
-      }
-      const base = `${BASE_API}/api/v0/volkswagen/jumpstart/${state.selected_jumpstart.id}/preview`;
-      const url = new URL(base);
-      state.preview_link = url.href;
     },
     update_email_recipients(state, payload) {
       state.email_recipients = payload;
