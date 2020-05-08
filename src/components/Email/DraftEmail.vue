@@ -45,8 +45,7 @@ export default {
     if (!this.get_email_date) return this.$router.push({ name: 'EmailsAdd', params: { step: 1 } });
   },
   methods: {
-    ...mapActions('email', ['debounced_preview']),
-    ...mapMutations('email', ['update_selected_articles', 'update_preview_link']),
+    ...mapActions('email', ['debounced_preview', 'update_preview_link', 'update_selected_articles']),
     addArticle(article) {
       if (this.get_selected_articles.length < 6) {
         this.$v.$reset();
