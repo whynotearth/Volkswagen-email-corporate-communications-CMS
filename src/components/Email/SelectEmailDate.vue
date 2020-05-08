@@ -84,8 +84,8 @@ export default {
     }
   },
   methods: {
-    ...mapMutations('email', ['update_email_date', 'update_selected_articles', 'update_selected_jumpstart']),
-    ...mapActions('email', ['clear_email_data', 'debounced_preview', 'fetch_jumpstarts']),
+    ...mapMutations('email', ['update_email_date', 'update_selected_jumpstart', 'update_articles']),
+    ...mapActions('email', ['clear_email_data', 'debounced_preview', 'fetch_jumpstarts', 'update_selected_articles']),
     formatDate,
     formatISODate,
     init() {
