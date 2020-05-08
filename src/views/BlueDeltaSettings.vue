@@ -5,34 +5,133 @@
         <BaseAppBarHeader title="Blue Delta Settings" :to-link="{ name: 'Settings' }" />
 
         <div class="container px-0 md:px-6">
-          <div class="text-left py-6 px-4">
+          <div class="text-left py-6 px-4 pb-0">
             <p class="mb-6">
               By default, Blue Delta will automatically send each day according to the below details. You can change
               these manually for each individual Blue Delta
               <router-link class="text-secondary underline" :to="{ name: '' }">here</router-link>.
             </p>
           </div>
+
+          <div
+            class="px-4 bg-white pb-0"
+            :class="[
+              {
+                'is-query-empty': to_query === '',
+                'is-filled': recipients.length > 0,
+                error: recipientsIsDirthy && recipients.length === 0
+              },
+              recipientsIsDirthy && recipients.length === 0
+                ? 'text-red-600 border-red-600'
+                : 'text-gray-500 border-gray-600'
+            ]"
+          >
+            <label
+              class="multiselect--material-label absolute"
+              v-if="recipients.length > 0"
+              for="default-distribution-list"
+            >
+              Default Distribution List:
+            </label>
+            <Multiselect
+              id="default-distribution-list"
+              v-model="recipients"
+              :placeholder="recipients.length === 0 ? 'Distribution List' : ''"
+              :options="emailList"
+              :multiple="true"
+              :hide-selected="true"
+              :show-labels="false"
+              @close="recipientsIsDirthy = true"
+              @search-change="onToSearchChange"
+            >
+              <template v-slot:noResult>Nothing found</template>
+              <template v-slot:noOptions>No options available</template>
+            </Multiselect>
+            <span v-if="recipientsIsDirthy && recipients.length === 0" class="text-xs text-error pl-error-message">
+              Default Distribution List is required
+            </span>
+          </div>
+        </div>
+
+        <div class="flex flex-col h-full mt-8">
+          <div class="flex items-strech items-center border-b-1 border-divider bg-surface" @click="toggleDropdown()">
+            <div
+              class="container relative md:px-6 block flex-grow justify-between flex h-full items-center select-none px-4 pr-6 py-5"
+            >
+              <span class="tg-body-mobile">
+                Time
+                <span class="ml-2 text-black em-medium">
+                  {{ formatDateAMPM(selected_hour) }}
+                </span>
+              </span>
+              <ArrowDown class="transform scale-x-1 text-gray" :class="{ 'transform rotate-180': isOpenDropdown }" />
+              <ul v-if="isOpenDropdown" class="absolute menu shadow-8dp mx-2 md:mx-6 z-10 py-2">
+                <li class="text-left" v-for="(hour, index) in hours" :key="index" @click="get_selected_hour(hour)">
+                  <div class="tg-body-mobile p-4 block w-full cursor-pointer">
+                    {{ formatDateAMPM(hour) }}
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
     </template>
+
     <template #footer>
       <NavigationBottom />
     </template>
   </LayoutFixedScrollable>
 </template>
 
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
+
 <script>
 import BaseAppBarHeader from '@/components/BaseAppBarHeader.vue';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
 import LayoutFixedScrollable from '@/components/LayoutFixedScrollable';
 import NavigationBottom from '@/components/BaseNavigationBottom';
+import Multiselect from 'vue-multiselect';
+import { formatDateAMPM } from '@/helpers.js';
+import ArrowDown from '@/assets/arrow-down.svg';
 
 export default {
   name: 'BlueDeltaSettings',
-  components: { BaseAppBarHeader, NavigationBottom, LayoutFixedScrollable },
+  components: { BaseAppBarHeader, NavigationBottom, LayoutFixedScrollable, Multiselect, ArrowDown },
+  data: () => ({
+    recipientsIsDirthy: false,
+    to_query: '',
+    isOpenDropdown: false,
+    selected_hour: new Date()
+  }),
   computed: {
     emailList() {
       return this.$store.getters['distributionGroup/getEmailLists'];
+    },
+    ...mapGetters('memo', ['get_to', 'get_subject', 'get_date', 'get_description', 'get_recipients']),
+    ...mapGetters('recipient', ['get_recipients_available']),
+    to: {
+      get() {
+        return this.get_to;
+      },
+      set(value) {
+        this.update_to(value);
+      }
+    },
+    recipients: {
+      get() {
+        return this.get_recipients;
+      },
+      set(value) {
+        this.update_recipients(value);
+      }
+    },
+    hours() {
+      let hours = [];
+      for (let i = 0; i < 24; i++) {
+        hours.push(new Date(0, 0, 0, i));
+      }
+      return hours;
     }
   },
   mounted() {
@@ -50,13 +149,33 @@ export default {
     choiceEmailList(payload) {
       this.selectEmailList(payload);
       this.$router.push({ name: 'EmailList', params: { groupName: payload.distributionGroup } });
+    },
+    onToSearchChange(query) {
+      this.to_query = query;
+    },
+    formatDateAMPM,
+    toggleDropdown() {
+      this.isOpenDropdown = !this.isOpenDropdown;
+    },
+    get_selected_hour(hour) {
+      this.selected_hour = hour;
     }
   }
 };
 </script>
 
 <style scoped>
-.item-details {
-  color: rgba(0, 0, 0, 0.38);
+.menu {
+  height: 224px;
+  top: 54px;
+  background: white;
+  border-radius: 4px;
+  right: 0;
+  left: 0;
+  overflow-y: scroll;
+}
+
+.active {
+  background: rgba(3, 179, 249, 0.12);
 }
 </style>

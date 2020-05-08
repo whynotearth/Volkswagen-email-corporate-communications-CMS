@@ -85,6 +85,17 @@ export function formatDate(inputDate, dateFormat = 'dd MMM, yyyy') {
   return format(inputDate, dateFormat);
 }
 
+export function formatDateAMPM(inputDate) {
+  var hours = inputDate.getHours();
+  var minutes = inputDate.getMinutes();
+  var ampm = hours >= 12 ? 'PM' : 'AM';
+  hours = hours % 12;
+  hours = hours ? hours : 12;
+  minutes = minutes < 10 ? '0' + minutes : minutes;
+  var strTime = hours + ':' + minutes + ' ' + ampm;
+  return strTime;
+}
+
 export function formatISODate(inputDate) {
   if (!inputDate) {
     console.error('formatISO: Invalid Date');
