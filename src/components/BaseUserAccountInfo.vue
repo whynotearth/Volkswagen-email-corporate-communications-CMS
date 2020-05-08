@@ -11,32 +11,24 @@
     <div class="mb-4">
       <BaseInputText class="bg-surface" label="Email" type="email"></BaseInputText>
     </div>
-    <div class="mb-4">
-      <BaseInputText class="bg-surface" label="Password" type="password"></BaseInputText>
-      <router-link to="" class="block py-2 px-4 leading-5 text-secondary cursor-pointer underline">
-        Reset Password
-      </router-link>
+    <div class="mb-4 items-center flex justify-center py-8">
+      <BaseButton>
+        RESET PASSWORD
+      </BaseButton>
     </div>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import BaseInputText from '@/components/BaseInputText.vue';
+import BaseButton from '@/components/BaseButton.vue';
 
 export default {
   name: 'BaseUserAccountInfo',
-  components: { BaseInputText },
+  components: { BaseInputText, BaseButton },
   computed: {
-    email: {
-      get() {
-        return this.$store.getters['auth/email'];
-      }
-    },
-    password: {
-      get() {
-        return this.$store.getters['auth/password'];
-      }
-    }
+    ...mapGetters('auth', ['email', 'password'])
   }
 };
 </script>
