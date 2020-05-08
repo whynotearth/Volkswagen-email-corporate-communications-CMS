@@ -22,7 +22,7 @@
         class="body-1-mobile bg-surface"
         v-model="$v.description.$model"
         label="Description"
-        placeholder="Put the content of your post here."
+        placeholder="Put the content of your article here."
         :error="$v.description.$dirty && $v.description.$invalid"
       >
         <span v-if="$v.description.$dirty && !$v.description.required" class="text-xs text-error pl-error-message">
@@ -84,7 +84,7 @@ import { mustBeDate } from '@/validations.js';
 // Plant, Priority, People, Community: Headline, Description, Image
 
 export default {
-  name: 'PostAddStep2',
+  name: 'ArticleAddStep2',
   components: {
     BaseInputText,
     BaseInputTextarea
@@ -127,8 +127,8 @@ export default {
     this.fetch_categories();
   },
   methods: {
-    ...mapActions('post', ['fetch_categories']),
-    ...mapMutations('post', [
+    ...mapActions('article', ['fetch_categories']),
+    ...mapMutations('article', [
       'update_headline',
       'update_description',
       'update_date',
@@ -161,7 +161,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('post', [
+    ...mapGetters('article', [
       'get_headline',
       'get_description',
       'get_price',

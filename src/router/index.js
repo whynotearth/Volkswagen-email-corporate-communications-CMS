@@ -3,6 +3,7 @@ import VueRouter from 'vue-router';
 import Home from '../views/Home.vue';
 import Stats from '../views/Stats.vue';
 import PostAdd from '../views/PostAdd.vue';
+import ArticleAdd from '../views/ArticleAdd.vue';
 import AuthLogin from '../views/AuthLogin.vue';
 import MemoAdd from '../views/MemoAdd.vue';
 import Settings from '../views/Settings';
@@ -41,9 +42,9 @@ const routes = [
     component: AuthLogin
   },
   {
-    path: '/posts/add/:step?',
-    name: 'PostAdd',
-    component: PostAdd,
+    path: '/articles/add/:step?',
+    name: 'ArticleAdd',
+    component: ArticleAdd,
     props: true,
     meta: {
       requiresAuth: true
