@@ -3,26 +3,24 @@
     <div class="container px-4 text-left h-full">
       <EmailPreview @error="$v.$touch()" />
       <h2 class="text-primary font-bold text-xl">Rearrange the Jumpstart</h2>
-      <template v-if="get_selected_articles.length">
-        <span v-if="$v.get_selected_articles.$error" class="text-xs text-error">
-          Please select atleast one article.
-        </span>
-        <span
-          v-else-if="!get_selected_articles.some(article => article.category.slug === 'answers-at-a-glance')"
-          class="text-xs text-error"
-        >
-          Selecting an "answers at a glance" article is required.
-        </span>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-4">
-          <Article
-            v-for="article in get_articles"
-            :key="article.id"
-            :article="article"
-            @clicked="addArticle(article)"
-            :active="isActive(article)"
-          />
-        </div>
-      </template>
+      <span v-if="$v.get_selected_articles.$error" class="text-xs text-error">
+        Please select atleast one article.
+      </span>
+      <span
+        v-else-if="!get_selected_articles.some(article => article.category.slug === 'answers-at-a-glance')"
+        class="text-xs text-error"
+      >
+        Selecting an "answers at a glance" article is required.
+      </span>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-4">
+        <Article
+          v-for="article in get_articles"
+          :key="article.id"
+          :article="article"
+          @clicked="addArticle(article)"
+          :active="isActive(article)"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -59,8 +57,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('email', ['get_email_date', 'get_selected_articles']),
-    ...mapGetters('email', ['get_articles'])
+    ...mapGetters('email', ['get_email_date', 'get_selected_articles', 'get_articles'])
   }
 };
 </script>
