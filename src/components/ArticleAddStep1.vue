@@ -32,7 +32,7 @@ import { mapGetters, mapMutations, mapActions } from 'vuex';
 import { required } from 'vuelidate/lib/validators';
 
 export default {
-  name: 'PostAddStep1',
+  name: 'ArticleAddStep1',
   validations: {
     selected_category: {
       required
@@ -48,11 +48,11 @@ export default {
     this.fetch_categories();
   },
   methods: {
-    ...mapMutations('post', ['update_selected_category']),
-    ...mapActions('post', ['fetch_categories'])
+    ...mapMutations('article', ['update_selected_category']),
+    ...mapActions('article', ['fetch_categories'])
   },
   computed: {
-    ...mapGetters('post', ['get_categories', 'get_selected_category']),
+    ...mapGetters('article', ['get_categories', 'get_selected_category']),
     selected_category: {
       get() {
         return this.get_selected_category;

@@ -15,10 +15,19 @@
           </div>
           <div class="flex items-strech items-center border-b-1 border-divider">
             <router-link
+              :to="{ name: '' }"
+              class="link-fordward block flex-grow justify-between flex h-full items-center cursor-pointer select-none px-4 pr-6 py-5"
+            >
+              <span class="mr-2 tg-body-mobile">Blue Delta Settings</span>
+              <ArrowRightIcon />
+            </router-link>
+          </div>
+          <div class="flex items-strech items-center border-b-1 border-divider">
+            <router-link
               :to="{ name: 'EmailLists' }"
               class="link-fordward block flex-grow justify-between flex h-full items-center cursor-pointer select-none px-4 pr-6 py-5"
             >
-              <span class="mr-2 tg-body-mobile">Email Settings</span>
+              <span class="mr-2 tg-body-mobile">Distribution Groups</span>
               <ArrowRightIcon />
             </router-link>
           </div>
