@@ -5,6 +5,7 @@ import PostAdd from '../views/PostAdd.vue';
 import AuthLogin from '../views/AuthLogin.vue';
 import MemoAdd from '../views/MemoAdd.vue';
 import Settings from '../views/Settings';
+import BlueDeltaSettings from '../views/BlueDeltaSettings';
 import ActivityFeedMemoList from '../views/ActivityFeedMemoList.vue';
 import ActivityFeedMemoItem from '../views/ActivityFeedMemoItem.vue';
 import EmailLists from '../views/EmailLists';
@@ -54,6 +55,14 @@ const routes = [
     path: '/settings',
     name: 'Settings',
     component: Settings,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/settings/blue-delta-settings',
+    name: 'BlueDeltaSettings',
+    component: BlueDeltaSettings,
     meta: {
       requiresAuth: true
     }
