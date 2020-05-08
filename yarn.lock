@@ -1367,7 +1367,7 @@
     "@webassemblyjs/wast-parser" "1.9.0"
     "@xtuc/long" "4.2.2"
 
-"@whynotearth/meredith-axios@^1.0.16":
+"@whynotearth/meredith-axios@^1.0.17":
   version "1.0.17"
   resolved "https://registry.yarnpkg.com/@whynotearth/meredith-axios/-/meredith-axios-1.0.17.tgz#61b667d4a27a772d88d986d169aaeb3419479b33"
   integrity sha512-apM+GxTOqPafHdoXQqviWYZ8gol6PA/xL2t71qabOxgi6/OcmmasrAkhvmXHBYUhMlByibWBjOaBv+LZnyD7mw==
