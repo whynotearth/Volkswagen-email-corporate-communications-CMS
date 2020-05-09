@@ -9,12 +9,12 @@
             <p class="mb-6">
               By default, Blue Delta will automatically send each day according to the below details. You can change
               these manually for each individual Blue Delta
-              <router-link class="text-secondary underline" :to="{ name: '' }">here</router-link>.
+              <router-link class="text-secondary underline" to="/admin/blue-delta">here</router-link>.
             </p>
           </div>
 
           <div
-            class="px-4 bg-white pb-0"
+            class="px-4 bg-white pb-0 pl-error-message"
             :class="[
               {
                 'is-query-empty': to_query === '',
@@ -53,7 +53,7 @@
           </div>
         </div>
 
-        <div class="flex flex-col mt-8">
+        <div class="container flex flex-col mt-8">
           <div class="flex items-strech items-center border-b-1 border-divider bg-surface" @click="toggleDropdown()">
             <div
               class="container relative md:px-6 block flex-grow justify-between flex h-full items-center select-none px-4 pr-6 py-5 border-top"
@@ -186,5 +186,9 @@ export default {
 
 .border-top {
   border-top: 1px solid rgb(226, 232, 240);
+}
+
+.pl-error-message {
+  text-align: left;
 }
 </style>
