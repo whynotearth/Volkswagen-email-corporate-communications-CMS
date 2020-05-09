@@ -35,7 +35,7 @@
               id="default_distribution_list"
               v-model="$v.default_distribution_list.$model"
               :placeholder="$v.default_distribution_list.$invalid ? 'Distribution List' : ''"
-              :options="get_recipients_available"
+              :options="get_default_distribution_groups"
               :multiple="true"
               :hide-selected="true"
               :show-labels="false"
@@ -116,21 +116,13 @@ export default {
   }),
   computed: {
     ...mapGetters('distributionGroup', ['getEmailLists']),
-    ...mapGetters('recipient', ['get_recipients_available']),
+    ...mapGetters('email', ['get_default_distribution_groups']),
     default_distribution_list: {
       get() {
         return this.getEmailLists;
       },
       set(value) {
-        this.updateEmailLists(value);
-      }
-    },
-    recipients: {
-      get() {
-        return this.get_recipients;
-      },
-      set(value) {
-        this.update_recipients(value);
+        this.selectedEmailList(value);
       }
     },
     hours() {
@@ -142,11 +134,11 @@ export default {
     }
   },
   mounted() {
-    this.fetch_recipients();
+    this.getEmailLists();
   },
   methods: {
-    ...mapMutations('distributionGroup', ['updateEmailLists']),
-    ...mapActions('recipient', ['fetch_recipients']),
+    ...mapMutations('email', ['update_default_distribution_groups']),
+    ...mapActions('distributionGroup', ['getEmailLists']),
     onToSearchChange(query) {
       this.to_query = query;
     },
