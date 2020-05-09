@@ -53,10 +53,10 @@
           </div>
         </div>
 
-        <div class="flex flex-col h-full mt-8">
+        <div class="flex flex-col mt-8">
           <div class="flex items-strech items-center border-b-1 border-divider bg-surface" @click="toggleDropdown()">
             <div
-              class="container relative md:px-6 block flex-grow justify-between flex h-full items-center select-none px-4 pr-6 py-5"
+              class="container relative md:px-6 block flex-grow justify-between flex h-full items-center select-none px-4 pr-6 py-5 border-top"
             >
               <span class="tg-body-mobile">
                 Time
@@ -75,6 +75,13 @@
             </div>
           </div>
         </div>
+
+        <div class="py-6 max-w-sm mx-auto px-12">
+          <BaseButton
+            class="block bg-secondary w-full hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline transition duration-100 ease-in-out transition-all label-mobile mb-6">
+            SAVE
+          </BaseButton>
+        </div>
       </div>
     </template>
 
@@ -87,17 +94,18 @@
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 
 <script>
-import BaseAppBarHeader from '@/components/BaseAppBarHeader.vue';
+import BaseAppBarHeader from '@/components/BaseAppBarHeader';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
 import LayoutFixedScrollable from '@/components/LayoutFixedScrollable';
 import NavigationBottom from '@/components/BaseNavigationBottom';
 import Multiselect from 'vue-multiselect';
 import { formatDateAMPM } from '@/helpers.js';
 import ArrowDown from '@/assets/arrow-down.svg';
+import BaseButton from '@/components/BaseButton';
 
 export default {
   name: 'BlueDeltaSettings',
-  components: { BaseAppBarHeader, NavigationBottom, LayoutFixedScrollable, Multiselect, ArrowDown },
+  components: { BaseAppBarHeader, NavigationBottom, LayoutFixedScrollable, Multiselect, ArrowDown, BaseButton },
   data: () => ({
     recipientsIsDirthy: false,
     to_query: '',
@@ -137,9 +145,6 @@ export default {
   mounted() {
     this.init();
   },
-  destroyed() {
-    this.updateEmailLists([]);
-  },
   methods: {
     ...mapActions('distributionGroup', ['getEmailLists']),
     ...mapMutations('distributionGroup', ['selectEmailList', 'updateEmailLists']),
@@ -177,5 +182,9 @@ export default {
 
 .active {
   background: rgba(3, 179, 249, 0.12);
+}
+
+.border-top {
+  border-top: 1px solid rgb(226, 232, 240);
 }
 </style>
