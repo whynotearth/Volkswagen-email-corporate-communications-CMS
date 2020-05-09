@@ -6,7 +6,7 @@
         <div class="container px-0 md:px-6">
           <div class="flex items-strech items-center border-b-1 border-divider">
             <router-link
-              :to="{ name: '' }"
+              :to="{ name: 'MyAccount' }"
               class="link-fordward block flex-grow justify-between flex h-full items-center cursor-pointer select-none px-4 pr-6 py-5"
             >
               <span class="mr-2 tg-body-mobile">My Account</span>
@@ -49,6 +49,7 @@
     </template>
   </LayoutFixedScrollable>
 </template>
+
 <script>
 import PageNavigation from '@/components/PageNavigation.vue';
 import AuthLogin from '@/components/AuthLogin';
