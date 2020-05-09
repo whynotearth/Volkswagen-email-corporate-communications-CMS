@@ -65,8 +65,8 @@
         </span>
       </BaseInputText>
 
-      <!-- <hr class="bg-background border-black em-low -mx-4 sm:mx-0 mb-4" />
-      <ImageUpload v-if="isFieldRequired('images')" v-model="images" /> -->
+      <hr class="bg-background border-black em-low -mx-4 sm:mx-0 mb-4" />
+      <ImageUpload v-if="isFieldRequired('images')" v-model="images" />
     </div>
   </div>
 </template>
@@ -74,7 +74,7 @@
 <script>
 import BaseInputText from '@/components/BaseInputText.vue';
 import BaseInputTextarea from '@/components/BaseInputTextarea.vue';
-// import ImageUpload from '@/components/ImageUpload/ImageUpload.vue';
+import ImageUpload from '@/components/ImageUpload/ImageUpload.vue';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
 import { required, decimal, maxLength, requiredIf } from 'vuelidate/lib/validators';
 import { mustBeDate } from '@/validations.js';
@@ -87,8 +87,8 @@ export default {
   name: 'ArticleAddStep2',
   components: {
     BaseInputText,
-    BaseInputTextarea
-    // , ImageUpload
+    BaseInputTextarea,
+    ImageUpload
   },
   data() {
     return {

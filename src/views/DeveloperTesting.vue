@@ -4,6 +4,7 @@
 
     <br />
     <CloudinaryWidget
+      @uploaded="onUpload"
       :uploaderOptions="{
         maxFiles: 1,
         maxImageWidth: 256,
@@ -19,6 +20,11 @@
 import CloudinaryWidget from '@/components/ImageUpload/CloudinaryWidget';
 export default {
   name: 'DeveloperTesting',
-  components: { CloudinaryWidget }
+  components: { CloudinaryWidget },
+  methods: {
+    onUpload(result) {
+      console.log(result);
+    }
+  }
 };
 </script>
