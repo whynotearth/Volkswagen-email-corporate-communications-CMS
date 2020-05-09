@@ -92,12 +92,12 @@
 
 <script>
 import BaseAppBarHeader from '@/components/BaseAppBarHeader';
+import { mapGetters, mapMutations, mapActions } from 'vuex';
 import LayoutFixedScrollable from '@/components/LayoutFixedScrollable';
 import NavigationBottom from '@/components/BaseNavigationBottom';
 import BaseButton from '@/components/BaseButton';
 import ArrowDown from '@/assets/arrow-down.svg';
 import Multiselect from 'vue-multiselect';
-import { mapGetters, mapMutations, mapActions } from 'vuex';
 import { formatDate } from '@/helpers.js';
 import { required } from 'vuelidate/lib/validators';
 
