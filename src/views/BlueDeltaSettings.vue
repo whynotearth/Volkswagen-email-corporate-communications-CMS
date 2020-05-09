@@ -61,14 +61,14 @@
               <span class="tg-body-mobile">
                 Time
                 <span class="ml-2 text-black em-medium">
-                  {{ formatDateAMPM(selected_hour) }}
+                  {{ formatDate(selected_hour, 'p') }}
                 </span>
               </span>
               <ArrowDown class="transform scale-x-1 text-gray" :class="{ 'transform rotate-180': isOpenDropdown }" />
               <ul v-if="isOpenDropdown" class="absolute menu shadow-8dp mx-2 md:mx-6 z-10 py-2">
                 <li class="text-left" v-for="(hour, index) in hours" :key="index" @click="get_selected_hour(hour)">
                   <div class="tg-body-mobile p-4 block w-full cursor-pointer">
-                    {{ formatDateAMPM(hour) }}
+                    {{ formatDate(hour, 'p') }}
                   </div>
                 </li>
               </ul>
@@ -99,7 +99,7 @@ import { mapGetters, mapMutations, mapActions } from 'vuex';
 import LayoutFixedScrollable from '@/components/LayoutFixedScrollable';
 import NavigationBottom from '@/components/BaseNavigationBottom';
 import Multiselect from 'vue-multiselect';
-import { formatDateAMPM } from '@/helpers.js';
+import { formatDate } from '@/helpers.js';
 import ArrowDown from '@/assets/arrow-down.svg';
 import BaseButton from '@/components/BaseButton';
 
@@ -158,7 +158,7 @@ export default {
     onToSearchChange(query) {
       this.to_query = query;
     },
-    formatDateAMPM,
+    formatDate,
     toggleDropdown() {
       this.isOpenDropdown = !this.isOpenDropdown;
     },
