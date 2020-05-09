@@ -18,36 +18,33 @@
             :class="[
               {
                 'is-query-empty': to_query === '',
-                'is-filled': recipients.length > 0,
-                error: recipientsIsDirthy && recipients.length === 0
+                'is-filled': !$v.default_distribution_list.$invalid,
+                error: $v.default_distribution_list.$error
               },
-              recipientsIsDirthy && recipients.length === 0
-                ? 'text-red-600 border-red-600'
-                : 'text-gray-500 border-gray-600'
+              $v.default_distribution_list.$error ? 'text-red-600 border-red-600' : 'text-gray-500 border-gray-600'
             ]"
           >
             <label
               class="multiselect--material-label absolute"
-              v-if="recipients.length > 0"
-              for="default-distribution-list"
+              v-if="!$v.default_distribution_list.$invalid"
+              for="default_distribution_list"
             >
               Default Distribution List:
             </label>
             <Multiselect
-              id="default-distribution-list"
-              v-model="recipients"
-              :placeholder="recipients.length === 0 ? 'Distribution List' : ''"
-              :options="emailList"
+              id="default_distribution_list"
+              v-model="$v.default_distribution_list.$model"
+              :placeholder="$v.default_distribution_list.$invalid ? 'Distribution List' : ''"
+              :options="get_recipients_available"
               :multiple="true"
               :hide-selected="true"
               :show-labels="false"
-              @close="recipientsIsDirthy = true"
               @search-change="onToSearchChange"
             >
               <template v-slot:noResult>Nothing found</template>
               <template v-slot:noOptions>No options available</template>
             </Multiselect>
-            <span v-if="recipientsIsDirthy && recipients.length === 0" class="text-xs text-error pl-error-message">
+            <span v-if="$v.default_distribution_list.$error" class="text-xs text-error pl-error-message">
               Default Distribution List is required
             </span>
           </div>
@@ -95,35 +92,37 @@
 
 <script>
 import BaseAppBarHeader from '@/components/BaseAppBarHeader';
-import { mapGetters, mapMutations, mapActions } from 'vuex';
 import LayoutFixedScrollable from '@/components/LayoutFixedScrollable';
 import NavigationBottom from '@/components/BaseNavigationBottom';
-import Multiselect from 'vue-multiselect';
-import { formatDate } from '@/helpers.js';
-import ArrowDown from '@/assets/arrow-down.svg';
 import BaseButton from '@/components/BaseButton';
+import ArrowDown from '@/assets/arrow-down.svg';
+import Multiselect from 'vue-multiselect';
+import { mapGetters, mapMutations, mapActions } from 'vuex';
+import { formatDate } from '@/helpers.js';
+import { required } from 'vuelidate/lib/validators';
 
 export default {
   name: 'BlueDeltaSettings',
   components: { BaseAppBarHeader, NavigationBottom, LayoutFixedScrollable, Multiselect, ArrowDown, BaseButton },
+  validations: {
+    default_distribution_list: {
+      required
+    }
+  },
   data: () => ({
-    recipientsIsDirthy: false,
     to_query: '',
     isOpenDropdown: false,
     selected_hour: new Date()
   }),
   computed: {
-    emailList() {
-      return this.$store.getters['distributionGroup/getEmailLists'];
-    },
-    ...mapGetters('memo', ['get_to', 'get_subject', 'get_date', 'get_description', 'get_recipients']),
+    ...mapGetters('distributionGroup', ['getEmailLists']),
     ...mapGetters('recipient', ['get_recipients_available']),
-    to: {
+    default_distribution_list: {
       get() {
-        return this.get_to;
+        return this.getEmailLists;
       },
       set(value) {
-        this.update_to(value);
+        this.updateEmailLists(value);
       }
     },
     recipients: {
@@ -143,18 +142,11 @@ export default {
     }
   },
   mounted() {
-    this.init();
+    this.fetch_recipients();
   },
   methods: {
-    ...mapActions('distributionGroup', ['getEmailLists']),
-    ...mapMutations('distributionGroup', ['selectEmailList', 'updateEmailLists']),
-    init() {
-      this.getEmailLists();
-    },
-    choiceEmailList(payload) {
-      this.selectEmailList(payload);
-      this.$router.push({ name: 'EmailList', params: { groupName: payload.distributionGroup } });
-    },
+    ...mapMutations('distributionGroup', ['updateEmailLists']),
+    ...mapActions('recipient', ['fetch_recipients']),
     onToSearchChange(query) {
       this.to_query = query;
     },
