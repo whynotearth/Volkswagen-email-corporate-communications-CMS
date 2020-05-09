@@ -93,11 +93,12 @@ export default {
     ]),
     dates() {
       let d = new Date();
+      let dtzOffset = d.getTimezoneOffset() * 60000;
       d.setHours(0, 0, 0, 0);
       d = d.getTime();
       let days = [];
       for (let i = 0; i < 30; i++) {
-        let a = d + i * 86400000;
+        let a = d - dtzOffset + i * 86400000;
         days.push(new Date(a));
       }
       return days;
