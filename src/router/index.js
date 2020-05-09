@@ -6,6 +6,7 @@ import AuthLogin from '../views/AuthLogin.vue';
 import MemoAdd from '../views/MemoAdd.vue';
 import Settings from '../views/Settings';
 import BlueDeltaSettings from '../views/BlueDeltaSettings';
+import MyAccount from '../views/MyAccount';
 import ActivityFeedMemoList from '../views/ActivityFeedMemoList.vue';
 import ActivityFeedMemoItem from '../views/ActivityFeedMemoItem.vue';
 import EmailLists from '../views/EmailLists';
@@ -63,6 +64,14 @@ const routes = [
     path: '/settings/blue-delta-settings',
     name: 'BlueDeltaSettings',
     component: BlueDeltaSettings,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/settings/my-account',
+    name: 'MyAccount',
+    component: MyAccount,
     meta: {
       requiresAuth: true
     }
