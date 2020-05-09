@@ -100,7 +100,7 @@ export default {
       const params = {
         body: {
           date: date_time,
-          categoryId: this.get_selected_category.id,
+          categorySlug: this.get_selected_category.slug,
           headline: this.get_headline,
           description: this.get_description,
           price: this.get_price,

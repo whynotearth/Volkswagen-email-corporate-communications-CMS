@@ -6,12 +6,6 @@
       <span v-if="$v.get_selected_articles.$error" class="text-xs text-error">
         Please select atleast one article.
       </span>
-      <span
-        v-else-if="!get_selected_articles.some(article => article.category.slug === 'answers-at-a-glance')"
-        class="text-xs text-error"
-      >
-        Selecting an "answers at a glance" article is required.
-      </span>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-4">
         <Article
           v-for="article in get_articles"
