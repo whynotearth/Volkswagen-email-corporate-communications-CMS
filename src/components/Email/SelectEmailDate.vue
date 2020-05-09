@@ -68,7 +68,6 @@ export default {
         return this.get_email_date;
       },
       set(value) {
-        console.log(value);
         this.clear_email_data();
         this.update_email_date(value);
         this.prefillArticles(value);
@@ -77,15 +76,17 @@ export default {
     dates() {
       if (!this.get_jumpstarts.length) return [];
       const dates = [];
+      let date;
       this.get_jumpstarts.forEach(jumpstart => {
-        dates.push(jumpstart.dateTime);
+        date = new Date(jumpstart.dateTime).getTime();
+        dates.push(date);
       });
       return dates;
     }
   },
   methods: {
-    ...mapMutations('email', ['update_email_date', 'update_selected_articles', 'update_selected_jumpstart']),
-    ...mapActions('email', ['clear_email_data', 'debounced_preview', 'fetch_jumpstarts']),
+    ...mapMutations('email', ['update_email_date', 'update_selected_jumpstart', 'update_articles']),
+    ...mapActions('email', ['clear_email_data', 'debounced_preview', 'fetch_jumpstarts', 'update_selected_articles']),
     formatDate,
     formatISODate,
     init() {
@@ -101,9 +102,10 @@ export default {
         let i, article, selectedJumpstart;
         const selectedDate = this.get_email_date;
         selectedJumpstart = this.get_jumpstarts.find(item => {
-          return item.dateTime == selectedDate;
+          return formatISODate(item.dateTime) === formatISODate(selectedDate);
         });
         this.update_selected_jumpstart(selectedJumpstart);
+        this.update_articles(selectedJumpstart.articles);
         for (i = 0; i < 5; i++) {
           article = selectedJumpstart.articles[i];
           if (article) this.update_selected_articles(article);

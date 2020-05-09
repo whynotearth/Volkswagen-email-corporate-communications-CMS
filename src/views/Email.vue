@@ -23,7 +23,7 @@ import DraftEmail from '@/components/Email/DraftEmail.vue';
 import ScheduleEmail from '@/components/Email/ScheduleEmail.vue';
 import SelectRecipents from '@/components/Email/SelectRecipents.vue';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
-import { sleep, formatISODate } from '@/helpers.js';
+import { sleep } from '@/helpers.js';
 
 export default {
   name: 'EmailsAdd',
@@ -88,10 +88,9 @@ export default {
       return true;
     },
     submit() {
-      console.log(formatISODate(this.get_email_date));
-      const date = new Date(this.get_email_date.split('T')[0]).getTime();
-      let total_time = new Date(date + this.get_schedule_time).toISOString();
+      let total_time = new Date(this.get_email_date + this.get_schedule_time).toISOString();
       const params = {
+        jumpStartId: this.get_selected_jumpstart.id,
         body: {
           jumpStartId: this.get_selected_jumpstart.id,
           dateTime: total_time,
