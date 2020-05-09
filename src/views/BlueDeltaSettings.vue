@@ -35,7 +35,7 @@
               id="default_distribution_list"
               v-model="$v.default_distribution_list.$model"
               :placeholder="$v.default_distribution_list.$invalid ? 'Distribution List' : ''"
-              :options="get_default_distribution_groups"
+              :options="get_recipients_available"
               :multiple="true"
               :hide-selected="true"
               :show-labels="false"
@@ -75,7 +75,8 @@
 
         <div class="py-6 max-w-sm mx-auto px-12">
           <BaseButton
-            class="block bg-secondary w-full hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline transition duration-100 ease-in-out transition-all label-mobile mb-6">
+            class="block bg-secondary w-full hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline transition duration-100 ease-in-out transition-all label-mobile mb-6"
+          >
             SAVE
           </BaseButton>
         </div>
@@ -115,14 +116,14 @@ export default {
     selected_hour: new Date()
   }),
   computed: {
-    ...mapGetters('distributionGroup', ['getEmailLists']),
+    ...mapGetters('recipient', ['get_recipients_available']),
     ...mapGetters('email', ['get_default_distribution_groups']),
     default_distribution_list: {
       get() {
-        return this.getEmailLists;
+        return this.get_default_distribution_groups;
       },
       set(value) {
-        this.selectedEmailList(value);
+        this.update_default_distribution_groups(value);
       }
     },
     hours() {
@@ -134,11 +135,11 @@ export default {
     }
   },
   mounted() {
-    this.getEmailLists();
+    this.fetch_recipients();
   },
   methods: {
     ...mapMutations('email', ['update_default_distribution_groups']),
-    ...mapActions('distributionGroup', ['getEmailLists']),
+    ...mapActions('recipient', ['fetch_recipients']),
     onToSearchChange(query) {
       this.to_query = query;
     },
