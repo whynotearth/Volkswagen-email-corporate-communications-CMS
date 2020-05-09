@@ -5,6 +5,7 @@ import ArticleAdd from '../views/ArticleAdd.vue';
 import AuthLogin from '../views/AuthLogin.vue';
 import MemoAdd from '../views/MemoAdd.vue';
 import Settings from '../views/Settings';
+import MyAccount from '../views/MyAccount';
 import ActivityFeedMemoList from '../views/ActivityFeedMemoList.vue';
 import ActivityFeedMemoItem from '../views/ActivityFeedMemoItem.vue';
 import EmailLists from '../views/EmailLists';
@@ -60,6 +61,14 @@ const routes = [
     path: '/settings',
     name: 'Settings',
     component: Settings,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/settings/my-account',
+    name: 'MyAccount',
+    component: MyAccount,
     meta: {
       requiresAuth: true
     }
