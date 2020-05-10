@@ -156,6 +156,15 @@ const routes = [
     meta: {
       requiresAuth: true
     }
+  },
+  {
+    path: '/edit/blue-delta/:id',
+    name: 'Dashboard',
+    component: () => import('@/views/EditBlueDelta.vue'),
+    props: true,
+    meta: {
+      requiresAuth: true
+    }
   }
 ];
 
