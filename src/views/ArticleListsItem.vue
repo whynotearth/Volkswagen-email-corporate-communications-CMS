@@ -1,6 +1,6 @@
 <template>
   <div class="flex-grow">
-    <BaseAppBarHeader :title="get_headline" :to-link="{ name: 'AdminArticles' }" />
+    <BaseAppBarHeader :title="get_headline" :to-link="{ name: 'ArticleLists' }" />
     <div v-if="selectedArticle.id" class="container px-0 py-6 text-left">
       <div class="px-4 md:px-6 md:pb-4">
         <div class="flex items-center pb-5 bg-surface">
@@ -72,7 +72,7 @@
             Date/Time is required
           </span>
           <span v-if="$v.eventDate.$dirty && !$v.eventDate.mustBeDate" class="text-xs text-error pl-error-message">
-            Date/Time is invalid. Example: 2020-12-24 7:30 pm
+            Date/Time is invalid. Example: 20 March, 2020, 7:30 pm
           </span>
         </BaseInputText>
       </div>
@@ -131,7 +131,7 @@ import { mustBeDate } from '@/validations.js';
 import { formatISODate, formatDate } from '@/helpers.js';
 
 export default {
-  name: 'AdminArticlesItem',
+  name: 'ArticleListsItem',
   components: {
     BaseAppBarHeader,
     BaseInputText,
@@ -288,10 +288,8 @@ export default {
       return isRequired;
     },
     submit() {
-      const date_time = this.get_date ? new Date(formatISODate(this.get_date)).toISOString() : undefined;
-      const event_date_time = this.get_eventDate
-        ? new Date(formatISODate(this.get_eventDate)).toISOString()
-        : undefined;
+      const date_time = this.get_date ? formatISODate(this.get_date) : undefined;
+      const event_date_time = this.get_eventDate ? formatISODate(this.get_eventDate) : undefined;
       const data = {
         articleId: this.articleId,
         body: {
@@ -306,7 +304,7 @@ export default {
       };
       this.put_article(data)
         .then(() => {
-          this.$router.push({ name: 'AdminArticles' });
+          this.$router.push({ name: 'ArticleLists' });
           this.$store.dispatch('article/clear_form_data');
         })
         .catch(error => {
@@ -325,27 +323,29 @@ export default {
         });
     },
     deleteItem() {
-      const data = {
-        articleId: this.articleId
-      };
-      this.delete_article(data)
-        .then(() => {
-          this.$router.push({ name: 'AdminArticles' });
-        })
-        .catch(error => {
-          let message = 'An error occured!';
-          try {
-            message = error.response.data.message;
-          } catch (error) {
-            message = 'Unknown error!';
-          }
+      if (confirm('Are you sure?')) {
+        const data = {
+          articleId: this.articleId
+        };
+        this.delete_article(data)
+          .then(() => {
+            this.$router.push({ name: 'ArticleLists' });
+          })
+          .catch(error => {
+            let message = 'An error occured!';
+            try {
+              message = error.response.data.message;
+            } catch (error) {
+              message = 'Unknown error!';
+            }
 
-          this.update_response_message({
-            message: message,
-            type: 'error',
-            class: 'text-error'
+            this.update_response_message({
+              message: message,
+              type: 'error',
+              class: 'text-error'
+            });
           });
-        });
+      }
     }
   }
 };

@@ -4,7 +4,7 @@
     <BaseTabs>
       <BaseTab name="TODAY" selected="true">
         <template v-for="(article, index) in todayArticles">
-          <router-link :key="index" :to="{ name: 'AdminArticlesItem', params: { id: article.id } }">
+          <router-link :key="index" :to="{ name: 'ArticleListsItem', params: { id: article.id } }">
             <ArticleItem :model="article" />
           </router-link>
         </template>
@@ -12,7 +12,7 @@
       </BaseTab>
       <BaseTab name="UPCOMING">
         <template v-for="(article, index) in upcomingArticles">
-          <router-link :key="index" :to="{ name: 'AdminArticlesItem', params: { id: article.id } }">
+          <router-link :key="index" :to="{ name: 'ArticleListsItem', params: { id: article.id } }">
             <ArticleItem :model="article" />
           </router-link>
         </template>
@@ -26,7 +26,7 @@
 import BaseAppBarHeader from '@/components/BaseAppBarHeader.vue';
 import BaseTabs from '@/components/BaseTabs.vue';
 import BaseTab from '@/components/BaseTab.vue';
-import ArticleItem from '@/components/admin/ArticleItem.vue';
+import ArticleItem from '@/components/ArticleListsItem.vue';
 import { mapGetters, mapActions } from 'vuex';
 import { formatISODate, formatDate } from '@/helpers.js';
 

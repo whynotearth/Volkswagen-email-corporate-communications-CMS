@@ -17,8 +17,8 @@ import EmailListImport from '../views/EmailListImport';
 import EmailListImportHelp from '../views/EmailListImportHelp';
 import Email from '@/views/Email';
 import Dashboard from '../views/Dashboard';
-import AdminArticles from '../views/admins/Articles';
-import AdminArticlesItem from '../views/admins/ArticlesItem';
+import ArticleLists from '../views/ArticleLists';
+import ArticleListsItem from '../views/ArticleListsItem';
 import store from '../store';
 
 Vue.use(VueRouter);
@@ -160,17 +160,17 @@ const routes = [
     }
   },
   {
-    path: '/admin/articles',
-    name: 'AdminArticles',
-    component: AdminArticles,
+    path: '/article-lists',
+    name: 'ArticleLists',
+    component: ArticleLists,
     meta: {
       requiresAuth: true
     }
   },
   {
-    path: '/admin/articles/:id',
-    name: 'AdminArticlesItem',
-    component: AdminArticlesItem,
+    path: '/article-lists/:id',
+    name: 'ArticleListsItem',
+    component: ArticleListsItem,
     meta: {
       requiresAuth: true
     }

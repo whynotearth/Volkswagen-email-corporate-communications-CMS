@@ -35,7 +35,7 @@
 import { formatDate } from '@/helpers.js';
 
 export default {
-  name: 'ArticleItem',
+  name: 'ArticleListsItem',
   props: {
     model: {
       type: Object
