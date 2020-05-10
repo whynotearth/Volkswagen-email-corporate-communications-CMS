@@ -41,7 +41,7 @@
 import { formatDate } from '@/helpers.js';
 
 export default {
-  name: 'PostItem',
+  name: 'ArticleItem',
   props: {
     model: {
       type: Object
@@ -52,9 +52,3 @@ export default {
   }
 };
 </script>
-
-<style scoped>
-.post-description {
-  height: 80px;
-}
-</style>

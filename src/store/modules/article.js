@@ -67,16 +67,11 @@ export default {
       const data = await ArticleCategoryService.categories();
       context.commit('update_categories', data);
     },
-    async fetch_posts({ commit }, payload) {
-      commit('update_posts', []);
-      const data = await ArticleCategoryService.posts1(payload.params);
-      commit('update_posts', data);
+    async put_article(context, payload) {
+      await ArticleService.articles1(payload);
     },
-    async put_post(context, payload) {
-      await ArticleCategoryService.posts2(payload);
-    },
-    async delete_post(context, payload) {
-      await ArticleCategoryService.posts3(payload);
+    async delete_article(context, payload) {
+      await ArticleService.articles2(payload);
     }
   },
   getters: {

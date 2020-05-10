@@ -3,14 +3,14 @@
     <BaseAppBarHeader title="Articles" to-link="/" />
     <BaseTabs>
       <BaseTab name="TODAY" selected="true">
-        <template v-for="(post, index) in get_posts">
-          <router-link :key="index" :to="{ name: 'AdminPostsItem', params: { id: post.id } }">
-            <PostItem :model="post" />
+        <template v-for="(article, index) in get_articles">
+          <router-link :key="index" :to="{ name: 'AdminArticlesItem', params: { id: article.id } }">
+            <ArticleItem :model="article" />
           </router-link>
         </template>
       </BaseTab>
       <BaseTab name="UPCOMING">
-        Upcoming posts as soon as possible
+        Upcoming articles as soon as possible
       </BaseTab>
     </BaseTabs>
   </div>
@@ -20,26 +20,26 @@
 import BaseAppBarHeader from '@/components/BaseAppBarHeader.vue';
 import BaseTabs from '@/components/BaseTabs.vue';
 import BaseTab from '@/components/BaseTab.vue';
-import PostItem from '@/components/admin/PostItem.vue';
+import ArticleItem from '@/components/admin/ArticleItem.vue';
 import { mapGetters, mapActions } from 'vuex';
 import { formatISODate } from '@/helpers.js';
 
 export default {
-  name: 'posts',
+  name: 'Articles',
   components: {
     BaseAppBarHeader,
     BaseTabs,
     BaseTab,
-    PostItem
+    ArticleItem
   },
   computed: {
-    ...mapGetters('post', ['get_posts'])
+    ...mapGetters('article', ['get_articles'])
   },
   mounted() {
-    this.fetch_posts({ params: { date: formatISODate(new Date()) } });
+    this.fetch_articles({ params: { date: formatISODate(new Date()) } });
   },
   methods: {
-    ...mapActions('post', ['fetch_posts'])
+    ...mapActions('article', ['fetch_articles'])
   }
 };
 </script>

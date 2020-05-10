@@ -1,15 +1,15 @@
 <template>
   <div class="flex-grow">
-    <BaseAppBarHeader :title="get_headline" to-link="/admin/posts" />
+    <BaseAppBarHeader :title="get_headline" :to-link="{ name: 'AdminArticles' }" />
     <div class="container px-0 py-6 text-left">
       <div class="px-4 md:px-6 md:pb-4">
         <div class="flex items-center pb-5 bg-surface">
           <div class="w-8 h-8">
-            <img :src="selectedPost.category.image" alt="" />
+            <img :src="selectedArticle.category.image" alt="" />
           </div>
           <div class="flex-auto pl-4">
-            <div class="w-full body-1-mobile">{{ selectedPost.category.name }}</div>
-            <div class="w-full text-xs text-black em-disabled">{{ selectedPost.category.description }}</div>
+            <div class="w-full body-1-mobile">{{ selectedArticle.category.name }}</div>
+            <div class="w-full text-xs text-black em-disabled">{{ selectedArticle.category.description }}</div>
           </div>
         </div>
         <BaseInputText
@@ -131,7 +131,7 @@ import { mustBeDate } from '@/validations.js';
 import { formatISODate, formatDate } from '@/helpers.js';
 
 export default {
-  name: 'AdminPostsItem',
+  name: 'AdminArticlesItem',
   components: {
     BaseAppBarHeader,
     BaseInputText,
@@ -164,22 +164,22 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('post', [
+    ...mapGetters('article', [
       'get_headline',
       'get_description',
       'get_price',
       'get_eventDate',
-      'get_posts',
+      'get_articles',
       'get_response_message',
       'get_date'
     ]),
     stringHeadlineByCategoryName() {
-      return this.selectedPost.name === 'Answers At A Glance' ? 'Question' : 'Headline';
+      return this.selectedArticle.name === 'Answers At A Glance' ? 'Question' : 'Headline';
     },
     stringDescriptionByCategoryName() {
-      return this.selectedPost.name === 'Answers At A Glance' ? 'Answer' : 'Description';
+      return this.selectedArticle.name === 'Answers At A Glance' ? 'Answer' : 'Description';
     },
-    postId() {
+    articleId() {
       return parseInt(this.$route.params.id);
     },
     headline: {
@@ -222,9 +222,9 @@ export default {
         this.update_date(value);
       }
     },
-    selectedPost() {
-      return this.get_posts.find(item => {
-        return item.id === this.postId;
+    selectedArticle() {
+      return this.get_articles.find(item => {
+        return item.id === this.articleId;
       });
     }
   },
@@ -232,14 +232,14 @@ export default {
     this.initialForm();
   },
   destroyed() {
-    this.$store.dispatch('post/clear_form_data');
+    this.$store.dispatch('article/clear_form_data');
     this.update_response_message({
       message: ''
     });
   },
   methods: {
-    ...mapActions('post', ['fetch_post', 'put_post', 'delete_post']),
-    ...mapMutations('post', [
+    ...mapActions('article', ['fetch_article', 'put_article', 'delete_article']),
+    ...mapMutations('article', [
       'update_headline',
       'update_description',
       'update_date',
@@ -249,18 +249,18 @@ export default {
       'update_response_message'
     ]),
     initialForm() {
-      this.update_headline(this.selectedPost.headline);
-      this.update_description(this.selectedPost.description);
-      this.update_date(this.selectedPost.date);
-      this.update_price(this.selectedPost.price);
-      this.update_eventDate(formatDate(this.selectedPost.eventDate));
-      this.update_date(formatDate(this.selectedPost.date));
+      this.update_headline(this.selectedArticle.headline);
+      this.update_description(this.selectedArticle.description);
+      this.update_date(this.selectedArticle.date);
+      this.update_price(this.selectedArticle.price);
+      this.update_eventDate(formatDate(this.selectedArticle.eventDate));
+      this.update_date(formatDate(this.selectedArticle.date));
     },
     isFieldRequired(fieldName) {
-      if (!this.selectedPost) {
+      if (!this.selectedArticle) {
         return false;
       }
-      const categoryName = this.selectedPost.category.name;
+      const categoryName = this.selectedArticle.category.name;
       let isRequired = false;
       switch (categoryName) {
         case 'Events':
@@ -284,10 +284,10 @@ export default {
     },
     submit() {
       const data = {
-        postId: this.postId,
+        articleId: this.articleId,
         body: {
           date: this.get_date ? formatISODate(this.get_date) : undefined,
-          categoryId: this.selectedPost.category.id,
+          categoryId: this.selectedArticle.category.id,
           headline: this.get_headline,
           description: this.get_description,
           price: this.get_price,
@@ -295,10 +295,10 @@ export default {
           //images: this.get_images
         }
       };
-      this.put_post(data)
+      this.put_article(data)
         .then(() => {
-          this.$router.push({ name: 'AdminPosts' });
-          this.$store.dispatch('post/clear_form_data');
+          this.$router.push({ name: 'AdminArticles' });
+          this.$store.dispatch('article/clear_form_data');
         })
         .catch(error => {
           let message = 'An error occured!';
@@ -317,11 +317,11 @@ export default {
     },
     deleteItem() {
       const data = {
-        postId: this.postId
+        articleId: this.articleId
       };
-      this.delete_post(data)
+      this.delete_article(data)
         .then(() => {
-          this.$router.push({ name: 'AdminPosts' });
+          this.$router.push({ name: 'AdminArticles' });
         })
         .catch(error => {
           let message = 'An error occured!';
