@@ -1,5 +1,10 @@
 <template>
-  <BaseDropdown class="relative" placeholder="Send Time" :options="time_slots" v-model="selectedTime">
+  <BaseDropdown
+    class="relative dropdown-text__align-left"
+    placeholder="Schedule: No time selected"
+    :options="time_slots"
+    v-model="selectedTime"
+  >
     <template #title="{ selectedOption }">
       <span v-if="time_slots.length === 0" class="text-gray-500">
         No time slots!
@@ -72,3 +77,10 @@ export default {
   }
 };
 </script>
+
+<style>
+.dropdown-text__align-left div.items-strech,
+.dropdown-text__align-left .option {
+  text-align: left;
+}
+</style>

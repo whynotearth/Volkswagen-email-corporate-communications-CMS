@@ -3,7 +3,7 @@
     <template #content>
       <div class="">
         <BaseAppBarHeader class="sticky top-0 bg-white" title="Wednesday, 6 May, 2020 " to-link="/blue-delta" />
-        <div class="flex">
+        <div class="flex mb-40">
           <div class="container px-0 md:px-6 pt-4 px-4">
             <div class="flex justify-center p-4">
               <img
@@ -43,6 +43,7 @@
                   :show-labels="false"
                   @close="recipientsIsDirthy = true"
                   @search-change="onToSearchChange"
+                  open-direction="bottom"
                 >
                   <template v-slot:noResult>Nothing found</template>
                   <template v-slot:noOptions>No options available</template>
