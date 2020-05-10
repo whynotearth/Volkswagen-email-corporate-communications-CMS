@@ -52,11 +52,7 @@ export default {
     }
   },
   mounted() {
-    if (
-      this.get_selected_articles.length === 0 ||
-      !this.get_selected_articles.some(article => article.category.slug === 'answers-at-a-glance')
-    )
-      return this.$router.push({ name: 'EmailsAdd', params: { step: 2 } });
+    if (this.get_selected_articles.length === 0) return this.$router.push({ name: 'EmailsAdd', params: { step: 2 } });
   },
   computed: {
     ...mapGetters('email', ['get_schedule_time', 'get_email_date', 'get_selected_articles']),
