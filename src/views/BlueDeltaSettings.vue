@@ -14,7 +14,7 @@
           </div>
 
           <div
-            class="px-4 bg-white pb-0 pl-error-message"
+            class="px-4 bg-white pb-0 text-left"
             :class="[
               {
                 'is-query-empty': to_query === '',
@@ -44,32 +44,37 @@
               <template v-slot:noResult>Nothing found</template>
               <template v-slot:noOptions>No options available</template>
             </Multiselect>
-            <span v-if="$v.default_distribution_list.$error" class="text-xs text-error pl-error-message">
+            <span v-if="$v.default_distribution_list.$error" class="text-xs text-error text-left">
               Default Distribution List is required
             </span>
           </div>
         </div>
 
-        <div class="container flex flex-col mt-8">
-          <div class="flex items-strech items-center border-b-1 border-divider bg-surface" @click="toggleDropdown()">
-            <div
-              class="container relative md:px-6 block flex-grow justify-between flex h-full items-center select-none px-4 pr-6 py-5 border-top"
-            >
-              <span class="tg-body-mobile">
-                Time
-                <span class="ml-2 text-black em-medium">
-                  {{ formatDate(selected_hour, 'p') }}
-                </span>
-              </span>
-              <ArrowDown class="transform scale-x-1 text-gray" :class="{ 'transform rotate-180': isOpenDropdown }" />
-              <ul v-if="isOpenDropdown" class="absolute menu shadow-8dp mx-2 md:mx-6 z-10 py-2">
-                <li class="text-left" v-for="(hour, index) in hours" :key="index" @click="get_selected_hour(hour)">
-                  <div class="tg-body-mobile p-4 block w-full cursor-pointer">
-                    {{ formatDate(hour, 'p') }}
-                  </div>
-                </li>
-              </ul>
+        <div class="container flex flex-col mt-8 py-6">
+          <div class="flex relative border-top">
+            <div class="flex-auto">
+              <BaseDropdown placeholder="Schedule time" :options="time_slots" v-model="$v.schedule_time.$model">
+                <template #title="{ selectedOption }">
+                  <span v-if="time_slots.length === 0" class="text-gray-500">
+                    No time slots!
+                  </span>
+                  <span v-else-if="selectedOption">
+                    Schedule
+                    <span class="ml-2 em-medium">
+                      {{ millisecondToTime(selectedOption) }}
+                    </span>
+                  </span>
+                </template>
+                <template #option="{ option }">
+                  <span>
+                    {{ millisecondToTime(option) }}
+                  </span>
+                </template>
+              </BaseDropdown>
             </div>
+            <p v-if="$v.schedule_time.$error" class="text-xs text-error">
+              Please select time.
+            </p>
           </div>
         </div>
 
@@ -93,20 +98,30 @@
 
 <script>
 import BaseAppBarHeader from '@/components/BaseAppBarHeader';
+import BaseDropdown from '@/components/BaseDropdown';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
 import LayoutFixedScrollable from '@/components/LayoutFixedScrollable';
 import NavigationBottom from '@/components/BaseNavigationBottom';
 import BaseButton from '@/components/BaseButton';
-import ArrowDown from '@/assets/arrow-down.svg';
 import Multiselect from 'vue-multiselect';
 import { formatDate } from '@/helpers.js';
 import { required } from 'vuelidate/lib/validators';
 
 export default {
   name: 'BlueDeltaSettings',
-  components: { BaseAppBarHeader, NavigationBottom, LayoutFixedScrollable, Multiselect, ArrowDown, BaseButton },
+  components: {
+    BaseAppBarHeader,
+    BaseDropdown,
+    NavigationBottom,
+    LayoutFixedScrollable,
+    Multiselect,
+    BaseButton
+  },
   validations: {
     default_distribution_list: {
+      required
+    },
+    schedule_time: {
       required
     }
   },
@@ -117,7 +132,7 @@ export default {
   }),
   computed: {
     ...mapGetters('recipient', ['get_recipients_available']),
-    ...mapGetters('email', ['get_default_distribution_groups']),
+    ...mapGetters('email', ['get_default_distribution_groups', 'get_schedule_time', 'get_email_date']),
     default_distribution_list: {
       get() {
         return this.get_default_distribution_groups;
@@ -125,6 +140,34 @@ export default {
       set(value) {
         this.update_default_distribution_groups(value);
       }
+    },
+    schedule_time: {
+      get() {
+        return this.get_schedule_time;
+      },
+      set(value) {
+        this.update_schedule_time(value);
+      }
+    },
+    time_slots() {
+      let time = [];
+      if (this.get_email_date) {
+        let d = new Date(this.get_email_date);
+        let start = 800;
+        let end = 2400;
+        let startHours = Math.floor(start / 100) * 3600000;
+        let endHours = Math.floor(end / 100) * 3600000;
+        let startMinutes = (start % 100) * 60000;
+        let endMinutes = (end % 100) * 60000;
+        let startTime = startHours + startMinutes;
+        let endTime = endHours + endMinutes;
+        d.setHours(0, 0, 0, 0);
+        if (Date.now() > d.getTime()) startTime = Date.now() - d.getTime() + 900000;
+        for (let i = startTime; i <= endTime; i += 900000) {
+          time.push(i);
+        }
+      }
+      return time;
     },
     hours() {
       let hours = [];
@@ -138,8 +181,17 @@ export default {
     this.fetch_recipients();
   },
   methods: {
-    ...mapMutations('email', ['update_default_distribution_groups']),
+    ...mapMutations('email', ['update_default_distribution_groups', 'update_schedule_time']),
     ...mapActions('recipient', ['fetch_recipients']),
+    millisecondToTime(duration) {
+      let minutes = parseInt((duration / (1000 * 60)) % 60),
+        hours = parseInt((duration / (1000 * 60 * 60)) % 24);
+
+      hours = hours < 10 ? '0' + hours : hours;
+      minutes = minutes < 10 ? '0' + minutes : minutes;
+
+      return hours + ':' + minutes;
+    },
     onToSearchChange(query) {
       this.to_query = query;
     },
@@ -155,25 +207,7 @@ export default {
 </script>
 
 <style scoped>
-.menu {
-  height: 224px;
-  top: 54px;
-  background: white;
-  border-radius: 4px;
-  right: 0;
-  left: 0;
-  overflow-y: scroll;
-}
-
-.active {
-  background: rgba(3, 179, 249, 0.12);
-}
-
 .border-top {
-  border-top: 1px solid rgb(226, 232, 240);
-}
-
-.pl-error-message {
-  text-align: left;
+  border-top: 1px solid #e2e8f0;
 }
 </style>
