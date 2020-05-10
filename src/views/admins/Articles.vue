@@ -3,7 +3,7 @@
     <BaseAppBarHeader title="Articles" to-link="/" />
     <BaseTabs>
       <BaseTab name="TODAY" selected="true">
-        <template v-for="(article, index) in get_articles">
+        <template v-for="(article, index) in todayArticles">
           <router-link :key="index" :to="{ name: 'AdminArticlesItem', params: { id: article.id } }">
             <ArticleItem :model="article" />
           </router-link>
@@ -33,13 +33,33 @@ export default {
     ArticleItem
   },
   computed: {
-    ...mapGetters('article', ['get_articles'])
+    ...mapGetters('article', ['get_daily_plan']),
+    todayArticles() {
+      const data = this.get_daily_plan.find(article => {
+        return article.date === this.getDate();
+      });
+      return data ? data.articles : [];
+    },
+    upcomingArticles() {
+      const data = this.get_daily_plan.find(article => {
+        return article.date !== this.getDate;
+      });
+      return data ? data.articles : [];
+    }
   },
   mounted() {
-    this.fetch_articles({ params: { date: formatISODate(new Date()) } });
+    this.fetch_daily_plan();
   },
   methods: {
-    ...mapActions('article', ['fetch_articles'])
+    ...mapActions('article', ['fetch_daily_plan']),
+    getDate() {
+      let d = new Date();
+      d.setHours(0, 0, 0, 0);
+      d.toISOString();
+      const today = formatISODate(d);
+      console.log(today);
+      return today;
+    }
   }
 };
 </script>

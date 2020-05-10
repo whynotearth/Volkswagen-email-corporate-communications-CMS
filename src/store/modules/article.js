@@ -18,6 +18,7 @@ export default {
   state: {
     form_data: cloneDeep(defaultArticleFormData),
     categories: [],
+    daily_plan: [],
     response_message: {
       type: '', // error, success
       message: '',
@@ -54,6 +55,9 @@ export default {
     },
     update_form_data(state, payload) {
       Vue.set(state, 'form_data', payload);
+    },
+    update_daily_plan(state, payload) {
+      state.daily_plan = payload;
     }
   },
   actions: {
@@ -72,6 +76,10 @@ export default {
     },
     async delete_article(context, payload) {
       await ArticleService.articles2(payload);
+    },
+    async fetch_daily_plan({ commit }) {
+      const data = await ArticleService.dailyplan();
+      commit('update_daily_plan', data);
     }
   },
   getters: {
@@ -83,6 +91,7 @@ export default {
     get_images: state => state.form_data.images,
     get_selected_category: state => state.form_data.selected_category,
     get_response_message: state => state.response_message,
-    get_categories: state => state.categories
+    get_categories: state => state.categories,
+    get_daily_plan: state => state.daily_plan
   }
 };
