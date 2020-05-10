@@ -33,7 +33,7 @@ export default {
     get_jumpstarts: state => state.jumpstarts,
     get_response_message: state => state.response_message,
     get_articles: state => state.articles,
-    get_default_distribution_groups: state => state.default_distribution_groups
+    get_default_distribution_groups: state => state.default_distribution_groups,
     get_available_articles: state => state.available_articles
   },
   actions: {
