@@ -1,8 +1,8 @@
-import { PostService, PostCategoryService } from '@whynotearth/meredith-axios';
+import { ArticleService, ArticleCategoryService } from '@whynotearth/meredith-axios';
 import Vue from 'vue';
 import { cloneDeep } from 'lodash-es';
 
-const defaultPostFormData = {
+const defaultArticleFormData = {
   headline: '',
   description: '',
   date: '',
@@ -16,14 +16,13 @@ const defaultPostFormData = {
 export default {
   namespaced: true,
   state: {
-    form_data: cloneDeep(defaultPostFormData),
+    form_data: cloneDeep(defaultArticleFormData),
     categories: [],
     response_message: {
       type: '', // error, success
       message: '',
       class: '' // text-error text-success
-    },
-    posts: []
+    }
   },
   mutations: {
     update_categories(state, payload) {
@@ -55,32 +54,29 @@ export default {
     },
     update_form_data(state, payload) {
       Vue.set(state, 'form_data', payload);
-    },
-    update_posts(state, payload) {
-      Vue.set(state, 'posts', payload);
     }
   },
   actions: {
     clear_form_data(context) {
-      context.commit('update_form_data', cloneDeep(defaultPostFormData));
+      context.commit('update_form_data', cloneDeep(defaultArticleFormData));
     },
-    async add_post(context, payload) {
-      await PostService.posts(payload.params);
+    async add_article(context, payload) {
+      await ArticleService.articles(payload.params);
     },
     async fetch_categories(context) {
-      const data = await PostCategoryService.categories();
+      const data = await ArticleCategoryService.categories();
       context.commit('update_categories', data);
     },
     async fetch_posts({ commit }, payload) {
       commit('update_posts', []);
-      const data = await PostService.posts1(payload.params);
+      const data = await ArticleCategoryService.posts1(payload.params);
       commit('update_posts', data);
     },
     async put_post(context, payload) {
-      await PostService.posts2(payload);
+      await ArticleCategoryService.posts2(payload);
     },
     async delete_post(context, payload) {
-      await PostService.posts3(payload);
+      await ArticleCategoryService.posts3(payload);
     }
   },
   getters: {
@@ -92,7 +88,6 @@ export default {
     get_images: state => state.form_data.images,
     get_selected_category: state => state.form_data.selected_category,
     get_response_message: state => state.response_message,
-    get_posts: state => state.posts,
     get_categories: state => state.categories
   }
 };

@@ -26,25 +26,20 @@
           Please select time.
         </p>
       </div>
-      <div class="bg-brand-gradient h-full p-8">
-        <div class="mx-auto max-w-sm">
-          <img v-if="get_preview_link.length > 0" :src="get_preview_link" @error="update_preview_link('')" />
-          <Logo v-else class="mx-auto" />
-        </div>
-      </div>
+      <EmailPreview />
     </div>
   </div>
 </template>
 
 <script>
 import BaseDropdown from '@/components/BaseDropdown';
-import Logo from '@/assets/white_logo.svg';
+import EmailPreview from '@/components/Email/EmailPreview.vue';
 import { required } from 'vuelidate/lib/validators';
 import { mapGetters, mapMutations } from 'vuex';
 
 export default {
   name: 'ScheduleEmail',
-  components: { BaseDropdown, Logo },
+  components: { BaseDropdown, EmailPreview },
   props: {
     error: {
       type: Boolean,
@@ -57,10 +52,14 @@ export default {
     }
   },
   mounted() {
-    if (this.get_postIds.length === 0) return this.$router.push({ name: 'EmailsAdd', params: { step: 2 } });
+    if (
+      this.get_selected_articles.length === 0 ||
+      !this.get_selected_articles.some(article => article.category.slug === 'answers-at-a-glance')
+    )
+      return this.$router.push({ name: 'EmailsAdd', params: { step: 2 } });
   },
   computed: {
-    ...mapGetters('email', ['get_schedule_time', 'get_preview_link', 'get_email_date', 'get_postIds']),
+    ...mapGetters('email', ['get_schedule_time', 'get_email_date', 'get_selected_articles']),
     schedule_time: {
       get() {
         return this.get_schedule_time;
@@ -91,7 +90,7 @@ export default {
     }
   },
   methods: {
-    ...mapMutations('email', ['update_schedule_time', 'update_preview_link']),
+    ...mapMutations('email', ['update_schedule_time']),
     millisecondToTime(duration) {
       let minutes = parseInt((duration / (1000 * 60)) % 60),
         hours = parseInt((duration / (1000 * 60 * 60)) % 24);
@@ -104,5 +103,3 @@ export default {
   }
 };
 </script>
-
-<style></style>
