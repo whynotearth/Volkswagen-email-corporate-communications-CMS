@@ -24,8 +24,8 @@
           {{ model.description }}
         </div>
       </div>
-      <div v-if="model.category.image" class="w-20 flex-shrink-0">
-        <img :src="model.category.image" alt="" />
+      <div v-if="model.image" class="w-20 flex-shrink-0">
+        <img :src="model.image" alt="" />
       </div>
     </div>
   </div>
