@@ -16,22 +16,16 @@
     </div>
     <!-- contents -->
     <div class="flex flex-no-wrap">
-      <div class="flex-grow text-left">
+      <div class="flex-grow text-left whitespace-pre-line overflow-hidden">
         <div class="tg-caption-mobile font-bold text-black whitespace-no-wrap pb-2">
           {{ formatDate(model.date) }}
         </div>
-        <div
-          class="tg-caption-mobile em-disabled text-black text-left pr-2 whitespace-pre-line
-          h-20 overflow-hidden"
-        >
+        <div class="tg-caption-mobile em-disabled text-black text-left pr-2 h-20">
           {{ model.description }}
         </div>
       </div>
-      <div v-if="model.image" class="w-20 flex-shrink-0">
-        <img
-          src="https://files.porsche.com/filestore/hotspotimage/multimedia/none/model-series-911-carrera-992-hotspot-image-overlay-01-mobile/normal/dc14d8b9-f233-11e8-bec8-0019999cd470;sN;twebp/porsche-normal.webp"
-          alt=""
-        />
+      <div v-if="model.category.image" class="w-20 flex-shrink-0">
+        <img :src="model.category.image" alt="" />
       </div>
     </div>
   </div>

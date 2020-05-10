@@ -1,7 +1,7 @@
 <template>
   <div class="flex-grow">
     <BaseAppBarHeader :title="get_headline" :to-link="{ name: 'AdminArticles' }" />
-    <div class="container px-0 py-6 text-left">
+    <div v-if="selectedArticle.id" class="container px-0 py-6 text-left">
       <div class="px-4 md:px-6 md:pb-4">
         <div class="flex items-center pb-5 bg-surface">
           <div class="w-8 h-8">
@@ -171,7 +171,8 @@ export default {
       'get_eventDate',
       'get_articles',
       'get_response_message',
-      'get_date'
+      'get_date',
+      'get_daily_plan'
     ]),
     stringHeadlineByCategoryName() {
       return this.selectedArticle.name === 'Answers At A Glance' ? 'Question' : 'Headline';
@@ -223,7 +224,11 @@ export default {
       }
     },
     selectedArticle() {
-      return this.get_articles.find(item => {
+      let articles = [];
+      this.get_daily_plan.forEach(item => {
+        articles = [...articles, ...item.articles];
+      });
+      return articles.find(item => {
         return item.id === this.articleId;
       });
     }
@@ -238,7 +243,7 @@ export default {
     });
   },
   methods: {
-    ...mapActions('article', ['fetch_article', 'put_article', 'delete_article']),
+    ...mapActions('article', ['fetch_daily_plan', 'put_article', 'delete_article']),
     ...mapMutations('article', [
       'update_headline',
       'update_description',
@@ -283,16 +288,20 @@ export default {
       return isRequired;
     },
     submit() {
+      const date_time = this.get_date ? new Date(formatISODate(this.get_date)).toISOString() : undefined;
+      const event_date_time = this.get_eventDate
+        ? new Date(formatISODate(this.get_eventDate)).toISOString()
+        : undefined;
       const data = {
         articleId: this.articleId,
         body: {
-          date: this.get_date ? formatISODate(this.get_date) : undefined,
-          categoryId: this.selectedArticle.category.id,
+          date: date_time,
+          categorySlug: this.selectedArticle.category.slug,
           headline: this.get_headline,
           description: this.get_description,
           price: this.get_price,
-          eventDate: this.get_eventDate ? formatISODate(this.get_eventDate) : undefined
-          //images: this.get_images
+          eventDate: event_date_time
+          //image: this.get_images
         }
       };
       this.put_article(data)
