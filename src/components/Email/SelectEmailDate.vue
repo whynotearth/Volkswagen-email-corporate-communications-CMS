@@ -110,8 +110,10 @@ export default {
         selectedJumpstart = this.get_jumpstarts.find(item => {
           return formatISODate(item.dateTime) === formatISODate(selectedDate);
         });
-        this.update_selected_jumpstart(selectedJumpstart);
-        this.fetch_available_articles({ jumpStartId: selectedJumpstart.id });
+        if (selectedJumpstart) {
+          this.update_selected_jumpstart(selectedJumpstart);
+          this.fetch_available_articles({ jumpStartId: selectedJumpstart.id });
+        }
         this.update_articles(selectedJumpstart.articles);
         for (i = 0; i < 5; i++) {
           article = selectedJumpstart.articles[i];
