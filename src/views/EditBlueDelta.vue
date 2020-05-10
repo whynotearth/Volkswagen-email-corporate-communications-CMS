@@ -2,11 +2,7 @@
   <LayoutFixedScrollable>
     <template #content>
       <div class="">
-        <BaseAppBarHeader
-          class="sticky top-0 bg-white"
-          title="Wednesday, 6 May, 2020 "
-          :to-link="'/settings/email-lists'"
-        />
+        <BaseAppBarHeader class="sticky top-0 bg-white" title="Wednesday, 6 May, 2020 " to-link="/blue-delta" />
         <div class="flex">
           <div class="container px-0 md:px-6 pt-4 px-4">
             <div class="flex justify-center p-4">

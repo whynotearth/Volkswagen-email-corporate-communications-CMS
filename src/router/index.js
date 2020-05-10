@@ -158,7 +158,7 @@ const routes = [
     }
   },
   {
-    path: '/edit/blue-delta/:id',
+    path: '/blue-delta/edit/:id',
     name: 'Dashboard',
     component: () => import('@/views/EditBlueDelta.vue'),
     props: true,
