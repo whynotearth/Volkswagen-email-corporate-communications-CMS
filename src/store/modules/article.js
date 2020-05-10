@@ -9,7 +9,7 @@ const defaultArticleFormData = {
   price: undefined,
   eventDate: '',
   // this is filelist
-  images: [],
+  image: '',
   selected_category: {}
 };
 
@@ -43,8 +43,8 @@ export default {
     update_eventDate(state, payload) {
       Vue.set(state.form_data, 'eventDate', payload);
     },
-    update_images(state, payload) {
-      Vue.set(state.form_data, 'images', payload);
+    update_image(state, payload) {
+      Vue.set(state.form_data, 'image', payload);
     },
     update_selected_category(state, payload) {
       Vue.set(state.form_data, 'selected_category', payload);
@@ -74,7 +74,7 @@ export default {
     get_description: state => state.form_data.description,
     get_price: state => state.form_data.price,
     get_eventDate: state => state.form_data.eventDate,
-    get_images: state => state.form_data.images,
+    get_image: state => state.form_data.image,
     get_selected_category: state => state.form_data.selected_category,
     get_response_message: state => state.response_message,
     get_categories: state => state.categories

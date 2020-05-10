@@ -34,7 +34,8 @@ export default {
       document.head.appendChild(theScript);
     },
     init() {
-      // available options https://cloudinary.com/documentation/upload_widget#unsigned_uploads
+      // unsigned upload doccument https://cloudinary.com/documentation/upload_widget#unsigned_uploads
+      // available options https://cloudinary.com/documentation/upload_widget#upload_widget_options
       var myWidget = window.cloudinary.createUploadWidget(
         {
           cloudName: 'whynotearth',
@@ -54,7 +55,8 @@ export default {
 
       document.getElementById('upload_widget').addEventListener(
         'click',
-        function() {
+        () => {
+          this.$emit('opened');
           myWidget.open();
         },
         false
