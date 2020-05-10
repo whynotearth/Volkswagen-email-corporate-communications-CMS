@@ -53,7 +53,7 @@
         <div class="container flex flex-col mt-8 py-6">
           <div class="flex relative border-top">
             <div class="flex-auto">
-              <BaseDropdown placeholder="Schedule time" :options="time_slots" v-model="$v.schedule_time.$model">
+              <BaseDropdown placeholder="Schedule time" :options="time_slots" v-model="$v.default_schedule_time.$model">
                 <template #title="{ selectedOption }">
                   <span v-if="time_slots.length === 0" class="text-gray-500">
                     No time slots!
@@ -72,7 +72,7 @@
                 </template>
               </BaseDropdown>
             </div>
-            <p v-if="$v.schedule_time.$error" class="text-xs text-error">
+            <p v-if="$v.default_schedule_time.$error" class="text-xs text-error">
               Please select time.
             </p>
           </div>
@@ -121,18 +121,17 @@ export default {
     default_distribution_list: {
       required
     },
-    schedule_time: {
+    default_schedule_time: {
       required
     }
   },
   data: () => ({
     to_query: '',
-    isOpenDropdown: false,
     selected_hour: new Date()
   }),
   computed: {
     ...mapGetters('recipient', ['get_recipients_available']),
-    ...mapGetters('email', ['get_default_distribution_groups', 'get_schedule_time', 'get_email_date']),
+    ...mapGetters('email', ['get_default_distribution_groups', 'get_email_date', 'get_default_schedule_time']),
     default_distribution_list: {
       get() {
         return this.get_default_distribution_groups;
@@ -141,47 +140,38 @@ export default {
         this.update_default_distribution_groups(value);
       }
     },
-    schedule_time: {
+    default_schedule_time: {
       get() {
-        return this.get_schedule_time;
+        return this.get_default_schedule_time;
       },
       set(value) {
-        this.update_schedule_time(value);
+        this.update_default_schedule_time(value);
       }
     },
     time_slots() {
       let time = [];
-      if (this.get_email_date) {
-        let d = new Date(this.get_email_date);
-        let start = 800;
-        let end = 2400;
-        let startHours = Math.floor(start / 100) * 3600000;
-        let endHours = Math.floor(end / 100) * 3600000;
-        let startMinutes = (start % 100) * 60000;
-        let endMinutes = (end % 100) * 60000;
-        let startTime = startHours + startMinutes;
-        let endTime = endHours + endMinutes;
-        d.setHours(0, 0, 0, 0);
-        if (Date.now() > d.getTime()) startTime = Date.now() - d.getTime() + 900000;
-        for (let i = startTime; i <= endTime; i += 900000) {
-          time.push(i);
-        }
+      let d = new Date();
+      let start = 800;
+      let end = 2400;
+      let startHours = Math.floor(start / 100) * 3600000;
+      let endHours = Math.floor(end / 100) * 3600000;
+      let startMinutes = (start % 100) * 60000;
+      let endMinutes = (end % 100) * 60000;
+      let startTime = startHours + startMinutes;
+      let endTime = endHours + endMinutes;
+      d.setHours(0, 0, 0, 0);
+      if (Date.now() > d.getTime()) startTime = Date.now() - d.getTime() + 900000;
+      for (let i = startTime; i <= endTime; i += 900000) {
+        time.push(i);
       }
       return time;
-    },
-    hours() {
-      let hours = [];
-      for (let i = 0; i < 24; i++) {
-        hours.push(new Date(0, 0, 0, i));
-      }
-      return hours;
     }
   },
   mounted() {
     this.fetch_recipients();
   },
   methods: {
-    ...mapMutations('email', ['update_default_distribution_groups', 'update_schedule_time']),
+    ...mapMutations('email', ['update_default_distribution_groups', 'update_default_schedule_time']),
     ...mapActions('recipient', ['fetch_recipients']),
     millisecondToTime(duration) {
       let minutes = parseInt((duration / (1000 * 60)) % 60),
@@ -195,13 +185,7 @@ export default {
     onToSearchChange(query) {
       this.to_query = query;
     },
-    formatDate,
-    toggleDropdown() {
-      this.isOpenDropdown = !this.isOpenDropdown;
-    },
-    get_selected_hour(hour) {
-      this.selected_hour = hour;
-    }
+    formatDate
   }
 };
 </script>
