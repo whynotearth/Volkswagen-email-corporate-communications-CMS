@@ -17,7 +17,7 @@
               <span v-if="$v.get_selected_articles.$error" class="text-xs text-error">
                 Please select atleast one article.
               </span>
-              <div class="px-12 py-4">
+              <div class="px-12 py-4 text-center">
                 <BaseButton @selectButton="updateBlueDelta" class="w-full sm:w-1/2" bgType="secondary">Save</BaseButton>
               </div>
               <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-4">
