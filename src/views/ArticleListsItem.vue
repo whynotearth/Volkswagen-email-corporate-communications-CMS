@@ -33,7 +33,7 @@
           class="body-1-mobile bg-surface"
           v-model="$v.description.$model"
           :label="stringDescriptionByCategoryName"
-          :placeholder="stringDescriptionByCategoryName"
+          :placeholder="isAnswersCategory ? stringDescriptionByCategoryName : 'Put the content of your article here.'"
           :error="$v.description.$dirty && $v.description.$invalid"
         >
           <span v-if="$v.description.$dirty && !$v.description.required" class="text-xs text-error pl-error-message">
@@ -175,11 +175,14 @@ export default {
       'get_date',
       'get_daily_plan'
     ]),
+    isAnswersCategory() {
+      return this.selectedArticle.category.slug === 'answers-at-a-glance';
+    },
     stringHeadlineByCategoryName() {
-      return this.selectedArticle.name === 'Answers At A Glance' ? 'Question' : 'Headline';
+      return this.isAnswersCategory ? 'Question' : 'Headline';
     },
     stringDescriptionByCategoryName() {
-      return this.selectedArticle.name === 'Answers At A Glance' ? 'Answer' : 'Description';
+      return this.isAnswersCategory ? 'Answer' : 'Description';
     },
     articleId() {
       return parseInt(this.$route.params.id);
