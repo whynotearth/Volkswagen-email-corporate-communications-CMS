@@ -66,7 +66,7 @@ export default {
     }
   },
   mounted() {
-    if (!this.id) this.$router.push({ name: 'JumpStartLists' });
+    if (!this.id || this.get_all_articles.length === 0) this.$router.push({ name: 'JumpStartLists' });
     this.fetch_available_articles({ jumpStartId: this.id });
     this.update_preview_link();
   },
