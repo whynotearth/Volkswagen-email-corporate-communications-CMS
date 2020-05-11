@@ -59,7 +59,7 @@
               </div>
             </div>
             <div>
-              <BaseTimePicker v-model="$v.time.$model" @blur="$v.time.$touch()" />
+              <BaseTimePicker v-model="$v.time.$model" :emailDate="get_email_date" @blur="$v.time.$touch()" />
               <span v-if="$v.time.$error" class="text-xs text-error">
                 Please schedule time.
               </span>

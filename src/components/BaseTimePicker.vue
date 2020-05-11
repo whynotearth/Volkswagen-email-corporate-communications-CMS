@@ -37,6 +37,7 @@ export default {
     prop: 'value',
     event: 'change'
   },
+  props: ['emailDate'],
   data() {
     return {
       selectedTime: null
@@ -45,19 +46,21 @@ export default {
   computed: {
     time_slots() {
       let time = [];
-      let d = new Date('00:00');
-      let start = 800;
-      let end = 2400;
-      let startHours = Math.floor(start / 100) * 3600000;
-      let endHours = Math.floor(end / 100) * 3600000;
-      let startMinutes = (start % 100) * 60000;
-      let endMinutes = (end % 100) * 60000;
-      let startTime = startHours + startMinutes;
-      let endTime = endHours + endMinutes;
-      d.setHours(0, 0, 0, 0);
-      if (Date.now() > d.getTime()) startTime = Date.now() - d.getTime() + 900000;
-      for (let i = startTime; i <= endTime; i += 900000) {
-        time.push(i);
+      if (this.get_email_date) {
+        let d = new Date(this.get_email_date);
+        let start = 800;
+        let end = 2400;
+        let startHours = Math.floor(start / 100) * 3600000;
+        let endHours = Math.floor(end / 100) * 3600000;
+        let startMinutes = (start % 100) * 60000;
+        let endMinutes = (end % 100) * 60000;
+        let startTime = startHours + startMinutes;
+        let endTime = endHours + endMinutes;
+        d.setHours(0, 0, 0, 0);
+        if (Date.now() > d.getTime()) startTime = Date.now() - d.getTime() + 900000;
+        for (let i = startTime; i <= endTime; i += 900000) {
+          time.push(i);
+        }
       }
       return time;
     }
