@@ -19,6 +19,9 @@ import Email from '@/views/Email';
 import Dashboard from '../views/Dashboard';
 import ArticleLists from '../views/ArticleLists';
 import ArticleListsItem from '../views/ArticleListsItem';
+// import DeveloperTesting from '../views/DeveloperTesting.vue';
+import ResetPassword from '../views/AuthResetPassword';
+import NewPassword from '../views/AuthNewPassword';
 import store from '../store';
 
 Vue.use(VueRouter);
@@ -29,10 +32,25 @@ const routes = [
     name: 'Home',
     component: Home
   },
+  // {
+  //   path: '/test',
+  //   name: 'DeveloperTesting',
+  //   component: DeveloperTesting
+  // },
   {
     path: '/login',
     name: 'AuthLogin',
     component: AuthLogin
+  },
+  {
+    path: '/reset-password',
+    name: 'ResetPassword',
+    component: ResetPassword
+  },
+  {
+    path: '/new-password',
+    name: 'NewPassword',
+    component: NewPassword
   },
   {
     path: '/articles/add/:step?',
