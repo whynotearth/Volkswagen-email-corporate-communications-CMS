@@ -1,7 +1,7 @@
 <template>
   <div v-if="model.articles.length" class="block w-full px-2 py-0 bg-surface border-b-1 min-h-44">
     <h2 class="flex tg-body-emphasis-mobile whitespace-no-wrap truncate text-left py-4 pl-2">
-      {{ formatDate(model.date, 'EEEE, d MMM,yyyy') }}
+      {{ formatDate(model.date, 'EEEE, d MMM, yyyy') }}
     </h2>
     <div class="flex flex-col text-left">
       <ul class="list-none">

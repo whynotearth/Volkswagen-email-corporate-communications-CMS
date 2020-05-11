@@ -4,7 +4,7 @@
       <div class="">
         <BaseAppBarHeader
           class="sticky top-0 bg-white"
-          title="Wednesday, 6 May, 2020 "
+          :title="formatDate(get_email_date, 'EEEE, d MMM, yyyy')"
           :to-link="{ name: 'JumpStartLists' }"
         />
         <div class="flex mb-40">
@@ -68,7 +68,7 @@
                 Please schedule time.
               </span>
             </div>
-            <div class="px-12 py-4">
+            <div class="md:px-12 py-4">
               <BaseButton @selectButton="updateBlueDelta" class="w-full sm:w-1/2" bgType="secondary">Save</BaseButton>
             </div>
           </div>
@@ -84,7 +84,7 @@
 <script>
 import { mapGetters, mapMutations, mapActions } from 'vuex';
 import { required } from 'vuelidate/lib/validators';
-import { sleep } from '@/helpers.js';
+import { sleep, formatDate } from '@/helpers.js';
 
 import BaseButton from '@/components/BaseButton.vue';
 import BaseTimePicker from '@/components/BaseTimePicker.vue';
@@ -161,6 +161,7 @@ export default {
     ...mapMutations('email', ['update_email_recipients', 'update_schedule_time']),
     ...mapActions('recipient', ['fetch_recipients']),
     ...mapActions('email', ['create_jumpstart', 'update_preview_link', 'clear_email_data']),
+    formatDate,
     onToSearchChange(query) {
       this.to_query = query;
     },
