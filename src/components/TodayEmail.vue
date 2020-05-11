@@ -8,7 +8,7 @@
     </div>
     <div>
       <h2 class="tg-h2-mobile text-primary">Daily Email will automatically send in</h2>
-      <div class="counter tg-h2-mobile my-2 text-center">
+      <div v-if="get_selected_jumpstart.dateTime" class="counter tg-h2-mobile my-2 text-center">
         <BaseCounter :date="formatDate(get_selected_jumpstart.dateTime, 'MMM d, yyyy h:mm aaa')" />
       </div>
     </div>
