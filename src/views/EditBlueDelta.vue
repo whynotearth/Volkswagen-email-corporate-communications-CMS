@@ -9,19 +9,19 @@
         />
         <div class="flex mb-40">
           <div class="container px-0 md:px-6 pt-4 px-4">
-            <div class="flex justify-center p-4">
-              <div class="relative">
+            <div class="relative my-4">
+              <div class="w-full">
                 <EmailPreview />
-                <router-link
-                  :to="{ name: 'BlueDeltaRearrange', params: { id: id } }"
-                  class="absolute bg-opacity-50 bg-black -mx-4 md:m-0 inset-0 text-white"
-                >
-                  <div class="flex h-full bg-transparent justify-center items-center">
-                    <RearrangeIcon />
-                    <span class="ml-4 em-high uppercase tg-color-label-mobile leading-normal">REARRANGE</span>
-                  </div>
-                </router-link>
               </div>
+              <router-link
+                :to="{ name: 'BlueDeltaRearrange', params: { id: id } }"
+                class="absolute bg-opacity-50 bg-black -mx-4 md:m-0 inset-0 text-white"
+              >
+                <div class="flex h-full bg-transparent justify-center items-center">
+                  <RearrangeIcon />
+                  <span class="ml-4 em-high uppercase tg-color-label-mobile leading-normal">REARRANGE</span>
+                </div>
+              </router-link>
             </div>
             <div class="py-4">
               <div
