@@ -39,7 +39,7 @@ export default {
     LayoutFixedScrollable,
     UserCard,
     TodayEmail
-    //    SmartSuggestions
+    //SmartSuggestions
   },
   computed: {},
   methods: {}

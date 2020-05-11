@@ -29,26 +29,26 @@ export default {
   name: 'TodaysEmail',
   components: { BaseButton, BaseCounter, EmailPreview },
   mounted() {
-    this.fetch_posts({ params: { date: formatISODate(new Date()) } })
+    this.fetch_jumpstarts()
       .then(() => {
-        for (let i = 0; i < this.get_posts.length; i++) {
-          if (this.get_posts[i].category.name === 'Answers At A Glance') {
-            this.update_selected_posts(this.get_posts[i]);
-            this.update_preview_link('');
-            this.debounced_preview();
-            break;
-          }
+        let article, i;
+        this.update_selected_jumpstart(this.get_jumpstarts[0]);
+        for (i = 0; i < 5; i++) {
+          article = this.get_selected_jumpstart.articles[i];
+          if (article) this.update_selected_articles(article);
+          else break;
         }
+        this.update_preview_link('');
+        this.debounced_preview();
       })
       .catch();
   },
   methods: {
-    ...mapActions('email', ['debounced_preview']),
-    ...mapActions('post', ['fetch_posts']),
-    ...mapMutations('email', ['update_selected_posts', 'update_preview_link'])
+    ...mapActions('email', ['debounced_preview', 'fetch_jumpstarts', 'update_selected_articles']),
+    ...mapMutations('email', ['update_selected_jumpstart', 'update_preview_link'])
   },
   computed: {
-    ...mapGetters('post', ['get_posts'])
+    ...mapGetters('email', ['get_jumpstarts', 'get_selected_jumpstart'])
   }
 };
 </script>
