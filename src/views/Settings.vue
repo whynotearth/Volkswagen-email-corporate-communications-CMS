@@ -2,7 +2,7 @@
   <LayoutFixedScrollable>
     <template #content>
       <div>
-        <BaseAppBarHeader title="Settings" :to-link="'/'" />
+        <BaseAppBarHeader title="Settings" :to-link="{ name: 'Dashboard' }" />
         <div class="container px-0 md:px-6">
           <div class="flex items-strech items-center border-b-1 border-divider">
             <router-link

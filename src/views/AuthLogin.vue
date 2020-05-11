@@ -31,7 +31,7 @@ export default {
   },
   methods: {
     onSuccess() {
-      this.$router.push({ name: 'Home' });
+      this.$router.push({ name: 'Dashboard' });
     }
   }
 };

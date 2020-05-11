@@ -58,7 +58,7 @@ export default {
       const wantToExit = newStep < 1;
       if (wantToExit) {
         this.$store.dispatch('memo/clear_form_data');
-        return this.$router.push({ name: 'Home' });
+        return this.$router.push({ name: 'Dashboard' });
       }
 
       const wantToFinish = newStep > this.steps.length;
@@ -102,7 +102,7 @@ export default {
       await sleep(1000);
 
       await this.$router.push({
-        name: 'Home'
+        name: 'Dashboard'
       });
 
       this.$store.commit('overlay/updateModel', {

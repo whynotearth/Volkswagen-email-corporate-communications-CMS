@@ -9,7 +9,7 @@
     <div>
       <h2 class="tg-h2-mobile text-primary">Daily Email will automatically send in</h2>
       <div class="counter tg-h2-mobile my-2 text-center">
-        <BaseCounter date="Jan 5, 2021 15:37:25" />
+        <BaseCounter date="May 15, 2020 15:37:25" />
       </div>
     </div>
     <div>
@@ -39,7 +39,6 @@ export default {
           else break;
         }
         this.update_preview_link('');
-        this.debounced_preview();
       })
       .catch();
   },

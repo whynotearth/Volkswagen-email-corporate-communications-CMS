@@ -176,7 +176,7 @@ router.beforeEach(async (to, from, next) => {
 
   if (to.meta.requiresAuth) {
     if (pingResult === 'IS_LOGGED_OUT') {
-      await router.push({ name: 'Home' });
+      await router.push({ name: 'Dashboard' });
       setTimeout(function() {
         window.location.reload();
       });
