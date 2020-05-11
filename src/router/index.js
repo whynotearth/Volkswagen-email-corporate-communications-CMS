@@ -33,7 +33,14 @@ const routes = [
   {
     path: '/',
     name: 'Dashboard',
-    component: Dashboard
+    component: Dashboard,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/dashboard',
+    redirect: '/'
   },
   // {
   //   path: '/test',
@@ -189,9 +196,19 @@ const routes = [
     }
   },
   {
-    path: '/dashboard',
-    name: 'Dashboard',
-    component: Dashboard,
+    path: '/blue-delta/edit/:id',
+    name: 'EditBlueDelta',
+    component: () => import('@/views/EditBlueDelta.vue'),
+    props: true,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/blue-delta/rearrange/:id',
+    name: 'BlueDeltaRearrange',
+    component: () => import('@/views/BlueDeltaRearrange.vue'),
+    props: true,
     meta: {
       requiresAuth: true
     }
