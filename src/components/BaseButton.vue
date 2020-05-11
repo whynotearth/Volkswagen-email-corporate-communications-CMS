@@ -1,7 +1,7 @@
 <template>
   <button
     @click="select()"
-    class="em-high text-white text-sm font-medium leading-6 uppercase py-2 px-4 rounded-full"
+    class="bg-primary em-high text-white text-sm font-medium leading-6 uppercase py-2 px-4 rounded-full"
     :class="`bg-${bgType}`"
   >
     <slot></slot>
@@ -23,7 +23,7 @@ export default {
   }
 };
 </script>
-:class="[props.bgType ? `bg-${props.bgType}` : 'bg-primary', props.classes ? props.classes : '']"
+
 <style scoped>
 button {
   letter-spacing: 0.02;
