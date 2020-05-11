@@ -15,6 +15,7 @@ export default {
     selected_articles: [],
     email_recipients: [],
     jumpstarts: [],
+    available_articles: [],
     response_message: {
       type: '', // error, success
       message: '',
@@ -30,17 +31,22 @@ export default {
     get_email_recipients: state => state.email_recipients,
     get_jumpstarts: state => state.jumpstarts,
     get_response_message: state => state.response_message,
-    get_articles: state => state.articles
+    get_articles: state => state.articles,
+    get_available_articles: state => state.available_articles
   },
   actions: {
     async create_jumpstart({ commit }, payload) {
-      await JumpStartService.jumpstart(payload.params);
+      await JumpStartService.jumpstart1(payload.params);
     },
     async fetch_jumpstarts({ commit }) {
       store.commit('loading/loading', true);
-      const data = await JumpStartService.jumpstart1();
+      const data = await JumpStartService.jumpstart();
       commit('update_jumpstarts', data);
       store.commit('loading/loading', false);
+    },
+    async fetch_available_articles({ commit }, payload) {
+      const data = await JumpStartService.availablearticles(payload);
+      commit('update_available_articles', data);
     },
     update_selected_articles({ state }, payload) {
       if (!payload) {
@@ -50,6 +56,10 @@ export default {
         i !== -1 ? state.selected_articles.splice(i, 1) : state.selected_articles.push(payload);
       }
     },
+    update_available_articles({ state, commit }, payload) {
+      let i = state.available_articles.indexOf(payload);
+      i !== -1 ? state.available_articles.splice(i, 1) : state.available_articles.push(payload);
+    },
     update_preview_link({ state }, payload) {
       if (payload === '') {
         state.preview_link = payload;
@@ -57,6 +67,9 @@ export default {
       }
       const base = `${BASE_API}/api/v0/volkswagen/jumpstart/${state.selected_jumpstart.id}/preview`;
       const url = new URL(base);
+      state.selected_articles.forEach(article => {
+        url.searchParams.append('articleIds', article.id);
+      });
       state.preview_link = url.href;
     },
     clear_email_data({ commit, dispatch }) {
@@ -95,6 +108,9 @@ export default {
     },
     update_articles(state, payload) {
       state.articles = payload;
+    },
+    update_available_articles(state, payload) {
+      state.available_articles = payload;
     }
   }
 };

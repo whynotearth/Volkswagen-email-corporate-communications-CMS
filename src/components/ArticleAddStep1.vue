@@ -7,10 +7,10 @@
 
       <ul class="list-none bg-background">
         <li
-          v-for="category in get_categories"
-          :key="category.id"
+          v-for="(category, index) in get_categories"
+          :key="index"
           class="text-left py-1 px-2"
-          :class="{ active: category.id === get_selected_category.id }"
+          :class="{ active: category.slug === get_selected_category.slug }"
         >
           <a @click.prevent="selected_category = category" href="#" class="flex items-center">
             <div class="w-12 h-12">

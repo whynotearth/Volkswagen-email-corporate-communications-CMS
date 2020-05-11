@@ -6,6 +6,7 @@ import ArticleAdd from '../views/ArticleAdd.vue';
 import AuthLogin from '../views/AuthLogin.vue';
 import MemoAdd from '../views/MemoAdd.vue';
 import Settings from '../views/Settings';
+import MyAccount from '../views/MyAccount';
 import ActivityFeedMemoList from '../views/ActivityFeedMemoList.vue';
 import ActivityFeedMemoItem from '../views/ActivityFeedMemoItem.vue';
 import EmailLists from '../views/EmailLists';
@@ -17,6 +18,11 @@ import EmailListImport from '../views/EmailListImport';
 import EmailListImportHelp from '../views/EmailListImportHelp';
 import Email from '@/views/Email';
 import Dashboard from '../views/Dashboard';
+import ArticleLists from '../views/ArticleLists';
+import ArticleListsItem from '../views/ArticleListsItem';
+// import DeveloperTesting from '../views/DeveloperTesting.vue';
+import ResetPassword from '../views/AuthResetPassword';
+import NewPassword from '../views/AuthNewPassword';
 import store from '../store';
 
 Vue.use(VueRouter);
@@ -27,6 +33,11 @@ const routes = [
     name: 'Home',
     component: Home
   },
+  // {
+  //   path: '/test',
+  //   name: 'DeveloperTesting',
+  //   component: DeveloperTesting
+  // },
   {
     path: '/stats',
     name: 'Stats',
@@ -39,6 +50,16 @@ const routes = [
     path: '/login',
     name: 'AuthLogin',
     component: AuthLogin
+  },
+  {
+    path: '/reset-password',
+    name: 'ResetPassword',
+    component: ResetPassword
+  },
+  {
+    path: '/new-password',
+    name: 'NewPassword',
+    component: NewPassword
   },
   {
     path: '/articles/add/:step?',
@@ -63,6 +84,14 @@ const routes = [
     path: '/settings',
     name: 'Settings',
     component: Settings,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/settings/my-account',
+    name: 'MyAccount',
+    component: MyAccount,
     meta: {
       requiresAuth: true
     }
@@ -153,6 +182,22 @@ const routes = [
     path: '/dashboard',
     name: 'Dashboard',
     component: Dashboard,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/article-lists',
+    name: 'ArticleLists',
+    component: ArticleLists,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/article-lists/:id',
+    name: 'ArticleListsItem',
+    component: ArticleListsItem,
     meta: {
       requiresAuth: true
     }
