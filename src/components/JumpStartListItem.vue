@@ -1,0 +1,39 @@
+<template>
+  <div v-if="model.articles.length" class="block w-full px-2 py-0 bg-surface border-b-1 h-44">
+    <h2 class="flex tg-body-emphasis-mobile whitespace-no-wrap truncate text-left py-4 pl-2">
+      {{ formatDate(model.date, 'EEEE, d MMM,yyyy') }}
+    </h2>
+    <div class="flex flex-col text-left">
+      <ul class="list-none">
+        <li class="flex flex-row" v-for="(item, index) in model.articles" :key="index">
+          <img :src="item.category.image" class="w-5 h-5 p-1" />
+          <div class="tg-caption-mobile em-disabled text-black text-left truncate p-1 pl-2">
+            {{ item.headline }}
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</template>
+
+<script>
+import { formatDate } from '@/helpers.js';
+
+export default {
+  name: 'JumpStartItem',
+  props: {
+    model: {
+      type: Object
+    }
+  },
+  methods: {
+    formatDate
+  }
+};
+</script>
+
+<style scoped>
+.h-44 {
+  height: 11.5rem;
+}
+</style>
