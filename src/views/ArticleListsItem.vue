@@ -1,123 +1,137 @@
 <template>
-  <div class="flex-grow">
-    <BaseAppBarHeader :title="get_headline" :to-link="{ name: 'ArticleLists' }" />
-    <div v-if="selectedArticle.id" class="container px-0 py-6 text-left">
-      <div class="px-4 md:px-6 md:pb-4">
-        <div class="flex items-center pb-5 bg-surface">
-          <div class="w-8 h-8">
-            <img :src="selectedArticle.category.image" alt="" />
+  <LayoutFixedScrollable>
+    <template #header>
+      <BaseAppBarHeader :title="get_headline" :to-link="{ name: 'ArticleLists' }" />
+    </template>
+    <template #content>
+      <div class="flex-grow">
+        <div v-if="selectedArticle.id" class="container px-0 py-6 text-left">
+          <div class="px-4 md:px-6 md:pb-4">
+            <div class="flex items-center pb-5 bg-surface">
+              <div class="w-8 h-8">
+                <img :src="selectedArticle.category.image" alt="" />
+              </div>
+              <div class="flex-auto pl-4">
+                <div class="w-full body-1-mobile">{{ selectedArticle.category.name }}</div>
+                <div class="w-full text-xs text-black em-disabled">{{ selectedArticle.category.description }}</div>
+              </div>
+            </div>
+            <BaseInputText
+              v-if="isFieldRequired('headline')"
+              class="bg-surface mb-4"
+              v-model="$v.headline.$model"
+              :label="stringHeadlineByCategoryName"
+              :placeholder="stringHeadlineByCategoryName"
+              :error="$v.headline.$dirty && $v.headline.$invalid"
+            >
+              <span v-if="$v.headline.$dirty && !$v.headline.required" class="text-xs text-error pl-error-message">
+                {{ stringHeadlineByCategoryName }} is required
+              </span>
+              <span v-if="$v.headline.$dirty && !$v.headline.maxLength" class="text-xs text-error pl-error-message">
+                {{ stringHeadlineByCategoryName }} should be less than 80 characters
+              </span>
+            </BaseInputText>
+
+            <BaseInputTextarea
+              v-if="isFieldRequired('description')"
+              class="body-1-mobile bg-surface"
+              v-model="$v.description.$model"
+              :label="stringDescriptionByCategoryName"
+              :placeholder="
+                isAnswersCategory ? stringDescriptionByCategoryName : 'Put the content of your article here.'
+              "
+              :error="$v.description.$dirty && $v.description.$invalid"
+            >
+              <span
+                v-if="$v.description.$dirty && !$v.description.required"
+                class="text-xs text-error pl-error-message"
+              >
+                {{ stringDescriptionByCategoryName }} is required
+              </span>
+              <span
+                v-if="$v.description.$dirty && !$v.description.maxLength"
+                class="text-xs text-error pl-error-message"
+              >
+                {{ stringDescriptionByCategoryName }} should be less than 750 characters
+              </span>
+            </BaseInputTextarea>
+
+            <BaseInputText
+              v-if="isFieldRequired('price')"
+              class="bg-surface mb-4"
+              v-model="$v.price.$model"
+              label="Price"
+              placeholder="Price"
+              :error="$v.price.$dirty && $v.price.$invalid"
+            >
+              <span v-if="$v.price.$dirty && !$v.price.required" class="text-xs text-error pl-error-message">
+                Price is required
+              </span>
+              <span v-if="$v.price.$dirty && !$v.price.decimal" class="text-xs text-error pl-error-message">
+                Price is not a valid number
+              </span>
+            </BaseInputText>
+
+            <BaseInputText
+              v-if="isFieldRequired('eventDate')"
+              class="bg-surface mb-4"
+              v-model="$v.eventDate.$model"
+              label="Date/Time"
+              placeholder="20 March, 2020, 7:00 PM"
+              :error="$v.eventDate.$dirty && $v.eventDate.$invalid"
+            >
+              <span v-if="$v.eventDate.$dirty && !$v.eventDate.required" class="text-xs text-error pl-error-message">
+                Date/Time is required
+              </span>
+              <span v-if="$v.eventDate.$dirty && !$v.eventDate.mustBeDate" class="text-xs text-error pl-error-message">
+                Date/Time is invalid. Example: 20 March, 2020, 7:30 pm
+              </span>
+            </BaseInputText>
           </div>
-          <div class="flex-auto pl-4">
-            <div class="w-full body-1-mobile">{{ selectedArticle.category.name }}</div>
-            <div class="w-full text-xs text-black em-disabled">{{ selectedArticle.category.description }}</div>
-          </div>
-        </div>
-        <BaseInputText
-          v-if="isFieldRequired('headline')"
-          class="bg-surface mb-4"
-          v-model="$v.headline.$model"
-          :label="stringHeadlineByCategoryName"
-          :placeholder="stringHeadlineByCategoryName"
-          :error="$v.headline.$dirty && $v.headline.$invalid"
-        >
-          <span v-if="$v.headline.$dirty && !$v.headline.required" class="text-xs text-error pl-error-message">
-            {{ stringHeadlineByCategoryName }} is required
-          </span>
-          <span v-if="$v.headline.$dirty && !$v.headline.maxLength" class="text-xs text-error pl-error-message">
-            {{ stringHeadlineByCategoryName }} should be less than 80 characters
-          </span>
-        </BaseInputText>
 
-        <BaseInputTextarea
-          v-if="isFieldRequired('description')"
-          class="body-1-mobile bg-surface"
-          v-model="$v.description.$model"
-          :label="stringDescriptionByCategoryName"
-          :placeholder="isAnswersCategory ? stringDescriptionByCategoryName : 'Put the content of your article here.'"
-          :error="$v.description.$dirty && $v.description.$invalid"
-        >
-          <span v-if="$v.description.$dirty && !$v.description.required" class="text-xs text-error pl-error-message">
-            {{ stringDescriptionByCategoryName }} is required
-          </span>
-          <span v-if="$v.description.$dirty && !$v.description.maxLength" class="text-xs text-error pl-error-message">
-            {{ stringDescriptionByCategoryName }} should be less than 750 characters
-          </span>
-        </BaseInputTextarea>
+          <div class="border-divider border-b-1 w-auto my-5 md:mx-6 "></div>
 
-        <BaseInputText
-          v-if="isFieldRequired('price')"
-          class="bg-surface mb-4"
-          v-model="$v.price.$model"
-          label="Price"
-          placeholder="Price"
-          :error="$v.price.$dirty && $v.price.$invalid"
-        >
-          <span v-if="$v.price.$dirty && !$v.price.required" class="text-xs text-error pl-error-message">
-            Price is required
-          </span>
-          <span v-if="$v.price.$dirty && !$v.price.decimal" class="text-xs text-error pl-error-message">
-            Price is not a valid number
-          </span>
-        </BaseInputText>
+          <div class="px-4 md:px-6">
+            <div class="w-full text-left py-3 tg-body-mobile">Schedule Article</div>
+            <BaseDropdown class="relative" placeholder="Schedule time" :options="dates" v-model="$v.date.$model">
+              <template #title="{ selectedOption }">
+                <span v-if="dates.length === 0" class="text-gray-500">
+                  No time slots!
+                </span>
+                <span v-else-if="selectedOption" class="em-medium">
+                  {{ formatDate(selectedOption) }}
+                </span>
+              </template>
+              <template #option="{ option }">
+                <span>
+                  {{ formatDate(option) }}
+                </span>
+              </template>
+            </BaseDropdown>
+            <p v-if="get_response_message.message" class="font-bold px-4 mb-4" :class="get_response_message.class">
+              {{ get_response_message.message }}
+            </p>
 
-        <BaseInputText
-          v-if="isFieldRequired('eventDate')"
-          class="bg-surface mb-4"
-          v-model="$v.eventDate.$model"
-          label="Date/Time"
-          placeholder="20 March, 2020, 7:00 PM"
-          :error="$v.eventDate.$dirty && $v.eventDate.$invalid"
-        >
-          <span v-if="$v.eventDate.$dirty && !$v.eventDate.required" class="text-xs text-error pl-error-message">
-            Date/Time is required
-          </span>
-          <span v-if="$v.eventDate.$dirty && !$v.eventDate.mustBeDate" class="text-xs text-error pl-error-message">
-            Date/Time is invalid. Example: 20 March, 2020, 7:30 pm
-          </span>
-        </BaseInputText>
-      </div>
-
-      <div class="border-divider border-b-1 w-auto my-5 md:mx-6 "></div>
-
-      <div class="px-4 md:px-6">
-        <div class="w-full text-left py-3 tg-body-mobile">Schedule Article</div>
-        <BaseDropdown class="relative" placeholder="Schedule time" :options="dates" v-model="$v.date.$model">
-          <template #title="{ selectedOption }">
-            <span v-if="dates.length === 0" class="text-gray-500">
-              No time slots!
-            </span>
-            <span v-else-if="selectedOption" class="em-medium">
-              {{ formatDate(selectedOption) }}
-            </span>
-          </template>
-          <template #option="{ option }">
-            <span>
-              {{ formatDate(option) }}
-            </span>
-          </template>
-        </BaseDropdown>
-        <p v-if="get_response_message.message" class="font-bold px-4 mb-4" :class="get_response_message.class">
-          {{ get_response_message.message }}
-        </p>
-
-        <div
-          class="block text-center bg-secondary w-full hover:bg-blue-700 text-white font-bold py-2
+            <div
+              class="block text-center bg-secondary w-full hover:bg-blue-700 text-white font-bold py-2
            px-4 rounded-full focus:outline-none focus:shadow-outline transition duration-100
            ease-in-out transition-all label-mobile my-6 cursor-pointer mt-16 md:w-1/3 m-auto"
-          @click="submit()"
-        >
-          Save
-        </div>
-        <div
-          class="block text-center m-auto text-error font-bold label-mobile my-6 w-16
+              @click="submit()"
+            >
+              Save
+            </div>
+            <div
+              class="block text-center m-auto text-error font-bold label-mobile my-6 w-16
            cursor-pointer"
-          @click="deleteItem()"
-        >
-          DELETE
+              @click="deleteItem()"
+            >
+              DELETE
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
+    </template>
+  </LayoutFixedScrollable>
 </template>
 
 <script>
@@ -129,10 +143,12 @@ import { mapGetters, mapMutations, mapActions } from 'vuex';
 import { required, decimal, maxLength, requiredIf } from 'vuelidate/lib/validators';
 import { mustBeDate } from '@/validations.js';
 import { formatISODate, formatDate } from '@/helpers.js';
+import LayoutFixedScrollable from '@/components/LayoutFixedScrollable.vue';
 
 export default {
   name: 'ArticleListsItem',
   components: {
+    LayoutFixedScrollable,
     BaseAppBarHeader,
     BaseInputText,
     BaseInputTextarea,
