@@ -6,14 +6,9 @@
     <template #content>
       <div class="flex flex-col py-3">
         <div class="container px-0 md:px-6">
-          <router-link
-            v-for="(plan, index) in get_daily_plan"
-            :to="{ name: 'EditBlueDelta', params: { id: plan.jumpStartId || 1 } }"
-            :key="index"
-            class="cursor-pointer"
-          >
+          <div v-for="(plan, index) in get_daily_plan" :key="index" class="cursor-pointer" @click="selectPlan(plan)">
             <JumpStartItem :model="plan" />
-          </router-link>
+          </div>
         </div>
       </div>
     </template>
@@ -36,7 +31,14 @@ export default {
     this.fetch_daily_plan();
   },
   methods: {
-    ...mapActions('article', ['fetch_daily_plan'])
+    ...mapActions('article', ['fetch_daily_plan']),
+    ...mapActions('email', ['update_selected_articles']),
+    selectPlan(plan) {
+      plan.articles.forEach(plan => {
+        this.update_selected_articles(plan);
+      });
+      this.$router.push({ name: 'EditBlueDelta', params: { id: plan.jumpStartId || 38, data: plan } });
+    }
   }
 };
 </script>

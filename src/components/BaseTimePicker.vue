@@ -46,8 +46,8 @@ export default {
   computed: {
     time_slots() {
       let time = [];
-      if (this.get_email_date) {
-        let d = new Date(this.get_email_date);
+      if (this.emailDate) {
+        let d = new Date(this.emailDate);
         let start = 800;
         let end = 2400;
         let startHours = Math.floor(start / 100) * 3600000;

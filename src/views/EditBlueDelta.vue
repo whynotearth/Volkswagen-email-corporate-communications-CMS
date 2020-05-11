@@ -9,7 +9,7 @@
               <div class="relative">
                 <EmailPreview />
                 <router-link
-                  :to="{ name: 'BlueDeltaRearrange', params: { id: id || 1 } }"
+                  :to="{ name: 'BlueDeltaRearrange', params: { id: id || 38 } }"
                   class="absolute bg-opacity-50 bg-black -mx-4 md:m-0 inset-0 text-white"
                 >
                   <div class="flex h-full bg-transparent justify-center items-center">
@@ -59,7 +59,7 @@
               </div>
             </div>
             <div>
-              <BaseTimePicker v-model="$v.time.$model" :emailDate="get_email_date" @blur="$v.time.$touch()" />
+              <BaseTimePicker v-model="$v.time.$model" :emailDate="data.date" @blur="$v.time.$touch()" />
               <span v-if="$v.time.$error" class="text-xs text-error">
                 Please schedule time.
               </span>
@@ -92,6 +92,10 @@ export default {
     id: {
       type: [String, Number],
       required: true
+    },
+    data: {
+      type: Object,
+      required: true
     }
   },
   validations: {
@@ -113,7 +117,6 @@ export default {
   },
   data() {
     return {
-      recipientsIsDirthy: false,
       to_query: ''
     };
   },
@@ -146,21 +149,21 @@ export default {
   methods: {
     ...mapMutations('email', ['update_email_recipients', 'update_schedule_time']),
     ...mapActions('recipient', ['fetch_recipients']),
-    ...mapActions('email', ['update_selected_articles']),
+    ...mapActions('email', ['create_jumpstart']),
     onToSearchChange(query) {
       this.to_query = query;
     },
     updateBlueDelta() {
       let total_time = new Date(this.get_email_date + this.get_schedule_time).toISOString();
       const params = {
-        jumpStartId: this.get_selected_jumpstart.id,
+        jumpStartId: this.id,
         body: {
           dateTime: total_time,
           articleIds: this.get_selected_articles.map(article => article.id),
           distributionGroups: this.get_email_recipients
         }
       };
-      this.update_selected_articles({ params }).catch(error => {
+      this.create_jumpstart({ params }).catch(error => {
         this.update_response_message({
           message: error.response.data.message,
           type: 'error',
