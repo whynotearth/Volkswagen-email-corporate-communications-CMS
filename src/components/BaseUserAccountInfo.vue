@@ -6,10 +6,10 @@
       </h2>
     </div>
     <div class="mb-4">
-      <BaseInputText class="bg-surface" label="Name" type="text"></BaseInputText>
+      <BaseInputText class="bg-surface" label="Name" type="text" v-model="username"></BaseInputText>
     </div>
     <div class="mb-4">
-      <BaseInputText class="bg-surface" label="Email" type="email"></BaseInputText>
+      <BaseInputText class="bg-surface" label="Email" type="email" v-model="password"></BaseInputText>
     </div>
     <div class="mb-4 items-center flex justify-center py-8">
       <BaseButton>
@@ -29,6 +29,12 @@ export default {
   components: { BaseInputText, BaseButton },
   computed: {
     ...mapGetters('auth', ['email', 'password'])
+  },
+  data() {
+    return {
+      username: '',
+      password: ''
+    };
   }
 };
 </script>
