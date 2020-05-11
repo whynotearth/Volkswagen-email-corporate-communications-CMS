@@ -17,6 +17,8 @@ import EmailListImport from '../views/EmailListImport';
 import EmailListImportHelp from '../views/EmailListImportHelp';
 import Email from '@/views/Email';
 import Dashboard from '../views/Dashboard';
+import ArticleLists from '../views/ArticleLists';
+import ArticleListsItem from '../views/ArticleListsItem';
 // import DeveloperTesting from '../views/DeveloperTesting.vue';
 import ResetPassword from '../views/AuthResetPassword';
 import NewPassword from '../views/AuthNewPassword';
@@ -171,6 +173,22 @@ const routes = [
     path: '/dashboard',
     name: 'Dashboard',
     component: Dashboard,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/article-lists',
+    name: 'ArticleLists',
+    component: ArticleLists,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/article-lists/:id',
+    name: 'ArticleListsItem',
+    component: ArticleListsItem,
     meta: {
       requiresAuth: true
     }

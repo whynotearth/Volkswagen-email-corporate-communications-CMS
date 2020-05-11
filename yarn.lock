@@ -1367,10 +1367,10 @@
     "@webassemblyjs/wast-parser" "1.9.0"
     "@xtuc/long" "4.2.2"
 
-"@whynotearth/meredith-axios@^1.0.19":
-  version "1.0.19"
-  resolved "https://registry.yarnpkg.com/@whynotearth/meredith-axios/-/meredith-axios-1.0.19.tgz#9d43ddb7b489ef183dc8807df6dc47a9b86f3572"
-  integrity sha512-ATs5OSqD/zLc7pb0ttIr2Th4x9VbPT7mVaqVt4IDctMz1xqk18RVQ2JG6u0oURbjHnyBxjIeX2QCINN8l/KpQg==
+"@whynotearth/meredith-axios@^1.0.20":
+  version "1.0.20"
+  resolved "https://registry.yarnpkg.com/@whynotearth/meredith-axios/-/meredith-axios-1.0.20.tgz#78c2368862398387f43a2e34f1b01c17b144d73a"
+  integrity sha512-Ok14v7n2YK12jZD831TzbLAT/MeFRUX1a2qDCgkrI2Z1Np3fZqJweREi/JBN2qqKF+qZOxMfV0cOpjrT01U+uQ==
   dependencies:
     swagger-axios-codegen "^0.10.3"
 
@@ -3360,9 +3360,9 @@ entities@^1.1.1:
   integrity sha512-f2LZMYl1Fzu7YSBKg+RoROelpOaNrcGmE9AZubeDfrCEia483oW4MI4VyFd5VNHIgQ/7qm1I0wUHK1eJnn2y2w==
 
 entities@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/entities/-/entities-2.0.0.tgz#68d6084cab1b079767540d80e56a39b423e4abf4"
-  integrity sha512-D9f7V0JSRwIxlRI2mjMqufDrRDnx8p+eEOz7aUM9SuvF8gsBzra0/6tbjl1m8eQHrZlYj6PxqE00hZ1SAIKPLw==
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/entities/-/entities-2.0.2.tgz#ac74db0bba8d33808bbf36809c3a5c3683531436"
+  integrity sha512-dmD3AvJQBUjKpcNkoqr+x+IF0SdRtPz9Vk0uTy4yWqga9ibB6s4v++QFWNohjiUGoMlF552ZvNyXDxz5iW0qmw==
 
 errno@^0.1.3, errno@~0.1.7:
   version "0.1.7"
