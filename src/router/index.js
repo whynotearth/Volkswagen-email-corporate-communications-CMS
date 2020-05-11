@@ -17,7 +17,7 @@ import EmailListImport from '../views/EmailListImport';
 import EmailListImportHelp from '../views/EmailListImportHelp';
 import Email from '@/views/Email';
 import Dashboard from '../views/Dashboard';
-import AdminsJumpStart from '../views/admins/JumpStart';
+import JumpStartLists from '../views/JumpStartLists';
 import ArticleLists from '../views/ArticleLists';
 import ArticleListsItem from '../views/ArticleListsItem';
 // import DeveloperTesting from '../views/DeveloperTesting.vue';
@@ -179,9 +179,9 @@ const routes = [
     }
   },
   {
-    path: '/admin/jumpstart',
-    name: 'AdminsJumpStart',
-    component: AdminsJumpStart,
+    path: '/jumpstart-lists',
+    name: 'JumpStartLists',
+    component: JumpStartLists,
     meta: {
       requiresAuth: true
     }
