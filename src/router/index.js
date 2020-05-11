@@ -17,6 +17,7 @@ import EmailListImport from '../views/EmailListImport';
 import EmailListImportHelp from '../views/EmailListImportHelp';
 import Email from '@/views/Email';
 import Dashboard from '../views/Dashboard';
+// import DeveloperTesting from '../views/DeveloperTesting.vue';
 import ResetPassword from '../views/AuthResetPassword';
 import NewPassword from '../views/AuthNewPassword';
 import store from '../store';
@@ -29,6 +30,11 @@ const routes = [
     name: 'Home',
     component: Home
   },
+  // {
+  //   path: '/test',
+  //   name: 'DeveloperTesting',
+  //   component: DeveloperTesting
+  // },
   {
     path: '/login',
     name: 'AuthLogin',

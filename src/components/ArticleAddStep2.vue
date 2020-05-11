@@ -2,7 +2,7 @@
   <div class="py-6 flex-grow">
     <div class="container px-4 md:px-6 text-left">
       <BaseInputText
-        v-if="isFieldRequired('headline')"
+        v-if="isFieldVisible('headline')"
         class="bg-surface mb-4"
         v-model="$v.headline.$model"
         label="Headline"
@@ -18,7 +18,7 @@
       </BaseInputText>
 
       <BaseInputTextarea
-        v-if="isFieldRequired('description')"
+        v-if="isFieldVisible('description')"
         class="body-1-mobile bg-surface"
         v-model="$v.description.$model"
         label="Description"
@@ -34,7 +34,7 @@
       </BaseInputTextarea>
 
       <BaseInputText
-        v-if="isFieldRequired('price')"
+        v-if="isFieldVisible('price')"
         class="bg-surface mb-4"
         v-model="$v.price.$model"
         label="Price"
@@ -50,7 +50,7 @@
       </BaseInputText>
 
       <BaseInputText
-        v-if="isFieldRequired('eventDate')"
+        v-if="isFieldVisible('eventDate')"
         class="bg-surface mb-4"
         v-model="$v.eventDate.$model"
         label="Date/Time"
@@ -65,8 +65,8 @@
         </span>
       </BaseInputText>
 
-      <!-- <hr class="bg-background border-black em-low -mx-4 sm:mx-0 mb-4" />
-      <ImageUpload v-if="isFieldRequired('images')" v-model="images" /> -->
+      <hr class="bg-background border-black em-low -mx-4 sm:mx-0 mb-4" />
+      <ImageUpload v-if="isFieldVisible('image')" v-model="images" :defaultImages="images" />
     </div>
   </div>
 </template>
@@ -74,54 +74,44 @@
 <script>
 import BaseInputText from '@/components/BaseInputText.vue';
 import BaseInputTextarea from '@/components/BaseInputTextarea.vue';
-// import ImageUpload from '@/components/ImageUpload/ImageUpload.vue';
+import ImageUpload from '@/components/ImageUpload/ImageUpload.vue';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
 import { required, decimal, maxLength, requiredIf } from 'vuelidate/lib/validators';
 import { mustBeDate } from '@/validations.js';
 
 // Answers at a glance, One Team: Headline, Description
-// Event: Headline, Description, Price, Date/Time, Images
+// Event: Headline, Description, Price, Date/Time, Image
 // Plant, Priority, People, Community: Headline, Description, Image
 
 export default {
   name: 'ArticleAddStep2',
   components: {
     BaseInputText,
-    BaseInputTextarea
-    // , ImageUpload
-  },
-  data() {
-    return {
-      images: []
-    };
+    BaseInputTextarea,
+    ImageUpload
   },
   validations: {
     headline: {
       required: requiredIf(context => {
-        return context.isFieldRequired('headline');
+        return context.isFieldVisible('headline');
       }),
       maxLength: maxLength(80)
     },
     description: {
       required: requiredIf(context => {
-        return context.isFieldRequired('description');
+        return context.isFieldVisible('description');
       }),
       maxLength: maxLength(750)
     },
     price: {
       required: requiredIf(context => {
-        return context.isFieldRequired('price');
+        return context.isFieldVisible('price');
       }),
       decimal
     },
     eventDate: {
       mustBeDate: value => mustBeDate({ value })
     }
-    // images: {
-    //   required: requiredIf(function(context) {
-    //     return context.isFieldRequired('images');
-    //   })
-    // }
   },
   mounted() {
     this.fetch_categories();
@@ -134,30 +124,30 @@ export default {
       'update_date',
       'update_price',
       'update_eventDate',
-      'update_images'
+      'update_image'
     ]),
-    isFieldRequired(fieldName) {
+    isFieldVisible(fieldName) {
       const categoryName = this.get_selected_category.name;
-      let isRequired = false;
+      let isVisible = false;
       switch (categoryName) {
         case 'Events':
-          isRequired = ['headline', 'description', 'price', 'eventDate', 'images'].includes(fieldName);
+          isVisible = ['headline', 'description', 'price', 'eventDate', 'image'].includes(fieldName);
           break;
         case 'One Team':
         case 'Answers At A Glance':
-          isRequired = ['headline', 'description'].includes(fieldName);
+          isVisible = ['headline', 'description'].includes(fieldName);
           break;
         case 'Priority':
         case 'People':
         case 'Community':
         case 'Plant':
-          isRequired = ['headline', 'description', 'images'].includes(fieldName);
+          isVisible = ['headline', 'description', 'image'].includes(fieldName);
           break;
 
         default:
           break;
       }
-      return isRequired;
+      return isVisible;
     }
   },
   computed: {
@@ -166,7 +156,7 @@ export default {
       'get_description',
       'get_price',
       'get_eventDate',
-      'get_images',
+      'get_image',
       'get_selected_category',
       'get_categories'
     ]),
@@ -201,15 +191,23 @@ export default {
       set(value) {
         this.update_eventDate(value);
       }
+    },
+    images: {
+      get() {
+        return [
+          {
+            src: this.get_image
+          }
+        ];
+      },
+      set(value) {
+        let image = '';
+        try {
+          image = value[0].src;
+        } catch (error) {}
+        this.update_image(image);
+      }
     }
-    // images: {
-    //   get() {
-    //     return this.get_images;
-    //   },
-    //   set(value) {
-    //     this.update_images(value);
-    //   }
-    // }
   }
 };
 </script>
