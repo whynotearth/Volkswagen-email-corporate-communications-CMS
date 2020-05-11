@@ -35,10 +35,10 @@
       <div class="text-sm lg:flex-grow">
         <router-link
           v-if="isAuthenticated"
-          to="/posts/add"
+          :to="{ name: 'ArticleAdd' }"
           class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"
         >
-          Add a post
+          Add a article
         </router-link>
       </div>
       <div>
