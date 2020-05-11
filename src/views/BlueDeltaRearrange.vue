@@ -102,7 +102,7 @@ export default {
       const params = {
         jumpStartId: this.id,
         body: {
-          dateTime: total_time,
+          dateTime: this.get_schedule_time ? total_time : this.get_email_date,
           articleIds: this.get_selected_articles.map(article => article.id),
           distributionGroups: this.get_email_recipients
         }
