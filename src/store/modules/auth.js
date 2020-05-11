@@ -156,15 +156,15 @@ export default {
     loginStandard(context) {
       context.commit('updateLoginError', '');
       context.commit('updateLoading', true);
-      AuthenticationService.login({
+      return AuthenticationService.login({
         body: {
           email: context.state.email,
           password: context.state.password
         }
       })
-        .then(token => {
-          store.dispatch('authKeep/updateToken', token);
-          store.dispatch('auth/ping').catch(error => {
+        .then(async token => {
+          await store.dispatch('authKeep/updateToken', token);
+          await store.dispatch('auth/ping').catch(error => {
             context.commit('updateLoginError', error.response.data.error);
           });
           context.commit('updateLoading', false);
