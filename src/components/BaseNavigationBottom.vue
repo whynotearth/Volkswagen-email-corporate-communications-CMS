@@ -6,7 +6,7 @@
         <div class="flex relative">
           <ul class="flex-auto flex justify-around text-left menu list-none bg-primary px-2 md:px-0">
             <li class="text-white inline-block m-2 mb-1 text-xs">
-              <router-link class="text-white router-link" :to="{ name: 'Home' }">
+              <router-link class="text-white router-link" :to="{ name: 'Dashboard' }">
                 <HomeIcon class="m-auto" />
                 Home
               </router-link>

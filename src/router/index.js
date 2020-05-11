@@ -6,6 +6,7 @@ import ArticleAdd from '../views/ArticleAdd.vue';
 import AuthLogin from '../views/AuthLogin.vue';
 import MemoAdd from '../views/MemoAdd.vue';
 import Settings from '../views/Settings';
+import BlueDeltaSettings from '../views/BlueDeltaSettings';
 import MyAccount from '../views/MyAccount';
 import ActivityFeedMemoList from '../views/ActivityFeedMemoList.vue';
 import ActivityFeedMemoItem from '../views/ActivityFeedMemoItem.vue';
@@ -31,8 +32,8 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: '/',
-    name: 'Home',
-    component: Home
+    name: 'Dashboard',
+    component: Dashboard
   },
   // {
   //   path: '/test',
@@ -85,6 +86,14 @@ const routes = [
     path: '/settings',
     name: 'Settings',
     component: Settings,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/settings/blue-delta-settings',
+    name: 'BlueDeltaSettings',
+    component: BlueDeltaSettings,
     meta: {
       requiresAuth: true
     }
@@ -230,7 +239,7 @@ router.beforeEach(async (to, from, next) => {
 
   if (to.meta.requiresAuth) {
     if (pingResult === 'IS_LOGGED_OUT') {
-      await router.push({ name: 'Home' });
+      await router.push({ name: 'AuthLogin' });
       setTimeout(function() {
         window.location.reload();
       });

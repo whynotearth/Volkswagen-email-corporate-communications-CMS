@@ -2,8 +2,10 @@
   <LayoutFixedScrollable>
     <template #content>
       <div class="min-h-full relative bg-background">
-        <router-link to="/settings" class="absolute top-0 right-0 p-4 text-sm">
-          <img src="https://res.cloudinary.com/whynotearth/image/upload/v1588066712/Volkswagen/cms/wheel_eqhded.svg" />
+        <router-link to="/settings" class="absolute top-0 right-0 p-4 text-sm z-10">
+          <img
+            src="https://res.cloudinary.com/whynotearth/image/upload/v1588775654/Volkswagen/cms/wheel_2_prifka.svg"
+          />
         </router-link>
         <div class="bg-brand-gradient ">
           <UserCard class="w-full relative container px-0" />
@@ -11,9 +13,9 @@
         <div class="w-full relative container px-0 text-left">
           <TodayEmail />
         </div>
-        <div class="mb-8">
+        <!--<div class="mb-8">
           <SmartSuggestions />
-        </div>
+        </div>-->
       </div>
     </template>
     <template #footer>
@@ -28,7 +30,7 @@ import NavigationBottom from '@/components/BaseNavigationBottom';
 import LayoutFixedScrollable from '@/components/LayoutFixedScrollable';
 import UserCard from '@/components/BaseUserCard';
 import TodayEmail from '@/components/TodayEmail';
-import SmartSuggestions from '@/components/BaseSmartSuggestions';
+//import SmartSuggestions from '@/components/BaseSmartSuggestions';
 
 export default {
   name: 'Dashboard',
@@ -36,8 +38,8 @@ export default {
     NavigationBottom,
     LayoutFixedScrollable,
     UserCard,
-    TodayEmail,
-    SmartSuggestions
+    TodayEmail
+    //SmartSuggestions
   },
   computed: {},
   methods: {}
