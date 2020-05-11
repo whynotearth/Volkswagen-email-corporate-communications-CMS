@@ -2,14 +2,14 @@
   <LayoutFixedScrollable>
     <template #content>
       <div class="">
-        <BaseAppBarHeader class="sticky top-0 bg-white" title="Wednesday, 6 May, 2020 " to-link="/blue-delta" />
+        <BaseAppBarHeader class="sticky top-0 bg-white" title="Wednesday, 6 May, 2020 " to-link="/" />
         <div class="flex mb-40">
           <div class="container px-0 md:px-6 pt-4 px-4">
             <div class="flex justify-center p-4">
               <div class="relative">
                 <EmailPreview />
                 <router-link
-                  :to="{ path: '/' }"
+                  :to="{ name: 'DraftEmail' }"
                   class="absolute bg-opacity-50 bg-black -mx-4 md:m-0 inset-0 text-white"
                 >
                   <div class="flex h-full bg-transparent justify-center items-center">
