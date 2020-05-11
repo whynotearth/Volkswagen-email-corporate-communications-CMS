@@ -1,29 +1,29 @@
-import { PostService, PostCategoryService } from '@whynotearth/meredith-axios';
+import { ArticleService, ArticleCategoryService } from '@whynotearth/meredith-axios';
 import Vue from 'vue';
 import { cloneDeep } from 'lodash-es';
 
-const defaultPostFormData = {
+const defaultArticleFormData = {
   headline: '',
   description: '',
   date: '',
   price: undefined,
   eventDate: '',
   // this is filelist
-  images: [],
+  image: '',
   selected_category: {}
 };
 
 export default {
   namespaced: true,
   state: {
-    form_data: cloneDeep(defaultPostFormData),
+    form_data: cloneDeep(defaultArticleFormData),
     categories: [],
+    daily_plan: [],
     response_message: {
       type: '', // error, success
       message: '',
       class: '' // text-error text-success
-    },
-    posts: []
+    }
   },
   mutations: {
     update_categories(state, payload) {
@@ -44,8 +44,8 @@ export default {
     update_eventDate(state, payload) {
       Vue.set(state.form_data, 'eventDate', payload);
     },
-    update_images(state, payload) {
-      Vue.set(state.form_data, 'images', payload);
+    update_image(state, payload) {
+      Vue.set(state.form_data, 'image', payload);
     },
     update_selected_category(state, payload) {
       Vue.set(state.form_data, 'selected_category', payload);
@@ -56,25 +56,30 @@ export default {
     update_form_data(state, payload) {
       Vue.set(state, 'form_data', payload);
     },
-    update_posts(state, payload) {
-      Vue.set(state, 'posts', payload);
+    update_daily_plan(state, payload) {
+      state.daily_plan = payload;
     }
   },
   actions: {
     clear_form_data(context) {
-      context.commit('update_form_data', cloneDeep(defaultPostFormData));
+      context.commit('update_form_data', cloneDeep(defaultArticleFormData));
     },
-    async add_post(context, payload) {
-      await PostService.posts(payload.params);
+    async add_article(context, payload) {
+      await ArticleService.articles(payload.params);
     },
     async fetch_categories(context) {
-      const data = await PostCategoryService.categories();
+      const data = await ArticleCategoryService.categories();
       context.commit('update_categories', data);
     },
-    async fetch_posts({ commit }, payload) {
-      commit('update_posts', []);
-      const data = await PostService.posts1(payload.params);
-      commit('update_posts', data);
+    async put_article(context, payload) {
+      await ArticleService.articles1(payload);
+    },
+    async delete_article(context, payload) {
+      await ArticleService.articles2(payload);
+    },
+    async fetch_daily_plan({ commit }) {
+      const data = await ArticleService.dailyplan();
+      commit('update_daily_plan', data);
     }
   },
   getters: {
@@ -83,10 +88,10 @@ export default {
     get_description: state => state.form_data.description,
     get_price: state => state.form_data.price,
     get_eventDate: state => state.form_data.eventDate,
-    get_images: state => state.form_data.images,
+    get_image: state => state.form_data.image,
     get_selected_category: state => state.form_data.selected_category,
     get_response_message: state => state.response_message,
-    get_posts: state => state.posts,
-    get_categories: state => state.categories
+    get_categories: state => state.categories,
+    get_daily_plan: state => state.daily_plan
   }
 };

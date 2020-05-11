@@ -38,12 +38,19 @@
           <div class="flex items-center justify-center w-8 h-8 rounded-full bg-white circle-icon">
             <img class="m-auto w-4 h-4" :src="get_selected_category.image" />
           </div>
-          <!-- <img class="m-auto w-16" :src="get_selected_category.image" /> -->
-          <div class="w-full tg-h2-mobile text-black py-3">
+          <div class="w-full tg-h2-mobile text-black py-3 hidden sm:block">
             {{ get_headline }}
           </div>
-          <div class="w-full tg-body-mobile text-black em-high whitespace-pre-line break-words">
-            {{ get_description }}
+          <div class="flex w-full flex-col sm:flex-row">
+            <div class="w-full tg-h2-mobile text-black py-3 sm:hidden order-2">
+              {{ get_headline }}
+            </div>
+            <div class="w-full tg-body-mobile text-black em-high whitespace-pre-line break-words flex-grow order-2">
+              {{ get_description }}
+            </div>
+            <div class="order-1 mb-4 sm:mb-0 w-full sm:w-auto sm:order-3 flex-shrink-0">
+              <img class="mx-auto article-image" :src="get_image" />
+            </div>
           </div>
         </div>
         <p v-if="get_response_message.message" class="font-bold px-4 mb-4" :class="get_response_message.class">
@@ -60,7 +67,7 @@ import { mapGetters, mapMutations, mapActions } from 'vuex';
 import { formatDate } from '@/helpers.js';
 
 export default {
-  name: 'PostAddStep3',
+  name: 'ArticleAddStep3',
   components: { ArrowDown },
   props: {
     error: {
@@ -77,27 +84,29 @@ export default {
     this.update_date(this.dates[0]);
   },
   methods: {
-    ...mapMutations('post', ['update_date']),
+    ...mapMutations('article', ['update_date']),
     formatDate,
     toggleDropdown() {
       this.isOpenDropdown = !this.isOpenDropdown;
     }
   },
   computed: {
-    ...mapGetters('post', [
+    ...mapGetters('article', [
       'get_date',
       'get_response_message',
       'get_selected_category',
+      'get_image',
       'get_headline',
       'get_description'
     ]),
     dates() {
       let d = new Date();
+      let dtzOffset = d.getTimezoneOffset() * 60000;
       d.setHours(0, 0, 0, 0);
       d = d.getTime();
       let days = [];
       for (let i = 0; i < 30; i++) {
-        let a = d + i * 86400000;
+        let a = d - dtzOffset + i * 86400000;
         days.push(new Date(a));
       }
       return days;
@@ -134,5 +143,9 @@ export default {
 }
 .rotate-180 {
   transform: rotate(180deg);
+}
+.article-image {
+  width: 92px;
+  max-height: 92px;
 }
 </style>

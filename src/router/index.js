@@ -1,10 +1,11 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Home from '../views/Home.vue';
-import PostAdd from '../views/PostAdd.vue';
+import ArticleAdd from '../views/ArticleAdd.vue';
 import AuthLogin from '../views/AuthLogin.vue';
 import MemoAdd from '../views/MemoAdd.vue';
 import Settings from '../views/Settings';
+import MyAccount from '../views/MyAccount';
 import ActivityFeedMemoList from '../views/ActivityFeedMemoList.vue';
 import ActivityFeedMemoItem from '../views/ActivityFeedMemoItem.vue';
 import EmailLists from '../views/EmailLists';
@@ -17,6 +18,11 @@ import EmailListImportHelp from '../views/EmailListImportHelp';
 import Email from '@/views/Email';
 import Dashboard from '../views/Dashboard';
 import AdminsJumpStart from '../views/admins/JumpStart';
+import ArticleLists from '../views/ArticleLists';
+import ArticleListsItem from '../views/ArticleListsItem';
+// import DeveloperTesting from '../views/DeveloperTesting.vue';
+import ResetPassword from '../views/AuthResetPassword';
+import NewPassword from '../views/AuthNewPassword';
 import store from '../store';
 
 Vue.use(VueRouter);
@@ -27,15 +33,30 @@ const routes = [
     name: 'Home',
     component: Home
   },
+  // {
+  //   path: '/test',
+  //   name: 'DeveloperTesting',
+  //   component: DeveloperTesting
+  // },
   {
     path: '/login',
     name: 'AuthLogin',
     component: AuthLogin
   },
   {
-    path: '/posts/add/:step?',
-    name: 'PostAdd',
-    component: PostAdd,
+    path: '/reset-password',
+    name: 'ResetPassword',
+    component: ResetPassword
+  },
+  {
+    path: '/new-password',
+    name: 'NewPassword',
+    component: NewPassword
+  },
+  {
+    path: '/articles/add/:step?',
+    name: 'ArticleAdd',
+    component: ArticleAdd,
     props: true,
     meta: {
       requiresAuth: true
@@ -55,6 +76,14 @@ const routes = [
     path: '/settings',
     name: 'Settings',
     component: Settings,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/settings/my-account',
+    name: 'MyAccount',
+    component: MyAccount,
     meta: {
       requiresAuth: true
     }
@@ -153,6 +182,22 @@ const routes = [
     path: '/admin/jumpstart',
     name: 'AdminsJumpStart',
     component: AdminsJumpStart,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/article-lists',
+    name: 'ArticleLists',
+    component: ArticleLists,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/article-lists/:id',
+    name: 'ArticleListsItem',
+    component: ArticleListsItem,
     meta: {
       requiresAuth: true
     }
