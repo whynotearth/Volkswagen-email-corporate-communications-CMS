@@ -12,6 +12,9 @@
         </div>
       </div>
     </template>
+    <template #footer>
+      <NavigationBottom />
+    </template>
   </LayoutFixedScrollable>
 </template>
 
@@ -19,11 +22,12 @@
 import BaseAppBarHeader from '@/components/BaseAppBarHeader.vue';
 import JumpStartItem from '@/components/JumpStartListItem.vue';
 import { mapGetters, mapActions } from 'vuex';
+import NavigationBottom from '@/components/BaseNavigationBottom';
 import LayoutFixedScrollable from '@/components/LayoutFixedScrollable.vue';
 
 export default {
   name: 'JumpStart',
-  components: { BaseAppBarHeader, JumpStartItem, LayoutFixedScrollable },
+  components: { BaseAppBarHeader, JumpStartItem, LayoutFixedScrollable, NavigationBottom },
   computed: {
     ...mapGetters('article', ['get_daily_plan'])
   },
