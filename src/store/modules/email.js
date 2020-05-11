@@ -71,7 +71,8 @@ export default {
         state.preview_link = payload;
         return false;
       }
-      const base = `${BASE_API}/api/v0/volkswagen/jumpstart/${state.selected_plan.jumpStartId}/preview`;
+      const id = state.selected_plan.jumpStartId || state.selected_jumpstart.id;
+      const base = `${BASE_API}/api/v0/volkswagen/jumpstart/${id}/preview`;
       const url = new URL(base);
       state.selected_articles.forEach(article => {
         url.searchParams.append('articleIds', article.id);
