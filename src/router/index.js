@@ -6,6 +6,7 @@ import ArticleAdd from '../views/ArticleAdd.vue';
 import AuthLogin from '../views/AuthLogin.vue';
 import MemoAdd from '../views/MemoAdd.vue';
 import Settings from '../views/Settings';
+import BlueDeltaSettings from '../views/BlueDeltaSettings';
 import MyAccount from '../views/MyAccount';
 import ActivityFeedMemoList from '../views/ActivityFeedMemoList.vue';
 import ActivityFeedMemoItem from '../views/ActivityFeedMemoItem.vue';
@@ -18,6 +19,7 @@ import EmailListImport from '../views/EmailListImport';
 import EmailListImportHelp from '../views/EmailListImportHelp';
 import Email from '@/views/Email';
 import Dashboard from '../views/Dashboard';
+import JumpStartLists from '../views/JumpStartLists';
 import ArticleLists from '../views/ArticleLists';
 import ArticleListsItem from '../views/ArticleListsItem';
 // import DeveloperTesting from '../views/DeveloperTesting.vue';
@@ -84,6 +86,14 @@ const routes = [
     path: '/settings',
     name: 'Settings',
     component: Settings,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/settings/blue-delta-settings',
+    name: 'BlueDeltaSettings',
+    component: BlueDeltaSettings,
     meta: {
       requiresAuth: true
     }
@@ -191,6 +201,14 @@ const routes = [
     name: 'EditBlueDelta',
     component: () => import('@/views/EditBlueDelta.vue'),
     props: true,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/jumpstart-lists',
+    name: 'JumpStartLists',
+    component: JumpStartLists,
     meta: {
       requiresAuth: true
     }

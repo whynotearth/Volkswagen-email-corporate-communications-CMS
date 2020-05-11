@@ -18,7 +18,7 @@
               </router-link>
             </li>
             <li class="text-white inline-block m-2 mb-1 text-xs">
-              <router-link class="text-white router-link" :to="{ name: 'EmailsAdd' }">
+              <router-link class="text-white router-link" :to="{ name: 'JumpStartLists' }">
                 <MemoStatslIcon class="m-auto" />
                 Blue Delta
               </router-link>

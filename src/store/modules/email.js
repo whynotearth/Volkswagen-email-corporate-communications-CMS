@@ -20,7 +20,9 @@ export default {
       type: '', // error, success
       message: '',
       class: '' // text-error text-success
-    }
+    },
+    default_distribution_groups: [],
+    default_schedule_time: null
   },
   getters: {
     get_email_date: state => state.email_date,
@@ -32,7 +34,9 @@ export default {
     get_jumpstarts: state => state.jumpstarts,
     get_response_message: state => state.response_message,
     get_articles: state => state.articles,
-    get_available_articles: state => state.available_articles
+    get_default_distribution_groups: state => state.default_distribution_groups,
+    get_available_articles: state => state.available_articles,
+    get_default_schedule_time: state => state.default_schedule_time
   },
   actions: {
     async create_jumpstart({ commit }, payload) {
@@ -109,8 +113,14 @@ export default {
     update_articles(state, payload) {
       state.articles = payload;
     },
+    update_default_distribution_groups(state, payload) {
+      state.default_distribution_groups = payload;
+    },
     update_available_articles(state, payload) {
       state.available_articles = payload;
+    },
+    update_default_schedule_time(state, payload) {
+      state.default_schedule_time = payload;
     }
   }
 };
