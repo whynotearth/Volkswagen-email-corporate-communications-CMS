@@ -50,10 +50,15 @@
           </div>
         </div>
 
-        <div class="container flex flex-col mt-8 py-6">
-          <div class="flex relative border-top">
+        <div class="container flex-col mt-8 py-6">
+          <div class="relative border-top">
             <div class="flex-auto">
-              <BaseDropdown placeholder="Schedule time" :options="time_slots" v-model="$v.default_schedule_time.$model">
+              <BaseDropdown
+                class="text-left"
+                placeholder="Schedule time"
+                :options="time_slots"
+                v-model="$v.default_schedule_time.$model"
+              >
                 <template #title="{ selectedOption }">
                   <span v-if="time_slots.length === 0" class="text-gray-500">
                     No time slots!
