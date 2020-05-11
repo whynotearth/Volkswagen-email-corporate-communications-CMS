@@ -1,19 +1,29 @@
 <template>
   <div
-    class="modal modal-backdrop z-50 overflow-hidden fixed inset-0 flex justify-center items-center"
+    class="modal modal-backdrop z-50 fixed overflow-y-auto inset-0 flex justify-center items-center"
     @click="closeModal"
   >
-    <div class="modal-content flex items-center container px-0 sm:px-4 md:px-6 text-left w-screen h-screen relative">
-      <div @click.stop class="flex flex-col justify-center items-center sm:h-full sm:w-full px-0">
-        <button class="absolute left-0 top-0 flex justify-start p-6" @click.prevent="closeModal">
-          <CancelIcon />
-        </button>
-        <div class="w-screen sm:w-full">
-          <img class="w-full object-fill" :src="image.src" alt="image" />
+    <div class="modal-content flex items-center text-left w-full h-screen relative">
+      <div @click.stop class="flex flex-col justify-between w-full h-full px-0">
+        <div class="bg-white flex-shrink-0">
+          <div class="container flex justify-start">
+            <button class="py-4 opacity-75" @click.prevent="closeModal" title="Close">
+              <CancelIcon />
+            </button>
+          </div>
         </div>
-        <button class="absolute right-0 bottom-0 flex justify-end p-6" @click.prevent="deleteImage">
-          <DeleteIcon />
-        </button>
+        <div class="w-full flex justify-center flex-shrink-0">
+          <div class="py-4">
+            <img class="max-h-full" :src="image.src" alt="image" />
+          </div>
+        </div>
+        <div class="bg-white flex-shrink-0">
+          <div class="container flex justify-end">
+            <button class="py-4 opacity-75" @click.prevent="deleteImage" title="Delete">
+              <DeleteIcon />
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
