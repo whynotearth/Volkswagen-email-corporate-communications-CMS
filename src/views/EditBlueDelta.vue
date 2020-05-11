@@ -122,7 +122,8 @@ export default {
       'get_email_recipients',
       'get_schedule_time',
       'get_selected_jumpstart',
-      'get_selected_articles'
+      'get_selected_articles',
+      'get_email_date'
     ]),
     ...mapGetters('recipient', ['get_recipients_available']),
     email_recipients: {
@@ -150,10 +151,11 @@ export default {
       this.to_query = query;
     },
     updateBlueDelta() {
+      let total_time = new Date(this.get_email_date + this.get_schedule_time).toISOString();
       const params = {
         jumpStartId: this.get_selected_jumpstart.id,
         body: {
-          dateTime: this.get_schedule_time,
+          dateTime: total_time,
           articleIds: this.get_selected_articles.map(article => article.id),
           distributionGroups: this.get_email_recipients
         }
