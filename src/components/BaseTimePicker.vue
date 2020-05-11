@@ -78,7 +78,7 @@ export default {
   },
   watch: {
     selectedTime(value) {
-      this.$emit('change', this.millisecondToTime(value));
+      this.$emit('change', value);
     }
   }
 };

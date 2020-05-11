@@ -1,38 +1,53 @@
 <template>
-  <div class="flex-grow">
-    <div class="container px-4 text-left h-full">
-      <EmailPreview @error="$v.$touch()" />
-      <h2 class="text-primary font-bold text-xl">Rearrange the Jumpstart</h2>
-      <span v-if="$v.get_selected_articles.$error" class="text-xs text-error">
-        Please select atleast one article.
-      </span>
-      <div class="px-12 py-4">
-        <BaseButton @click="updateBlueDelta" classes="w-full sm:w-1/2" bg-type="secondary">Save</BaseButton>
-      </div>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-4">
-        <Article
-          v-for="article in get_all_articles"
-          :key="article.id"
-          :article="article"
-          @clicked="selectArticle(article)"
-          :active="isActive(article)"
+  <LayoutFixedScrollable>
+    <template #content>
+      <div>
+        <BaseAppBarHeader
+          class="sticky top-0 bg-white"
+          title="Rearrange Blue Delta "
+          :to-link="{ name: 'EditBlueDelta', params: { id: id } }"
         />
+        <div class="flex mb-40">
+          <div class="flex-grow">
+            <div class="container px-4 text-left h-full">
+              <EmailPreview @error="$v.$touch()" />
+              <h2 class="text-primary font-bold text-xl">Rearrange the Jumpstart</h2>
+              <span v-if="$v.get_selected_articles.$error" class="text-xs text-error">
+                Please select atleast one article.
+              </span>
+              <div class="px-12 py-4">
+                <BaseButton @selectButton="updateBlueDelta" class="w-full sm:w-1/2" bgType="secondary">Save</BaseButton>
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-4">
+                <Article
+                  v-for="(article, index) in get_all_articles"
+                  :key="index"
+                  :article="article"
+                  @clicked="selectArticle(article)"
+                  :active="isActive(article)"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
+    </template>
+  </LayoutFixedScrollable>
 </template>
 
 <script>
 import Article from '@/components/Email/Article.vue';
 import EmailPreview from '@/components/Email/EmailPreview.vue';
 import BaseButton from '@/components/BaseButton.vue';
+import BaseAppBarHeader from '@/components/BaseAppBarHeader.vue';
+import LayoutFixedScrollable from '@/components/LayoutFixedScrollable';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
 import { required } from 'vuelidate/lib/validators';
 import { formatISODate, formatDate } from '@/helpers.js';
 
 export default {
   name: 'DraftEmail',
-  components: { Article, BaseButton, EmailPreview },
+  components: { Article, BaseButton, EmailPreview, LayoutFixedScrollable, BaseAppBarHeader },
   props: {
     id: {
       type: [String, Number],
@@ -45,6 +60,7 @@ export default {
     }
   },
   mounted() {
+    if (!this.id) this.$router.push({ name: 'JumpStartLists' });
     this.fetch_available_articles({ jumpStartId: this.id });
     this.update_preview_link();
   },
@@ -71,7 +87,9 @@ export default {
       return this.get_selected_articles.indexOf(article);
     },
     updateBlueDelta() {
-      let total_time = new Date(this.get_email_date + this.get_schedule_time).toISOString();
+      let d = new Date(this.get_email_date);
+      d.setHours(0, 0, 0, 0);
+      let total_time = new Date(d.getTime() + this.get_schedule_time).toISOString();
       const params = {
         jumpStartId: this.id,
         body: {
@@ -95,7 +113,8 @@ export default {
       'get_schedule_time',
       'get_selected_articles',
       'get_available_articles',
-      'get_selected_jumpstart'
+      'get_selected_jumpstart',
+      'get_email_recipients'
     ]),
     get_all_articles() {
       return [...this.get_selected_articles, ...this.get_available_articles];

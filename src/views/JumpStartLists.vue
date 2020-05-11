@@ -18,7 +18,7 @@
 <script>
 import BaseAppBarHeader from '@/components/BaseAppBarHeader.vue';
 import JumpStartItem from '@/components/JumpStartListItem.vue';
-import { mapGetters, mapActions } from 'vuex';
+import { mapGetters, mapActions, mapMutations } from 'vuex';
 import LayoutFixedScrollable from '@/components/LayoutFixedScrollable.vue';
 
 export default {
@@ -33,11 +33,15 @@ export default {
   methods: {
     ...mapActions('article', ['fetch_daily_plan']),
     ...mapActions('email', ['update_selected_articles']),
+    ...mapMutations('email', ['update_selected_plan', 'update_email_date']),
     selectPlan(plan) {
+      this.update_selected_articles();
+      this.update_selected_plan(plan);
       plan.articles.forEach(plan => {
         this.update_selected_articles(plan);
       });
-      this.$router.push({ name: 'EditBlueDelta', params: { id: plan.jumpStartId || 38, data: plan } });
+      this.update_email_date(plan.date);
+      this.$router.push({ name: 'EditBlueDelta', params: { id: plan.jumpStartId } });
     }
   }
 };

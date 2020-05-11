@@ -2,14 +2,18 @@
   <LayoutFixedScrollable>
     <template #content>
       <div class="">
-        <BaseAppBarHeader class="sticky top-0 bg-white" title="Wednesday, 6 May, 2020 " to-link="/jumpstart-lists" />
+        <BaseAppBarHeader
+          class="sticky top-0 bg-white"
+          title="Wednesday, 6 May, 2020 "
+          :to-link="{ name: 'JumpStartLists' }"
+        />
         <div class="flex mb-40">
           <div class="container px-0 md:px-6 pt-4 px-4">
             <div class="flex justify-center p-4">
               <div class="relative">
                 <EmailPreview />
                 <router-link
-                  :to="{ name: 'BlueDeltaRearrange', params: { id: id || 38 } }"
+                  :to="{ name: 'BlueDeltaRearrange', params: { id: id } }"
                   class="absolute bg-opacity-50 bg-black -mx-4 md:m-0 inset-0 text-white"
                 >
                   <div class="flex h-full bg-transparent justify-center items-center">
@@ -59,13 +63,13 @@
               </div>
             </div>
             <div>
-              <BaseTimePicker v-model="$v.time.$model" :emailDate="data.date" @blur="$v.time.$touch()" />
+              <BaseTimePicker v-model="$v.time.$model" :emailDate="get_email_date" @blur="$v.time.$touch()" />
               <span v-if="$v.time.$error" class="text-xs text-error">
                 Please schedule time.
               </span>
             </div>
             <div class="px-12 py-4">
-              <BaseButton @click="updateBlueDelta" class="w-full sm:w-1/2" bgType="secondary">Save</BaseButton>
+              <BaseButton @selectButton="updateBlueDelta" class="w-full sm:w-1/2" bgType="secondary">Save</BaseButton>
             </div>
           </div>
         </div>
@@ -92,10 +96,6 @@ export default {
     id: {
       type: [String, Number],
       required: true
-    },
-    data: {
-      type: Object,
-      required: true
     }
   },
   validations: {
@@ -119,6 +119,11 @@ export default {
     return {
       to_query: ''
     };
+  },
+  mounted() {
+    if (!this.id) this.$router.push({ name: 'JumpStartLists' });
+    this.fetch_recipients();
+    this.update_preview_link();
   },
   computed: {
     ...mapGetters('email', [
@@ -149,12 +154,14 @@ export default {
   methods: {
     ...mapMutations('email', ['update_email_recipients', 'update_schedule_time']),
     ...mapActions('recipient', ['fetch_recipients']),
-    ...mapActions('email', ['create_jumpstart']),
+    ...mapActions('email', ['create_jumpstart', 'update_preview_link']),
     onToSearchChange(query) {
       this.to_query = query;
     },
     updateBlueDelta() {
-      let total_time = new Date(this.get_email_date + this.get_schedule_time).toISOString();
+      let d = new Date(this.get_email_date);
+      d.setHours(0, 0, 0, 0);
+      let total_time = new Date(d.getTime() + this.time).toISOString();
       const params = {
         jumpStartId: this.id,
         body: {
@@ -171,9 +178,6 @@ export default {
         });
       });
     }
-  },
-  mounted() {
-    this.fetch_recipients();
   }
 };
 </script>
