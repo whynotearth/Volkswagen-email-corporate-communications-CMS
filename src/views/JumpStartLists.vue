@@ -4,7 +4,7 @@
       <BaseAppBarHeader title="Blue Delta" :to-link="{ name: 'Dashboard' }" />
     </template>
     <template #content>
-      <div class="flex flex-col py-3">
+      <div class="flex flex-col py-6">
         <div class="container px-0 md:px-6">
           <div v-for="(plan, index) in get_daily_plan" :key="index" class="cursor-pointer" @click="selectPlan(plan)">
             <JumpStartItem :model="plan" />
