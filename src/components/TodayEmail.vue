@@ -47,7 +47,6 @@ export default {
     ...mapMutations('email', ['update_selected_jumpstart', 'update_preview_link']),
     formatDate,
     selectButton() {
-      debugger;
       this.$router.push({ name: 'EditBlueDelta', params: { id: this.get_selected_jumpstart.id } });
     }
   },
