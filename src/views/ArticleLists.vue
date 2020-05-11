@@ -29,6 +29,7 @@ import BaseTab from '@/components/BaseTab.vue';
 import ArticleItem from '@/components/ArticleListsItem.vue';
 import { mapGetters, mapActions } from 'vuex';
 import { formatISODate, formatDate } from '@/helpers.js';
+import { isToday, parseISO } from 'date-fns';
 
 export default {
   name: 'Articles',
@@ -42,14 +43,14 @@ export default {
     ...mapGetters('article', ['get_daily_plan']),
     todayArticles() {
       const data = this.get_daily_plan.find(article => {
-        return this.getIsoFormat(article.date) === this.getIsoFormat();
+        return isToday(parseISO(article.date));
       });
       return data ? data.articles : [];
     },
     upcomingArticles() {
       let articles = [];
       this.get_daily_plan.forEach(item => {
-        if (this.getIsoFormat(item.date) !== this.getIsoFormat()) {
+        if (!isToday(parseISO(item.date))) {
           if (item.articles.length) {
             articles = [...articles, ...item.articles];
           }
@@ -62,12 +63,7 @@ export default {
     this.fetch_daily_plan();
   },
   methods: {
-    ...mapActions('article', ['fetch_daily_plan']),
-    getIsoFormat(date) {
-      const d = date ? date : new Date();
-      const newDate = formatDate(d, 'yyyy-MM-dd');
-      return new Date(newDate).toISOString();
-    }
+    ...mapActions('article', ['fetch_daily_plan'])
   }
 };
 </script>

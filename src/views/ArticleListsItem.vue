@@ -305,6 +305,10 @@ export default {
       return isRequired;
     },
     submit() {
+      console.log('this.get_date', this.get_date);
+      console.log('formatISODate(this.get_date)', formatISODate(this.get_date));
+      
+      
       const date_time = this.get_date ? formatISODate(this.get_date) : undefined;
       const event_date_time = this.get_eventDate ? formatISODate(this.get_eventDate) : undefined;
       const data = {
