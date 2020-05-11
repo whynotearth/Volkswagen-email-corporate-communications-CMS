@@ -15,6 +15,7 @@ export default {
     selected_articles: [],
     email_recipients: [],
     jumpstarts: [],
+    available_articles: [],
     response_message: {
       type: '', // error, success
       message: '',
@@ -30,7 +31,8 @@ export default {
     get_email_recipients: state => state.email_recipients,
     get_jumpstarts: state => state.jumpstarts,
     get_response_message: state => state.response_message,
-    get_articles: state => state.articles
+    get_articles: state => state.articles,
+    get_available_articles: state => state.available_articles
   },
   actions: {
     async create_jumpstart({ commit }, payload) {
@@ -42,6 +44,10 @@ export default {
       commit('update_jumpstarts', data);
       store.commit('loading/loading', false);
     },
+    async fetch_available_articles({ commit }, payload) {
+      const data = await JumpStartService.availablearticles(payload);
+      commit('update_available_articles', data);
+    },
     update_selected_articles({ state }, payload) {
       if (!payload) {
         state.selected_articles.splice(0, state.selected_articles.length);
@@ -49,6 +55,10 @@ export default {
         let i = state.selected_articles.indexOf(payload);
         i !== -1 ? state.selected_articles.splice(i, 1) : state.selected_articles.push(payload);
       }
+    },
+    update_available_articles({ state, commit }, payload) {
+      let i = state.available_articles.indexOf(payload);
+      i !== -1 ? state.available_articles.splice(i, 1) : state.available_articles.push(payload);
     },
     update_preview_link({ state }, payload) {
       if (payload === '') {
@@ -95,6 +105,9 @@ export default {
     },
     update_articles(state, payload) {
       state.articles = payload;
+    },
+    update_available_articles(state, payload) {
+      state.available_articles = payload;
     }
   }
 };
