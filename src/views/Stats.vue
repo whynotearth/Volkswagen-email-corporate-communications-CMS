@@ -44,11 +44,10 @@
 import LayoutFixedScrollable from '@/components/LayoutFixedScrollable';
 import NavigationBottom from '@/components/BaseNavigationBottom';
 import BaseAppBarHeader from '@/components/BaseAppBarHeader.vue';
-import Logo from '@/assets/logo.svg';
 
 export default {
   name: 'StatsPage',
-  components: { BaseAppBarHeader, NavigationBottom, LayoutFixedScrollable, Logo }
+  components: { BaseAppBarHeader, NavigationBottom, LayoutFixedScrollable }
 };
 </script>
 

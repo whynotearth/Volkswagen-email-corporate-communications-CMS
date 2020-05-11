@@ -2,6 +2,7 @@
   <button
     @click="select()"
     class="bg-primary em-high text-white text-sm font-medium leading-6 uppercase py-2 px-4 rounded-full"
+    :class="`bg-${bgType}`"
   >
     <slot></slot>
   </button>
@@ -13,6 +14,11 @@ export default {
   methods: {
     select() {
       this.$emit('selectButton');
+    }
+  },
+  props: {
+    bgType: {
+      default: 'primary'
     }
   }
 };
