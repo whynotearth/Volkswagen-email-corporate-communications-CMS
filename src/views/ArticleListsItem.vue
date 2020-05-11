@@ -81,22 +81,21 @@
 
       <div class="px-4 md:px-6">
         <div class="w-full text-left py-3 tg-body-mobile">Schedule Article</div>
-        <BaseInputText
-          v-if="isFieldRequired('date')"
-          class="bg-surface mb-4"
-          v-model="$v.date.$model"
-          label="Date/Time"
-          placeholder="20 March, 2020, 7:00 PM"
-          :error="$v.date.$dirty && $v.date.$invalid"
-        >
-          <span v-if="$v.date.$dirty && !$v.date.required" class="text-xs text-error pl-error-message">
-            Date/Time is required
-          </span>
-          <span v-if="$v.date.$dirty && !$v.date.mustBeDate" class="text-xs text-error pl-error-message">
-            Date/Time is invalid. Example: 2020-12-24 7:30 pm
-          </span>
-        </BaseInputText>
-
+        <BaseDropdown class="relative" placeholder="Schedule time" :options="dates" v-model="$v.date.$model">
+          <template #title="{ selectedOption }">
+            <span v-if="dates.length === 0" class="text-gray-500">
+              No time slots!
+            </span>
+            <span v-else-if="selectedOption" class="em-medium">
+              {{ formatDate(selectedOption) }}
+            </span>
+          </template>
+          <template #option="{ option }">
+            <span>
+              {{ formatDate(option) }}
+            </span>
+          </template>
+        </BaseDropdown>
         <p v-if="get_response_message.message" class="font-bold px-4 mb-4" :class="get_response_message.class">
           {{ get_response_message.message }}
         </p>
@@ -125,6 +124,7 @@
 import BaseAppBarHeader from '@/components/BaseAppBarHeader.vue';
 import BaseInputText from '@/components/BaseInputText.vue';
 import BaseInputTextarea from '@/components/BaseInputTextarea.vue';
+import BaseDropdown from '@/components/BaseDropdown';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
 import { required, decimal, maxLength, requiredIf } from 'vuelidate/lib/validators';
 import { mustBeDate } from '@/validations.js';
@@ -135,7 +135,8 @@ export default {
   components: {
     BaseAppBarHeader,
     BaseInputText,
-    BaseInputTextarea
+    BaseInputTextarea,
+    BaseDropdown
   },
   validations: {
     headline: {
@@ -223,6 +224,18 @@ export default {
         this.update_date(value);
       }
     },
+    dates() {
+      let d = new Date();
+      let dtzOffset = d.getTimezoneOffset() * 60000;
+      d.setHours(0, 0, 0, 0);
+      d = d.getTime();
+      let days = [];
+      for (let i = 0; i < 30; i++) {
+        let a = d - dtzOffset + i * 86400000;
+        days.push(new Date(a));
+      }
+      return days;
+    },
     selectedArticle() {
       let articles = [];
       this.get_daily_plan.forEach(item => {
@@ -253,6 +266,7 @@ export default {
       'update_date',
       'update_response_message'
     ]),
+    formatDate,
     initialForm() {
       this.update_headline(this.selectedArticle.headline);
       this.update_description(this.selectedArticle.description);
