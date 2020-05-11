@@ -38,7 +38,8 @@ module.exports = {
       },
       spacing: {
         '0.5': '0.125rem',
-        '1.5': '0.375rem'
+        '1.5': '0.375rem',
+        '14': '3.5rem'
       },
       borderWidth: {
         default: '1px',
@@ -67,6 +68,7 @@ module.exports = {
         '7xl': '7rem' // 112
       },
       zIndex: {
+        '-1': '-1',
         '100': '100'
       },
       lineHeight: {

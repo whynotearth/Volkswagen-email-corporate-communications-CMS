@@ -40,7 +40,13 @@ export default {
     };
   },
   computed: {
-    ...mapGetters('email', ['get_email_date', 'get_selected_posts', 'get_email_recipients', 'get_schedule_time']),
+    ...mapGetters('email', [
+      'get_email_date',
+      'get_selected_articles',
+      'get_email_recipients',
+      'get_schedule_time',
+      'get_selected_jumpstart'
+    ]),
     currentStep() {
       return parseInt(this.step);
     }
@@ -84,9 +90,10 @@ export default {
     submit() {
       let total_time = new Date(this.get_email_date + this.get_schedule_time).toISOString();
       const params = {
+        jumpStartId: this.get_selected_jumpstart.id,
         body: {
           dateTime: total_time,
-          postIds: this.get_selected_posts.map(post => post.id),
+          articleIds: this.get_selected_articles.map(article => article.id),
           distributionGroups: this.get_email_recipients
         }
       };
