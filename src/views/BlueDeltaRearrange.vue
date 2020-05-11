@@ -10,7 +10,9 @@
         <div class="flex mb-40">
           <div class="flex-grow">
             <div class="container px-4 text-left h-full">
-              <EmailPreview @error="$v.$touch()" />
+              <div class="my-4 w-full">
+                <EmailPreview @error="$v.$touch()" />
+              </div>
               <h2 class="text-primary font-bold text-xl">Rearrange the Jumpstart</h2>
               <span v-if="$v.get_selected_articles.$error" class="text-xs text-error">
                 Please select atleast one article.
