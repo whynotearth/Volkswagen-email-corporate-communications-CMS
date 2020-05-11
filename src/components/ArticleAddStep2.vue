@@ -5,15 +5,15 @@
         v-if="isFieldVisible('headline')"
         class="bg-surface mb-4"
         v-model="$v.headline.$model"
-        label="Headline"
-        placeholder="Headline"
+        :label="stringHeadlineByCategoryName"
+        :placeholder="stringHeadlineByCategoryName"
         :error="$v.headline.$dirty && $v.headline.$invalid"
       >
         <span v-if="$v.headline.$dirty && !$v.headline.required" class="text-xs text-error pl-error-message">
-          Headline is required
+          {{ stringHeadlineByCategoryName }} is required
         </span>
         <span v-if="$v.headline.$dirty && !$v.headline.maxLength" class="text-xs text-error pl-error-message">
-          Headline should be less than 80 characters
+          {{ stringHeadlineByCategoryName }} should be less than 80 characters
         </span>
       </BaseInputText>
 
@@ -21,15 +21,15 @@
         v-if="isFieldVisible('description')"
         class="body-1-mobile bg-surface"
         v-model="$v.description.$model"
-        label="Description"
-        placeholder="Put the content of your article here."
+        :label="stringDescriptionByCategoryName"
+        :placeholder="isAnswersCategory ? stringDescriptionByCategoryName : 'Put the content of your article here.'"
         :error="$v.description.$dirty && $v.description.$invalid"
       >
         <span v-if="$v.description.$dirty && !$v.description.required" class="text-xs text-error pl-error-message">
-          Description is required
+          {{ stringDescriptionByCategoryName }} is required
         </span>
         <span v-if="$v.description.$dirty && !$v.description.maxLength" class="text-xs text-error pl-error-message">
-          Description should be less than 750 characters
+          {{ stringDescriptionByCategoryName }} should be less than 750 characters
         </span>
       </BaseInputTextarea>
 
@@ -65,7 +65,7 @@
         </span>
       </BaseInputText>
 
-      <hr class="bg-background border-black em-low -mx-4 sm:mx-0 mb-4" />
+      <hr v-if="isFieldVisible('image')" class="bg-background border-black em-low -mx-4 sm:mx-0 mb-4" />
       <ImageUpload v-if="isFieldVisible('image')" v-model="images" :defaultImages="images" />
     </div>
   </div>
@@ -160,6 +160,15 @@ export default {
       'get_selected_category',
       'get_categories'
     ]),
+    isAnswersCategory() {
+      return this.get_selected_category.slug === 'answers-at-a-glance';
+    },
+    stringHeadlineByCategoryName() {
+      return this.isAnswersCategory ? 'Question' : 'Headline';
+    },
+    stringDescriptionByCategoryName() {
+      return this.isAnswersCategory ? 'Answer' : 'Description';
+    },
     headline: {
       get() {
         return this.get_headline;
