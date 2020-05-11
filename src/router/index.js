@@ -32,8 +32,15 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: '/',
-    name: 'Home',
-    component: Home
+    name: 'Dashboard',
+    component: Dashboard,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/dashboard',
+    redirect: '/'
   },
   // {
   //   path: '/test',
@@ -189,14 +196,6 @@ const routes = [
     }
   },
   {
-    path: '/dashboard',
-    name: 'Dashboard',
-    component: Dashboard,
-    meta: {
-      requiresAuth: true
-    }
-  },
-  {
     path: '/blue-delta/edit/:id',
     name: 'EditBlueDelta',
     component: () => import('@/views/EditBlueDelta.vue'),
@@ -248,7 +247,7 @@ router.beforeEach(async (to, from, next) => {
 
   if (to.meta.requiresAuth) {
     if (pingResult === 'IS_LOGGED_OUT') {
-      await router.push({ name: 'Home' });
+      await router.push({ name: 'AuthLogin' });
       setTimeout(function() {
         window.location.reload();
       });

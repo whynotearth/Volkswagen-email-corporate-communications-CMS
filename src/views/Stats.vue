@@ -8,7 +8,11 @@
         <div class="w-full">
           <div class="max-w-sm mx-auto px-12">
             <div class="mb-4">
-              <Logo class="w-24 h-24 mx-auto block" />
+              <img
+                class="w-24 h-24 mx-auto block"
+                src="https://res.cloudinary.com/whynotearth/image/upload/v1588067012/Volkswagen/cms/Volkswagen_logo_2019_1_ddafyt.svg"
+                alt=""
+              />
             </div>
             <h1 class="text-primary h1-mobile md:h1 mb-h1-mobile">Let's crunch the numbers...</h1>
 
@@ -40,11 +44,10 @@
 import LayoutFixedScrollable from '@/components/LayoutFixedScrollable';
 import NavigationBottom from '@/components/BaseNavigationBottom';
 import BaseAppBarHeader from '@/components/BaseAppBarHeader.vue';
-import Logo from '@/assets/logo.svg';
 
 export default {
   name: 'StatsPage',
-  components: { BaseAppBarHeader, NavigationBottom, LayoutFixedScrollable, Logo }
+  components: { BaseAppBarHeader, NavigationBottom, LayoutFixedScrollable }
 };
 </script>
 

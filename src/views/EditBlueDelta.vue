@@ -65,7 +65,7 @@
               </span>
             </div>
             <div class="px-12 py-4">
-              <BaseButton @click="updateBlueDelta" classes="w-full sm:w-1/2" bg-type="secondary">Save</BaseButton>
+              <BaseButton @click="updateBlueDelta" class="w-full sm:w-1/2" bgType="secondary">Save</BaseButton>
             </div>
           </div>
         </div>
