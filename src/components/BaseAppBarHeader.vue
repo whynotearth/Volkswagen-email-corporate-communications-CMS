@@ -3,7 +3,10 @@
     <div class="container flex items-center px-0 md:px-6">
       <div class="flex-start mr-3 flex-shrink-0">
         <router-link class="inline-block align-middle" :to="toLink">
-          <img src="https://res.cloudinary.com/whynotearth/image/upload/v1587102533/Volkswagen/cms/back_oay5wt.png" />
+          <img
+            class="lg:w-8 lg:h-8"
+            src="https://res.cloudinary.com/whynotearth/image/upload/v1587102533/Volkswagen/cms/back_oay5wt.png"
+          />
         </router-link>
       </div>
       <div class="text-primary tg-h2-mobile lg:tg-h2-desktop truncate">{{ title }}</div>
