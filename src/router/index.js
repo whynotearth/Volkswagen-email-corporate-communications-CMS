@@ -205,6 +205,15 @@ const routes = [
     }
   },
   {
+    path: '/blue-delta/rearrange/:id',
+    name: 'BlueDeltaRearrange',
+    component: () => import('@/views/BlueDeltaRearrange.vue'),
+    props: true,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
     path: '/jumpstart-lists',
     name: 'JumpStartLists',
     component: JumpStartLists,
