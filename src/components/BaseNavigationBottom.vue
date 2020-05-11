@@ -126,14 +126,17 @@ export default {
 
 ul.toggle-menu > li {
   transition: all 0.2s ease;
+  color: transparent;
 }
 
 ul.toggle-menu.opened > li:nth-child(1) {
   transition-duration: 450ms;
+  color: white;
   top: -70px;
 }
 
 ul.toggle-menu.opened > li:nth-child(2) {
+  color: white;
   transition-duration: 450ms;
   top: -130px;
 }
