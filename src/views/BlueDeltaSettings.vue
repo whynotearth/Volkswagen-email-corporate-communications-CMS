@@ -49,10 +49,10 @@
             </span>
           </div>
 
-          <div class="px-4 bg-white relative pt-8">
-            <div class="flex-auto border-top">
+          <div class="flex relative m-4">
+            <div class="flex-auto">
               <BaseDropdown
-                class="text-left"
+                class="text-left border-t"
                 placeholder="Schedule time"
                 :options="time_slots"
                 v-model="$v.default_schedule_time.$model"
@@ -189,9 +189,3 @@ export default {
   }
 };
 </script>
-
-<style scoped>
-.border-top {
-  border-top: 1px solid #e2e8f0;
-}
-</style>
