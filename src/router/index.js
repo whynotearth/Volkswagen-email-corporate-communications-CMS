@@ -17,9 +17,8 @@ import EmailListImport from '../views/EmailListImport';
 import EmailListImportHelp from '../views/EmailListImportHelp';
 import Email from '@/views/Email';
 import Dashboard from '../views/Dashboard';
-import ResetPassword from '../views/ResetPassword';
-import NewPassword from '../views/NewPassword';
-import VolkswagenLoadMessage from '../views/VolkswagenLoadMessage';
+import ResetPassword from '../views/AuthResetPassword';
+import NewPassword from '../views/AuthNewPassword';
 import store from '../store';
 
 Vue.use(VueRouter);
@@ -44,12 +43,6 @@ const routes = [
     path: '/new-password',
     name: 'NewPassword',
     component: NewPassword
-  },
-  {
-    path: '/volkswagen-load-message/:reset/:confirmreset',
-    name: 'VolkswagenLoadMessage',
-    component: VolkswagenLoadMessage,
-    props: true
   },
   {
     path: '/articles/add/:step?',

@@ -46,13 +46,12 @@
           Log In
         </button>
         <div class="auth-recovery">
-          <a
-            @click="forgotPassword()"
+          <router-link
+            :to="{ name: 'ResetPassword' }"
             class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
-            href="#"
           >
             Forgot Password?
-          </a>
+          </router-link>
         </div>
       </div>
     </form>
@@ -98,9 +97,6 @@ export default {
     this.cleanup();
   },
   methods: {
-    forgotPassword() {
-      this.$router.push({ name: 'ResetPassword' });
-    },
     cleanup() {
       this.password = '';
     },
