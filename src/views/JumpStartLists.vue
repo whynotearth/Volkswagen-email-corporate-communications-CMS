@@ -6,9 +6,14 @@
     <template #content>
       <div class="flex flex-col py-3">
         <div class="container px-0 md:px-6">
-          <template v-for="(plan, index) in get_daily_plan">
-            <JumpStartItem :key="index" :model="plan" />
-          </template>
+          <router-link
+            v-for="(plan, index) in get_daily_plan"
+            :to="{ name: 'EditBlueDelta', params: { id: plan.jumpStartId || 1 } }"
+            :key="index"
+            class="cursor-pointer"
+          >
+            <JumpStartItem :model="plan" />
+          </router-link>
         </div>
       </div>
     </template>

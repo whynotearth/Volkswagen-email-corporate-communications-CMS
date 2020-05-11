@@ -9,7 +9,7 @@
               <div class="relative">
                 <EmailPreview />
                 <router-link
-                  :to="{ name: 'Home' }"
+                  :to="{ name: 'BlueDeltaRearrange', params: { id: id || 1 } }"
                   class="absolute bg-opacity-50 bg-black -mx-4 md:m-0 inset-0 text-white"
                 >
                   <div class="flex h-full bg-transparent justify-center items-center">
@@ -90,7 +90,7 @@ export default {
   name: 'EditBlueDelta',
   props: {
     id: {
-      type: String,
+      type: [String, Number],
       required: true
     }
   },
