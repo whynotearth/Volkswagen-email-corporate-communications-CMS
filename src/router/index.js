@@ -17,6 +17,8 @@ import EmailListImport from '../views/EmailListImport';
 import EmailListImportHelp from '../views/EmailListImportHelp';
 import Email from '@/views/Email';
 import Dashboard from '../views/Dashboard';
+import ResetPassword from '../views/AuthResetPassword';
+import NewPassword from '../views/AuthNewPassword';
 import store from '../store';
 
 Vue.use(VueRouter);
@@ -31,6 +33,16 @@ const routes = [
     path: '/login',
     name: 'AuthLogin',
     component: AuthLogin
+  },
+  {
+    path: '/reset-password',
+    name: 'ResetPassword',
+    component: ResetPassword
+  },
+  {
+    path: '/new-password',
+    name: 'NewPassword',
+    component: NewPassword
   },
   {
     path: '/articles/add/:step?',
