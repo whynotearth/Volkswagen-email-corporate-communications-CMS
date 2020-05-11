@@ -1,7 +1,7 @@
 <template>
   <BaseDropdown
-    class="relative dropdown-text__align-left"
-    placeholder="Schedule: No time selected"
+    class="relative dropdown-text__align-left border-t"
+    placeholder=""
     :options="time_slots"
     v-model="selectedTime"
   >
@@ -9,10 +9,13 @@
       <span v-if="time_slots.length === 0" class="text-gray-500">
         No time slots!
       </span>
-      <span v-else-if="selectedOption">
-        Schedule
-        <span class="ml-2 em-medium">
+      <span v-else>
+        <span class="text-black">Schedule:</span>
+        <span v-if="selectedOption" class="ml-2 em-medium text-gray-500">
           {{ millisecondToTime(selectedOption) }}
+        </span>
+        <span class="ml-2 em-medium" v-else>
+          No time selected
         </span>
       </span>
     </template>
@@ -34,6 +37,7 @@ export default {
     prop: 'value',
     event: 'change'
   },
+  props: ['emailDate'],
   data() {
     return {
       selectedTime: null
@@ -42,19 +46,21 @@ export default {
   computed: {
     time_slots() {
       let time = [];
-      let d = new Date('00:00');
-      let start = 800;
-      let end = 2400;
-      let startHours = Math.floor(start / 100) * 3600000;
-      let endHours = Math.floor(end / 100) * 3600000;
-      let startMinutes = (start % 100) * 60000;
-      let endMinutes = (end % 100) * 60000;
-      let startTime = startHours + startMinutes;
-      let endTime = endHours + endMinutes;
-      d.setHours(0, 0, 0, 0);
-      if (Date.now() > d.getTime()) startTime = Date.now() - d.getTime() + 900000;
-      for (let i = startTime; i <= endTime; i += 900000) {
-        time.push(i);
+      if (this.get_email_date) {
+        let d = new Date(this.get_email_date);
+        let start = 800;
+        let end = 2400;
+        let startHours = Math.floor(start / 100) * 3600000;
+        let endHours = Math.floor(end / 100) * 3600000;
+        let startMinutes = (start % 100) * 60000;
+        let endMinutes = (end % 100) * 60000;
+        let startTime = startHours + startMinutes;
+        let endTime = endHours + endMinutes;
+        d.setHours(0, 0, 0, 0);
+        if (Date.now() > d.getTime()) startTime = Date.now() - d.getTime() + 900000;
+        for (let i = startTime; i <= endTime; i += 900000) {
+          time.push(i);
+        }
       }
       return time;
     }

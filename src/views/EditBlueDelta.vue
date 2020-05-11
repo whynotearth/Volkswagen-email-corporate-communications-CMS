@@ -2,62 +2,70 @@
   <LayoutFixedScrollable>
     <template #content>
       <div class="">
-        <BaseAppBarHeader class="sticky top-0 bg-white" title="Wednesday, 6 May, 2020 " to-link="/blue-delta" />
+        <BaseAppBarHeader class="sticky top-0 bg-white" title="Wednesday, 6 May, 2020 " to-link="/jumpstart-lists" />
         <div class="flex mb-40">
           <div class="container px-0 md:px-6 pt-4 px-4">
             <div class="flex justify-center p-4">
-              <img
-                class="cursor-pointer"
-                src="https://user-images.githubusercontent.com/5694308/81145997-a7721680-8fa1-11ea-919a-9b11ef4cc8c7.png"
-                alt="image"
-              />
+              <div class="relative">
+                <EmailPreview />
+                <router-link
+                  :to="{ name: 'Home' }"
+                  class="absolute bg-opacity-50 bg-black -mx-4 md:m-0 inset-0 text-white"
+                >
+                  <div class="flex h-full bg-transparent justify-center items-center">
+                    <RearrangeIcon />
+                    <span class="ml-4 em-high uppercase tg-color-label-mobile leading-normal">REARRANGE</span>
+                  </div>
+                </router-link>
+              </div>
             </div>
             <div class="py-4">
               <div
-                class="mb-4 bg-white relative"
+                class="mb-4 bg-white relative text-left"
                 :class="[
                   {
                     'is-query-empty': to_query === '',
-                    'is-filled': recipients.length > 0,
-                    error: recipientsIsDirthy && recipients.length === 0
+                    'is-filled': !$v.email_recipients.$invalid,
+                    error: $v.email_recipients.$error
                   },
-                  recipientsIsDirthy && recipients.length === 0
-                    ? 'text-red-600 border-red-600'
-                    : 'text-gray-500 border-gray-600'
+                  $v.email_recipients.$error ? 'text-red-600 border-red-600' : 'text-gray-500 border-gray-600'
                 ]"
               >
                 <label
                   class="multiselect--material-label absolute left-0"
-                  v-if="recipients.length > 0"
-                  for="memoadd-step1-recipients"
+                  v-if="!$v.email_recipients.$invalid"
+                  for="email_recipients"
                 >
                   Recipients:
                 </label>
                 <Multiselect
-                  id="memoadd-step1-recipients"
-                  v-model="recipients"
-                  :placeholder="recipients.length === 0 ? 'Recipients:' : ''"
+                  id="edit-blue-delta"
+                  :placeholder="email_recipients.length === 0 ? 'Recipients:' : ''"
+                  v-model="$v.email_recipients.$model"
+                  @blur="$v.email_recipients.$touch()"
                   :options="get_recipients_available"
                   :multiple="true"
                   :hide-selected="true"
                   :show-labels="false"
-                  @close="recipientsIsDirthy = true"
                   @search-change="onToSearchChange"
                   open-direction="bottom"
                 >
                   <template v-slot:noResult>Nothing found</template>
                   <template v-slot:noOptions>No options available</template>
                 </Multiselect>
-                <span v-if="recipientsIsDirthy && recipients.length === 0" class="text-xs text-error pl-error-message">
-                  To is required
+                <span v-if="$v.email_recipients.$error" class="text-xs text-error">
+                  Please select recipients.
                 </span>
               </div>
             </div>
             <div>
-              <BaseTimePicker v-model="time" />
+              <BaseTimePicker v-model="$v.time.$model" :emailDate="get_email_date" @blur="$v.time.$touch()" />
+              <span v-if="$v.time.$error" class="text-xs text-error">
+                Please schedule time.
+              </span>
             </div>
             <div class="px-12 py-4">
-              <BaseButton classes="w-full sm:w-1/2" type="secondary">Save</BaseButton>
+              <BaseButton @click="updateBlueDelta" classes="w-full sm:w-1/2" bg-type="secondary">Save</BaseButton>
             </div>
           </div>
         </div>
@@ -74,7 +82,9 @@ import BaseButton from '@/components/BaseButton.vue';
 import BaseTimePicker from '@/components/BaseTimePicker.vue';
 import BaseAppBarHeader from '@/components/BaseAppBarHeader.vue';
 import LayoutFixedScrollable from '@/components/LayoutFixedScrollable';
+import EmailPreview from '@/components/Email/EmailPreview.vue';
 import Multiselect from 'vue-multiselect';
+import RearrangeIcon from '@/assets/Rearrange.svg';
 
 export default {
   name: 'EditBlueDelta',
@@ -84,31 +94,79 @@ export default {
       required: true
     }
   },
-  components: { BaseAppBarHeader, LayoutFixedScrollable, Multiselect, BaseButton, BaseTimePicker },
+  validations: {
+    email_recipients: {
+      required
+    },
+    time: {
+      required
+    }
+  },
+  components: {
+    BaseAppBarHeader,
+    LayoutFixedScrollable,
+    Multiselect,
+    BaseButton,
+    BaseTimePicker,
+    EmailPreview,
+    RearrangeIcon
+  },
   data() {
     return {
       recipientsIsDirthy: false,
-      to_query: '',
-      time: null
+      to_query: ''
     };
   },
   computed: {
-    ...mapGetters('memo', ['get_recipients']),
+    ...mapGetters('email', [
+      'get_email_recipients',
+      'get_schedule_time',
+      'get_selected_jumpstart',
+      'get_selected_articles',
+      'get_email_date'
+    ]),
     ...mapGetters('recipient', ['get_recipients_available']),
-    recipients: {
+    email_recipients: {
       get() {
-        return this.get_recipients;
+        return this.get_email_recipients;
       },
       set(value) {
-        this.update_recipients(value);
+        this.update_email_recipients(value);
+      }
+    },
+    time: {
+      get() {
+        return this.get_schedule_time;
+      },
+      set(value) {
+        this.update_schedule_time(value);
       }
     }
   },
   methods: {
-    ...mapMutations('memo', ['update_recipients']),
+    ...mapMutations('email', ['update_email_recipients', 'update_schedule_time']),
     ...mapActions('recipient', ['fetch_recipients']),
+    ...mapActions('email', ['update_selected_articles']),
     onToSearchChange(query) {
       this.to_query = query;
+    },
+    updateBlueDelta() {
+      let total_time = new Date(this.get_email_date + this.get_schedule_time).toISOString();
+      const params = {
+        jumpStartId: this.get_selected_jumpstart.id,
+        body: {
+          dateTime: total_time,
+          articleIds: this.get_selected_articles.map(article => article.id),
+          distributionGroups: this.get_email_recipients
+        }
+      };
+      this.update_selected_articles({ params }).catch(error => {
+        this.update_response_message({
+          message: error.response.data.message,
+          type: 'error',
+          class: 'text-error'
+        });
+      });
     }
   },
   mounted() {
