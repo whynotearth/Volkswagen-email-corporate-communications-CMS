@@ -32,6 +32,9 @@
         </div>
       </div>
     </template>
+    <template #footer>
+      <NavigationBottom />
+    </template>
   </LayoutFixedScrollable>
 </template>
 
@@ -40,6 +43,7 @@ import Article from '@/components/Email/Article.vue';
 import EmailPreview from '@/components/Email/EmailPreview.vue';
 import BaseButton from '@/components/BaseButton.vue';
 import BaseAppBarHeader from '@/components/BaseAppBarHeader.vue';
+import NavigationBottom from '@/components/BaseNavigationBottom';
 import LayoutFixedScrollable from '@/components/LayoutFixedScrollable';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
 import { required } from 'vuelidate/lib/validators';
@@ -47,7 +51,7 @@ import { formatISODate, formatDate, sleep } from '@/helpers.js';
 
 export default {
   name: 'DraftEmail',
-  components: { Article, BaseButton, EmailPreview, LayoutFixedScrollable, BaseAppBarHeader },
+  components: { Article, BaseButton, EmailPreview, LayoutFixedScrollable, BaseAppBarHeader, NavigationBottom },
   props: {
     id: {
       type: [String, Number],

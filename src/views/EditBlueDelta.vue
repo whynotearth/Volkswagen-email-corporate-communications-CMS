@@ -75,6 +75,9 @@
         </div>
       </div>
     </template>
+    <template #footer>
+      <NavigationBottom />
+    </template>
   </LayoutFixedScrollable>
 </template>
 
@@ -86,6 +89,7 @@ import { sleep } from '@/helpers.js';
 import BaseButton from '@/components/BaseButton.vue';
 import BaseTimePicker from '@/components/BaseTimePicker.vue';
 import BaseAppBarHeader from '@/components/BaseAppBarHeader.vue';
+import NavigationBottom from '@/components/BaseNavigationBottom';
 import LayoutFixedScrollable from '@/components/LayoutFixedScrollable';
 import EmailPreview from '@/components/Email/EmailPreview.vue';
 import Multiselect from 'vue-multiselect';
@@ -114,7 +118,8 @@ export default {
     BaseButton,
     BaseTimePicker,
     EmailPreview,
-    RearrangeIcon
+    RearrangeIcon,
+    NavigationBottom
   },
   data() {
     return {
