@@ -1,5 +1,5 @@
 <template>
-  <div v-if="model.articles.length" class="block w-full px-2 py-0 bg-surface border-b-1 h-44">
+  <div v-if="model.articles.length" class="block w-full px-2 py-0 bg-surface border-b-1 min-h-44">
     <h2 class="flex tg-body-emphasis-mobile whitespace-no-wrap truncate text-left py-4 pl-2">
       {{ formatDate(model.date, 'EEEE, d MMM,yyyy') }}
     </h2>
@@ -33,7 +33,7 @@ export default {
 </script>
 
 <style scoped>
-.h-44 {
-  height: 11.5rem;
+.min-h-44 {
+  min-height: 11.5rem;
 }
 </style>
