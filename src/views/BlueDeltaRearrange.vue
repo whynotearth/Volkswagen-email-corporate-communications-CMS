@@ -43,7 +43,7 @@ import BaseAppBarHeader from '@/components/BaseAppBarHeader.vue';
 import LayoutFixedScrollable from '@/components/LayoutFixedScrollable';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
 import { required } from 'vuelidate/lib/validators';
-import { formatISODate, formatDate } from '@/helpers.js';
+import { formatISODate, formatDate, sleep } from '@/helpers.js';
 
 export default {
   name: 'DraftEmail',
@@ -71,7 +71,8 @@ export default {
       'create_jumpstart',
       'update_selected_articles',
       'fetch_available_articles',
-      'update_available_articles'
+      'update_available_articles',
+      'clear_email_data'
     ]),
     formatDate,
     formatISODate,
@@ -87,6 +88,8 @@ export default {
       return this.get_selected_articles.indexOf(article);
     },
     updateBlueDelta() {
+      this.$v.$touch();
+      if (this.$v.$invalid) return false;
       let d = new Date(this.get_email_date);
       d.setHours(0, 0, 0, 0);
       let total_time = new Date(d.getTime() + this.get_schedule_time).toISOString();
@@ -98,12 +101,34 @@ export default {
           distributionGroups: this.get_email_recipients
         }
       };
-      this.create_jumpstart({ params }).catch(error => {
-        this.update_response_message({
-          message: error.response.data.message,
-          type: 'error',
-          class: 'text-error'
+      this.create_jumpstart({ params })
+        .then(() => {
+          this.clear_email_data();
+          this.onSuccessSubmit();
+        })
+        .catch(error => {
+          this.update_response_message({
+            message: error.response.data.message,
+            type: 'error',
+            class: 'text-error'
+          });
         });
+    },
+    async onSuccessSubmit() {
+      this.$store.commit('overlay/updateModel', {
+        title: 'Success!',
+        message: ''
+      });
+
+      await sleep(1000);
+
+      await this.$router.push({
+        name: 'JumpStartLists'
+      });
+
+      this.$store.commit('overlay/updateModel', {
+        title: '',
+        message: ''
       });
     }
   },
