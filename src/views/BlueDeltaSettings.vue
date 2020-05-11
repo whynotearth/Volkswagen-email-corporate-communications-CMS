@@ -9,7 +9,7 @@
             <p class="mb-6">
               By default, Blue Delta will automatically send each day according to the below details. You can change
               these manually for each individual Blue Delta
-              <router-link class="text-secondary underline" to="/admin/blue-delta">here</router-link>.
+              <router-link class="text-secondary underline" :to="{ name: 'JumpStartLists' }">here</router-link>.
             </p>
           </div>
 
