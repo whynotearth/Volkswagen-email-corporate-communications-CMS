@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Home from '../views/Home.vue';
+import Stats from '../views/Stats.vue';
 import ArticleAdd from '../views/ArticleAdd.vue';
 import AuthLogin from '../views/AuthLogin.vue';
 import MemoAdd from '../views/MemoAdd.vue';
@@ -37,6 +38,14 @@ const routes = [
   //   name: 'DeveloperTesting',
   //   component: DeveloperTesting
   // },
+  {
+    path: '/stats',
+    name: 'Stats',
+    component: Stats,
+    meta: {
+      requiresAuth: true
+    }
+  },
   {
     path: '/login',
     name: 'AuthLogin',
