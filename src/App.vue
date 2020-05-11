@@ -4,7 +4,7 @@
       <router-view />
     </transition>
     <transition name="fade">
-      <div v-if="overlayModel.title" class="w-full h-full fixed block top-0 left-0 z-50">
+      <div v-if="overlayModel.title || overlayModel.message" class="w-full h-full fixed block top-0 left-0 z-50">
         <OverlayBrand :title="overlayModel.title" :message="overlayModel.message"></OverlayBrand>
       </div>
     </transition>

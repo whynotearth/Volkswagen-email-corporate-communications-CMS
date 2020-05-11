@@ -6,15 +6,33 @@
       </div>
     </div>
     <div class="flex flex-wrap -mx-1">
-      <ImageInput v-model="images" />
-      <ImagePreview
-        :selectImage="selectImage"
-        v-for="(image, index) in imagesToPreview"
-        :key="index"
-        :image="image"
-        :index="index"
-      />
-      <ImageModal
+      <CloudinaryWidget
+        @uploaded="onUpload"
+        @opened="onUploaderOpened"
+        :uploaderOptions="{
+          maxFiles: 1,
+          maxImageWidth: 256,
+          maxImageHeight: 256
+        }"
+      >
+        <label class="bg-background m-1 block cursor-pointer" for="add-post-image-upload">
+          <div class="upload-icon">
+            <div class="upload-icon--dimension border flex justify-center items-center">
+              <PlusIcon />
+            </div>
+          </div>
+        </label>
+      </CloudinaryWidget>
+      <div class="upload-previews-wrapper flex flex-wrap">
+        <BaseImagePreview
+          :selectImage="selectImage"
+          v-for="(image, index) in imagesToPreview"
+          :key="index"
+          :image="image.src"
+          :index="index"
+        />
+      </div>
+      <ImagePreviewModal
         v-if="selectedImageInfo.src && selectedImageInfo.index >= 0"
         @deleteImage="deleteImage"
         @resetSelectedImage="resetSelectedImage"
@@ -25,11 +43,18 @@
 </template>
 
 <script>
+import PlusIcon from '@/assets/plus.svg';
+
 export default {
   name: 'ImageUpload',
   model: {
     prop: 'value',
     event: 'change'
+  },
+  props: {
+    defaultImages: {
+      type: Array
+    }
   },
   data() {
     return {
@@ -42,28 +67,16 @@ export default {
     };
   },
   components: {
-    ImageInput: () => import('./BaseImageUpload'),
-    ImagePreview: () => import('./BaseImagePreview'),
-    ImageModal: () => import('./ImagePreviewModal')
+    PlusIcon,
+    BaseImagePreview: () => import('./BaseImagePreview'),
+    ImagePreviewModal: () => import('./ImagePreviewModal'),
+    CloudinaryWidget: () => import('./CloudinaryWidget')
+  },
+  mounted() {
+    this.images = [...this.defaultImages];
+    this.imagesToPreview = [...this.defaultImages];
   },
   methods: {
-    readImageFile(images) {
-      return images.reduce((allUrls, currentImage) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(currentImage);
-        reader.onload = e => {
-          allUrls.push(e.target.result);
-        };
-        reader.onerror = err => {
-          console.log(err);
-          /*
-            When uploading fails, we should inform user about that.
-            So notification box should pop up.
-          */
-        };
-        return allUrls;
-      }, []);
-    },
     deleteImage(index) {
       this.images.splice(index, 1);
     },
@@ -76,21 +89,38 @@ export default {
         src: '',
         index: null
       };
+    },
+    onUploaderOpened() {
+      //
+    },
+    onUpload(result) {
+      if (result.event === 'success') {
+        const images = [this.getCloudinaryImageAdaptedObject(result.info)];
+        this.images = images;
+      }
+    },
+    getCloudinaryImageAdaptedObject(cloudinaryImageInfo) {
+      return {
+        src: cloudinaryImageInfo.url
+      };
     }
   },
   watch: {
     images(val) {
       this.$emit('change', [...val]);
-      this.imagesToPreview = this.readImageFile(val);
+      this.imagesToPreview = [...val];
     }
   }
 };
 </script>
 
 <style scoped>
-::v-deep .upload-icon--dimension,
-::v-deep .upload-img--dimension {
+.upload-icon--dimension,
+.upload-img--dimension {
   width: 76px;
+  height: 108px;
+}
+.upload-previews-wrapper {
   height: 108px;
 }
 </style>
