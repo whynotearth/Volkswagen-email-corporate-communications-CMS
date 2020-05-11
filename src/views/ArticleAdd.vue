@@ -43,7 +43,7 @@ export default {
       'get_description',
       'get_price',
       'get_eventDate',
-      'get_images',
+      'get_image',
       'get_selected_category'
     ]),
     currentStep() {
@@ -101,6 +101,7 @@ export default {
         body: {
           date: date_time,
           categorySlug: this.get_selected_category.slug,
+          image: this.get_image,
           headline: this.get_headline,
           description: this.get_description,
           price: this.get_price,

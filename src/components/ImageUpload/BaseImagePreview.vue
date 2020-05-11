@@ -1,6 +1,6 @@
 <template functional>
-  <div class="upload-img--dimension m-1">
-    <img @click="props.selectImage([props.image, props.index])" class="h-full w-full object-cover" :src="props.image" />
+  <div class="upload-img--dimension m-1 h-full">
+    <img @click="props.selectImage([props.image, props.index])" class="max-h-full cursor-pointer" :src="props.image" />
   </div>
 </template>
 
