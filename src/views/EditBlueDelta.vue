@@ -150,11 +150,10 @@ export default {
       this.to_query = query;
     },
     updateBlueDelta() {
-      let total_time = new Date(this.get_schedule_time).toISOString();
       const params = {
         jumpStartId: this.get_selected_jumpstart.id,
         body: {
-          dateTime: total_time,
+          dateTime: this.get_schedule_time,
           articleIds: this.get_selected_articles.map(article => article.id),
           distributionGroups: this.get_email_recipients
         }
