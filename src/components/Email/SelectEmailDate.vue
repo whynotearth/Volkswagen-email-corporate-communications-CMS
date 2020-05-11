@@ -86,7 +86,13 @@ export default {
   },
   methods: {
     ...mapMutations('email', ['update_email_date', 'update_selected_jumpstart', 'update_articles']),
-    ...mapActions('email', ['clear_email_data', 'debounced_preview', 'fetch_jumpstarts', 'update_selected_articles']),
+    ...mapActions('email', [
+      'clear_email_data',
+      'debounced_preview',
+      'fetch_jumpstarts',
+      'update_selected_articles',
+      'fetch_available_articles'
+    ]),
     formatDate,
     formatISODate,
     init() {
@@ -104,7 +110,10 @@ export default {
         selectedJumpstart = this.get_jumpstarts.find(item => {
           return formatISODate(item.dateTime) === formatISODate(selectedDate);
         });
-        this.update_selected_jumpstart(selectedJumpstart);
+        if (selectedJumpstart) {
+          this.update_selected_jumpstart(selectedJumpstart);
+          this.fetch_available_articles({ jumpStartId: selectedJumpstart.id });
+        }
         this.update_articles(selectedJumpstart.articles);
         for (i = 0; i < 5; i++) {
           article = selectedJumpstart.articles[i];

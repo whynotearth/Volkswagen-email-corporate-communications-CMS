@@ -36,11 +36,11 @@ export default {
   },
   actions: {
     async create_jumpstart({ commit }, payload) {
-      await JumpStartService.jumpstart(payload.params);
+      await JumpStartService.jumpstart1(payload.params);
     },
     async fetch_jumpstarts({ commit }) {
       store.commit('loading/loading', true);
-      const data = await JumpStartService.jumpstart1();
+      const data = await JumpStartService.jumpstart();
       commit('update_jumpstarts', data);
       store.commit('loading/loading', false);
     },
@@ -67,6 +67,9 @@ export default {
       }
       const base = `${BASE_API}/api/v0/volkswagen/jumpstart/${state.selected_jumpstart.id}/preview`;
       const url = new URL(base);
+      state.selected_articles.forEach(article => {
+        url.searchParams.append('articleIds', article.id);
+      });
       state.preview_link = url.href;
     },
     clear_email_data({ commit, dispatch }) {
