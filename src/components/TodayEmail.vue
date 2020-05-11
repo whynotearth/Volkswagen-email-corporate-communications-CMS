@@ -3,7 +3,7 @@
     <div>
       <h2 class="tg-h2-mobile text-primary">Hi Xavier, here's your Jumpstart email for the day.</h2>
     </div>
-    <div class="my-4 px-6">
+    <div class="my-4 w-full">
       <EmailPreview />
     </div>
     <div>
