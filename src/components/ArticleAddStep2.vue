@@ -17,18 +17,21 @@
         </span>
       </BaseInputText>
 
-      <vue-simplemde
+      <MarkDownEditor
+        class="mb-4"
+        :error="
+          $v.description.$dirty && ($v.description.$invalid || !$v.description.required || !$v.description.maxLength)
+        "
         v-if="isFieldRequired('description')"
         v-model="$v.description.$model"
-        :configs="configs"
-        ref="markdownEditor"
-      />
-      <span v-if="$v.description.$dirty && !$v.description.required" class="text-xs text-error pl-error-message">
-        Description is required
-      </span>
-      <span v-if="$v.description.$dirty && !$v.description.maxLength" class="text-xs text-error pl-error-message">
-        Description should be less than 750 characters
-      </span>
+      >
+        <span v-if="$v.description.$dirty && !$v.description.required" class="text-xs text-error pl-error-message">
+          Description is required
+        </span>
+        <span v-if="$v.description.$dirty && !$v.description.maxLength" class="text-xs text-error pl-error-message">
+          Description should be less than 750 characters
+        </span>
+      </MarkDownEditor>
 
       <BaseInputText
         v-if="isFieldRequired('price')"
@@ -70,7 +73,7 @@
 
 <script>
 import BaseInputText from '@/components/BaseInputText.vue';
-import VueSimplemde from 'vue-simplemde';
+import MarkDownEditor from '@/components/BaseMarkDownEditor.vue';
 // import ImageUpload from '@/components/ImageUpload/ImageUpload.vue';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
 import { required, decimal, maxLength, requiredIf } from 'vuelidate/lib/validators';
@@ -84,18 +87,12 @@ export default {
   name: 'ArticleAddStep2',
   components: {
     BaseInputText,
-    VueSimplemde
+    MarkDownEditor
     // , ImageUpload
   },
   data() {
     return {
-      images: [],
-      configs: {
-        status: ['lines', 'words'],
-        spellChecker: false,
-        placeholder: 'Put your article\'s content here.',
-        hideIcons: ['code', 'table', 'side-by-side', 'fullscreen', 'image']
-      }
+      images: []
     };
   },
   validations: {
@@ -216,7 +213,3 @@ export default {
   }
 };
 </script>
-
-<style scoped>
-@import '~simplemde/dist/simplemde.min.css';
-</style>
