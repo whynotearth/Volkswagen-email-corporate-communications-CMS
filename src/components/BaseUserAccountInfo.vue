@@ -21,15 +21,34 @@
 
 <script>
 import store from '@/store';
-import { mapGetters } from 'vuex';
+import { mapMutations, mapGetters } from 'vuex';
 import BaseInputText from '@/components/BaseInputText.vue';
 import BaseButton from '@/components/BaseButton.vue';
 
 export default {
   name: 'BaseUserAccountInfo',
   components: { BaseInputText, BaseButton },
+  methods: {
+    ...mapMutations('auth', ['update_name', 'update_email'])
+  },
   computed: {
-    ...mapGetters('auth', ['name', 'email'])
+    ...mapGetters('auth', ['name', 'email']),
+    name: {
+      get() {
+        return this.name;
+      },
+      set(value) {
+        this.update_name(value);
+      }
+    },
+    email: {
+      get() {
+        return this.email;
+      },
+      set(value) {
+        this.update_email(value);
+      }
+    }
   }
 };
 </script>
