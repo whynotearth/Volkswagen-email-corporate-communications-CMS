@@ -28,7 +28,7 @@ export default {
       configs: {
         status: ['lines', 'words'],
         spellChecker: false,
-        placeholder: "Put your article's content here.",
+        placeholder: "Put your article's content here",
         hideIcons: ['code', 'table', 'side-by-side', 'fullscreen', 'image']
       }
     };
