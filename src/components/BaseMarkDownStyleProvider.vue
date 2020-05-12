@@ -1,38 +1,45 @@
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+<template functional>
+  <div class="markdown">
+    <slot></slot>
+  </div>
+</template>
+
+<style scoped>
+/deep/ h1,
+/deep/ h2,
+/deep/ h3,
+/deep/ h4,
+/deep/ h5,
+/deep/ h6 {
   font-weight: bolder !important;
 }
 
-h1 {
+/deep/ h1 {
   font-size: 2em !important;
 }
 
-h2 {
+/deep/ h2 {
   font-size: 1.5em !important;
 }
 
-h3 {
+/deep/ h3 {
   font-size: 1.17em !important;
 }
 
-h4 {
+/deep/ h4 {
   font-size: 1em !important;
 }
 
-h5 {
+/deep/ h5 {
   font-size: 0.83em !important;
 }
 
-h6 {
+/deep/ h6 {
   font-size: 0.67em !important;
 }
 
-ul,
-ol {
+/deep/ ul,
+/deep/ ol {
   display: block !important;
   margin-top: 1em !important;
   margin-bottom: 1em !important;
@@ -41,14 +48,15 @@ ol {
   padding-left: 40px !important;
 }
 
-ol {
+/deep/ ol {
   list-style-type: decimal !important;
 }
 
-ul {
+/deep/ ul {
   list-style-type: disc !important;
 }
 
-li {
+/deep/ li {
   display: list-item !important;
 }
+</style>

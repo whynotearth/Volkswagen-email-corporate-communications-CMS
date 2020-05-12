@@ -1,6 +1,8 @@
 <template>
   <div class="relative" :class="[error ? 'markdown-error' : 'markdown-grey']">
-    <vue-simplemde v-model="content" :configs="configs" ref="markdownEditor" />
+    <mark-down-style>
+      <vue-simplemde v-model="content" :configs="configs" ref="markdownEditor" />
+    </mark-down-style>
     <div class="flex items-center error absolute bottom-0 left-0">
       <slot></slot>
     </div>
@@ -9,6 +11,7 @@
 
 <script>
 import VueSimplemde from 'vue-simplemde';
+import MarkDownStyle from './BaseMarkDownStyleProvider.vue';
 
 export default {
   name: 'MarkDownEditor',
@@ -39,7 +42,8 @@ export default {
     }
   },
   components: {
-    VueSimplemde
+    VueSimplemde,
+    MarkDownStyle
   },
   methods: {
     updateValue() {
@@ -56,7 +60,6 @@ export default {
 
 <style scoped>
 @import '~simplemde/dist/simplemde.min.css';
-@import '../styles/markdown.css';
 
 .error {
   bottom: 8px;

@@ -1,7 +1,21 @@
-<template functional>
-  <div v-html="props.content"></div>
+<template>
+  <mark-down-style>
+    <div class="markdown-preview" v-html="content"></div>
+  </mark-down-style>
 </template>
 
-<style scoped>
-@import '../styles/markdown.css';
-</style>
+<script>
+import MarkDownStyle from './BaseMarkDownStyleProvider.vue';
+
+export default {
+  name: 'MarkDownPreview',
+  props: {
+    content: {
+      required: true
+    }
+  },
+  components: {
+    MarkDownStyle
+  }
+};
+</script>

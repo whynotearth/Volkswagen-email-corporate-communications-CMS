@@ -43,7 +43,7 @@
             {{ get_headline }}
           </div>
           <div class="w-full tg-body-mobile text-black em-high whitespace-pre-line break-words">
-            {{ get_description }}
+            <MarkDownPreview :content="get_description" />
           </div>
         </div>
         <p v-if="get_response_message.message" class="font-bold px-4 mb-4" :class="get_response_message.class">
@@ -58,10 +58,11 @@
 import ArrowDown from '@/assets/arrow-down.svg';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
 import { formatDate } from '@/helpers.js';
+import MarkDownPreview from '@/components/BaseMarkDownPreview.vue';
 
 export default {
   name: 'ArticleAddStep3',
-  components: { ArrowDown },
+  components: { ArrowDown, MarkDownPreview },
   props: {
     error: {
       type: Boolean,
