@@ -1,8 +1,8 @@
 <template>
   <div class="relative" :class="[error ? 'markdown-error' : 'markdown-grey']">
-    <mark-down-style>
+    <MarkDownStyle>
       <vue-simplemde v-model="content" :configs="configs" ref="markdownEditor" />
-    </mark-down-style>
+    </MarkDownStyle>
     <div class="flex items-center error absolute bottom-0 left-0">
       <slot></slot>
     </div>
@@ -67,26 +67,21 @@ export default {
 }
 
 .markdown-error,
-.markdown-error >>> .CodeMirror,
-.markdown-error >>> .editor-toolbar {
-  --border-opacity: 1;
-
-  border-color: #e53e3e;
-  border-color: rgba(229, 62, 62, var(--border-opacity));
+.markdown-error /deep/ .CodeMirror,
+.markdown-error /deep/ .editor-toolbar {
+  @apply border-red-600;
 }
 
 .markdown-grey,
-.markdown-grey >>> .CodeMirror,
-.markdown-grey >>> .editor-toolbar {
-  --border-opacity: 1;
-
+.markdown-grey /deep/ .CodeMirror,
+.markdown-grey /deep/ .editor-toolbar {
   opacity: 1;
-  border-color: #718096;
-  border-color: rgba(113, 128, 150, var(--border-opacity));
+
+  @apply border-gray-600;
 }
 
-.markdown-error >>> .editor-toolbar a,
-.markdown-grey >>> .editor-toolbar a {
+.markdown-error /deep/ .editor-toolbar a,
+.markdown-grey /deep/ .editor-toolbar a {
   opacity: 0.6;
 }
 </style>
