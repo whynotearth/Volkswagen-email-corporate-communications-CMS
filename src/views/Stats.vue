@@ -21,9 +21,9 @@
             </div>
             <h1 class="text-primary h1-mobile md:h1 mb-h1-mobile">Let's crunch the numbers...</h1>
 
-            <div v-if="isAuthenticated">
+            <div>
               <router-link
-                :to="{ name: 'MemoAdd' }"
+                :to="{ name: 'ActivityFeedMemoList' }"
                 class="block bg-secondary w-full hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline transition duration-100 ease-in-out transition-all label-mobile mb-6"
               >
                 BLUE DELTA STATS
@@ -35,35 +35,24 @@
                 MEMO STATS
               </router-link>
             </div>
-
-            <AuthLogin v-if="!isAuthenticated" />
           </div>
         </div>
       </div>
     </template>
-    <template #footer v-if="isAuthenticated">
+    <template #footer>
       <NavigationBottom active="stats" />
     </template>
   </LayoutFixedScrollable>
 </template>
 
 <script>
-import store from '@/store';
-import isEmail from 'validator/lib/isEmail';
-import AuthLogin from '@/components/AuthLogin';
 import LayoutFixedScrollable from '@/components/LayoutFixedScrollable';
 import NavigationBottom from '@/components/BaseNavigationBottom';
 import BaseAppBarHeader from '@/components/BaseAppBarHeader.vue';
 
 export default {
   name: 'StatsPage',
-  components: { AuthLogin, BaseAppBarHeader, NavigationBottom, LayoutFixedScrollable },
-  computed: {
-    isAuthenticated() {
-      return this.$store.getters['authKeep/isAuthenticated'];
-    }
-  },
-  methods: {}
+  components: { BaseAppBarHeader, NavigationBottom, LayoutFixedScrollable }
 };
 </script>
 

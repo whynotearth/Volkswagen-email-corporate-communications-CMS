@@ -69,7 +69,7 @@ export default {
       const wantToExit = newStep < 1;
       if (wantToExit) {
         this.clear_email_data();
-        return this.$router.push({ name: 'Home' });
+        return this.$router.push({ name: 'Dashboard' });
       }
 
       // finish
@@ -120,7 +120,7 @@ export default {
       await sleep(1000);
 
       await this.$router.push({
-        name: 'Home'
+        name: 'Dashboard'
       });
 
       this.$store.commit('overlay/updateModel', {
