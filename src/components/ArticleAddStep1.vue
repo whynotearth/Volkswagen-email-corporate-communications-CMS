@@ -6,8 +6,9 @@
       </p>
 
       <ul class="list-none bg-background">
+        <!-- TODO: ENABLE COMMUNITY -->
         <li
-          v-for="(category, index) in get_categories"
+          v-for="(category, index) in get_categories.filter(category => category.slug !== 'community')"
           :key="index"
           class="text-left py-1 px-2"
           :class="{ active: category.slug === get_selected_category.slug }"

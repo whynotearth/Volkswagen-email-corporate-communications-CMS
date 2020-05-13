@@ -7,7 +7,7 @@
           <BaseUserAccountCard class="w-full relative container px-0 py-8" />
         </div>
         <div class="container pt-6 pb-8 mb-4 text-left">
-          <BaseUserAccountInfo />
+          <BaseUserAccountInfo :to-link="{ name: 'ResetPassword' }" />
         </div>
       </div>
     </template>

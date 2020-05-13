@@ -20,7 +20,10 @@ export default {
       type: '', // error, success
       message: '',
       class: '' // text-error text-success
-    }
+    },
+    default_distribution_groups: [],
+    default_schedule_time: null,
+    selected_plan: {}
   },
   getters: {
     get_email_date: state => state.email_date,
@@ -32,7 +35,10 @@ export default {
     get_jumpstarts: state => state.jumpstarts,
     get_response_message: state => state.response_message,
     get_articles: state => state.articles,
-    get_available_articles: state => state.available_articles
+    get_default_distribution_groups: state => state.default_distribution_groups,
+    get_available_articles: state => state.available_articles,
+    get_default_schedule_time: state => state.default_schedule_time,
+    get_selected_plan: state => state.selected_plan
   },
   actions: {
     async create_jumpstart({ commit }, payload) {
@@ -65,7 +71,8 @@ export default {
         state.preview_link = payload;
         return false;
       }
-      const base = `${BASE_API}/api/v0/volkswagen/jumpstart/${state.selected_jumpstart.id}/preview`;
+      const id = state.selected_plan.jumpStartId || state.selected_jumpstart.id;
+      const base = `${BASE_API}/api/v0/volkswagen/jumpstart/${id}/preview`;
       const url = new URL(base);
       state.selected_articles.forEach(article => {
         url.searchParams.append('articleIds', article.id);
@@ -109,8 +116,17 @@ export default {
     update_articles(state, payload) {
       state.articles = payload;
     },
+    update_default_distribution_groups(state, payload) {
+      state.default_distribution_groups = payload;
+    },
     update_available_articles(state, payload) {
       state.available_articles = payload;
+    },
+    update_default_schedule_time(state, payload) {
+      state.default_schedule_time = payload;
+    },
+    update_selected_plan(state, payload) {
+      state.selected_plan = payload;
     }
   }
 };
