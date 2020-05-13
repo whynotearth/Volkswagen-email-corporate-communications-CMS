@@ -5,6 +5,11 @@
         <BaseAppBarHeader title="Blue Delta Settings" :to-link="{ name: 'Settings' }" />
 
         <div class="container px-0 md:px-6">
+          <div class="flex justify-between text-left py-6 px-4 mt-2">
+            <div class="">Send email automatically</div>
+            <BaseToggleSwitch :value="true" @toggleSwitch="toggleSwitch" />
+          </div>
+          <hr />
           <div class="text-left py-6 px-4 pb-0">
             <p class="mb-6">
               By default, Blue Delta will automatically send each day according to the below details. You can change
@@ -106,6 +111,7 @@ import { mapGetters, mapMutations, mapActions } from 'vuex';
 import LayoutFixedScrollable from '@/components/LayoutFixedScrollable';
 import NavigationBottom from '@/components/BaseNavigationBottom';
 import BaseButton from '@/components/BaseButton';
+import BaseToggleSwitch from '@/components/BaseToggleSwitch';
 import Multiselect from 'vue-multiselect';
 import { formatDate } from '@/helpers.js';
 import { required } from 'vuelidate/lib/validators';
@@ -118,7 +124,8 @@ export default {
     NavigationBottom,
     LayoutFixedScrollable,
     Multiselect,
-    BaseButton
+    BaseButton,
+    BaseToggleSwitch
   },
   validations: {
     default_distribution_list: {
@@ -184,6 +191,9 @@ export default {
     },
     onToSearchChange(query) {
       this.to_query = query;
+    },
+    toggleSwitch(value) {
+      console.log(value);
     },
     formatDate
   }
