@@ -97,7 +97,6 @@ export default {
         blue: 'opacity-100',
         archive: 'opacity-100'
       }
-      isOpen: false
     };
   },
   methods: {
