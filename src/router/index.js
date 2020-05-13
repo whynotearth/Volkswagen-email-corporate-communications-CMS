@@ -1,7 +1,12 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Home from '../views/Home.vue';
+<<<<<<< HEAD
 import ArticleAdd from '../views/ArticleAdd.vue';
+=======
+import Stats from '../views/Stats.vue';
+import PostAdd from '../views/PostAdd.vue';
+>>>>>>> added stats page
 import AuthLogin from '../views/AuthLogin.vue';
 import MemoAdd from '../views/MemoAdd.vue';
 import Settings from '../views/Settings';
@@ -37,6 +42,11 @@ const routes = [
   //   name: 'DeveloperTesting',
   //   component: DeveloperTesting
   // },
+  {
+    path: '/stats',
+    name: 'Stats',
+    component: Stats
+  },
   {
     path: '/login',
     name: 'AuthLogin',
