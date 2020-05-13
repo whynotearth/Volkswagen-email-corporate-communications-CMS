@@ -20,15 +20,19 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from 'vuex';
+import { mapGetters, mapMutations, mapActions } from 'vuex';
 import BaseInputText from '@/components/BaseInputText.vue';
 import BaseButton from '@/components/BaseButton.vue';
 
 export default {
   name: 'BaseUserAccountInfo',
   components: { BaseInputText, BaseButton },
+  mounted() {
+    this.fetch_profile();
+  },
   methods: {
-    ...mapMutations('profile', ['update_name', 'update_email'])
+    ...mapMutations('profile', ['update_name', 'update_email']),
+    ...mapActions('profile', ['fetch_profile'])
   },
   computed: {
     ...mapGetters('profile', ['get_name', 'get_email']),
