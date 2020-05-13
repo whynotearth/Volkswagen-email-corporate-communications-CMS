@@ -75,13 +75,15 @@ export default {
 .markdown-grey,
 .markdown-grey /deep/ .CodeMirror,
 .markdown-grey /deep/ .editor-toolbar {
-  opacity: 1;
-
+  @apply opacity-100;
   @apply border-gray-600;
 }
 
-.markdown-error /deep/ .editor-toolbar a,
+.markdown-error /deep/ .editor-toolbar a {
+  @apply opacity-75;
+}
+
 .markdown-grey /deep/ .editor-toolbar a {
-  opacity: 0.6;
+  @apply opacity-50;
 }
 </style>

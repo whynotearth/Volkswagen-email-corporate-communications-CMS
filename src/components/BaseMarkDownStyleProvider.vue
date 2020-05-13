@@ -40,20 +40,20 @@
 
 /deep/ ul,
 /deep/ ol {
-  display: block !important;
+  @apply block;
+  @apply mx-0;
+  @apply p-10;
+
   margin-top: 1em !important;
   margin-bottom: 1em !important;
-  margin-left: 0 !important;
-  margin-right: 0 !important;
-  padding-left: 40px !important;
 }
 
 /deep/ ol {
-  list-style-type: decimal !important;
+  @apply list-decimal;
 }
 
 /deep/ ul {
-  list-style-type: disc !important;
+  @apply list-disc;
 }
 
 /deep/ li {
