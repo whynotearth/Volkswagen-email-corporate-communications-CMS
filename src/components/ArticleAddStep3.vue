@@ -63,7 +63,6 @@
 </template>
 
 <script>
-import ArrowDown from '@/assets/arrow-down.svg';
 import BaseDropdown from '@/components/BaseDropdown';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
 import { mustBeDate } from '@/validations.js';
@@ -71,7 +70,7 @@ import { formatDate } from '@/helpers.js';
 
 export default {
   name: 'ArticleAddStep3',
-  components: { ArrowDown, BaseDropdown },
+  components: { BaseDropdown },
   props: {
     error: {
       type: Boolean,
