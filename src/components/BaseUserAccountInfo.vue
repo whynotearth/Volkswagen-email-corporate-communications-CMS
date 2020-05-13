@@ -24,7 +24,6 @@ import store from '@/store';
 import { mapGetters, mapMutations } from 'vuex';
 import BaseInputText from '@/components/BaseInputText.vue';
 import BaseButton from '@/components/BaseButton.vue';
-import { required } from 'vuelidate/lib/validators';
 
 export default {
   name: 'BaseUserAccountInfo',
