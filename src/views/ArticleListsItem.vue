@@ -89,25 +89,33 @@
             </BaseInputText>
           </div>
 
-          <div class="border-divider border-b-1 w-auto my-5 md:mx-6 "></div>
+          <hr v-if="isFieldRequired('image')" class="bg-background border-black em-low -mx-4 sm:mx-0 mb-4" />
+          <ImageUpload v-if="isFieldRequired('image')" class="px-4 md:px-6" v-model="images" :defaultImages="images" />
+
+          <hr class="border-divider w-auto mt-5 md:mx-6" />
+          <BaseDropdown
+            class="relative bg-surface"
+            placeholder="Schedule time"
+            :options="dates"
+            v-model="$v.date.$model"
+          >
+            <template #title="{ selectedOption }">
+              Schedule
+              <span v-if="dates.length === 0" class="text-gray-500">
+                No time slots!
+              </span>
+              <span v-else-if="selectedOption" class="ml-2 em-medium text-black">
+                {{ formatDate(selectedOption) }}
+              </span>
+            </template>
+            <template #option="{ option }">
+              <span>
+                {{ formatDate(option) }}
+              </span>
+            </template>
+          </BaseDropdown>
 
           <div class="px-4 md:px-6">
-            <div class="w-full text-left py-3 tg-body-mobile">Schedule Article</div>
-            <BaseDropdown class="relative" placeholder="Schedule time" :options="dates" v-model="$v.date.$model">
-              <template #title="{ selectedOption }">
-                <span v-if="dates.length === 0" class="text-gray-500">
-                  No time slots!
-                </span>
-                <span v-else-if="selectedOption" class="em-medium">
-                  {{ formatDate(selectedOption) }}
-                </span>
-              </template>
-              <template #option="{ option }">
-                <span>
-                  {{ formatDate(option) }}
-                </span>
-              </template>
-            </BaseDropdown>
             <p v-if="get_response_message.message" class="font-bold px-4 mb-4" :class="get_response_message.class">
               {{ get_response_message.message }}
             </p>
@@ -139,11 +147,12 @@ import BaseAppBarHeader from '@/components/BaseAppBarHeader.vue';
 import BaseInputText from '@/components/BaseInputText.vue';
 import BaseInputTextarea from '@/components/BaseInputTextarea.vue';
 import BaseDropdown from '@/components/BaseDropdown';
+import ImageUpload from '@/components/ImageUpload/ImageUpload.vue';
+import LayoutFixedScrollable from '@/components/LayoutFixedScrollable.vue';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
 import { required, decimal, maxLength, requiredIf } from 'vuelidate/lib/validators';
 import { mustBeDate } from '@/validations.js';
 import { formatISODate, formatDate } from '@/helpers.js';
-import LayoutFixedScrollable from '@/components/LayoutFixedScrollable.vue';
 
 export default {
   name: 'ArticleListsItem',
@@ -152,7 +161,8 @@ export default {
     BaseAppBarHeader,
     BaseInputText,
     BaseInputTextarea,
-    BaseDropdown
+    BaseDropdown,
+    ImageUpload
   },
   validations: {
     headline: {
@@ -189,6 +199,7 @@ export default {
       'get_articles',
       'get_response_message',
       'get_date',
+      'get_image',
       'get_daily_plan'
     ]),
     isAnswersCategory() {
@@ -243,6 +254,22 @@ export default {
         this.update_date(value);
       }
     },
+    images: {
+      get() {
+        return [
+          {
+            src: this.get_image
+          }
+        ];
+      },
+      set(value) {
+        let image = '';
+        try {
+          image = value[0].src;
+        } catch (error) {}
+        this.update_image(image);
+      }
+    },
     dates() {
       let d = new Date();
       let dtzOffset = d.getTimezoneOffset() * 60000;
@@ -283,7 +310,8 @@ export default {
       'update_price',
       'update_eventDate',
       'update_date',
-      'update_response_message'
+      'update_response_message',
+      'update_image'
     ]),
     formatDate,
     initialForm() {
@@ -302,7 +330,7 @@ export default {
       let isRequired = false;
       switch (categoryName) {
         case 'Events':
-          isRequired = ['headline', 'description', 'price', 'eventDate', 'images', 'date'].includes(fieldName);
+          isRequired = ['headline', 'description', 'price', 'eventDate', 'image', 'date'].includes(fieldName);
           break;
         case 'One Team':
         case 'Answers At A Glance':
@@ -312,7 +340,7 @@ export default {
         case 'People':
         case 'Community':
         case 'Plant':
-          isRequired = ['headline', 'description', 'images', 'date'].includes(fieldName);
+          isRequired = ['headline', 'description', 'image', 'date'].includes(fieldName);
           break;
 
         default:
@@ -331,8 +359,8 @@ export default {
           headline: this.get_headline,
           description: this.get_description,
           price: this.get_price,
-          eventDate: event_date_time
-          //image: this.get_images
+          eventDate: event_date_time,
+          image: this.get_image
         }
       };
       this.put_article(data)
