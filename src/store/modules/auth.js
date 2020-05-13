@@ -15,6 +15,7 @@ const defaultState = {
   recoveryEmail: '',
   token: '',
   newPassword: '',
+  oldPassword: '',
   confirmPassword: '',
   password: '',
   status: '',
@@ -55,6 +56,9 @@ export default {
     },
     newPassword: state => {
       return state.newPassword;
+    },
+    oldPassword: state => {
+      return state.oldPassword;
     },
     confirmPassword: state => {
       return state.confirmPassword;
@@ -99,6 +103,9 @@ export default {
     },
     updateNewPassword(state, payload) {
       state.newPassword = payload;
+    },
+    updateOldPassword(state, payload) {
+      state.oldPassword = payload;
     },
     updateConfirmPassword(state, payload) {
       state.confirmPassword = payload;

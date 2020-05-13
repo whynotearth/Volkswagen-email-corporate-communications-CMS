@@ -12,8 +12,8 @@
       <BaseInputText class="bg-surface" label="Email" type="email"></BaseInputText>
     </div>
     <div class="mb-4 items-center flex justify-center py-8">
-      <BaseButton>
-        RESET PASSWORD
+      <BaseButton @selectButton="selectButton">
+        Change Password
       </BaseButton>
     </div>
   </div>
@@ -29,6 +29,11 @@ export default {
   components: { BaseInputText, BaseButton },
   computed: {
     ...mapGetters('auth', ['email', 'password'])
+  },
+  methods: {
+    selectButton() {
+      this.$router.push({ name: 'ChangePassword' });
+    }
   }
 };
 </script>
