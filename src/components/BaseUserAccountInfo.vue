@@ -28,24 +28,24 @@ export default {
   name: 'BaseUserAccountInfo',
   components: { BaseInputText, BaseButton },
   methods: {
-    ...mapMutations('auth', ['updateName', 'updateEmail'])
+    ...mapMutations('profile', ['update_name', 'update_email'])
   },
   computed: {
-    ...mapGetters('auth', ['name', 'email']),
+    ...mapGetters('profile', ['get_name', 'get_email']),
     userName: {
       get() {
-        return this.name;
+        return this.get_name;
       },
       set(value) {
-        this.updateName(value);
+        this.update_name(value);
       }
     },
     userEmail: {
       get() {
-        return this.email;
+        return this.get_email;
       },
       set(value) {
-        this.updateEmail(value);
+        this.update_email(value);
       }
     }
   }
