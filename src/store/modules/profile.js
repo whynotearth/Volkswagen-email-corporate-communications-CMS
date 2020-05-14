@@ -21,9 +21,6 @@ export default {
     }
   },
   actions: {
-    async update_profile(context, payload) {
-      await ProfileService.profile1(payload.params);
-    },
     async fetch_profile(context, payload) {
       const data = await ProfileService.profile();
       context.commit('update_profile_data', data);
