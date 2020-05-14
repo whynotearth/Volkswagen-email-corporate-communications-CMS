@@ -76,19 +76,29 @@ export default {
       'update_preview_link',
       'create_jumpstart',
       'update_selected_articles',
-      'clear_email_data'
+      'clear_email_data',
+      'update_selected_active_articles'
     ]),
     formatDate,
     formatISODate,
     selectArticle(article) {
-      if (this.get_selected_articles.length >= 5 && this.isActive(article) === -1) return false;
       this.$v.$reset();
-      this.update_selected_articles(article);
+      this.update_selected_active_articles(article);
       this.update_preview_link('');
       this.debounced_preview();
     },
     isActive(article) {
-      return this.get_selected_articles.indexOf(article);
+      let i, n, x;
+      x = -1;
+      if (article.isActive) {
+        n = this.get_selected_articles.indexOf(article);
+        for (i = 0; i <= n; i++) {
+          if (this.get_selected_articles[i].isActive) {
+            x++;
+          }
+        }
+      }
+      return x;
     },
     updateBlueDelta() {
       this.$v.$touch();
@@ -101,7 +111,7 @@ export default {
         body: {
           id: this.id,
           dateTime: total_time,
-          articleIds: this.get_selected_articles.map(article => article.id),
+          articleIds: this.get_selected_articles.filter(article => article.isActive).map(article => article.id),
           distributionGroups: this.get_email_recipients
         }
       };

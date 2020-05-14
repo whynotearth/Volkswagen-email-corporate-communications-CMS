@@ -35,14 +35,12 @@ export default {
     this.fetch_daily_plan();
   },
   methods: {
-    ...mapActions('email', ['update_selected_articles', 'fetch_daily_plan']),
+    ...mapActions('email', ['update_selected_articles', 'fetch_daily_plan', 'update_selected_active_articles']),
     ...mapMutations('email', ['update_selected_plan', 'update_email_date']),
     selectPlan(plan) {
       this.update_selected_articles();
       this.update_selected_plan(plan);
-      plan.articles.forEach(article => {
-        this.update_selected_articles(article);
-      });
+      this.update_selected_active_articles();
       this.update_email_date(plan.dateTime);
       this.$router.push({ name: 'EditBlueDelta', params: { id: plan.jumpStartId } });
     }

@@ -105,8 +105,8 @@ export default {
       function({ dispatch }) {
         dispatch('update_preview_link');
       },
-      3000,
-      { maxWait: 3000 }
+      1500,
+      { maxWait: 1500 }
     )
   },
   mutations: {
