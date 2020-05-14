@@ -4,7 +4,7 @@
       <BaseAppBarHeader :title="'Reset Password'" :to-link="'/login'" />
     </template>
     <template #content>
-      <div class="container px-0 md:px-6 py-4">
+      <div class="container px-4 md:px-6 py-4">
         <div class="reset-content mb-2">
           <span class="reset-title tg-body-mobile">Please input your email:</span>
         </div>
