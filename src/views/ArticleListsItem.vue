@@ -188,9 +188,9 @@ export default {
       'get_eventDate',
       'get_articles',
       'get_response_message',
-      'get_date',
-      'get_daily_plan'
+      'get_date'
     ]),
+    ...mapGetters('email', ['get_daily_plan']),
     isAnswersCategory() {
       return this.selectedArticle.category.slug === 'answers-at-a-glance';
     },
@@ -275,7 +275,8 @@ export default {
     });
   },
   methods: {
-    ...mapActions('article', ['fetch_daily_plan', 'put_article', 'delete_article']),
+    ...mapActions('article', ['put_article', 'delete_article']),
+    ...mapActions('email', ['fetch_daily_plan']),
     ...mapMutations('article', [
       'update_headline',
       'update_description',

@@ -29,22 +29,21 @@ export default {
   name: 'JumpStart',
   components: { BaseAppBarHeader, JumpStartItem, LayoutFixedScrollable, NavigationBottom },
   computed: {
-    ...mapGetters('article', ['get_daily_plan'])
+    ...mapGetters('email', ['get_daily_plan'])
   },
   mounted() {
     this.fetch_daily_plan();
   },
   methods: {
-    ...mapActions('article', ['fetch_daily_plan']),
-    ...mapActions('email', ['update_selected_articles']),
+    ...mapActions('email', ['update_selected_articles', 'fetch_daily_plan']),
     ...mapMutations('email', ['update_selected_plan', 'update_email_date']),
     selectPlan(plan) {
       this.update_selected_articles();
       this.update_selected_plan(plan);
-      plan.articles.forEach(plan => {
-        this.update_selected_articles(plan);
+      plan.articles.forEach(article => {
+        this.update_selected_articles(article);
       });
-      this.update_email_date(plan.date);
+      this.update_email_date(plan.dateTime);
       this.$router.push({ name: 'EditBlueDelta', params: { id: plan.jumpStartId } });
     }
   }

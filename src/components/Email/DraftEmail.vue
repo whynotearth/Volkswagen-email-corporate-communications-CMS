@@ -8,7 +8,7 @@
       </span>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-4">
         <Article
-          v-for="article in get_all_articles"
+          v-for="article in get_selected_articles"
           :key="article.id"
           :article="article"
           @clicked="selectArticle(article)"
@@ -35,38 +35,31 @@ export default {
   },
   mounted() {
     if (!this.get_email_date) return this.$router.push({ name: 'EmailsAdd', params: { step: 1 } });
-    this.fetch_available_articles({ jumpStartId: this.get_selected_jumpstart.id });
   },
   methods: {
-    ...mapActions('email', [
-      'debounced_preview',
-      'update_preview_link',
-      'update_selected_articles',
-      'fetch_available_articles',
-      'update_available_articles'
-    ]),
+    ...mapActions('email', ['debounced_preview', 'update_preview_link', 'update_selected_active_articles']),
     selectArticle(article) {
-      if (this.get_selected_articles.length >= 5 && this.isActive(article) === -1) return false;
+      this.update_selected_active_articles(article);
       this.$v.$reset();
-      this.update_selected_articles(article);
-      this.update_available_articles(article);
       this.update_preview_link('');
       this.debounced_preview();
     },
     isActive(article) {
-      return this.get_selected_articles.indexOf(article);
+      let i, n, x;
+      x = -1;
+      if (article.isActive) {
+        n = this.get_selected_articles.indexOf(article);
+        for (i = 0; i <= n; i++) {
+          if (this.get_selected_articles[i].isActive) {
+            x++;
+          }
+        }
+      }
+      return x;
     }
   },
   computed: {
-    ...mapGetters('email', [
-      'get_email_date',
-      'get_selected_articles',
-      'get_available_articles',
-      'get_selected_jumpstart'
-    ]),
-    get_all_articles() {
-      return [...this.get_selected_articles, ...this.get_available_articles];
-    }
+    ...mapGetters('email', ['get_email_date', 'get_selected_articles'])
   }
 };
 </script>

@@ -4,7 +4,7 @@
       <div class="flex relative">
         <div class="flex-auto">
           <BaseDropdown
-            v-if="get_jumpstarts.length"
+            v-if="get_daily_plan.length"
             placeholder="Select date"
             :options="dates"
             v-model="$v.email_date.$model"
@@ -23,10 +23,10 @@
               </span>
             </template>
           </BaseDropdown>
-          <p v-if="$v.email_date.$error && get_jumpstarts.length" class="text-xs text-error">
+          <p v-if="$v.email_date.$error && get_daily_plan.length" class="text-xs text-error">
             Please select a date.
           </p>
-          <p v-if="!get_jumpstarts.length && !isLoading">
+          <p v-if="!get_daily_plan.length && !isLoading">
             <span class="block my-2">
               No articles available!
               <br />
@@ -61,7 +61,7 @@ export default {
     this.init();
   },
   computed: {
-    ...mapGetters('email', ['get_email_date', 'get_jumpstarts']),
+    ...mapGetters('email', ['get_email_date', 'get_daily_plan']),
     ...mapGetters('loading', ['isLoading']),
     email_date: {
       get() {
@@ -74,10 +74,10 @@ export default {
       }
     },
     dates() {
-      if (!this.get_jumpstarts.length) return [];
+      if (!this.get_daily_plan.length) return [];
       const dates = [];
       let date;
-      this.get_jumpstarts.forEach(jumpstart => {
+      this.get_daily_plan.forEach(jumpstart => {
         date = new Date(jumpstart.dateTime).getTime();
         dates.push(date);
       });
@@ -85,43 +85,34 @@ export default {
     }
   },
   methods: {
-    ...mapMutations('email', ['update_email_date', 'update_selected_jumpstart', 'update_articles']),
+    ...mapMutations('email', ['update_email_date', 'update_selected_plan']),
     ...mapActions('email', [
       'clear_email_data',
       'debounced_preview',
-      'fetch_jumpstarts',
+      'fetch_daily_plan',
       'update_selected_articles',
-      'fetch_available_articles'
+      'update_selected_active_articles'
     ]),
     formatDate,
     formatISODate,
     init() {
       if (this.get_email_date) {
-        this.prefillArticles(this.get_email_date);
+        this.prefillArticles();
       } else {
-        this.fetch_jumpstarts();
+        this.fetch_daily_plan();
       }
     },
-    prefillArticles(date) {
-      this.update_selected_articles();
-      this.fetch_jumpstarts().then(() => {
-        let i, article, selectedJumpstart;
-        const selectedDate = this.get_email_date;
-        selectedJumpstart = this.get_jumpstarts.find(item => {
-          return formatISODate(item.dateTime) === formatISODate(selectedDate);
-        });
-        if (selectedJumpstart) {
-          this.update_selected_jumpstart(selectedJumpstart);
-          this.fetch_available_articles({ jumpStartId: selectedJumpstart.id });
-        }
-        this.update_articles(selectedJumpstart.articles);
-        for (i = 0; i < 5; i++) {
-          article = selectedJumpstart.articles[i];
-          if (article) this.update_selected_articles(article);
-          else break;
-        }
-        this.debounced_preview();
+    prefillArticles() {
+      let selectedJumpstart;
+      const selectedDate = this.get_email_date;
+      selectedJumpstart = this.get_daily_plan.find(item => {
+        return formatISODate(item.dateTime) === formatISODate(selectedDate);
       });
+      if (selectedJumpstart) {
+        this.update_selected_plan(selectedJumpstart);
+        this.update_selected_active_articles();
+      }
+      this.debounced_preview();
     }
   }
 };

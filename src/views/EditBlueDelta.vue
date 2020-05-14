@@ -132,13 +132,7 @@ export default {
     this.update_preview_link();
   },
   computed: {
-    ...mapGetters('email', [
-      'get_email_recipients',
-      'get_schedule_time',
-      'get_selected_jumpstart',
-      'get_selected_articles',
-      'get_email_date'
-    ]),
+    ...mapGetters('email', ['get_email_recipients', 'get_schedule_time', 'get_selected_articles', 'get_email_date']),
     ...mapGetters('recipient', ['get_recipients_available']),
     email_recipients: {
       get() {
@@ -174,6 +168,7 @@ export default {
       const params = {
         jumpStartId: this.id,
         body: {
+          id: this.id,
           dateTime: total_time,
           articleIds: this.get_selected_articles.map(article => article.id),
           distributionGroups: this.get_email_recipients

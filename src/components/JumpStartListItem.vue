@@ -3,7 +3,7 @@
     <h2
       class="flex tg-body-emphasis-mobile lg:tg-body-emphasis-desktop whitespace-no-wrap truncate text-left em-high py-4 pl-2"
     >
-      {{ formatDate(model.date, 'EEEE, d MMM,yyyy') }}
+      {{ formatDate(model.dateTime, 'EEEE, d MMM,yyyy') }}
     </h2>
     <div class="flex flex-col text-left">
       <ul class="list-none">
