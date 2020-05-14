@@ -11,10 +11,17 @@
     <div class="mb-4">
       <BaseInputText class="bg-surface" label="Email" type="email" v-model="userEmail"></BaseInputText>
     </div>
-    <div class="mb-4 items-center flex justify-center py-8">
-      <BaseButton>
-        RESET PASSWORD
-      </BaseButton>
+    <div class="py-8">
+      <div class="mb-4 items-center flex justify-center">
+        <BaseButton class="w-100">
+          RESET PASSWORD
+        </BaseButton>
+      </div>
+      <div class="mb-4 items-center flex justify-center">
+        <BaseButton class="w-40">
+          SAVE
+        </BaseButton>
+      </div>
     </div>
   </div>
 </template>
