@@ -16,7 +16,7 @@ import VuexPersistence from 'vuex-persist';
 
 const vuexLocal = new VuexPersistence({
   storage: window.localStorage,
-  modules: ['memo', 'article', 'authKeep', 'profile'],
+  modules: ['memo', 'article', 'authKeep'],
   key: 'store'
 });
 
