@@ -11,23 +11,25 @@
     <div class="mb-4">
       <BaseInputText class="bg-surface" label="Email" type="email" v-model="userEmail"></BaseInputText>
     </div>
-    <div class="py-8">
-      <div class="mb-4 items-center flex justify-center">
-        <BaseButton class="w-100">
-          RESET PASSWORD
-        </BaseButton>
-      </div>
-      <div class="mb-4 items-center flex justify-center">
-        <BaseButton class="w-40">
-          SAVE
-        </BaseButton>
-      </div>
+    <div class="py-6 justify-center flex">
+      <BaseButton class="w-40" @click="submit()">
+        SAVE
+      </BaseButton>
+    </div>
+    <div class="justify-center flex">
+      <router-link
+        :to="{ name: 'ResetPassword' }"
+        class="inline-block align-baseline text-sm text-blue-500 hover:text-blue-800 underline"
+      >
+        Change Password
+      </router-link>
     </div>
   </div>
 </template>
 
 <script>
 import { mapGetters, mapMutations, mapActions } from 'vuex';
+
 import BaseInputText from '@/components/BaseInputText.vue';
 import BaseButton from '@/components/BaseButton.vue';
 
@@ -39,7 +41,8 @@ export default {
   },
   methods: {
     ...mapMutations('profile', ['update_name', 'update_email']),
-    ...mapActions('profile', ['fetch_profile'])
+    ...mapActions('profile', ['fetch_profile']),
+    submit() {}
   },
   computed: {
     ...mapGetters('profile', ['get_name', 'get_email']),
