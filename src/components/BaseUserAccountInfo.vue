@@ -41,8 +41,20 @@ export default {
   },
   methods: {
     ...mapMutations('profile', ['update_name', 'update_email']),
-    ...mapActions('profile', ['fetch_profile']),
-    submit() {}
+    ...mapActions('profile', ['fetch_profile', 'update_profile']),
+    submit() {
+      try {
+        const payload = {
+          params: {
+            name: this.userName,
+            email: this.userEmail
+          }
+        };
+        this.update_profile(payload);
+      } catch (error) {
+        console.log(error);
+      }
+    }
   },
   computed: {
     ...mapGetters('profile', ['get_name', 'get_email']),
