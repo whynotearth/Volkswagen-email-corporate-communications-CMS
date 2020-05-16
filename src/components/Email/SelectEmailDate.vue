@@ -47,7 +47,8 @@
 import BaseDropdown from '@/components/BaseDropdown';
 import { required } from 'vuelidate/lib/validators';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
-import { formatISODate, formatDate } from '@/helpers.js';
+import { isSameDay, parseISO } from 'date-fns';
+import { formatDate } from '@/helpers.js';
 
 export default {
   name: 'SelectEmailDate',
@@ -94,7 +95,6 @@ export default {
       'update_selected_active_articles'
     ]),
     formatDate,
-    formatISODate,
     init() {
       if (this.get_email_date) {
         this.prefillArticles();
@@ -106,7 +106,7 @@ export default {
       let selectedJumpstart;
       const selectedDate = this.get_email_date;
       selectedJumpstart = this.get_daily_plan.find(item => {
-        return formatISODate(item.dateTime) === formatISODate(selectedDate);
+        return isSameDay(parseISO(item.dateTime), selectedDate);
       });
       if (selectedJumpstart) {
         this.update_selected_plan(selectedJumpstart);

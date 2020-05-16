@@ -12,7 +12,7 @@
           :key="article.id"
           :article="article"
           @clicked="selectArticle(article)"
-          :active="isActive(article)"
+          :active="selectedNumber(article)"
         />
       </div>
     </div>
@@ -44,7 +44,8 @@ export default {
       this.update_preview_link('');
       this.debounced_preview();
     },
-    isActive(article) {
+    selectedNumber(article) {
+      // Calculates the number of selected articles by their position
       let i, n, x;
       x = -1;
       if (article.isActive) {
