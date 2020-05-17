@@ -48,7 +48,6 @@ export default {
         state.selected_articles.splice(0, state.selected_articles.length);
       } else {
         let i = state.selected_articles.indexOf(payload);
-        console.log(i);
         i !== -1 ? state.selected_articles.splice(i, 1) : state.selected_articles.push(payload);
       }
     },
