@@ -37,12 +37,7 @@ export default {
     if (!this.get_email_date) return this.$router.push({ name: 'EmailsAdd', params: { step: 1 } });
   },
   methods: {
-    ...mapActions('email', [
-      'debounced_preview',
-      'update_preview_link',
-      'update_selected_active_articles',
-      'update_selected_articles'
-    ]),
+    ...mapActions('email', ['debounced_preview', 'update_preview_link', 'update_selected_articles']),
     selectArticle(article) {
       if (this.get_selected_articles.length >= 5 && this.isActive(article) === -1) return false;
       this.$v.$reset();
