@@ -8,8 +8,8 @@
     </div>
     <div>
       <h2 class="tg-h2-mobile text-primary">Daily Email will automatically send in</h2>
-      <div v-if="get_selected_jumpstart.dateTime" class="counter tg-h2-mobile my-2 text-center">
-        <BaseCounter :date="formatDate(get_selected_jumpstart.dateTime, 'MMM d, yyyy h:mm aaa')" />
+      <div v-if="get_selected_plan.dateTime" class="counter tg-h2-mobile my-2 text-center">
+        <BaseCounter :date="formatDate(get_selected_plan.dateTime, 'MMM d, yyyy h:mm aaa')" />
       </div>
     </div>
     <div>
@@ -29,12 +29,12 @@ export default {
   name: 'TodaysEmail',
   components: { BaseButton, BaseCounter, EmailPreview },
   mounted() {
-    this.fetch_jumpstarts()
+    this.fetch_daily_plan()
       .then(() => {
         let article, i;
-        this.update_selected_jumpstart(this.get_jumpstarts[0]);
+        this.update_selected_plan(this.get_daily_plan[0]);
         for (i = 0; i < 5; i++) {
-          article = this.get_selected_jumpstart.articles[i];
+          article = this.get_selected_plan.articles[i];
           if (article) this.update_selected_articles(article);
           else break;
         }
@@ -43,15 +43,15 @@ export default {
       .catch();
   },
   methods: {
-    ...mapActions('email', ['debounced_preview', 'fetch_jumpstarts', 'update_selected_articles']),
-    ...mapMutations('email', ['update_selected_jumpstart', 'update_preview_link']),
+    ...mapActions('email', ['debounced_preview', 'fetch_daily_plan', 'update_selected_articles']),
+    ...mapMutations('email', ['update_selected_plan', 'update_preview_link']),
     formatDate,
     selectButton() {
-      this.$router.push({ name: 'EditBlueDelta', params: { id: this.get_selected_jumpstart.id } });
+      this.$router.push({ name: 'EditBlueDelta', params: { id: this.get_selected_plan.jumpStartId } });
     }
   },
   computed: {
-    ...mapGetters('email', ['get_jumpstarts', 'get_selected_jumpstart'])
+    ...mapGetters('email', ['get_daily_plan', 'get_selected_plan'])
   }
 };
 </script>
