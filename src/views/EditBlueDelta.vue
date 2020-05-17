@@ -127,7 +127,7 @@ export default {
     };
   },
   mounted() {
-    if (!this.id) this.$router.push({ name: 'JumpStartLists' });
+    if (!this.id || this.get_email_date === null) this.$router.push({ name: 'JumpStartLists' });
     this.fetch_recipients();
     this.update_preview_link();
   },
@@ -174,7 +174,7 @@ export default {
       const params = {
         jumpStartId: this.id,
         body: {
-          dateTime: total_time,
+          dateTime: this.time ? total_time : this.get_email_date,
           articleIds: this.get_selected_articles.map(article => article.id),
           distributionGroups: this.get_email_recipients
         }
