@@ -11,6 +11,7 @@ import email from './modules/email';
 import overlay from './modules/overlay';
 import distributionGroup from './modules/distributionGroup';
 import recipient from './modules/recipient';
+import settings from './modules/settings';
 import VuexPersistence from 'vuex-persist';
 
 const vuexLocal = new VuexPersistence({
@@ -34,6 +35,7 @@ export default new Vuex.Store({
     authKeep,
     distributionGroup,
     overlay,
-    recipient
+    recipient,
+    settings
   }
 });
