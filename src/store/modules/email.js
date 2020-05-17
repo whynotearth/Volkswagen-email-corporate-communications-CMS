@@ -59,7 +59,7 @@ export default {
       const base = `${BASE_API}/api/v0/volkswagen/jumpstart/${state.selected_plan.dateTime}/preview`;
       const url = new URL(base);
       state.selected_articles.forEach(article => {
-        article.isActive === undefined || article.isActive ? url.searchParams.append('articleIds', article.id) : false;
+        url.searchParams.append('articleIds', article.id);
       });
       state.preview_link = url.href;
     },
