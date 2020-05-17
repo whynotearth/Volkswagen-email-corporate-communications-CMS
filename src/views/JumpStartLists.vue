@@ -35,12 +35,17 @@ export default {
     this.fetch_daily_plan();
   },
   methods: {
-    ...mapActions('email', ['update_selected_articles', 'fetch_daily_plan', 'update_selected_active_articles']),
-    ...mapMutations('email', ['update_selected_plan', 'update_email_date']),
+    ...mapActions('email', ['fetch_daily_plan', 'update_selected_articles']),
+    ...mapMutations('email', ['update_selected_plan', 'update_email_date', 'update_available_articles']),
     selectPlan(plan) {
-      this.update_selected_articles();
       this.update_selected_plan(plan);
-      this.update_selected_active_articles();
+      this.update_available_articles(plan.articles);
+      this.update_selected_articles();
+      for (let i = 0; i < 5; i++) {
+        if (plan.articles[i]) {
+          this.update_selected_articles(plan.articles[i]);
+        } else break;
+      }
       this.update_email_date(plan.dateTime);
       this.$router.push({ name: 'EditBlueDelta', params: { id: plan.jumpStartId } });
     }

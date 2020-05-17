@@ -22,11 +22,11 @@
               </div>
               <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-4">
                 <Article
-                  v-for="(article, index) in get_selected_articles"
+                  v-for="(article, index) in get_available_articles"
                   :key="index"
                   :article="article"
                   @clicked="selectArticle(article)"
-                  :active="selectedNumber(article)"
+                  :active="isActive(article)"
                 />
               </div>
             </div>
@@ -76,30 +76,20 @@ export default {
       'update_preview_link',
       'create_jumpstart',
       'update_selected_articles',
-      'clear_email_data',
-      'update_selected_active_articles'
+      'update_available_articles',
+      'clear_email_data'
     ]),
     formatDate,
     formatISODate,
     selectArticle(article) {
+      if (this.get_selected_articles.length >= 5 && this.isActive(article) === -1) return false;
       this.$v.$reset();
-      this.update_selected_active_articles(article);
+      this.update_selected_articles(article);
       this.update_preview_link('');
       this.debounced_preview();
     },
-    selectedNumber(article) {
-      // Calculates the number of selected articles by their position
-      let i, n, x;
-      x = -1;
-      if (article.isActive) {
-        n = this.get_selected_articles.indexOf(article);
-        for (i = 0; i <= n; i++) {
-          if (this.get_selected_articles[i].isActive) {
-            x++;
-          }
-        }
-      }
-      return x;
+    isActive(article) {
+      return this.get_selected_articles.indexOf(article);
     },
     updateBlueDelta() {
       this.$v.$touch();
@@ -111,7 +101,7 @@ export default {
         jumpStartId: this.id,
         body: {
           id: this.id,
-          articleIds: this.get_selected_articles.filter(article => article.isActive).map(article => article.id),
+          articleIds: this.get_selected_articles.map(article => article.id),
           dateTime: this.get_schedule_time ? total_time : this.get_email_date,
           distributionGroups: this.get_email_recipients
         }
@@ -148,7 +138,13 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('email', ['get_email_date', 'get_schedule_time', 'get_selected_articles', 'get_email_recipients'])
+    ...mapGetters('email', [
+      'get_email_date',
+      'get_schedule_time',
+      'get_selected_articles',
+      'get_email_recipients',
+      'get_available_articles'
+    ])
   }
 };
 </script>

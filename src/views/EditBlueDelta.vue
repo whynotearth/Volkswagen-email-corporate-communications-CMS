@@ -176,7 +176,7 @@ export default {
         jumpStartId: this.id,
         body: {
           id: this.id,
-          articleIds: this.get_selected_articles.filter(article => article.isActive).map(article => article.id),
+          articleIds: this.get_selected_articles.map(article => article.id),
           dateTime: this.time ? total_time : this.get_email_date,
           distributionGroups: this.get_email_recipients
         }

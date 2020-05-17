@@ -22,7 +22,8 @@ export default {
     default_distribution_groups: [],
     default_schedule_time: null,
     selected_plan: {},
-    daily_plan: []
+    daily_plan: [],
+    available_articles: []
   },
   getters: {
     get_email_date: state => state.email_date,
@@ -35,7 +36,8 @@ export default {
     get_default_distribution_groups: state => state.default_distribution_groups,
     get_default_schedule_time: state => state.default_schedule_time,
     get_selected_plan: state => state.selected_plan,
-    get_daily_plan: state => state.daily_plan
+    get_daily_plan: state => state.daily_plan,
+    get_available_articles: state => state.available_articles
   },
   actions: {
     async create_jumpstart({ commit }, payload) {
@@ -46,11 +48,8 @@ export default {
         state.selected_articles.splice(0, state.selected_articles.length);
       } else {
         let i = state.selected_articles.indexOf(payload);
-        if (i !== -1) {
-          state.selected_articles[i] = payload;
-        } else {
-          state.selected_articles.push(payload);
-        }
+        console.log(i);
+        i !== -1 ? state.selected_articles.splice(i, 1) : state.selected_articles.push(payload);
       }
     },
     update_preview_link({ state }, payload) {
@@ -75,31 +74,6 @@ export default {
       commit('update_email_recipients', []);
       dispatch('update_preview_link', '');
       dispatch('update_selected_articles'); // Passing no payload just clears the selected_articles array
-    },
-    update_selected_active_articles({ state, dispatch }, payload) {
-      if (!payload) {
-        let article, i;
-        for (i = 0; state.selected_plan.articles.length > i; i++) {
-          article = state.selected_plan.articles[i];
-          if (i < 5) {
-            article.isActive = true;
-          } else {
-            article.isActive = false;
-          }
-          dispatch('update_selected_articles', article);
-        }
-      } else if (payload) {
-        const numberOfActive = state.selected_articles.filter(item => {
-          return item.isActive;
-        }).length;
-        if (numberOfActive >= 5 && payload.isActive) {
-          payload.isActive = false;
-          dispatch('update_selected_articles', payload);
-        } else if (numberOfActive < 5) {
-          payload.isActive = !payload.isActive;
-          dispatch('update_selected_articles', payload);
-        }
-      }
     },
     debounced_preview: debounce(
       function({ dispatch }) {
@@ -133,6 +107,9 @@ export default {
     },
     update_selected_plan(state, payload) {
       state.selected_plan = payload;
+    },
+    update_available_articles(state, payload) {
+      state.available_articles = payload;
     },
     update_daily_plan(state, payload) {
       state.daily_plan = payload;

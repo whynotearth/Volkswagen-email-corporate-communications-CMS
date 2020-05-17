@@ -94,7 +94,7 @@ export default {
         body: {
           id: this.get_selected_plan.jumpStartId,
           dateTime: total_time,
-          articleIds: this.get_selected_articles.filter(article => article.isActive).map(article => article.id),
+          articleIds: this.get_selected_articles.map(article => article.id),
           distributionGroups: this.get_email_recipients
         }
       };

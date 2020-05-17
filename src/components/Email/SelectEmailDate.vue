@@ -86,14 +86,8 @@ export default {
     }
   },
   methods: {
-    ...mapMutations('email', ['update_email_date', 'update_selected_plan']),
-    ...mapActions('email', [
-      'clear_email_data',
-      'debounced_preview',
-      'fetch_daily_plan',
-      'update_selected_articles',
-      'update_selected_active_articles'
-    ]),
+    ...mapMutations('email', ['update_email_date', 'update_selected_plan', 'update_available_articles']),
+    ...mapActions('email', ['clear_email_data', 'debounced_preview', 'fetch_daily_plan', 'update_selected_articles']),
     formatDate,
     init() {
       if (this.get_email_date) {
@@ -103,14 +97,20 @@ export default {
       }
     },
     prefillArticles() {
-      let selectedJumpstart;
+      let selectedPlan;
       const selectedDate = this.get_email_date;
-      selectedJumpstart = this.get_daily_plan.find(item => {
+      selectedPlan = this.get_daily_plan.find(item => {
         return isSameDay(parseISO(item.dateTime), selectedDate);
       });
-      if (selectedJumpstart) {
-        this.update_selected_plan(selectedJumpstart);
-        this.update_selected_active_articles();
+      if (selectedPlan) {
+        this.update_selected_plan(selectedPlan);
+        this.update_available_articles(selectedPlan.articles);
+        this.update_selected_articles();
+        for (let i = 0; i < 5; i++) {
+          if (selectedPlan.articles[i]) {
+            this.update_selected_articles(selectedPlan.articles[i]);
+          } else break;
+        }
       }
       this.debounced_preview();
     }
