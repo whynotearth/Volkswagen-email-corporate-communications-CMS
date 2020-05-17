@@ -30,13 +30,13 @@
           :style="{ borderColor: `#${get_selected_category.color}` }"
         >
           <div
-            class="h-6 px-3 border-1 category-tag bg-white border-b-0 rounded rounded-bl-none
+            class="h-6 px-3 border-1 category-tag absolute bg-white border-b-0 rounded rounded-bl-none
           rounded-br-none tg-caps-title-print"
             :style="{ borderColor: `#${get_selected_category.color}`, color: `#${get_selected_category.color}` }"
           >
             {{ get_selected_category.name }}
           </div>
-          <div class="flex items-center justify-center w-8 h-8 rounded-full bg-white circle-icon">
+          <div class="flex items-center justify-center w-8 h-8 rounded-full bg-white circle-icon absolute">
             <img class="m-auto w-4 h-4" :src="get_selected_category.image" />
           </div>
           <div class="w-full tg-h2-mobile text-black py-3 hidden sm:block">
@@ -124,14 +124,12 @@ export default {
 
 <style scoped>
 .circle-icon {
-  position: absolute;
   top: -16px;
   right: 16px;
 }
 
 .category-tag {
   min-width: 130px;
-  position: absolute;
   top: -24px;
   left: 24px;
 }

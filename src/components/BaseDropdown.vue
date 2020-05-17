@@ -24,7 +24,7 @@
     </div>
     <div
       v-if="showDropdown"
-      class="dropdown absolute right-0 left-0 bg-white mt-1 mx-2 md:mx-6 py-2 rounded shadow-8dp overflow-x-hidden overflow-y-auto z-10"
+      class="dropdown absolute right-0 left-0 bg-white mt-1 mx-2 md:mx-4 py-2 rounded shadow-8dp overflow-x-hidden overflow-y-auto z-10"
     >
       <div
         class="option p-4 first:rounded-t-lg last:rounded-b-lg cursor-pointer"
