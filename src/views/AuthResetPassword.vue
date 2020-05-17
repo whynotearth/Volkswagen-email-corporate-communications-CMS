@@ -18,10 +18,16 @@
                 placeholder="Email"
                 :error="$v.recoveryEmail.$dirty && (!$v.recoveryEmail.required || !$v.recoveryEmail.email)"
               >
-                <span v-if="$v.recoveryEmail.$dirty && !$v.recoveryEmail.required" class="text-xs text-error">
+                <span
+                  v-if="$v.recoveryEmail.$dirty && !$v.recoveryEmail.required"
+                  class="text-xs text-error pl-error-message"
+                >
                   Email is required
                 </span>
-                <span v-if="$v.recoveryEmail.$dirty && !$v.recoveryEmail.email" class="text-xs text-error">
+                <span
+                  v-if="$v.recoveryEmail.$dirty && !$v.recoveryEmail.email"
+                  class="text-xs text-error pl-error-message"
+                >
                   Please enter valid email
                 </span>
               </BaseInputText>
@@ -71,7 +77,7 @@ export default {
         message: 'Your password reset email is on the way!'
       });
 
-      await sleep(1000);
+      await sleep(100000);
 
       await this.$router.push({
         name: 'Home'
