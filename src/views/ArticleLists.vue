@@ -46,7 +46,7 @@ export default {
     LayoutFixedScrollable
   },
   computed: {
-    ...mapGetters('article', ['get_daily_plan']),
+    ...mapGetters('email', ['get_daily_plan']),
     todayArticles() {
       const data = this.get_daily_plan.find(article => {
         return isToday(parseISO(article.date));
@@ -69,7 +69,7 @@ export default {
     this.fetch_daily_plan();
   },
   methods: {
-    ...mapActions('article', ['fetch_daily_plan'])
+    ...mapActions('email', ['fetch_daily_plan'])
   }
 };
 </script>
