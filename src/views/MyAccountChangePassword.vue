@@ -45,10 +45,13 @@
             >
               Confirm New Password is required
             </span>
-            <span v-if="showMessage" class="text-xs text-error">
-              Password don't match
+            <span v-if="!$v.confirmPassword.sameAsPassword" class="text-xs text-error pl-error-message">
+              Passwords must be identical.
             </span>
           </BaseInputText>
+          <p v-if="get_response_message.message" class="px-4 mb-4" :class="get_response_message.class">
+            {{ get_response_message.message }}
+          </p>
           <div class="text-center my-8" @click="submit()">
             <BaseButton>Change Password</BaseButton>
           </div>
@@ -64,7 +67,8 @@ import BaseAppBarHeader from '@/components/BaseAppBarHeader';
 import BaseInputText from '@/components/BaseInputText';
 import LayoutFixedScrollable from '@/components/LayoutFixedScrollable.vue';
 import BaseButton from '@/components/BaseButton.vue';
-import { required, password } from 'vuelidate/lib/validators';
+import { mapGetters, mapMutations, mapActions } from 'vuex';
+import { required, password, sameAs } from 'vuelidate/lib/validators';
 import { sleep } from '@/helpers.js';
 
 export default {
@@ -78,25 +82,28 @@ export default {
       required
     },
     confirmPassword: {
-      required
+      required,
+      sameAsPassword: sameAs('newPassword')
     }
   },
-  data() {
-    return {
-      showMessage: false
-    };
-  },
   methods: {
+    ...mapMutations('auth', [
+      'updateOldPassword',
+      'updateNewPassword',
+      'updateConfirmPassword',
+      'update_response_message'
+    ]),
+    ...mapActions('auth', ['changePassword']),
     async onSuccess() {
       this.$store.commit('overlay/updateModel', {
         title: '',
-        message: 'Your password has been reset!'
+        message: 'Your password has been change!'
       });
 
       await sleep(1000);
 
       await this.$router.push({
-        name: 'Home'
+        name: 'Dashboard'
       });
 
       this.$store.commit('overlay/updateModel', {
@@ -104,57 +111,73 @@ export default {
         message: ''
       });
     },
-
     submit() {
       this.$v.$touch();
       if (this.$v.$invalid) {
         return false;
       }
+      const params = {
+        body: {
+          oldPassword: this.oldPassword,
+          newPassword: this.newPassword,
+          confirmPassword: this.confirmPassword
+        }
+      };
 
-      if (this.passwordMatch) {
-        this.showMessage = true;
-        return;
-      } else {
-        this.newPasswordRecovery().then(() => {
+      this.changePassword(params)
+        .then(() => {
           this.onSuccess();
+        })
+        .catch(error => {
+          let message = 'An error occured!';
+          try {
+            message = error.response.data[0].description;
+          } catch (error) {
+            //
+          }
+
+          this.update_response_message({
+            message: message,
+            type: 'error',
+            class: 'text-error'
+          });
         });
-      }
-    },
-    async newPasswordRecovery() {
-      await this.$store.dispatch('auth/setNewPassword');
-      this.$store.dispatch('snackbar/show', {
-        color: 'success',
-        text: 'Reset password is successful',
-        class: 'dark--text'
-      });
     }
   },
+  destroyed() {
+    this.updateOldPassword('');
+    this.updateNewPassword('');
+    this.updateConfirmPassword('');
+    this.update_response_message({
+      message: '',
+      type: '',
+      class: ''
+    });
+  },
   computed: {
-    passwordMatch() {
-      return this.confirmPassword !== this.newPassword;
-    },
+    ...mapGetters('auth', ['get_new_password', 'get_old_password', 'get_confirm_password', 'get_response_message']),
     newPassword: {
       get() {
-        return this.$store.getters['auth/newPassword'];
+        return this.get_new_password;
       },
       set(value) {
-        this.$store.commit('auth/updateNewPassword', value);
+        this.updateNewPassword(value);
       }
     },
     oldPassword: {
       get() {
-        return this.$store.getters['auth/oldPassword'];
+        return this.get_old_password;
       },
       set(value) {
-        this.$store.commit('auth/updateOldPassword', value);
+        this.updateOldPassword(value);
       }
     },
     confirmPassword: {
       get() {
-        return this.$store.getters['auth/confirmPassword'];
+        return this.get_confirm_password;
       },
       set(value) {
-        this.$store.commit('auth/updateConfirmPassword', value);
+        this.updateConfirmPassword(value);
       }
     }
   }
