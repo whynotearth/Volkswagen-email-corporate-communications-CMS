@@ -13,6 +13,7 @@ const authStates = {
 const defaultState = {
   email: '',
   recoveryEmail: '',
+  name: '',
   token: '',
   newPassword: '',
   oldPassword: '',
@@ -52,6 +53,9 @@ export default {
     },
     recoveryEmail: state => {
       return state.recoveryEmail;
+    },
+    name: state => {
+      return state.name;
     },
     token: state => {
       return state.token;
@@ -103,6 +107,9 @@ export default {
     },
     updateRecoveryEmail(state, payload) {
       state.recoveryEmail = payload;
+    },
+    updateName(state, payload) {
+      state.name = payload;
     },
     updateToken(state, payload) {
       state.token = payload;
@@ -172,15 +179,15 @@ export default {
     loginStandard(context) {
       context.commit('updateLoginError', '');
       context.commit('updateLoading', true);
-      AuthenticationService.login({
+      return AuthenticationService.login({
         body: {
           email: context.state.email,
           password: context.state.password
         }
       })
-        .then(token => {
-          store.dispatch('authKeep/updateToken', token);
-          store.dispatch('auth/ping').catch(error => {
+        .then(async token => {
+          await store.dispatch('authKeep/updateToken', token);
+          await store.dispatch('auth/ping').catch(error => {
             context.commit('updateLoginError', error.response.data.error);
           });
           context.commit('updateLoading', false);

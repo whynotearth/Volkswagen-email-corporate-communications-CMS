@@ -6,10 +6,10 @@
       </h2>
     </div>
     <div class="mb-4">
-      <BaseInputText class="bg-surface" label="Name" type="text"></BaseInputText>
+      <BaseInputText class="bg-surface" label="Name" type="text" v-model="userName"></BaseInputText>
     </div>
     <div class="mb-4">
-      <BaseInputText class="bg-surface" label="Email" type="email"></BaseInputText>
+      <BaseInputText class="bg-surface" label="Email" type="email" v-model="userEmail"></BaseInputText>
     </div>
     <div class="mb-4 items-center flex justify-center py-8">
       <BaseButton @selectButton="selectButton">
@@ -20,19 +20,36 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapMutations } from 'vuex';
 import BaseInputText from '@/components/BaseInputText.vue';
 import BaseButton from '@/components/BaseButton.vue';
 
 export default {
   name: 'BaseUserAccountInfo',
   components: { BaseInputText, BaseButton },
-  computed: {
-    ...mapGetters('auth', ['email', 'password'])
-  },
   methods: {
+    ...mapMutations('auth', ['updateName', 'updateEmail']),
     selectButton() {
       this.$router.push({ name: 'ChangePassword' });
+    }
+  },
+  computed: {
+    ...mapGetters('auth', ['name', 'email']),
+    userName: {
+      get() {
+        return this.name;
+      },
+      set(value) {
+        this.updateName(value);
+      }
+    },
+    userEmail: {
+      get() {
+        return this.email;
+      },
+      set(value) {
+        this.updateEmail(value);
+      }
     }
   }
 };
