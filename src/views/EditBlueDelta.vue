@@ -130,9 +130,16 @@ export default {
     if (!this.id || this.get_email_date === null) this.$router.push({ name: 'JumpStartLists' });
     this.fetch_recipients();
     this.update_preview_link();
+    this.update_email_recipients(this.get_selected_plan.distributionGroups);
   },
   computed: {
-    ...mapGetters('email', ['get_email_recipients', 'get_schedule_time', 'get_selected_articles', 'get_email_date']),
+    ...mapGetters('email', [
+      'get_email_recipients',
+      'get_schedule_time',
+      'get_selected_articles',
+      'get_email_date',
+      'get_selected_plan'
+    ]),
     ...mapGetters('recipient', ['get_recipients_available']),
     email_recipients: {
       get() {
@@ -152,7 +159,7 @@ export default {
     }
   },
   methods: {
-    ...mapMutations('email', ['update_email_recipients', 'update_schedule_time']),
+    ...mapMutations('email', ['update_email_recipients', 'update_schedule_time', 'update_email_date']),
     ...mapActions('recipient', ['fetch_recipients']),
     ...mapActions('email', ['create_jumpstart', 'update_preview_link', 'clear_email_data']),
     formatDate,

@@ -7,7 +7,7 @@
       <div class="flex flex-col py-6">
         <div class="container px-0 md:px-6">
           <div v-for="(plan, index) in get_daily_plan" :key="index" class="cursor-pointer" @click="selectPlan(plan)">
-            <JumpStartItem :model="plan" />
+            <JumpStartItem :model="plan" v-if="plan.jumpStartId" />
           </div>
         </div>
       </div>
