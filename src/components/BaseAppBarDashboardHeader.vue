@@ -4,7 +4,7 @@
       <div class="text-primary pr-3">{{ title }}</div>
       <div class="flex-start flex-shrink-0">
         <slot name="right-icon">
-          <router-link :to="{ name: '/settings' }" class="inline-block align-middle">
+          <router-link :to="{ name: 'Settings' }" class="inline-block align-middle">
             <Setting />
           </router-link>
         </slot>
