@@ -18,8 +18,13 @@ export default {
   },
   data() {
     return {
-      isActive: this.value || false
+      isActive: false
     };
+  },
+  watch: {
+    value(data) {
+      this.isActive = data;
+    }
   },
   methods: {
     toggleCheckbox() {

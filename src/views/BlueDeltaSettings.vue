@@ -7,91 +7,99 @@
         <div class="container px-0 md:px-6">
           <div class="flex justify-between text-left py-6 px-4 mt-2">
             <div class="">Send email automatically</div>
-            <BaseToggleSwitch :value="true" @toggleSwitch="toggleSwitch" />
+            <BaseToggleSwitch :value="enableAutoSend" @toggleSwitch="toggleSwitch" />
           </div>
           <hr />
-          <div class="text-left py-6 px-4 pb-0">
-            <p class="mb-6">
-              By default, Blue Delta will automatically send each day according to the below details. You can change
-              these manually for each individual Blue Delta
-              <router-link class="text-secondary underline" :to="{ name: 'JumpStartLists' }">here</router-link>.
-            </p>
-          </div>
-
-          <div
-            class="px-4 bg-white pb-0 text-left"
-            :class="[
-              {
-                'is-query-empty': to_query === '',
-                'is-filled': !$v.default_distribution_list.$invalid,
-                error: $v.default_distribution_list.$error
-              },
-              $v.default_distribution_list.$error ? 'text-red-600 border-red-600' : 'text-gray-500 border-gray-600'
-            ]"
-          >
-            <label
-              class="multiselect--material-label absolute"
-              v-if="!$v.default_distribution_list.$invalid"
-              for="default_distribution_list"
-            >
-              Default Distribution List:
-            </label>
-            <Multiselect
-              id="default_distribution_list"
-              v-model="$v.default_distribution_list.$model"
-              :placeholder="$v.default_distribution_list.$invalid ? 'Distribution List' : ''"
-              :options="get_recipients_available"
-              :multiple="true"
-              :hide-selected="true"
-              :show-labels="false"
-              @search-change="onToSearchChange"
-            >
-              <template v-slot:noResult>Nothing found</template>
-              <template v-slot:noOptions>No options available</template>
-            </Multiselect>
-            <span v-if="$v.default_distribution_list.$error" class="text-xs text-error text-left">
-              Default Distribution List is required
-            </span>
-          </div>
-
-          <div class="flex relative m-4">
-            <div class="flex-auto">
-              <BaseDropdown
-                class="text-left border-t"
-                placeholder="Schedule time"
-                :options="time_slots"
-                v-model="$v.default_schedule_time.$model"
-              >
-                <template #title="{ selectedOption }">
-                  <span v-if="time_slots.length === 0" class="text-gray-500">
-                    No time slots!
-                  </span>
-                  <span v-else-if="selectedOption">
-                    Schedule
-                    <span class="ml-2 em-medium">
-                      {{ millisecondToTime(selectedOption) }}
-                    </span>
-                  </span>
-                </template>
-                <template #option="{ option }">
-                  <span>
-                    {{ millisecondToTime(option) }}
-                  </span>
-                </template>
-              </BaseDropdown>
+          <template v-if="enableAutoSend">
+            <div class="text-left py-6 px-4 pb-0">
+              <p class="mb-6">
+                By default, Blue Delta will automatically send each day according to the below details. You can change
+                these manually for each individual Blue Delta
+                <router-link class="text-secondary underline" :to="{ name: 'JumpStartLists' }">here</router-link>.
+              </p>
             </div>
-            <p v-if="$v.default_schedule_time.$error" class="text-xs text-error">
-              Please select time.
-            </p>
-          </div>
 
-          <div class="px-12 max-w-sm mx-auto pt-8">
-            <BaseButton
-              class="block bg-secondary w-full hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline transition duration-100 ease-in-out transition-all label-mobile mb-6"
+            <div
+              class="px-4 bg-white pb-0 text-left"
+              :class="[
+                {
+                  'is-query-empty': to_query === '',
+                  'is-filled': !$v.distributionGroups.$invalid,
+                  error: $v.distributionGroups.$error
+                },
+                $v.distributionGroups.$error
+                  ? 'text-red-600 border-red-600 pl-error-message'
+                  : 'text-gray-500 border-gray-600'
+              ]"
             >
-              SAVE
-            </BaseButton>
-          </div>
+              <label
+                class="multiselect--material-label absolute"
+                v-if="!$v.distributionGroups.$invalid"
+                for="distributionGroups"
+              >
+                Default Distribution List:
+              </label>
+              <Multiselect
+                id="distributionGroups"
+                v-model="$v.distributionGroups.$model"
+                :placeholder="$v.distributionGroups.$invalid ? 'Distribution List' : ''"
+                :options="get_distribution_groups"
+                :multiple="true"
+                :hide-selected="true"
+                :show-labels="false"
+                @search-change="onToSearchChange"
+              >
+                <template v-slot:noResult>Nothing found</template>
+                <template v-slot:noOptions>No options available</template>
+              </Multiselect>
+              <span v-if="$v.distributionGroups.$error" class="text-xs text-error text-left pl-error-message">
+                Distribution Groups is required
+              </span>
+            </div>
+
+            <div class="flex relative my-4">
+              <div class="flex-auto">
+                <BaseDropdown
+                  class="text-left border-t"
+                  placeholder="Schedule time"
+                  :options="time_slots"
+                  v-model="$v.sendTime.$model"
+                >
+                  <template #title="{ selectedOption }">
+                    <span v-if="time_slots.length === 0" class="text-gray-500">
+                      No time slots!
+                    </span>
+                    <span v-else-if="selectedOption">
+                      Schedule
+                      <span class="ml-2 em-medium">
+                        {{ millisecondToTime(selectedOption) }}
+                      </span>
+                    </span>
+                  </template>
+                  <template #option="{ option }">
+                    <span>
+                      {{ millisecondToTime(option) }}
+                    </span>
+                  </template>
+                </BaseDropdown>
+              </div>
+              <p v-if="$v.sendTime.$error" class="text-xs text-error pl-error-message">
+                Please select time.
+              </p>
+            </div>
+            <p v-if="get_response_message.message" class="font-bold px-4 mb-4" :class="get_response_message.class">
+              {{ get_response_message.message }}
+            </p>
+
+            <div class="px-12 max-w-sm mx-auto pt-8">
+              <BaseButton
+                @selectButton="updateSettings"
+                class="block bg-secondary w-full hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline transition duration-100 ease-in-out transition-all label-mobile mb-6"
+              >
+                SAVE
+              </BaseButton>
+            </div>
+          </template>
         </div>
       </div>
     </template>
@@ -113,8 +121,9 @@ import NavigationBottom from '@/components/BaseNavigationBottom';
 import BaseButton from '@/components/BaseButton';
 import BaseToggleSwitch from '@/components/BaseToggleSwitch';
 import Multiselect from 'vue-multiselect';
-import { formatDate } from '@/helpers.js';
+import { sleep, formatDate } from '@/helpers.js';
 import { required } from 'vuelidate/lib/validators';
+import { getTime } from 'date-fns';
 
 export default {
   name: 'BlueDeltaSettings',
@@ -128,34 +137,46 @@ export default {
     BaseToggleSwitch
   },
   validations: {
-    default_distribution_list: {
+    distributionGroups: {
       required
     },
-    default_schedule_time: {
+    sendTime: {
       required
     }
   },
   data: () => ({
-    to_query: '',
-    selected_hour: new Date()
+    to_query: ''
   }),
   computed: {
-    ...mapGetters('recipient', ['get_recipients_available']),
-    ...mapGetters('email', ['get_default_distribution_groups', 'get_email_date', 'get_default_schedule_time']),
-    default_distribution_list: {
+    ...mapGetters('settings', [
+      'get_settings',
+      'get_distribution_groups',
+      'get_send_time',
+      'get_enable_auto_send',
+      'get_response_message'
+    ]),
+    distributionGroups: {
       get() {
-        return this.get_default_distribution_groups;
+        return this.get_distribution_groups;
       },
       set(value) {
-        this.update_default_distribution_groups(value);
+        this.update_distribution_groups(value);
       }
     },
-    default_schedule_time: {
+    sendTime: {
       get() {
-        return this.get_default_schedule_time;
+        return this.timeToMillisecond(this.get_send_time);
       },
       set(value) {
-        this.update_default_schedule_time(value);
+        this.update_send_time(value);
+      }
+    },
+    enableAutoSend: {
+      get() {
+        return this.get_enable_auto_send;
+      },
+      set(value) {
+        return this.update_enable_auto_send(value);
       }
     },
     time_slots() {
@@ -175,11 +196,23 @@ export default {
     }
   },
   mounted() {
-    this.fetch_recipients();
+    this.fetch_settings();
+  },
+  destroyed() {
+    this.update_response_message({
+      message: '',
+      type: '',
+      class: ''
+    });
   },
   methods: {
-    ...mapMutations('email', ['update_default_distribution_groups', 'update_default_schedule_time']),
-    ...mapActions('recipient', ['fetch_recipients']),
+    ...mapMutations('settings', [
+      'update_distribution_groups',
+      'update_send_time',
+      'update_enable_auto_send',
+      'update_response_message'
+    ]),
+    ...mapActions('settings', ['fetch_settings', 'post_settings']),
     millisecondToTime(duration) {
       let minutes = parseInt((duration / (1000 * 60)) % 60),
         hours = parseInt((duration / (1000 * 60 * 60)) % 24);
@@ -193,7 +226,62 @@ export default {
       this.to_query = query;
     },
     toggleSwitch(value) {
-      console.log(value);
+      this.update_enable_auto_send(value);
+    },
+    timeToMillisecond(value) {
+      // value is like '08:00'
+      if (typeof value === 'string') {
+        const hoursMillisecond = parseInt(value.split(':')[0]) * 3600 * 1000;
+        const minuteMillisecond = parseInt(value.split(':')[1]) * 60 * 1000;
+        return hoursMillisecond + minuteMillisecond;
+      }
+      return value;
+    },
+    async onSuccessSubmit() {
+      // TODO: refactor, rename and move to helpers
+      this.$store.commit('overlay/updateModel', {
+        title: 'Success!',
+        message: ''
+      });
+
+      await sleep(1000);
+
+      await this.$router.push({
+        name: 'Dashboard'
+      });
+
+      this.$store.commit('overlay/updateModel', {
+        title: '',
+        message: ''
+      });
+    },
+    updateSettings() {
+      if (this.$v.$invalid) return false;
+      const params = {
+        body: {
+          distributionGroups: this.get_distribution_groups,
+          enableAutoSend: this.get_enable_auto_send,
+          sendTime: this.millisecondToTime(this.get_send_time)
+        }
+      };
+      this.post_settings({ params })
+        .then(() => {
+          this.onSuccessSubmit();
+        })
+        .catch(error => {
+          let message = 'An error occured!';
+          try {
+            message = error.response.data.title;
+          } catch (error) {
+            //
+          }
+
+          this.update_response_message({
+            message: message,
+            type: 'error',
+            class: 'text-error'
+          });
+        });
     },
     formatDate
   }
