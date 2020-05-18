@@ -10,7 +10,7 @@
       <!-- The link only routing -->
       <router-link
         v-if="action && !action.method"
-        class="flex-grow flex-shrink-0 inline-block action-link tg-h3-mobile text-left"
+        class="flex-grow flex-shrink-0 inline-block action-link tg-h3-mobile text-left font-medium"
         :to="action.link"
         >{{ action.label }}</router-link
       >
@@ -18,7 +18,7 @@
       <div
         v-if="action && action.method"
         class="flex-grow flex-shrink-0 inline-block action-link tg-h3-mobile text-right cursor-pointer"
-        :class="{ disabled: action.disabled }"
+        :class="{ 'cursor-default em-disabled': action.disabled }"
         @click="select()"
       >
         {{ action.label }}
@@ -61,10 +61,5 @@ export default {
 <style scoped>
 .action-link {
   color: #03b3f9;
-  font-weight: 500;
-}
-.disabled {
-  color: rgba(0, 0, 0, 0.38);
-  cursor: default;
 }
 </style>
