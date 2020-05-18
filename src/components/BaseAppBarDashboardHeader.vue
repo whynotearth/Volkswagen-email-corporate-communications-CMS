@@ -3,9 +3,7 @@
     <div class="container flex items-center px-0 md:px-6 justify-end">
       <div class="text-primary pr-3">{{ title }}</div>
       <div class="flex-start flex-shrink-0">
-        <router-link class="inline-block align-middle" :to="toLink">
-          <Setting />
-        </router-link>
+        <slot name="right-icon"></slot>
       </div>
       <!-- The link only routing -->
       <router-link
@@ -29,17 +27,12 @@
 </template>
 
 <script>
-import Setting from '@/assets/setting.svg';
 export default {
   name: 'BaseAppBarHeader',
-  components: { Setting },
   props: {
     title: {
       type: String,
       required: true
-    },
-    toLink: {
-      default: '/settings'
     },
     action: {
       type: Object,
