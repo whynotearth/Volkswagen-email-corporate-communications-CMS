@@ -22,7 +22,7 @@
               </div>
               <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-4">
                 <Article
-                  v-for="(article, index) in get_all_articles"
+                  v-for="(article, index) in get_available_articles"
                   :key="index"
                   :article="article"
                   @clicked="selectArticle(article)"
@@ -66,17 +66,16 @@ export default {
     }
   },
   mounted() {
-    if (!this.id) this.$router.push({ name: 'JumpStartLists' });
-    this.fetch_available_articles({ jumpStartId: this.id });
+    if (!this.id || this.get_selected_articles.length === 0) this.$router.push({ name: 'JumpStartLists' });
     this.update_preview_link();
   },
   methods: {
+    ...mapMutations('email', ['update_response_message']),
     ...mapActions('email', [
       'debounced_preview',
       'update_preview_link',
       'create_jumpstart',
       'update_selected_articles',
-      'fetch_available_articles',
       'update_available_articles',
       'clear_email_data'
     ]),
@@ -86,7 +85,6 @@ export default {
       if (this.get_selected_articles.length >= 5 && this.isActive(article) === -1) return false;
       this.$v.$reset();
       this.update_selected_articles(article);
-      this.update_available_articles(article);
       this.update_preview_link('');
       this.debounced_preview();
     },
@@ -102,8 +100,9 @@ export default {
       const params = {
         jumpStartId: this.id,
         body: {
-          dateTime: total_time,
+          id: this.id,
           articleIds: this.get_selected_articles.map(article => article.id),
+          dateTime: this.get_schedule_time ? total_time : this.get_email_date,
           distributionGroups: this.get_email_recipients
         }
       };
@@ -143,13 +142,9 @@ export default {
       'get_email_date',
       'get_schedule_time',
       'get_selected_articles',
-      'get_available_articles',
-      'get_selected_jumpstart',
-      'get_email_recipients'
-    ]),
-    get_all_articles() {
-      return [...this.get_selected_articles, ...this.get_available_articles];
-    }
+      'get_email_recipients',
+      'get_available_articles'
+    ])
   }
 };
 </script>

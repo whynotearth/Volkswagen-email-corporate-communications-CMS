@@ -153,6 +153,7 @@ import { mapGetters, mapMutations, mapActions } from 'vuex';
 import { required, decimal, maxLength, requiredIf } from 'vuelidate/lib/validators';
 import { mustBeDate } from '@/validations.js';
 import { formatISODate, formatDate } from '@/helpers.js';
+import { get } from 'lodash-es';
 
 export default {
   name: 'ArticleListsItem',
@@ -199,9 +200,9 @@ export default {
       'get_articles',
       'get_response_message',
       'get_date',
-      'get_image',
-      'get_daily_plan'
+      'get_image'
     ]),
+    ...mapGetters('email', ['get_daily_plan']),
     isAnswersCategory() {
       return this.selectedArticle.category.slug === 'answers-at-a-glance';
     },
@@ -263,11 +264,7 @@ export default {
         ];
       },
       set(value) {
-        let image = '';
-        try {
-          image = value[0].src;
-        } catch (error) {}
-        this.update_image(image);
+        this.update_image(get(value, '[0].src', ''));
       }
     },
     dates() {
@@ -302,7 +299,8 @@ export default {
     });
   },
   methods: {
-    ...mapActions('article', ['fetch_daily_plan', 'put_article', 'delete_article']),
+    ...mapActions('article', ['put_article', 'delete_article']),
+    ...mapActions('email', ['fetch_daily_plan']),
     ...mapMutations('article', [
       'update_headline',
       'update_description',

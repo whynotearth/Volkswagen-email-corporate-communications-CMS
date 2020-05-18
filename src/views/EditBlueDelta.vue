@@ -127,17 +127,18 @@ export default {
     };
   },
   mounted() {
-    if (!this.id) this.$router.push({ name: 'JumpStartLists' });
+    if (!this.id || this.get_email_date === null) this.$router.push({ name: 'JumpStartLists' });
     this.fetch_recipients();
     this.update_preview_link();
+    this.update_email_recipients(this.get_selected_plan.distributionGroups);
   },
   computed: {
     ...mapGetters('email', [
       'get_email_recipients',
       'get_schedule_time',
-      'get_selected_jumpstart',
       'get_selected_articles',
-      'get_email_date'
+      'get_email_date',
+      'get_selected_plan'
     ]),
     ...mapGetters('recipient', ['get_recipients_available']),
     email_recipients: {
@@ -158,7 +159,7 @@ export default {
     }
   },
   methods: {
-    ...mapMutations('email', ['update_email_recipients', 'update_schedule_time']),
+    ...mapMutations('email', ['update_email_recipients', 'update_schedule_time', 'update_email_date']),
     ...mapActions('recipient', ['fetch_recipients']),
     ...mapActions('email', ['create_jumpstart', 'update_preview_link', 'clear_email_data']),
     formatDate,
@@ -174,8 +175,9 @@ export default {
       const params = {
         jumpStartId: this.id,
         body: {
-          dateTime: total_time,
+          id: this.id,
           articleIds: this.get_selected_articles.map(article => article.id),
+          dateTime: this.time ? total_time : this.get_email_date,
           distributionGroups: this.get_email_recipients
         }
       };
