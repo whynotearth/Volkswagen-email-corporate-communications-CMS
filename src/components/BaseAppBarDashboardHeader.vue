@@ -4,7 +4,7 @@
       <div class="text-primary pr-3">{{ title }}</div>
       <div class="flex-start flex-shrink-0">
         <router-link class="inline-block align-middle" :to="toLink">
-          <SettingIcon />
+          <Setting />
         </router-link>
       </div>
       <!-- The link only routing -->
@@ -29,10 +29,10 @@
 </template>
 
 <script>
-import SettingIcon from '@/assets/setting.svg';
+import Setting from '@/assets/setting.svg';
 export default {
   name: 'BaseAppBarHeader',
-  components: { SettingIcon },
+  components: { Setting },
   props: {
     title: {
       type: String,
