@@ -1,7 +1,7 @@
 <template>
   <LayoutFixedScrollable>
     <template #header>
-      <BaseAppBarHeader :title="'Stats'" :to="{ name: 'Dashboard' }" />
+      <BaseAppBarHeader :title="'Stats'" :toLink="{ name: 'Dashboard' }" />
     </template>
     <template #content>
       <div class="bg-white flex items-center justify-center min-h-full relative">
