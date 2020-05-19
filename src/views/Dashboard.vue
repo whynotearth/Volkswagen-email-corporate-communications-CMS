@@ -10,9 +10,7 @@
         <!-- <div class="bg-brand-gradient ">
           <UserCard class="w-full relative container px-0" />
         </div> -->
-        <BaseAppBarDashboardHeader :title="'Hello Sunshine!'">
-          <template #right-icon></template>
-        </BaseAppBarDashboardHeader>
+        <BaseAppBarHeader :option="'main-header'" :title="'Hello Sunshine!'"></BaseAppBarHeader>
         <div class="w-full relative container px-0 text-left">
           <TodayEmail />
         </div>
@@ -33,7 +31,7 @@ import NavigationBottom from '@/components/BaseNavigationBottom';
 import LayoutFixedScrollable from '@/components/LayoutFixedScrollable';
 import UserCard from '@/components/BaseUserCard';
 import TodayEmail from '@/components/TodayEmail';
-import BaseAppBarDashboardHeader from '@/components/BaseAppBarDashboardHeader.vue';
+import BaseAppBarHeader from '@/components/BaseAppBarHeader.vue';
 //import SmartSuggestions from '@/components/BaseSmartSuggestions';
 
 export default {
@@ -41,7 +39,7 @@ export default {
   components: {
     NavigationBottom,
     LayoutFixedScrollable,
-    BaseAppBarDashboardHeader,
+    BaseAppBarHeader,
     TodayEmail
     //SmartSuggestions
   },

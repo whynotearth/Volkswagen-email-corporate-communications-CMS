@@ -1,6 +1,6 @@
 <template>
   <nav class="flex items-strech items-center px-4 py-4 flex-wrap shadow-4dp z-10">
-    <div class="container flex items-center px-0 md:px-6">
+    <div v-if="option == 'other-header'" class="container flex items-center px-0 md:px-6">
       <div class="flex-start flex-shrink-0">
         <router-link class="inline-block align-middle" :to="toLink">
           <img
@@ -28,12 +28,23 @@
       </div>
       <slot name="menu"></slot>
     </div>
+    <div v-else class="container flex items-center px-0 md:px-6 justify-end">
+      <div class="text-primary pr-3">{{ title }}</div>
+      <div class="flex-start flex-shrink-0">
+        <router-link :to="{ name: 'Settings' }" class="inline-block align-middle">
+          <Setting />
+        </router-link>
+      </div>
+    </div>
   </nav>
 </template>
 
 <script>
+import Setting from '@/assets/setting.svg';
+
 export default {
   name: 'BaseAppBarHeader',
+  components: { Setting },
   props: {
     title: {
       type: String,
@@ -45,6 +56,10 @@ export default {
     action: {
       type: Object,
       default: () => {}
+    },
+    option: {
+      type: String,
+      default: 'other-header'
     }
   },
   methods: {
