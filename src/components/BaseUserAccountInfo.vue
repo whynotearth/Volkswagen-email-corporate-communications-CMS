@@ -34,7 +34,7 @@
     </div>
     <div class="justify-center flex">
       <router-link
-        :to="{ name: 'ResetPassword' }"
+        :to="{ name: 'ChangePassword' }"
         class="inline-block align-baseline text-sm text-blue-500 hover:text-blue-800 underline"
       >
         Change Password
