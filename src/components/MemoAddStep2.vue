@@ -21,7 +21,7 @@
             <p class="mb-2"><b>To:</b> {{ get_to }}</p>
             <p class="mb-2">{{ get_subject }}</p>
             <div class="w-full tg-body-mobile text-black em-high whitespace-pre-line break-words flex-grow order-2">
-              <MarkDownPreview :content="get_description" />
+              <BaseEditorPreview :content="get_description" />
             </div>
           </div>
         </div>
@@ -33,11 +33,11 @@
 <script>
 import { mapGetters } from 'vuex';
 
-import MarkDownPreview from '@/components/BaseMarkDownPreview.vue';
+import BaseEditorPreview from '@/components/Editor/BaseEditorPreview.vue';
 
 export default {
   name: 'MemoAddStep2',
-  components: { MarkDownPreview },
+  components: { BaseEditorPreview },
   computed: {
     ...mapGetters('memo', ['get_to', 'get_subject', 'get_date', 'get_description', 'get_response_message'])
   }

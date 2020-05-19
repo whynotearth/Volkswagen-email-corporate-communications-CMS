@@ -17,7 +17,7 @@
         </span>
       </BaseInputText>
 
-      <MarkDownEditor
+      <BaseEditor
         class="mb-4 body-1-mobile bg-surface"
         :error="
           $v.description.$dirty && ($v.description.$invalid || !$v.description.required || !$v.description.maxLength)
@@ -32,7 +32,7 @@
         <span v-if="$v.description.$dirty && !$v.description.maxLength" class="text-xs text-error pl-error-message">
           {{ stringDescriptionByCategoryName }} should be less than 750 characters
         </span>
-      </MarkDownEditor>
+      </BaseEditor>
 
       <BaseInputText
         v-if="isFieldVisible('price')"
@@ -74,7 +74,7 @@
 
 <script>
 import BaseInputText from '@/components/BaseInputText.vue';
-import MarkDownEditor from '@/components/BaseMarkDownEditor.vue';
+import BaseEditor from '@/components/Editor/BaseEditor.vue';
 import ImageUpload from '@/components/ImageUpload/ImageUpload.vue';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
 import { required, decimal, maxLength, requiredIf } from 'vuelidate/lib/validators';
@@ -88,7 +88,7 @@ export default {
   name: 'ArticleAddStep2',
   components: {
     BaseInputText,
-    MarkDownEditor,
+    BaseEditor,
     ImageUpload
   },
   validations: {

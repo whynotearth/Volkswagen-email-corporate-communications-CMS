@@ -69,7 +69,7 @@
           Audience is required
         </span>
       </BaseInputText>
-      <MarkDownEditor
+      <BaseEditor
         class="body-1-mobile bg-surface"
         v-model="$v.description.$model"
         placeholder="Memo Body"
@@ -78,7 +78,7 @@
         <span v-if="$v.description.$dirty && !$v.description.required" class="text-xs text-error pl-error-message">
           Description is required
         </span>
-      </MarkDownEditor>
+      </BaseEditor>
       <span v-if="$v.$invalid" v-show="error" class="font-bold text-error pl-error-message">
         Please fill the memo form properly.
       </span>
@@ -90,14 +90,14 @@
 
 <script>
 import BaseInputText from '@/components/BaseInputText.vue';
-import MarkDownEditor from '@/components/BaseMarkDownEditor.vue';
+import BaseEditor from '@/components/Editor/BaseEditor.vue';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
 import { required } from 'vuelidate/lib/validators';
 import Multiselect from 'vue-multiselect';
 
 export default {
   name: 'MemoAddStep1',
-  components: { BaseInputText, MarkDownEditor, Multiselect },
+  components: { BaseInputText, BaseEditor, Multiselect },
   data: () => ({
     // TODO: refactor, use vuelidate
     recipientsIsDirthy: false,
