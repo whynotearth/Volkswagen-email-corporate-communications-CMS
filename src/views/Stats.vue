@@ -1,11 +1,16 @@
 <template>
   <LayoutFixedScrollable>
     <template #header>
-      <BaseAppBarHeader :title="'Stats'" :to="{ name: 'Dashboard' }" />
+      <BaseAppBarHeader :title="'Stats'" :toLink="{ name: 'Dashboard' }" />
     </template>
     <template #content>
       <div class="bg-white flex items-center justify-center min-h-full relative">
         <div class="w-full">
+          <!-- <router-link v-if="isAuthenticated" to="/settings" class="absolute top-0 right-0 p-4 text-sm">
+            <img
+              src="https://res.cloudinary.com/whynotearth/image/upload/v1588066712/Volkswagen/cms/wheel_eqhded.svg"
+            />
+          </router-link> -->
           <div class="max-w-sm mx-auto px-12">
             <div class="mb-4">
               <img
