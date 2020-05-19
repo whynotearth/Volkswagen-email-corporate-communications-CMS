@@ -1,18 +1,21 @@
 <template>
   <div>
-    <div @click="showDropdown = !showDropdown" class="items-strech mb-2 p-5 cursor-pointer border-b-1 border-divider">
+    <div
+      @click="showDropdown = !showDropdown"
+      class="flex flex-grow justify-between items-strech p-5 cursor-pointer border-b-1 border-divider"
+    >
       <img
         :src="icon"
         v-if="icon"
         alt="icon"
         class="inline-block align-baseline mr-4 h-5 w-5 -mb-0.5 pointer-events-none"
       />
-      <span class="inline-block truncate w-4/5" :class="selectedOption ? '' : 'text-gray-500'">
+      <span class="truncate" :class="selectedOption ? '' : 'text-gray-500'">
         <slot name="title" :selectedOption="selectedOption">
           {{ selectedOption || placeholder }}
         </slot>
       </span>
-      <div class="h-full float-right ">
+      <div class="h-full">
         <Down
           class="transform inline-block pointer-events-none scale-x-1 text-gray"
           :class="{ 'rotate-180': showDropdown }"
@@ -21,10 +24,10 @@
     </div>
     <div
       v-if="showDropdown"
-      class="dropdown absolute right-0 left-0 bg-white mt-2 w-48 w-full rounded shadow-8dp overflow-x-hidden overflow-y-auto z-10"
+      class="dropdown absolute right-0 left-0 bg-white mt-1 mx-2 md:mx-4 py-2 rounded shadow-8dp overflow-x-hidden overflow-y-auto z-10"
     >
       <div
-        class="option p-5 first:rounded-t-lg last:rounded-b-lg cursor-pointer"
+        class="option p-4 first:rounded-t-lg last:rounded-b-lg cursor-pointer"
         :class="{ active: selectedOption === option }"
         v-for="(option, index) in options"
         :key="index"
@@ -80,7 +83,7 @@ export default {
 
 <style scoped>
 .dropdown {
-  max-height: 12rem;
+  max-height: 15rem;
   top: 54px;
 }
 .rotate-180 {
