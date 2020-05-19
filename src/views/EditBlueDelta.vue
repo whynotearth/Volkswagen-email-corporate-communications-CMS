@@ -130,15 +130,15 @@ export default {
     if (!this.id || this.get_email_date === null) this.$router.push({ name: 'JumpStartLists' });
     this.fetch_recipients();
     this.update_preview_link();
-    this.update_email_recipients(this.get_selected_plan.distributionGroups);
+    this.defaultScheduleDate();
   },
   computed: {
     ...mapGetters('email', [
       'get_email_recipients',
       'get_schedule_time',
+      'get_selected_plan',
       'get_selected_articles',
-      'get_email_date',
-      'get_selected_plan'
+      'get_email_date'
     ]),
     ...mapGetters('recipient', ['get_recipients_available']),
     email_recipients: {
@@ -159,12 +159,17 @@ export default {
     }
   },
   methods: {
-    ...mapMutations('email', ['update_email_recipients', 'update_schedule_time', 'update_email_date']),
+    ...mapMutations('email', ['update_email_recipients', 'update_schedule_time']),
     ...mapActions('recipient', ['fetch_recipients']),
     ...mapActions('email', ['create_jumpstart', 'update_preview_link', 'clear_email_data']),
     formatDate,
     onToSearchChange(query) {
       this.to_query = query;
+    },
+    defaultScheduleDate() {
+      let d = new Date(this.get_selected_plan.dateTime);
+      d = d.getTime() - 86400;
+      this.update_schedule_time(d);
     },
     updateBlueDelta() {
       this.$v.$touch();
@@ -174,8 +179,9 @@ export default {
       let total_time = new Date(d.getTime() + this.time).toISOString();
       const params = {
         body: {
+          /update_email_date
           id: this.id,
-          articleIds: this.get_selected_articles.map(article => article.id),
+          rticleIds: this.get_selected_articles.map(article => article.id),
           dateTime: this.time ? total_time : this.get_email_date,
           distributionGroups: this.get_email_recipients
         }
