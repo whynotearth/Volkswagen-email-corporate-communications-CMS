@@ -1,8 +1,9 @@
 <template>
-  <nav class="px-4 py-4 flex-wrap shadow-4dp z-10">
+  <nav class="px-4 py-4 shadow-4dp z-10">
     <div class="container flex items-center justify-between px-0 md:px-6">
-      <div class="flex items-center">
-        <div v-if="toLink" class="flex-start flex-shrink-0">
+      <!-- start side -->
+      <div class="appbar-startside flex items-center">
+        <div v-if="toLink" class="flex-shrink-0">
           <router-link class="inline-block align-middle" :to="toLink">
             <img
               class="lg:w-6 lg:h-6"
@@ -13,7 +14,8 @@
         <div v-if="title" class="text-primary tg-h2-mobile lg:tg-h2-desktop truncate pl-8">{{ title }}</div>
       </div>
 
-      <div>
+      <!-- end side -->
+      <div class="appbar-endside flex-shrink-0 pl-2">
         <!-- TODO: probably using slot is better -->
         <!-- The link only routing -->
         <router-link
@@ -84,6 +86,9 @@ export default {
 </script>
 
 <style scoped>
+.appbar-startside {
+  min-width: 0;
+}
 .action-link {
   color: #03b3f9;
   font-weight: 500;
