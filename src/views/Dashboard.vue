@@ -1,5 +1,12 @@
 <template>
   <LayoutFixedScrollable>
+    <template #header>
+      <BaseAppBarHeader
+        :showSettingsLink="true"
+        :option="'main-header'"
+        :titleEnd="'Hello Sunshine!'"
+      ></BaseAppBarHeader>
+    </template>
     <template #content>
       <div class="min-h-full relative bg-background">
         <!-- <router-link to="/settings" class="absolute top-0 right-0 p-4 text-sm z-10">
@@ -10,7 +17,7 @@
         <!-- <div class="bg-brand-gradient ">
           <UserCard class="w-full relative container px-0" />
         </div> -->
-        <BaseAppBarHeader :option="'main-header'" :title="'Hello Sunshine!'"></BaseAppBarHeader>
+
         <div class="w-full relative container px-0 text-left">
           <TodayEmail />
         </div>
