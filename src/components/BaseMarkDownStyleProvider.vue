@@ -40,9 +40,7 @@
 
 /deep/ ul,
 /deep/ ol {
-  @apply block;
-  @apply mx-0;
-  @apply p-10;
+  @apply block mx-0 p-10;
 
   margin-top: 1em !important;
   margin-bottom: 1em !important;
