@@ -27,6 +27,9 @@ export default {
     value: {
       type: String,
       required: true
+    },
+    placeholder: {
+      type: String
     }
   },
   data() {
@@ -35,7 +38,7 @@ export default {
       configs: {
         status: ['lines', 'words'],
         spellChecker: false,
-        placeholder: "Put your article's content here",
+        placeholder: this.placeholder,
         hideIcons: ['code', 'table', 'side-by-side', 'fullscreen', 'image']
       }
     };

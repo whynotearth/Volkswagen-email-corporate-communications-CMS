@@ -23,7 +23,6 @@
           $v.description.$dirty && ($v.description.$invalid || !$v.description.required || !$v.description.maxLength)
         "
         :placeholder="isAnswersCategory ? stringDescriptionByCategoryName : 'Put the content of your article here.'"
-        :label="stringDescriptionByCategoryName"
         v-if="isFieldVisible('description')"
         v-model="$v.description.$model"
       >
