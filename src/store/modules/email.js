@@ -10,43 +10,38 @@ export default {
     email_date: null,
     schedule_time: null,
     preview_link: '',
-    selected_jumpstart: {},
     articles: [],
     selected_articles: [],
     email_recipients: [],
     jumpstarts: [],
-    available_articles: [],
     response_message: {
       type: '', // error, success
       message: '',
       class: '' // text-error text-success
-    }
+    },
+    default_distribution_groups: [],
+    default_schedule_time: null,
+    selected_plan: {},
+    daily_plan: [],
+    available_articles: []
   },
   getters: {
     get_email_date: state => state.email_date,
     get_schedule_time: state => state.schedule_time,
-    get_selected_jumpstart: state => state.selected_jumpstart,
     get_selected_articles: state => state.selected_articles,
     get_preview_link: state => state.preview_link,
     get_email_recipients: state => state.email_recipients,
-    get_jumpstarts: state => state.jumpstarts,
     get_response_message: state => state.response_message,
     get_articles: state => state.articles,
+    get_default_distribution_groups: state => state.default_distribution_groups,
+    get_default_schedule_time: state => state.default_schedule_time,
+    get_selected_plan: state => state.selected_plan,
+    get_daily_plan: state => state.daily_plan,
     get_available_articles: state => state.available_articles
   },
   actions: {
     async create_jumpstart({ commit }, payload) {
-      await JumpStartService.jumpstart1(payload.params);
-    },
-    async fetch_jumpstarts({ commit }) {
-      store.commit('loading/loading', true);
-      const data = await JumpStartService.jumpstart();
-      commit('update_jumpstarts', data);
-      store.commit('loading/loading', false);
-    },
-    async fetch_available_articles({ commit }, payload) {
-      const data = await JumpStartService.availablearticles(payload);
-      commit('update_available_articles', data);
+      await JumpStartService.jumpstart(payload.params);
     },
     update_selected_articles({ state }, payload) {
       if (!payload) {
@@ -56,21 +51,21 @@ export default {
         i !== -1 ? state.selected_articles.splice(i, 1) : state.selected_articles.push(payload);
       }
     },
-    update_available_articles({ state, commit }, payload) {
-      let i = state.available_articles.indexOf(payload);
-      i !== -1 ? state.available_articles.splice(i, 1) : state.available_articles.push(payload);
-    },
     update_preview_link({ state }, payload) {
       if (payload === '') {
         state.preview_link = payload;
         return false;
       }
-      const base = `${BASE_API}/api/v0/volkswagen/jumpstart/${state.selected_jumpstart.id}/preview`;
+      const base = `${BASE_API}/api/v0/volkswagen/jumpstart/${state.selected_plan.dateTime}/preview`;
       const url = new URL(base);
       state.selected_articles.forEach(article => {
         url.searchParams.append('articleIds', article.id);
       });
       state.preview_link = url.href;
+    },
+    async fetch_daily_plan({ commit }) {
+      const data = await JumpStartService.dailyplan();
+      commit('update_daily_plan', data);
     },
     clear_email_data({ commit, dispatch }) {
       commit('update_email_date', null);
@@ -94,12 +89,6 @@ export default {
     update_schedule_time(state, payload) {
       state.schedule_time = payload;
     },
-    update_jumpstarts(state, payload) {
-      state.jumpstarts = payload;
-    },
-    update_selected_jumpstart(state, payload) {
-      state.selected_jumpstart = payload;
-    },
     update_email_recipients(state, payload) {
       state.email_recipients = payload;
     },
@@ -109,8 +98,20 @@ export default {
     update_articles(state, payload) {
       state.articles = payload;
     },
+    update_default_distribution_groups(state, payload) {
+      state.default_distribution_groups = payload;
+    },
+    update_default_schedule_time(state, payload) {
+      state.default_schedule_time = payload;
+    },
+    update_selected_plan(state, payload) {
+      state.selected_plan = payload;
+    },
     update_available_articles(state, payload) {
       state.available_articles = payload;
+    },
+    update_daily_plan(state, payload) {
+      state.daily_plan = payload;
     }
   }
 };

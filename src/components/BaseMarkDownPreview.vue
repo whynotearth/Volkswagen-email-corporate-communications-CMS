@@ -1,10 +1,11 @@
 <template>
   <MarkDownStyle>
-    <div class="markdown-preview" v-html="content"></div>
+    <div class="markdown-preview" v-html="preview"></div>
   </MarkDownStyle>
 </template>
 
 <script>
+import Simplemde from 'simplemde';
 import MarkDownStyle from './BaseMarkDownStyleProvider.vue';
 
 export default {
@@ -16,6 +17,11 @@ export default {
   },
   components: {
     MarkDownStyle
+  },
+  computed: {
+    preview() {
+      return Simplemde.prototype.markdown(this.content);
+    }
   }
 };
 </script>

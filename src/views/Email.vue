@@ -45,7 +45,7 @@ export default {
       'get_selected_articles',
       'get_email_recipients',
       'get_schedule_time',
-      'get_selected_jumpstart'
+      'get_selected_plan'
     ]),
     currentStep() {
       return parseInt(this.step);
@@ -69,7 +69,7 @@ export default {
       const wantToExit = newStep < 1;
       if (wantToExit) {
         this.clear_email_data();
-        return this.$router.push({ name: 'Home' });
+        return this.$router.push({ name: 'Dashboard' });
       }
 
       // finish
@@ -90,8 +90,8 @@ export default {
     submit() {
       let total_time = new Date(this.get_email_date + this.get_schedule_time).toISOString();
       const params = {
-        jumpStartId: this.get_selected_jumpstart.id,
         body: {
+          id: this.get_selected_plan.jumpStartId,
           dateTime: total_time,
           articleIds: this.get_selected_articles.map(article => article.id),
           distributionGroups: this.get_email_recipients
@@ -120,7 +120,7 @@ export default {
       await sleep(1000);
 
       await this.$router.push({
-        name: 'Home'
+        name: 'Dashboard'
       });
 
       this.$store.commit('overlay/updateModel', {

@@ -43,7 +43,7 @@ export default {
       'get_description',
       'get_price',
       'get_eventDate',
-      'get_images',
+      'get_image',
       'get_selected_category'
     ]),
     currentStep() {
@@ -67,7 +67,7 @@ export default {
       const wantToExit = newStep < 1;
       if (wantToExit) {
         this.$store.dispatch('article/clear_form_data');
-        return this.$router.push({ name: 'Home' });
+        return this.$router.push({ name: 'Dashboard' });
       }
 
       // finish
@@ -101,6 +101,7 @@ export default {
         body: {
           date: date_time,
           categorySlug: this.get_selected_category.slug,
+          image: this.get_image,
           headline: this.get_headline,
           description: this.get_description,
           price: this.get_price,
@@ -139,7 +140,7 @@ export default {
       await sleep(1000);
 
       await this.$router.push({
-        name: 'Home'
+        name: 'Dashboard'
       });
 
       this.$store.commit('overlay/updateModel', {

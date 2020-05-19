@@ -6,25 +6,25 @@
         <div class="flex relative">
           <ul class="flex-auto flex justify-around text-left menu list-none bg-primary px-2 md:px-0">
             <li class="text-white inline-block m-2 mb-1 text-xs">
-              <router-link class="text-white router-link" :to="{ name: 'Home' }">
+              <router-link class="text-white router-link" :to="{ name: 'Dashboard' }">
                 <HomeIcon class="m-auto" />
                 Home
               </router-link>
             </li>
             <li class="text-white inline-block m-2 mb-1 text-xs">
-              <router-link class="text-white router-link" :to="{ name: 'ActivityFeedMemoList' }">
+              <router-link class="text-white router-link" :to="{ name: 'Stats' }">
                 <StatsIcon class="m-auto" />
                 Stats
               </router-link>
             </li>
             <li class="text-white inline-block m-2 mb-1 text-xs">
-              <router-link class="text-white router-link" :to="{ name: 'EmailsAdd' }">
+              <router-link class="text-white router-link" :to="{ name: 'JumpStartLists' }">
                 <MemoStatslIcon class="m-auto" />
                 Blue Delta
               </router-link>
             </li>
             <li class="text-white inline-block m-2 mb-1 text-xs">
-              <router-link class="text-white router-link" :to="{ name: 'ArticleAdd' }">
+              <router-link class="text-white router-link" :to="{ name: 'ArticleLists' }">
                 <BookingIcon class="m-auto" />
                 Article
               </router-link>
@@ -90,7 +90,13 @@ export default {
       isOpen: false,
       showNavbar: true,
       lastScrollPosition: 0,
-      scrollValue: 0
+      scrollValue: 0,
+      activeClass: {
+        home: 'opacity-100',
+        stats: 'opacity-100',
+        blue: 'opacity-100',
+        archive: 'opacity-100'
+      }
     };
   },
   methods: {
@@ -129,14 +135,17 @@ export default {
 
 ul.toggle-menu > li {
   transition: all 0.2s ease;
+  color: transparent;
 }
 
 ul.toggle-menu.opened > li:nth-child(1) {
   transition-duration: 450ms;
+  color: white;
   top: -70px;
 }
 
 ul.toggle-menu.opened > li:nth-child(2) {
+  color: white;
   transition-duration: 450ms;
   top: -130px;
 }

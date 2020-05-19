@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import auth from './modules/auth';
 import authKeep from './modules/authKeep';
+import profile from './modules/profile';
 import category from './modules/category';
 import loading from './modules/loading';
 import snackbar from './modules/snackbar';
@@ -27,6 +28,7 @@ export default new Vuex.Store({
     snackbar,
     loading,
     auth,
+    profile,
     category,
     article,
     memo,

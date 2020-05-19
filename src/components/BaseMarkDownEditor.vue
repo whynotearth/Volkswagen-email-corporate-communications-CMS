@@ -23,11 +23,15 @@ export default {
     error: {
       type: Boolean,
       default: false
+    },
+    value: {
+      type: String,
+      required: true
     }
   },
   data() {
     return {
-      content: null,
+      content: this.value,
       configs: {
         status: ['lines', 'words'],
         spellChecker: false,
@@ -36,18 +40,13 @@ export default {
       }
     };
   },
-  computed: {
-    simplemde() {
-      return this.$refs.markdownEditor.simplemde;
-    }
-  },
   components: {
     VueSimplemde,
     MarkDownStyle
   },
   methods: {
     updateValue() {
-      this.$emit('change', this.simplemde.markdown(this.content));
+      this.$emit('change', this.content);
     }
   },
   watch: {

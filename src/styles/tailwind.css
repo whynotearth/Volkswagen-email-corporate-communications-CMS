@@ -1,6 +1,7 @@
 @tailwind base;
 
 @import './base.css';
+@import './gradients.css';
 
 @tailwind components;
 @tailwind utilities;
@@ -12,4 +13,3 @@
 .pl-error-message {
   padding-left: 1.125rem;
 }
-
