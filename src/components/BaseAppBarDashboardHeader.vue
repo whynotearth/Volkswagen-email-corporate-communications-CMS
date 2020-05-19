@@ -9,23 +9,6 @@
           </router-link>
         </slot>
       </div>
-      <!-- The link only routing -->
-      <router-link
-        v-if="action && !action.method"
-        class="flex-grow flex-shrink-0 inline-block action-link tg-h3-mobile text-left font-medium"
-        :to="action.link"
-        >{{ action.label }}</router-link
-      >
-      <!-- The link has a action, emit a method, like finish (Add, Edit) -->
-      <div
-        v-if="action && action.method"
-        class="flex-grow flex-shrink-0 inline-block action-link tg-h3-mobile text-right cursor-pointer"
-        :class="{ 'cursor-default em-disabled': action.disabled }"
-        @click="select()"
-      >
-        {{ action.label }}
-      </div>
-      <slot name="menu"></slot>
     </div>
   </nav>
 </template>
