@@ -179,7 +179,6 @@ export default {
       let total_time = new Date(d.getTime() + this.time).toISOString();
       const params = {
         body: {
-          /update_email_date
           id: this.id,
           rticleIds: this.get_selected_articles.map(article => article.id),
           dateTime: this.time ? total_time : this.get_email_date,
