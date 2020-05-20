@@ -45,7 +45,10 @@
             >
               Confirm New Password is required
             </span>
-            <span v-if="!$v.confirmPassword.sameAsPassword" class="text-xs text-error pl-error-message">
+            <span
+              v-if="!$v.confirmPassword.sameAsPassword && $v.confirmPassword.required"
+              class="text-xs text-error pl-error-message"
+            >
               Passwords must be identical.
             </span>
           </BaseInputText>
