@@ -7,7 +7,7 @@
       <div class="flex flex-col py-6">
         <div class="container px-0 md:px-6">
           <div v-for="(plan, index) in get_daily_plan" :key="index" class="cursor-pointer" @click="selectPlan(plan)">
-            <JumpStartItem :model="plan" v-if="plan.jumpStartId" />
+            <JumpStartItem :model="plan" />
           </div>
         </div>
       </div>
@@ -47,7 +47,11 @@ export default {
         } else break;
       }
       this.update_email_date(plan.dateTime);
-      this.$router.push({ name: 'EditBlueDelta', params: { id: plan.jumpStartId } });
+      if (plan.jumpStartId) {
+        this.$router.push({ name: 'EditBlueDelta', params: { id: plan.jumpStartId } });
+      } else {
+        this.$router.push({ name: 'AddBlueDelta', params: { date: plan.dateTime } });
+      }
     }
   }
 };

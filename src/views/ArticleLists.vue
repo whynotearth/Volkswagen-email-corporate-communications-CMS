@@ -49,14 +49,14 @@ export default {
     ...mapGetters('email', ['get_daily_plan']),
     todayArticles() {
       const data = this.get_daily_plan.find(article => {
-        return isToday(parseISO(article.date));
+        return isToday(parseISO(article.dateTime));
       });
       return data ? data.articles : [];
     },
     upcomingArticles() {
       let articles = [];
       this.get_daily_plan.forEach(item => {
-        if (!isToday(parseISO(item.date))) {
+        if (!isToday(parseISO(item.dateTime))) {
           if (item.articles.length) {
             articles = [...articles, ...item.articles];
           }

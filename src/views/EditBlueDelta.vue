@@ -14,7 +14,11 @@
                 <EmailPreview />
               </div>
               <router-link
-                :to="{ name: 'BlueDeltaRearrange', params: { id: id } }"
+                :to="
+                  id
+                    ? { name: 'BlueDeltaRearrange', params: { id: id } }
+                    : { name: 'AddBlueDeltaRearrange', params: { date: date } }
+                "
                 class="absolute bg-opacity-50 bg-black -mx-4 md:m-0 inset-0 text-white"
               >
                 <div class="flex h-full bg-transparent justify-center items-center">
@@ -99,8 +103,10 @@ export default {
   name: 'EditBlueDelta',
   props: {
     id: {
-      type: [String, Number],
-      required: true
+      type: [String, Number]
+    },
+    date: {
+      type: [String]
     }
   },
   validations: {
@@ -127,7 +133,7 @@ export default {
     };
   },
   mounted() {
-    if (!this.id || this.get_email_date === null) this.$router.push({ name: 'JumpStartLists' });
+    if (!(this.id || this.date) || this.get_email_date === null) this.$router.push({ name: 'JumpStartLists' });
     this.fetch_recipients();
     this.update_preview_link();
     this.update_email_recipients(this.get_selected_plan.distributionGroups);
