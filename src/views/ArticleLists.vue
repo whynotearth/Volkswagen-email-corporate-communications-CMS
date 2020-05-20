@@ -24,7 +24,7 @@
       </BaseTabs>
     </template>
     <template #footer>
-      <BaseNavigationBottom :active="'article'" />
+      <BaseNavigationBottom />
     </template>
   </LayoutFixedScrollable>
 </template>

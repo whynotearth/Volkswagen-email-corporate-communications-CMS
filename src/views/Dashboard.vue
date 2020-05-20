@@ -27,7 +27,7 @@
       </div>
     </template>
     <template #footer>
-      <NavigationBottom :active="'dashboard'" />
+      <NavigationBottom />
     </template>
   </LayoutFixedScrollable>
 </template>

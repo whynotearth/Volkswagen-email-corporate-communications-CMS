@@ -7,27 +7,24 @@
           <ul class="flex-auto flex justify-around text-left menu list-none bg-primary px-2 md:px-0">
             <li class="text-white inline-block m-2 mb-1 text-xs">
               <router-link
-                :active-class="'text-white router-active-link'"
+                :active-class="'router-active-link'"
                 class="router-normal-link"
                 :to="{ name: 'Dashboard' }"
+                exact
               >
                 <HomeIcon class="m-auto" />
                 Home
               </router-link>
             </li>
             <li class="text-white inline-block m-2 mb-1 text-xs">
-              <router-link
-                :active-class="'text-white router-active-link'"
-                class="router-normal-link"
-                :to="{ name: 'Stats' }"
-              >
+              <router-link :active-class="'router-active-link'" class="router-normal-link" :to="{ name: 'Stats' }">
                 <StatsIcon class="m-auto" />
                 Stats
               </router-link>
             </li>
             <li class="text-white inline-block m-2 mb-1 text-xs">
               <router-link
-                :active-class="'text-white router-active-link'"
+                :active-class="'router-active-link'"
                 class="router-normal-link"
                 :to="{ name: 'JumpStartLists' }"
               >
@@ -37,7 +34,7 @@
             </li>
             <li class="text-white inline-block m-2 mb-1 text-xs">
               <router-link
-                :active-class="'text-white router-active-link'"
+                :active-class="'router-active-link'"
                 class="router-normal-link"
                 :to="{ name: 'ArticleLists' }"
               >
@@ -100,11 +97,6 @@ import StatsIcon from '@/assets/stats.svg';
 export default {
   name: 'NavigationBottom',
   components: { AddIcon, HomeIcon, MemoIcon, MemoStatslIcon, ArticleIcon, BookingIcon, StatsIcon },
-  props: {
-    active: {
-      type: String
-    }
-  },
   data() {
     return {
       isOpen: false,
@@ -184,6 +176,7 @@ ul.toggle-menu.opened > li:nth-child(2) {
 }
 
 .router-active-link svg path {
+  opacity: 1;
   fill: #fff;
   fill-opacity: 1;
 }

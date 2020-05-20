@@ -13,7 +13,7 @@
       </div>
     </template>
     <template #footer>
-      <NavigationBottom :active="'bluedelta'" />
+      <NavigationBottom />
     </template>
   </LayoutFixedScrollable>
 </template>
