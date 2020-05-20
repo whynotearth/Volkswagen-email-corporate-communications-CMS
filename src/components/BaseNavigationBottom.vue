@@ -7,7 +7,8 @@
           <ul class="flex-auto flex justify-around text-left menu list-none bg-primary px-2 md:px-0">
             <li class="text-white inline-block m-2 mb-1 text-xs">
               <router-link
-                :class="active == 'dashboard' ? 'text-white router-active-link' : 'text-white router-normal-link'"
+                :active-class="'text-white'"
+                :class="active == 'dashboard' ? 'router-active-link' : 'router-normal-link'"
                 :to="{ name: 'Dashboard' }"
               >
                 <HomeIcon class="m-auto" />
@@ -16,8 +17,8 @@
             </li>
             <li class="text-white inline-block m-2 mb-1 text-xs">
               <router-link
-                :class="active == 'stats' ? 'text-white router-active-link' : 'text-white router-normal-link'"
-                class="text-white router-link"
+                :active-class="'text-white'"
+                :class="active == 'stats' ? 'router-active-link' : 'router-normal-link'"
                 :to="{ name: 'Stats' }"
               >
                 <StatsIcon class="m-auto" />
@@ -26,8 +27,8 @@
             </li>
             <li class="text-white inline-block m-2 mb-1 text-xs">
               <router-link
-                :class="active == 'bluedelta' ? 'text-white router-active-link' : 'text-white router-normal-link'"
-                class="text-white router-link"
+                :active-class="'text-white'"
+                :class="active == 'bluedelta' ? 'router-active-link' : 'router-normal-link'"
                 :to="{ name: 'JumpStartLists' }"
               >
                 <MemoStatslIcon class="m-auto" />
@@ -36,8 +37,8 @@
             </li>
             <li class="text-white inline-block m-2 mb-1 text-xs">
               <router-link
-                :class="active == 'article' ? 'text-white router-active-link' : 'text-white router-normal-link'"
-                class="text-white router-link"
+                :active-class="'text-white'"
+                :class="active == 'article' ? 'router-active-link' : 'router-normal-link'"
                 :to="{ name: 'ArticleLists' }"
               >
                 <BookingIcon class="m-auto" />
@@ -176,10 +177,6 @@ ul.toggle-menu.opened > li:nth-child(2) {
 .router-normal-link svg path {
   fill: #fff;
   fill-opacity: 0.54;
-}
-
-.router-active-link {
-  opacity: 1;
 }
 
 .router-active-link svg path {
