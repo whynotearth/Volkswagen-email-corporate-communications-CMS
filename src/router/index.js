@@ -23,6 +23,8 @@ import Dashboard from '../views/Dashboard';
 import JumpStartLists from '../views/JumpStartLists';
 import ArticleLists from '../views/ArticleLists';
 import ArticleListsItem from '../views/ArticleListsItem';
+import EditBlueDelta from '../views/EditBlueDelta';
+import BlueDeltaRearrange from '../views/BlueDeltaRearrange';
 // import DeveloperTesting from '../views/DeveloperTesting.vue';
 import ResetPassword from '../views/AuthResetPassword';
 import NewPassword from '../views/AuthNewPassword';
@@ -207,7 +209,16 @@ const routes = [
   {
     path: '/blue-delta/edit/:id',
     name: 'EditBlueDelta',
-    component: () => import('@/views/EditBlueDelta.vue'),
+    component: EditBlueDelta,
+    props: true,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/blue-delta/add/:date',
+    name: 'AddBlueDelta',
+    component: EditBlueDelta,
     props: true,
     meta: {
       requiresAuth: true
@@ -216,7 +227,16 @@ const routes = [
   {
     path: '/blue-delta/rearrange/:id',
     name: 'BlueDeltaRearrange',
-    component: () => import('@/views/BlueDeltaRearrange.vue'),
+    component: BlueDeltaRearrange,
+    props: true,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/blue-delta/rearrange/add/:date',
+    name: 'AddBlueDeltaRearrange',
+    component: BlueDeltaRearrange,
     props: true,
     meta: {
       requiresAuth: true
