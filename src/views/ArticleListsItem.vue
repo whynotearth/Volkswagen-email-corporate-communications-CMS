@@ -197,7 +197,6 @@ export default {
       'get_description',
       'get_price',
       'get_eventDate',
-      'get_articles',
       'get_response_message',
       'get_date',
       'get_image'
@@ -319,6 +318,7 @@ export default {
       this.update_price(this.selectedArticle.price);
       this.update_eventDate(formatDate(this.selectedArticle.eventDate));
       this.update_date(formatDate(this.selectedArticle.date));
+      this.update_image(this.selectedArticle.image);
     },
     isFieldRequired(fieldName) {
       if (!this.selectedArticle) {
