@@ -1,7 +1,7 @@
 <template>
   <label for="toggle" class="flex items-center cursor-pointer">
     <div class="relative">
-      <input id="toggle" type="checkbox" class="hidden" v-model="isActive" @click="toggleCheckbox" />
+      <input id="toggle" type="checkbox" class="hidden" v-model="value" @click="toggleCheckbox" />
       <div class="toggle-line w-10 h-4 bg-gray-400 rounded-full shadow-inner"></div>
       <div class="toggle-dot absolute w-6 h-6 bg-white rounded-full shadow inset-y-0 left-0"></div>
     </div>
@@ -16,20 +16,9 @@ export default {
       type: Boolean
     }
   },
-  data() {
-    return {
-      isActive: false
-    };
-  },
-  watch: {
-    value(data) {
-      this.isActive = data;
-    }
-  },
   methods: {
     toggleCheckbox() {
-      this.isActive = !this.isActive;
-      this.$emit('toggleSwitch', this.isActive);
+      this.$emit('toggleSwitch');
     }
   }
 };

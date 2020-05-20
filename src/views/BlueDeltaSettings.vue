@@ -43,7 +43,7 @@
                 id="distributionGroups"
                 v-model="$v.distributionGroups.$model"
                 :placeholder="$v.distributionGroups.$invalid ? 'Distribution List' : ''"
-                :options="get_distribution_groups"
+                :options="get_recipients_available"
                 :multiple="true"
                 :hide-selected="true"
                 :show-labels="false"
@@ -155,6 +155,7 @@ export default {
       'get_enable_auto_send',
       'get_response_message'
     ]),
+    ...mapGetters('recipient', ['get_recipients_available']),
     distributionGroups: {
       get() {
         return this.get_distribution_groups;
@@ -196,6 +197,7 @@ export default {
     }
   },
   mounted() {
+    this.fetch_recipients();
     this.fetch_settings();
   },
   destroyed() {
@@ -212,8 +214,10 @@ export default {
       'update_enable_auto_send',
       'update_response_message'
     ]),
+    ...mapActions('recipient', ['fetch_recipients']),
     ...mapActions('settings', ['fetch_settings', 'post_settings']),
     millisecondToTime(duration) {
+      // TODO: refactor this to a helper function, used this in a lot of places
       let minutes = parseInt((duration / (1000 * 60)) % 60),
         hours = parseInt((duration / (1000 * 60 * 60)) % 24);
 
@@ -225,8 +229,10 @@ export default {
     onToSearchChange(query) {
       this.to_query = query;
     },
-    toggleSwitch(value) {
-      this.update_enable_auto_send(value);
+    toggleSwitch() {
+      this.enableAutoSend = !this.enableAutoSend;
+      this.update_enable_auto_send(this.enableAutoSend);
+      this.updateSettings();
     },
     timeToMillisecond(value) {
       // value is like '08:00'
@@ -247,7 +253,7 @@ export default {
       await sleep(1000);
 
       await this.$router.push({
-        name: 'Dashboard'
+        name: 'Settings'
       });
 
       this.$store.commit('overlay/updateModel', {
@@ -261,7 +267,7 @@ export default {
         body: {
           distributionGroups: this.get_distribution_groups,
           enableAutoSend: this.get_enable_auto_send,
-          sendTime: this.millisecondToTime(this.get_send_time)
+          sendTime: isNaN(this.get_send_time) ? this.get_send_time : this.millisecondToTime(this.get_send_time)
         }
       };
       this.post_settings({ params })
