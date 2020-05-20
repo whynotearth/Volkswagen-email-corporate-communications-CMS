@@ -11,8 +11,7 @@
         @opened="onUploaderOpened"
         :uploaderOptions="{
           maxFiles: 1,
-          maxImageWidth: 256,
-          maxImageHeight: 256
+          maxImageWidth: 160
         }"
       >
         <label class="bg-background m-1 block cursor-pointer" for="add-post-image-upload">
