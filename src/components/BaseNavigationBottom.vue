@@ -87,7 +87,16 @@ export default {
   props: {},
   data() {
     return {
-      isOpen: false
+      isOpen: false,
+      showNavbar: true,
+      lastScrollPosition: 0,
+      scrollValue: 0,
+      activeClass: {
+        home: 'opacity-100',
+        stats: 'opacity-100',
+        blue: 'opacity-100',
+        archive: 'opacity-100'
+      }
     };
   },
   methods: {

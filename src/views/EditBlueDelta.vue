@@ -173,7 +173,6 @@ export default {
       d.setHours(0, 0, 0, 0);
       let total_time = new Date(d.getTime() + this.time).toISOString();
       const params = {
-        jumpStartId: this.id,
         body: {
           id: this.id,
           articleIds: this.get_selected_articles.map(article => article.id),

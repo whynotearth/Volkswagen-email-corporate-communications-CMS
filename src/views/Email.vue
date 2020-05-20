@@ -90,7 +90,6 @@ export default {
     submit() {
       let total_time = new Date(this.get_email_date + this.get_schedule_time).toISOString();
       const params = {
-        jumpStartId: this.get_selected_plan.jumpStartId,
         body: {
           id: this.get_selected_plan.jumpStartId,
           dateTime: total_time,
