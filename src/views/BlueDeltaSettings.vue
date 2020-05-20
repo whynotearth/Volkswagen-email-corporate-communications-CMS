@@ -232,7 +232,7 @@ export default {
     toggleSwitch() {
       this.enableAutoSend = !this.enableAutoSend;
       this.update_enable_auto_send(this.enableAutoSend);
-      this.updateSettings();
+      this.updateEnabledAutoSend();
     },
     timeToMillisecond(value) {
       // value is like '08:00'
@@ -261,6 +261,30 @@ export default {
         message: ''
       });
     },
+    async onCatchSubmit(error) {
+      let message = 'An error occured!';
+      try {
+        message = error.response.data.title;
+      } catch (error) {
+        //
+      }
+
+      this.update_response_message({
+        message: message,
+        type: 'error',
+        class: 'text-error'
+      });
+    },
+    updateEnabledAutoSend() {
+      const params = {
+        body: {
+          enableAutoSend: this.enableAutoSend
+        }
+      };
+      this.post_settings({ params }).catch(error => {
+        this.onCatchSubmit(error);
+      });
+    },
     updateSettings() {
       if (this.$v.$invalid) return false;
       const params = {
@@ -275,18 +299,7 @@ export default {
           this.onSuccessSubmit();
         })
         .catch(error => {
-          let message = 'An error occured!';
-          try {
-            message = error.response.data.title;
-          } catch (error) {
-            //
-          }
-
-          this.update_response_message({
-            message: message,
-            type: 'error',
-            class: 'text-error'
-          });
+          this.onCatchSubmit(error);
         });
     },
     formatDate
