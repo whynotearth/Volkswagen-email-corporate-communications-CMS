@@ -87,33 +87,33 @@
                 Date/Time is invalid. Example: 20 March, 2020, 7:30 pm
               </span>
             </BaseInputText>
+
+            <hr v-if="isFieldRequired('image')" class="bg-background border-black em-low -mx-4 sm:mx-0 mb-4" />
+            <ImageUpload v-if="isFieldRequired('image')" v-model="images" :defaultImages="images" />
+
+            <hr class="border-divider mt-5" />
+            <BaseDropdown
+              class="relative bg-surface"
+              placeholder="Schedule time"
+              :options="dates"
+              v-model="$v.date.$model"
+            >
+              <template #title="{ selectedOption }">
+                Schedule
+                <span v-if="dates.length === 0" class="text-gray-500">
+                  No time slots!
+                </span>
+                <span v-else-if="selectedOption" class="ml-2 em-medium text-black">
+                  {{ formatDate(selectedOption) }}
+                </span>
+              </template>
+              <template #option="{ option }">
+                <span>
+                  {{ formatDate(option) }}
+                </span>
+              </template>
+            </BaseDropdown>
           </div>
-
-          <hr v-if="isFieldRequired('image')" class="bg-background border-black em-low -mx-4 sm:mx-0 mb-4" />
-          <ImageUpload v-if="isFieldRequired('image')" class="px-4 md:px-6" v-model="images" :defaultImages="images" />
-
-          <hr class="border-divider w-auto mt-5 md:mx-6" />
-          <BaseDropdown
-            class="relative bg-surface"
-            placeholder="Schedule time"
-            :options="dates"
-            v-model="$v.date.$model"
-          >
-            <template #title="{ selectedOption }">
-              Schedule
-              <span v-if="dates.length === 0" class="text-gray-500">
-                No time slots!
-              </span>
-              <span v-else-if="selectedOption" class="ml-2 em-medium text-black">
-                {{ formatDate(selectedOption) }}
-              </span>
-            </template>
-            <template #option="{ option }">
-              <span>
-                {{ formatDate(option) }}
-              </span>
-            </template>
-          </BaseDropdown>
 
           <div class="px-4 md:px-6">
             <p v-if="get_response_message.message" class="font-bold px-4 mb-4" :class="get_response_message.class">
