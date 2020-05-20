@@ -130,7 +130,8 @@ export default {
     if (!this.id || this.get_email_date === null) this.$router.push({ name: 'JumpStartLists' });
     this.fetch_recipients();
     this.update_preview_link();
-    this.defaultScheduleDate();
+    this.update_email_recipients(this.get_selected_plan.distributionGroups);
+    this.setDefaultScheduleTime();
   },
   computed: {
     ...mapGetters('email', [
@@ -166,9 +167,8 @@ export default {
     onToSearchChange(query) {
       this.to_query = query;
     },
-    defaultScheduleDate() {
+    setDefaultScheduleTime() {
       let d = new Date(this.get_selected_plan.dateTime);
-      d = d.getTime() - 86400;
       this.update_schedule_time(d);
     },
     updateBlueDelta() {
@@ -180,7 +180,7 @@ export default {
       const params = {
         body: {
           id: this.id,
-          rticleIds: this.get_selected_articles.map(article => article.id),
+          articleIds: this.get_selected_articles.map(article => article.id),
           dateTime: this.time ? total_time : this.get_email_date,
           distributionGroups: this.get_email_recipients
         }
