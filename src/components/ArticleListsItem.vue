@@ -21,7 +21,7 @@
           {{ formatDate(model.date) }}
         </div>
         <div class="tg-caption-mobile em-disabled text-black text-left pr-2 h-20">
-          {{ model.description }}
+          <BaseEditorPreview :content="model.description" />
         </div>
       </div>
       <div v-if="model.image" class="w-20 flex-shrink-0">
@@ -33,6 +33,7 @@
 
 <script>
 import { formatDate } from '@/helpers.js';
+import BaseEditorPreview from '@/components/Editor/BaseEditorPreview.vue';
 
 export default {
   name: 'ArticleListsItem',
@@ -41,6 +42,7 @@ export default {
       type: Object
     }
   },
+  components: { BaseEditorPreview },
   methods: {
     formatDate
   }

@@ -5,6 +5,7 @@
       :class="error ? 'editor-error' : 'editor-grey'"
       v-model="content"
       :placeholder="placeholder"
+      :editor-toolbar="customToolbar"
     />
     <div class="flex items-center">
       <slot></slot>
@@ -37,7 +38,18 @@ export default {
   components: { VueEditor },
   data() {
     return {
-      content: this.value
+      content: this.value,
+      customToolbar: [
+        [{ header: [false, 1, 2, 3, 4, 5, 6] }],
+        ['bold', 'italic', 'underline', 'strike'], // toggled buttons
+        [{ align: '' }, { align: 'center' }, { align: 'right' }, { align: 'justify' }],
+        ['blockquote', 'code-block'],
+        [{ list: 'ordered' }, { list: 'bullet' }, { list: 'check' }],
+        [{ indent: '-1' }, { indent: '+1' }], // outdent/indent
+        [{ color: [] }, { background: [] }], // dropdown with defaults from theme
+        ['link'],
+        ['clean'] // remove formatting button
+      ]
     };
   },
   methods: {
@@ -48,6 +60,12 @@ export default {
   watch: {
     content() {
       this.updateValue();
+    },
+    value: {
+      immediate: true,
+      handler() {
+        this.content = this.value;
+      }
     }
   }
 };
