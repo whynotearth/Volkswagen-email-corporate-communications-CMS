@@ -16,6 +16,7 @@ const defaultState = {
   name: '',
   token: '',
   newPassword: '',
+  oldPassword: '',
   confirmPassword: '',
   password: '',
   status: '',
@@ -29,6 +30,11 @@ const defaultState = {
   dialog: {
     title: 'Log In',
     isOpen: false
+  },
+  response_message: {
+    type: '', // error, success
+    message: '',
+    class: '' // text-error text-success
   }
 };
 
@@ -57,10 +63,13 @@ export default {
     password: state => {
       return state.password;
     },
-    newPassword: state => {
+    get_new_password: state => {
       return state.newPassword;
     },
-    confirmPassword: state => {
+    get_old_password: state => {
+      return state.oldPassword;
+    },
+    get_confirm_password: state => {
       return state.confirmPassword;
     },
     loading: state => {
@@ -75,6 +84,7 @@ export default {
     forgotPasswordError: state => {
       return state.forgotPasswordError;
     },
+    get_response_message: state => state.response_message,
     oauth(state) {
       return APIPath(`/api/v0/authentication/provider/login?provider=${state.provider}&returnUrl=${state.returnURL}`);
     }
@@ -107,6 +117,9 @@ export default {
     updateNewPassword(state, payload) {
       state.newPassword = payload;
     },
+    updateOldPassword(state, payload) {
+      state.oldPassword = payload;
+    },
     updateConfirmPassword(state, payload) {
       state.confirmPassword = payload;
     },
@@ -124,6 +137,9 @@ export default {
     },
     updateActiveState(state, payload) {
       state.activeState = payload;
+    },
+    update_response_message(state, payload) {
+      state.response_message = payload;
     },
     logout(state) {
       for (const key in defaultState) {
@@ -245,6 +261,9 @@ export default {
           context.commit('updateLoginError', error.response.data.error);
           context.commit('updateLoading', false);
         });
+    },
+    async changePassword(context, payload) {
+      await AuthenticationService.changepassword(payload);
     },
     setNewPassword(context) {
       const host = window.location.origin;
