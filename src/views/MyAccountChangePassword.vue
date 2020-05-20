@@ -100,7 +100,7 @@ export default {
     async onSuccess() {
       this.$store.commit('overlay/updateModel', {
         title: '',
-        message: 'Your password has been change!'
+        message: 'Your password has been changed!'
       });
 
       await sleep(1000);
