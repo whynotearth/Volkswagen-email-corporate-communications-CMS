@@ -1,7 +1,7 @@
 <template>
   <div class="bg-brand-gradient flex items-center justify-center h-full">
     <div>
-      <div class="progress-wrapper mb-4 md:mb-12">
+      <div class="progress-wrapper mb-4 md:mb-12 mx-auto">
         <!-- desktop -->
         <BaseProgressCircle
           class="hidden md:block"
