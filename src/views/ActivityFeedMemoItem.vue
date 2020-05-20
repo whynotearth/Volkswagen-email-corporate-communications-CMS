@@ -45,7 +45,7 @@
       </BaseTabs>
     </template>
     <template #footer>
-      <NavigationBottom />
+      <NavigationBottom :active="'stats'" />
     </template>
   </LayoutFixedScrollable>
 </template>
