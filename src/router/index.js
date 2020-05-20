@@ -8,6 +8,7 @@ import MemoAdd from '../views/MemoAdd.vue';
 import Settings from '../views/Settings';
 import BlueDeltaSettings from '../views/BlueDeltaSettings';
 import MyAccount from '../views/MyAccount';
+import ChangePassword from '../views/MyAccountChangePassword';
 import ActivityFeedMemoList from '../views/ActivityFeedMemoList.vue';
 import ActivityFeedMemoItem from '../views/ActivityFeedMemoItem.vue';
 import EmailLists from '../views/EmailLists';
@@ -22,6 +23,8 @@ import Dashboard from '../views/Dashboard';
 import JumpStartLists from '../views/JumpStartLists';
 import ArticleLists from '../views/ArticleLists';
 import ArticleListsItem from '../views/ArticleListsItem';
+import EditBlueDelta from '../views/EditBlueDelta';
+import BlueDeltaRearrange from '../views/BlueDeltaRearrange';
 // import DeveloperTesting from '../views/DeveloperTesting.vue';
 import ResetPassword from '../views/AuthResetPassword';
 import NewPassword from '../views/AuthNewPassword';
@@ -114,6 +117,14 @@ const routes = [
     }
   },
   {
+    path: '/settings/my-account/change-password',
+    name: 'ChangePassword',
+    component: ChangePassword,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
     path: '/activity-feed/memos',
     name: 'ActivityFeedMemoList',
     component: ActivityFeedMemoList,
@@ -198,7 +209,16 @@ const routes = [
   {
     path: '/blue-delta/edit/:id',
     name: 'EditBlueDelta',
-    component: () => import('@/views/EditBlueDelta.vue'),
+    component: EditBlueDelta,
+    props: true,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/blue-delta/add/:date',
+    name: 'AddBlueDelta',
+    component: EditBlueDelta,
     props: true,
     meta: {
       requiresAuth: true
@@ -207,7 +227,16 @@ const routes = [
   {
     path: '/blue-delta/rearrange/:id',
     name: 'BlueDeltaRearrange',
-    component: () => import('@/views/BlueDeltaRearrange.vue'),
+    component: BlueDeltaRearrange,
+    props: true,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/blue-delta/rearrange/add/:date',
+    name: 'AddBlueDeltaRearrange',
+    component: BlueDeltaRearrange,
     props: true,
     meta: {
       requiresAuth: true

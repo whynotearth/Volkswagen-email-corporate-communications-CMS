@@ -38,13 +38,14 @@ export default {
       const secs = Math.floor((diff % (1000 * 60)) / 1000);
 
       return `
-        ${hours < 10 ? '0' + hours : hours} : 
-        ${mins < 10 ? '0' + mins : mins} : 
-        ${secs < 10 ? '0' + secs : secs}
+        ${this.convertTimeToString(hours)} : 
+        ${this.convertTimeToString(mins)} : 
+        ${this.convertTimeToString(secs)}
       `;
+    },
+    convertTimeToString(number) {
+      return number <= 0 ? '00' : number > 0 && number < 10 ? `0${number}` : number;
     }
   }
 };
 </script>
-
-<style></style>
