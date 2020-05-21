@@ -136,7 +136,7 @@ export default {
     },
     newPassword: {
       get() {
-        return this.$store.getters['auth/newPassword'];
+        return this.$store.getters['auth/get_new_password'];
       },
       set(value) {
         this.$store.commit('auth/updateNewPassword', value);
@@ -144,7 +144,7 @@ export default {
     },
     confirmPassword: {
       get() {
-        return this.$store.getters['auth/confirmPassword'];
+        return this.$store.getters['auth/get_confirm_password'];
       },
       set(value) {
         this.$store.commit('auth/updateConfirmPassword', value);
