@@ -48,7 +48,7 @@ export default {
         [{ indent: '-1' }, { indent: '+1' }], // outdent/indent
         [{ color: [] }, { background: [] }], // dropdown with defaults from theme
         ['link'],
-        ['clean'] // remove formatting button
+        ['image', 'clean'] // remove formatting button
       ]
     };
   },
