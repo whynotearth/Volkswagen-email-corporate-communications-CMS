@@ -30,13 +30,34 @@ export default {
     },
     placeholder: {
       type: String
+    },
+    model: {
+      type: Object
     }
   },
   data() {
     return {
       content: this.value,
       configs: {
-        status: ['lines', 'words'],
+        status: [
+          'lines',
+          'words',
+          {
+            className: 'max-length',
+            onUpdate: el => {
+              if (
+                this.content.length > this.model.$params.maxLength.max &&
+                !el.classList.value.includes('text-error')
+              ) {
+                el.classList.add('text-error');
+              } else if (this.content.length <= this.model.$params.maxLength.max) {
+                el.classList.remove('text-error');
+              }
+              this.counter = this.content.length;
+              el.innerHTML = `${this.counter} / ${this.model.$params.maxLength.max}`;
+            }
+          }
+        ],
         spellChecker: false,
         placeholder: this.placeholder,
         hideIcons: ['code', 'table', 'side-by-side', 'fullscreen', 'image']

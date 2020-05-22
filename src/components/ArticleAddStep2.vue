@@ -8,6 +8,7 @@
         :label="stringHeadlineByCategoryName"
         :placeholder="stringHeadlineByCategoryName"
         :error="$v.headline.$dirty && $v.headline.$invalid"
+        :model="$v.headline"
       >
         <span v-if="$v.headline.$dirty && !$v.headline.required" class="text-xs text-error pl-error-message">
           {{ stringHeadlineByCategoryName }} is required
@@ -25,6 +26,7 @@
         :placeholder="isAnswersCategory ? stringDescriptionByCategoryName : 'Put the content of your article here.'"
         v-if="isFieldVisible('description')"
         v-model="$v.description.$model"
+        :model="$v.description"
       >
         <span v-if="$v.description.$dirty && !$v.description.required" class="text-xs text-error pl-error-message">
           {{ stringDescriptionByCategoryName }} is required
