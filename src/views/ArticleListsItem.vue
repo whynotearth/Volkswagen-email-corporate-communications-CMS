@@ -324,7 +324,7 @@ export default {
           image: this.get_image && this.get_image.url ? this.get_image : undefined,
           headline: this.get_headline,
           description: this.get_description,
-          eventDate: event_date_time,
+          eventDate: event_date_time
         }
       };
       this.put_article(data)
