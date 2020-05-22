@@ -13,7 +13,7 @@ export default {
   },
   actions: {
     async fetch_recipients(context) {
-      const data = await DistributionGroupService.distributiongroups();
+      const data = await DistributionGroupService.distributiongroups1();
       context.commit('update_items', data);
     }
   },
