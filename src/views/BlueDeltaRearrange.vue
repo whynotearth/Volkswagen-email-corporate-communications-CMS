@@ -5,7 +5,9 @@
         <BaseAppBarHeader
           class="sticky top-0 bg-white"
           title="Rearrange Blue Delta "
-          :to-link="{ name: 'EditBlueDelta', params: { id: id } }"
+          :to-link="
+            id ? { name: 'EditBlueDelta', params: { id: id } } : { name: 'AddBlueDelta', params: { date: date } }
+          "
         />
         <div class="flex mb-40">
           <div class="flex-grow">
@@ -14,6 +16,9 @@
                 <EmailPreview @error="$v.$touch()" />
               </div>
               <h2 class="text-primary font-bold text-xl">Rearrange the Jumpstart</h2>
+              <p v-if="get_response_message.message" class="font-bold" :class="get_response_message.class">
+                {{ get_response_message.message }}
+              </p>
               <span v-if="$v.get_selected_articles.$error" class="text-xs text-error">
                 Please select atleast one article.
               </span>
@@ -56,8 +61,10 @@ export default {
   components: { Article, BaseButton, EmailPreview, LayoutFixedScrollable, BaseAppBarHeader, NavigationBottom },
   props: {
     id: {
-      type: [String, Number],
-      required: true
+      type: [String, Number]
+    },
+    date: {
+      type: [String]
     }
   },
   validations: {
@@ -66,8 +73,16 @@ export default {
     }
   },
   mounted() {
-    if (!this.id || this.get_selected_articles.length === 0) this.$router.push({ name: 'JumpStartLists' });
+    if (!(this.id || this.date) || this.get_selected_articles.length === 0)
+      this.$router.push({ name: 'JumpStartLists' });
     this.update_preview_link();
+  },
+  destroyed() {
+    this.update_response_message({
+      message: '',
+      type: '',
+      class: ''
+    });
   },
   methods: {
     ...mapMutations('email', ['update_response_message']),
@@ -142,7 +157,8 @@ export default {
       'get_schedule_time',
       'get_selected_articles',
       'get_email_recipients',
-      'get_available_articles'
+      'get_available_articles',
+      'get_response_message'
     ])
   }
 };

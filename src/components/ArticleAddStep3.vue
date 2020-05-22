@@ -26,7 +26,7 @@
     <div class="flex flex-grow bg-brand-gradient overflow-y-auto narrow-scrollbars h-full">
       <div class="container relative px-0 md:px-6 text-left ">
         <div
-          class="flex flex-wrap relative bg-white text-black mx-4 my-6 mt-12 p-4 bg-surface border-1"
+          class="preview-box flex flex-wrap relative bg-white text-black mx-4 my-6 mt-12 p-4 bg-surface border-1"
           :style="{ borderColor: `#${get_selected_category.color}` }"
         >
           <div
@@ -46,11 +46,11 @@
             <div class="w-full tg-h2-mobile text-black py-3 sm:hidden order-2">
               {{ get_headline }}
             </div>
-            <div class="w-full tg-body-mobile text-black em-high whitespace-pre-line break-words flex-grow order-2">
+            <div class="w-1/2 tg-body-mobile text-black em-high whitespace-pre-line break-words flex-grow order-2">
               {{ get_description }}
             </div>
-            <div class="order-1 mb-4 sm:mb-0 w-full sm:w-auto sm:order-3 flex-shrink-0">
-              <img class="mx-auto article-image" :src="get_image" />
+            <div v-if="get_image.url" class="order-1 mb-4 sm:mb-0 w-1/2 sm:order-3 flex-shrink-0 w-full sm:w-1/2">
+              <img class="w-full" :src="get_image.url" />
             </div>
           </div>
         </div>
@@ -123,18 +123,16 @@ export default {
 </script>
 
 <style scoped>
+.preview-box {
+  max-width: 572px;
+}
 .circle-icon {
   top: -16px;
   right: 16px;
 }
-
 .category-tag {
   min-width: 130px;
   top: -24px;
   left: 24px;
-}
-.article-image {
-  width: 92px;
-  max-height: 92px;
 }
 </style>
