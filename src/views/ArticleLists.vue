@@ -23,6 +23,9 @@
         </BaseTab>
       </BaseTabs>
     </template>
+    <template #footer>
+      <BaseNavigationBottom />
+    </template>
   </LayoutFixedScrollable>
 </template>
 
@@ -32,6 +35,7 @@ import BaseTabs from '@/components/BaseTabs.vue';
 import BaseTab from '@/components/BaseTab.vue';
 import ArticleItem from '@/components/ArticleListsItem.vue';
 import LayoutFixedScrollable from '@/components/LayoutFixedScrollable.vue';
+import BaseNavigationBottom from '@/components/BaseNavigationBottom.vue';
 import { mapGetters, mapActions } from 'vuex';
 import { formatISODate, formatDate } from '@/helpers.js';
 import { isToday, parseISO } from 'date-fns';
@@ -43,7 +47,8 @@ export default {
     BaseTabs,
     BaseTab,
     ArticleItem,
-    LayoutFixedScrollable
+    LayoutFixedScrollable,
+    BaseNavigationBottom
   },
   computed: {
     ...mapGetters('email', ['get_daily_plan']),
