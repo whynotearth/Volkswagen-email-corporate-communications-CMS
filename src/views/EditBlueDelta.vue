@@ -67,7 +67,7 @@
               </div>
             </div>
             <div class="text-left">
-              <BaseTimePicker v-model="$v.time.$model" :emailDate="get_email_date" :selectedTime="get_schedule_time" />
+              <BaseTimePicker v-model="$v.time.$model" :emailDate="get_email_date" @blur="$v.time.$touch()" />
               <span v-if="$v.time.$error" class="text-xs text-error">
                 Please schedule time.
               </span>
@@ -137,15 +137,14 @@ export default {
     this.fetch_recipients();
     this.update_preview_link();
     this.update_email_recipients(this.get_selected_plan.distributionGroups);
-    this.setDefaultScheduleTime();
   },
   computed: {
     ...mapGetters('email', [
       'get_email_recipients',
       'get_schedule_time',
-      'get_selected_plan',
       'get_selected_articles',
-      'get_email_date'
+      'get_email_date',
+      'get_selected_plan'
     ]),
     ...mapGetters('recipient', ['get_recipients_available']),
     email_recipients: {
@@ -172,13 +171,6 @@ export default {
     formatDate,
     onToSearchChange(query) {
       this.to_query = query;
-    },
-    setDefaultScheduleTime() {
-      let d = new Date(this.get_selected_plan.dateTime);
-      let dtzOffset = d.getTimezoneOffset() * 60000;
-      d = d.getTime();
-      d = d - dtzOffset;
-      this.update_schedule_time(d);
     },
     updateBlueDelta() {
       this.$v.$touch();
