@@ -1,10 +1,14 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Home from '../views/Home.vue';
-import PostAdd from '../views/PostAdd.vue';
+import ArticleAdd from '../views/ArticleAdd.vue';
+import Stats from '../views/Stats.vue';
 import AuthLogin from '../views/AuthLogin.vue';
 import MemoAdd from '../views/MemoAdd.vue';
 import Settings from '../views/Settings';
+import BlueDeltaSettings from '../views/BlueDeltaSettings';
+import MyAccount from '../views/MyAccount';
+import ChangePassword from '../views/MyAccountChangePassword';
 import ActivityFeedMemoList from '../views/ActivityFeedMemoList.vue';
 import ActivityFeedMemoItem from '../views/ActivityFeedMemoItem.vue';
 import EmailLists from '../views/EmailLists';
@@ -18,6 +22,14 @@ import Email from '@/views/Email';
 import Dashboard from '../views/Dashboard';
 import ActivityFeedJumpStartList from '../views/ActivityFeedJumpStartList.vue';
 import ActivityFeedJumpStartItem from '../views/ActivityFeedJumpStartItem.vue';
+import JumpStartLists from '../views/JumpStartLists';
+import ArticleLists from '../views/ArticleLists';
+import ArticleListsItem from '../views/ArticleListsItem';
+import EditBlueDelta from '../views/EditBlueDelta';
+import BlueDeltaRearrange from '../views/BlueDeltaRearrange';
+// import DeveloperTesting from '../views/DeveloperTesting.vue';
+import ResetPassword from '../views/AuthResetPassword';
+import NewPassword from '../views/AuthNewPassword';
 import store from '../store';
 
 Vue.use(VueRouter);
@@ -25,8 +37,28 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: '/',
-    name: 'Home',
-    component: Home
+    name: 'Dashboard',
+    component: Dashboard,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/dashboard',
+    redirect: '/'
+  },
+  // {
+  //   path: '/test',
+  //   name: 'DeveloperTesting',
+  //   component: DeveloperTesting
+  // },
+  {
+    path: '/stats',
+    name: 'Stats',
+    component: Stats,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/login',
@@ -34,9 +66,19 @@ const routes = [
     component: AuthLogin
   },
   {
-    path: '/posts/add/:step?',
-    name: 'PostAdd',
-    component: PostAdd,
+    path: '/reset-password',
+    name: 'ResetPassword',
+    component: ResetPassword
+  },
+  {
+    path: '/new-password',
+    name: 'NewPassword',
+    component: NewPassword
+  },
+  {
+    path: '/articles/add/:step?',
+    name: 'ArticleAdd',
+    component: ArticleAdd,
     props: true,
     meta: {
       requiresAuth: true
@@ -56,6 +98,30 @@ const routes = [
     path: '/settings',
     name: 'Settings',
     component: Settings,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/settings/blue-delta-settings',
+    name: 'BlueDeltaSettings',
+    component: BlueDeltaSettings,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/settings/my-account',
+    name: 'MyAccount',
+    component: MyAccount,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/settings/my-account/change-password',
+    name: 'ChangePassword',
+    component: ChangePassword,
     meta: {
       requiresAuth: true
     }
@@ -143,9 +209,61 @@ const routes = [
     }
   },
   {
-    path: '/dashboard',
-    name: 'Dashboard',
-    component: Dashboard,
+    path: '/blue-delta/edit/:id',
+    name: 'EditBlueDelta',
+    component: EditBlueDelta,
+    props: true,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/blue-delta/add/:date',
+    name: 'AddBlueDelta',
+    component: EditBlueDelta,
+    props: true,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/blue-delta/rearrange/:id',
+    name: 'BlueDeltaRearrange',
+    component: BlueDeltaRearrange,
+    props: true,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/blue-delta/rearrange/add/:date',
+    name: 'AddBlueDeltaRearrange',
+    component: BlueDeltaRearrange,
+    props: true,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/jumpstart-lists',
+    name: 'JumpStartLists',
+    component: JumpStartLists,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/article-lists',
+    name: 'ArticleLists',
+    component: ArticleLists,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/article-lists/:id',
+    name: 'ArticleListsItem',
+    component: ArticleListsItem,
     meta: {
       requiresAuth: true
     }
@@ -186,7 +304,8 @@ router.beforeEach(async (to, from, next) => {
 
   if (to.meta.requiresAuth) {
     if (pingResult === 'IS_LOGGED_OUT') {
-      await router.push({ name: 'Home' });
+      await router.push({ name: 'AuthLogin' });
+
       setTimeout(function() {
         window.location.reload();
       });

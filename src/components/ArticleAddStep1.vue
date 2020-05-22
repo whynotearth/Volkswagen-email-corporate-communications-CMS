@@ -6,11 +6,12 @@
       </p>
 
       <ul class="list-none bg-background">
+        <!-- TODO: ENABLE COMMUNITY -->
         <li
-          v-for="category in get_categories"
-          :key="category.id"
+          v-for="(category, index) in get_categories.filter(category => category.slug !== 'community')"
+          :key="index"
           class="text-left py-1 px-2"
-          :class="{ active: category.id === get_selected_category.id }"
+          :class="{ active: category.slug === get_selected_category.slug }"
         >
           <a @click.prevent="selected_category = category" href="#" class="flex items-center">
             <div class="w-12 h-12">
@@ -32,7 +33,7 @@ import { mapGetters, mapMutations, mapActions } from 'vuex';
 import { required } from 'vuelidate/lib/validators';
 
 export default {
-  name: 'PostAddStep1',
+  name: 'ArticleAddStep1',
   validations: {
     selected_category: {
       required
@@ -48,11 +49,11 @@ export default {
     this.fetch_categories();
   },
   methods: {
-    ...mapMutations('post', ['update_selected_category']),
-    ...mapActions('post', ['fetch_categories'])
+    ...mapMutations('article', ['update_selected_category']),
+    ...mapActions('article', ['fetch_categories'])
   },
   computed: {
-    ...mapGetters('post', ['get_categories', 'get_selected_category']),
+    ...mapGetters('article', ['get_categories', 'get_selected_category']),
     selected_category: {
       get() {
         return this.get_selected_category;

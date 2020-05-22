@@ -3,7 +3,12 @@
     <div class="container px-4 text-left">
       <div class="flex relative">
         <div class="flex-auto">
-          <BaseDropdown placeholder="Select date" :options="dates" v-model="$v.email_date.$model">
+          <BaseDropdown
+            v-if="get_daily_plan.length"
+            placeholder="Select date"
+            :options="dates"
+            v-model="$v.email_date.$model"
+          >
             <template #title="{ selectedOption }">
               <span v-if="selectedOption">
                 Schedule
@@ -18,8 +23,19 @@
               </span>
             </template>
           </BaseDropdown>
-          <p v-if="$v.email_date.$error" class="text-xs text-error">
+          <p v-if="$v.email_date.$error && get_daily_plan.length" class="text-xs text-error">
             Please select a date.
+          </p>
+          <p v-if="!get_daily_plan.length && !isLoading">
+            <span class="block my-2">
+              No articles available!
+              <br />
+              Click
+              <router-link :to="{ name: 'ArticleAdd', params: { step: 1 } }" class="text-secondary underline">
+                here
+              </router-link>
+              to create one
+            </span>
           </p>
         </div>
       </div>
@@ -29,10 +45,10 @@
 
 <script>
 import BaseDropdown from '@/components/BaseDropdown';
-import { formatDate } from '@/helpers.js';
 import { required } from 'vuelidate/lib/validators';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
-import { formatISODate } from '@/helpers.js';
+import { isSameDay, parseISO } from 'date-fns';
+import { formatDate } from '@/helpers.js';
 
 export default {
   name: 'SelectEmailDate',
@@ -43,12 +59,11 @@ export default {
     }
   },
   mounted() {
-    if (this.get_email_date) {
-      this.fetch_posts({ params: { date: formatISODate(this.get_email_date) } });
-    }
+    this.init();
   },
   computed: {
-    ...mapGetters('email', ['get_email_date']),
+    ...mapGetters('email', ['get_email_date', 'get_daily_plan']),
+    ...mapGetters('loading', ['isLoading']),
     email_date: {
       get() {
         return this.get_email_date;
@@ -56,28 +71,49 @@ export default {
       set(value) {
         this.clear_email_data();
         this.update_email_date(value);
-        this.fetch_posts({ params: { date: formatISODate(value) } });
+        this.prefillArticles(value);
       }
     },
     dates() {
-      let d = new Date();
-      d.setHours(0, 0, 0, 0);
-      d = d.getTime();
-      let days = [];
-      for (let i = 0; i < 3; i++) {
-        let a = d + i * 86400000;
-        days.push(a);
-      }
-      return days;
+      if (!this.get_daily_plan.length) return [];
+      const dates = [];
+      let date;
+      this.get_daily_plan.forEach(jumpstart => {
+        date = new Date(jumpstart.dateTime).getTime();
+        dates.push(date);
+      });
+      return dates;
     }
   },
   methods: {
-    ...mapMutations('email', ['update_email_date']),
-    ...mapActions('email', ['clear_email_data']),
-    ...mapActions('post', ['fetch_posts']),
-    formatDate
+    ...mapMutations('email', ['update_email_date', 'update_selected_plan', 'update_available_articles']),
+    ...mapActions('email', ['clear_email_data', 'debounced_preview', 'fetch_daily_plan', 'update_selected_articles']),
+    formatDate,
+    init() {
+      if (this.get_email_date) {
+        this.prefillArticles();
+      } else {
+        this.fetch_daily_plan();
+      }
+    },
+    prefillArticles() {
+      let selectedPlan;
+      const selectedDate = this.get_email_date;
+      selectedPlan = this.get_daily_plan.find(item => {
+        return isSameDay(parseISO(item.dateTime), selectedDate);
+      });
+      if (selectedPlan) {
+        this.update_selected_plan(selectedPlan);
+        this.update_available_articles(selectedPlan.articles);
+        this.update_selected_articles();
+        for (let i = 0; i < 5; i++) {
+          if (selectedPlan.articles[i]) {
+            this.update_selected_articles(selectedPlan.articles[i]);
+          } else break;
+        }
+      }
+      this.debounced_preview();
+    }
   }
 };
 </script>
-
-<style></style>

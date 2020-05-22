@@ -6,10 +6,12 @@
     @changeStep="changeStep"
   >
     <div class="px-0 overflow-y-auto flex flex-col h-full narrow-scrollbars">
-      <SelectEmailDate v-if="currentStep === 1" ref="formStep1" />
-      <DraftEmail v-if="currentStep === 2" ref="formStep2" />
-      <ScheduleEmail v-if="currentStep === 3" ref="formStep3" />
-      <SelectRecipents v-if="currentStep === 4" ref="formStep4" />
+      <transition name="fade" mode="out-in">
+        <SelectEmailDate v-if="currentStep === 1" ref="formStep1" />
+        <DraftEmail v-if="currentStep === 2" ref="formStep2" />
+        <ScheduleEmail v-if="currentStep === 3" ref="formStep3" />
+        <SelectRecipents v-if="currentStep === 4" ref="formStep4" />
+      </transition>
     </div>
   </StepperManager>
 </template>
@@ -38,7 +40,13 @@ export default {
     };
   },
   computed: {
-    ...mapGetters('email', ['get_email_date', 'get_postIds', 'get_email_recipients', 'get_schedule_time']),
+    ...mapGetters('email', [
+      'get_email_date',
+      'get_selected_articles',
+      'get_email_recipients',
+      'get_schedule_time',
+      'get_selected_plan'
+    ]),
     currentStep() {
       return parseInt(this.step);
     }
@@ -61,7 +69,7 @@ export default {
       const wantToExit = newStep < 1;
       if (wantToExit) {
         this.clear_email_data();
-        return this.$router.push({ name: 'Home' });
+        return this.$router.push({ name: 'Dashboard' });
       }
 
       // finish
@@ -83,8 +91,9 @@ export default {
       let total_time = new Date(this.get_email_date + this.get_schedule_time).toISOString();
       const params = {
         body: {
+          id: this.get_selected_plan.jumpStartId,
           dateTime: total_time,
-          postIds: this.get_postIds,
+          articleIds: this.get_selected_articles.map(article => article.id),
           distributionGroups: this.get_email_recipients
         }
       };
@@ -111,7 +120,7 @@ export default {
       await sleep(1000);
 
       await this.$router.push({
-        name: 'Home'
+        name: 'Dashboard'
       });
 
       this.$store.commit('overlay/updateModel', {

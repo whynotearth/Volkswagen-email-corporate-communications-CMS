@@ -10,8 +10,8 @@
   .tg-h2-desktop {
     font-style: normal;
     font-weight: 600;
-    font-size: 44px;
-    line-height: 40px;
+    font-size: 40px;
+    line-height: 44px;
   }
 
   .tg-h3-desktop {
@@ -38,6 +38,13 @@
   .tg-caption-desktop {
     font-style: normal;
     font-weight: normal;
+    font-size: 24px;
+    line-height: 28px;
+  }
+
+  .tg-caption-bold-desktop {
+    font-style: normal;
+    font-weight: bold;
     font-size: 24px;
     line-height: 28px;
   }
@@ -104,6 +111,13 @@
   .tg-caption-mobile {
     font-style: normal;
     font-weight: normal;
+    font-size: 12px;
+    line-height: 16px;
+  }
+
+  .tg-caption-bold-mobile {
+    font-style: normal;
+    font-weight: bold;
     font-size: 12px;
     line-height: 16px;
   }

@@ -2,20 +2,22 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import auth from './modules/auth';
 import authKeep from './modules/authKeep';
+import profile from './modules/profile';
 import category from './modules/category';
 import loading from './modules/loading';
 import snackbar from './modules/snackbar';
-import post from './modules/post';
+import article from './modules/article';
 import memo from './modules/memo';
 import email from './modules/email';
 import overlay from './modules/overlay';
 import distributionGroup from './modules/distributionGroup';
 import recipient from './modules/recipient';
+import settings from './modules/settings';
 import VuexPersistence from 'vuex-persist';
 
 const vuexLocal = new VuexPersistence({
   storage: window.localStorage,
-  modules: ['memo', 'post', 'authKeep'],
+  modules: ['memo', 'article', 'authKeep'],
   key: 'store'
 });
 
@@ -27,13 +29,15 @@ export default new Vuex.Store({
     snackbar,
     loading,
     auth,
+    profile,
     category,
-    post,
+    article,
     memo,
     email,
     authKeep,
     distributionGroup,
     overlay,
-    recipient
+    recipient,
+    settings
   }
 });
