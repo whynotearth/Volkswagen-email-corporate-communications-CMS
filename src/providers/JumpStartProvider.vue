@@ -31,15 +31,15 @@ export default {
     };
   },
   computed: {
-    ...mapGetters('memo', {
-      list: 'get_memos'
+    ...mapGetters('email', {
+      list: 'get_stats'
     })
   },
   methods: {
-    ...mapActions('memo', ['fetch_memos'])
+    ...mapActions('email', ['fetch_stats'])
   },
   mounted() {
-    this.fetch_memos();
+    this.fetch_stats();
   }
 };
 </script>

@@ -1,6 +1,7 @@
 import { JumpStartService } from '@whynotearth/meredith-axios';
-import qs from 'qs';
+import { BASE_API } from '@/connection/api.js';
 import { debounce } from 'lodash-es';
+import store from '@/store';
 
 export default {
   namespaced: true,
@@ -23,7 +24,8 @@ export default {
     selected_plan: {},
     daily_plan: [],
     available_articles: [],
-    stats: []
+    stats: [],
+    stat: {}
   },
   getters: {
     get_email_date: state => state.email_date,
@@ -38,7 +40,8 @@ export default {
     get_selected_plan: state => state.selected_plan,
     get_daily_plan: state => state.daily_plan,
     get_available_articles: state => state.available_articles,
-    get_stats: state => state.stats
+    get_stats: state => state.stats,
+    get_stat: state => state.stat
   },
   actions: {
     async create_jumpstart({ commit }, payload) {
@@ -57,19 +60,12 @@ export default {
         state.preview_link = payload;
         return false;
       }
-      const data = {
-        params: {
-          date: state.selected_plan.dateTime,
-          articleIds: state.selected_articles.map(article => article.id)
-        }
-      };
-      JumpStartService.preview(data.params, {
-        paramsSerializer: params => {
-          return qs.stringify(params);
-        }
-      }).then(response => {
-        state.preview_link = response;
+      const base = `${BASE_API}/api/v0/volkswagen/jumpstart/${state.selected_plan.dateTime}/preview`;
+      const url = new URL(base);
+      state.selected_articles.forEach(article => {
+        url.searchParams.append('articleIds', article.id);
       });
+      state.preview_link = url.href;
     },
     async fetch_daily_plan({ commit }) {
       const data = await JumpStartService.dailyplan();
@@ -92,6 +88,10 @@ export default {
     async fetch_stats({ commit }) {
       const data = await JumpStartService.stats();
       commit('update_stats', data);
+    },
+    async fetch_stat({ commit }, params) {
+      const data = await JumpStartService.stats1(params);
+      commit('update_stat', data);
     }
   },
   mutations: {
@@ -127,6 +127,9 @@ export default {
     },
     update_stats(state, payload) {
       state.stats = payload;
+    },
+    update_stat(state, payload) {
+      state.stat = payload;
     }
   }
 };

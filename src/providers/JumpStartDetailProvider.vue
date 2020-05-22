@@ -32,16 +32,16 @@ export default {
   },
   props: ['id'],
   computed: {
-    ...mapGetters('memo', {
-      activity: 'get_stats'
+    ...mapGetters('email', {
+      activity: 'get_stat'
     })
   },
   methods: {
-    ...mapActions('memo', ['fetch_stats'])
+    ...mapActions('email', ['fetch_stat'])
   },
   mounted() {
-    this.fetch_stats({
-      memoId: this.id
+    this.fetch_stat({
+      jumpStartId: this.id
     });
   }
 };
