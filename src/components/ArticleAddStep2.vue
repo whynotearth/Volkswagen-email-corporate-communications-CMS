@@ -207,8 +207,6 @@ export default {
         return [this.get_image];
       },
       set(value) {
-        console.log('value', value);
-
         let image = {};
         try {
           image = value[0];
