@@ -204,16 +204,14 @@ export default {
     },
     images: {
       get() {
-        return [
-          {
-            src: this.get_image
-          }
-        ];
+        return [this.get_image];
       },
       set(value) {
-        let image = '';
+        console.log('value', value);
+
+        let image = {};
         try {
-          image = value[0].src;
+          image = value[0];
         } catch (error) {}
         this.update_image(image);
       }
