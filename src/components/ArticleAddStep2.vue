@@ -17,13 +17,14 @@
         </span>
       </BaseInputText>
 
-      <BaseInputTextarea
-        v-if="isFieldVisible('description')"
-        class="body-1-mobile bg-surface"
-        v-model="$v.description.$model"
-        :label="stringDescriptionByCategoryName"
+      <BaseEditor
+        class="mb-4 body-1-mobile bg-surface"
+        :error="
+          $v.description.$dirty && ($v.description.$invalid || !$v.description.required || !$v.description.maxLength)
+        "
         :placeholder="isAnswersCategory ? stringDescriptionByCategoryName : 'Put the content of your article here.'"
-        :error="$v.description.$dirty && $v.description.$invalid"
+        v-if="isFieldVisible('description')"
+        v-model="$v.description.$model"
       >
         <span v-if="$v.description.$dirty && !$v.description.required" class="text-xs text-error pl-error-message">
           {{ stringDescriptionByCategoryName }} is required
@@ -31,7 +32,7 @@
         <span v-if="$v.description.$dirty && !$v.description.maxLength" class="text-xs text-error pl-error-message">
           {{ stringDescriptionByCategoryName }} should be less than 750 characters
         </span>
-      </BaseInputTextarea>
+      </BaseEditor>
 
       <BaseInputText
         v-if="isFieldVisible('price')"
@@ -73,7 +74,7 @@
 
 <script>
 import BaseInputText from '@/components/BaseInputText.vue';
-import BaseInputTextarea from '@/components/BaseInputTextarea.vue';
+import BaseEditor from '@/components/Editor/BaseEditor.vue';
 import ImageUpload from '@/components/ImageUpload/ImageUpload.vue';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
 import { required, decimal, maxLength, requiredIf } from 'vuelidate/lib/validators';
@@ -87,7 +88,7 @@ export default {
   name: 'ArticleAddStep2',
   components: {
     BaseInputText,
-    BaseInputTextarea,
+    BaseEditor,
     ImageUpload
   },
   validations: {
