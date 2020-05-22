@@ -226,14 +226,14 @@ export default {
     },
     images: {
       get() {
-        return [
-          {
-            src: this.get_image
-          }
-        ];
+        return [this.get_image];
       },
       set(value) {
-        this.update_image(get(value, '[0].src', ''));
+        let image = {};
+        try {
+          image = value[0];
+        } catch (error) {}
+        this.update_image(image);
       }
     },
     dates() {
@@ -321,10 +321,10 @@ export default {
         body: {
           date: date_time,
           categorySlug: this.selectedArticle.category.slug,
+          image: this.get_image && this.get_image.url ? this.get_image : undefined,
           headline: this.get_headline,
           description: this.get_description,
           eventDate: event_date_time,
-          image: this.get_image
         }
       };
       this.put_article(data)
