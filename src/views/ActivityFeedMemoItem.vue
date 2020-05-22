@@ -14,14 +14,14 @@
       <div class="bg-background z-10 relative">
         <div class="container px-0 md:px-6">
           <div class="px-4 pb-4 pt-2">
-            <MemoListItem v-if="get(get_stats, `[${id}].memoList`)" :model="get(get_stats, `[${id}].memoList`)" />
+            <MemoListItem v-if="get(get_stat, `[${id}].memoStat`)" :model="get(get_stat, `[${id}].memoStat`)" />
           </div>
         </div>
       </div>
       <BaseTabs>
         <BaseTab class="text-left" name="Opened" :selected="true">
           <div class="px-4 pt-4 bg-background">
-            <div class="mb-4" v-for="(readReportLog, index) in get(get_stats, `${id}.opened`, [])" :key="index">
+            <div class="mb-4" v-for="(readReportLog, index) in get(get_stat, `${id}.opened`, [])" :key="index">
               <ActivityFeedReadReportLog
                 :deliverDateTime="formatDate(readReportLog.deliverDateTime, 'dd MMM, yyyy h:mm aaa')"
                 :openDateTime="formatDate(readReportLog.openDateTime, 'dd MMM, yyyy h:mm aaa')"
@@ -32,7 +32,7 @@
         </BaseTab>
         <BaseTab class="text-left" name="Unread">
           <div class="px-4 pt-4 bg-background">
-            <div class="mb-4" v-for="(readReportLog, index) in get(get_stats, `${id}.notOpened`, [])" :key="index">
+            <div class="mb-4" v-for="(readReportLog, index) in get(get_stat, `${id}.notOpened`, [])" :key="index">
               <ActivityFeedReadReportLog
                 :deliverDateTime="formatDate(readReportLog.deliverDateTime, 'dd MMM, yyyy h:mm aaa')"
                 :openDateTime="formatDate(readReportLog.openDateTime, 'dd MMM, yyyy h:mm aaa')"
@@ -77,15 +77,15 @@ export default {
   },
   props: ['id'],
   computed: {
-    ...mapGetters('memo', ['get_stats'])
+    ...mapGetters('memo', ['get_stat'])
   },
   methods: {
-    ...mapActions('memo', ['fetch_stats']),
+    ...mapActions('memo', ['fetch_stat']),
     get,
     formatDate
   },
   mounted() {
-    this.fetch_stats({
+    this.fetch_stat({
       memoId: this.id
     });
   }

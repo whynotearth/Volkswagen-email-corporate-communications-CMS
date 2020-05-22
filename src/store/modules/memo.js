@@ -26,8 +26,8 @@ export default {
       message: '',
       class: '' // text-error text-success
     },
-    memos: [],
-    stats: {}
+    stats: [],
+    stat: {}
   },
   mutations: {
     update_response_message(state, payload) {
@@ -51,11 +51,11 @@ export default {
     update_form_data(state, payload) {
       Vue.set(state, 'form_data', payload);
     },
-    update_memos(state, payload) {
-      Vue.set(state, 'memos', payload);
+    update_stats(state, payload) {
+      Vue.set(state, 'stats', payload);
     },
-    update_stats(state, { key, data }) {
-      Vue.set(state.stats, key, data);
+    update_stat(state, { key, data }) {
+      Vue.set(state.stat, key, data);
     }
   },
   actions: {
@@ -65,13 +65,13 @@ export default {
     async add_memo(context, payload) {
       await MemoService.memos(payload.params);
     },
-    async fetch_memos(context, payload) {
-      const data = await MemoService.memos1();
-      context.commit('update_memos', data);
-    },
     async fetch_stats(context, payload) {
-      const data = await MemoService.stats(payload);
-      context.commit('update_stats', { key: data.memoList.id, data });
+      const data = await MemoService.stats();
+      context.commit('update_stats', data);
+    },
+    async fetch_stat(context, payload) {
+      const data = await MemoService.stats1(payload);
+      context.commit('update_stat', { key: data.memoStat.id, data });
     }
   },
   getters: {
@@ -81,7 +81,7 @@ export default {
     get_date: state => state.form_data.date,
     get_recipients: state => state.form_data.recipients,
     get_response_message: state => state.response_message,
-    get_memos: state => state.memos,
-    get_stats: state => state.stats
+    get_stats: state => state.stats,
+    get_stat: state => state.stat
   }
 };
