@@ -23,6 +23,16 @@ export default {
     overlayModel() {
       return this.$store.getters['overlay/model'];
     }
+  },
+  created() {
+    this.$store.commit('overlay/updateModel', {
+      title: 'Welcome!'
+    });
+    setTimeout(() => {
+      this.$store.commit('overlay/updateModel', {
+        title: ''
+      });
+    }, 1500);
   }
 };
 </script>
