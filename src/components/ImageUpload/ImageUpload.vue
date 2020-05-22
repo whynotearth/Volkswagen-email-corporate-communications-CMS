@@ -99,7 +99,6 @@ export default {
       }
     },
     getCloudinaryImageAdaptedObject(cloudinaryImageInfo) {
-      console.log('cloudinaryImageInfo', cloudinaryImageInfo);
       const { url, height, width } = cloudinaryImageInfo;
       return {
         url,

@@ -57,22 +57,6 @@
             </BaseEditor>
 
             <BaseInputText
-              v-if="isFieldRequired('price')"
-              class="bg-surface mb-4"
-              v-model="$v.price.$model"
-              label="Price"
-              placeholder="Price"
-              :error="$v.price.$dirty && $v.price.$invalid"
-            >
-              <span v-if="$v.price.$dirty && !$v.price.required" class="text-xs text-error pl-error-message">
-                Price is required
-              </span>
-              <span v-if="$v.price.$dirty && !$v.price.decimal" class="text-xs text-error pl-error-message">
-                Price is not a valid number
-              </span>
-            </BaseInputText>
-
-            <BaseInputText
               v-if="isFieldRequired('eventDate')"
               class="bg-surface mb-4"
               v-model="$v.eventDate.$model"
@@ -178,12 +162,6 @@ export default {
       }),
       maxLength: maxLength(750)
     },
-    price: {
-      required: requiredIf(context => {
-        return context.isFieldRequired('price');
-      }),
-      decimal
-    },
     eventDate: {
       mustBeDate: value => mustBeDate({ value })
     },
@@ -195,7 +173,6 @@ export default {
     ...mapGetters('article', [
       'get_headline',
       'get_description',
-      'get_price',
       'get_eventDate',
       'get_articles',
       'get_response_message',
@@ -231,14 +208,6 @@ export default {
         this.update_description(value);
       }
     },
-    price: {
-      get() {
-        return this.get_price;
-      },
-      set(value) {
-        this.update_price(value);
-      }
-    },
     eventDate: {
       get() {
         return this.get_eventDate;
@@ -257,14 +226,14 @@ export default {
     },
     images: {
       get() {
-        return [
-          {
-            src: this.get_image
-          }
-        ];
+        return [this.get_image];
       },
       set(value) {
-        this.update_image(get(value, '[0].src', ''));
+        let image = {};
+        try {
+          image = value[0];
+        } catch (error) {}
+        this.update_image(image);
       }
     },
     dates() {
@@ -305,7 +274,6 @@ export default {
       'update_headline',
       'update_description',
       'update_date',
-      'update_price',
       'update_eventDate',
       'update_date',
       'update_response_message',
@@ -316,7 +284,6 @@ export default {
       this.update_headline(this.selectedArticle.headline);
       this.update_description(this.selectedArticle.description);
       this.update_date(this.selectedArticle.date);
-      this.update_price(this.selectedArticle.price);
       this.update_eventDate(formatDate(this.selectedArticle.eventDate));
       this.update_date(formatDate(this.selectedArticle.date));
     },
@@ -328,7 +295,7 @@ export default {
       let isRequired = false;
       switch (categoryName) {
         case 'Events':
-          isRequired = ['headline', 'description', 'price', 'eventDate', 'image', 'date'].includes(fieldName);
+          isRequired = ['headline', 'description', 'eventDate', 'image', 'date'].includes(fieldName);
           break;
         case 'One Team':
         case 'Answers At A Glance':
@@ -354,11 +321,10 @@ export default {
         body: {
           date: date_time,
           categorySlug: this.selectedArticle.category.slug,
+          image: this.get_image && this.get_image.url ? this.get_image : undefined,
           headline: this.get_headline,
           description: this.get_description,
-          price: this.get_price,
-          eventDate: event_date_time,
-          image: this.get_image
+          eventDate: event_date_time
         }
       };
       this.put_article(data)
