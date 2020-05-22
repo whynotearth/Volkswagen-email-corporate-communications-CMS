@@ -23,6 +23,7 @@
               :label="stringHeadlineByCategoryName"
               :placeholder="stringHeadlineByCategoryName"
               :error="$v.headline.$dirty && $v.headline.$invalid"
+              :model="$v.headline"
             >
               <span v-if="$v.headline.$dirty && !$v.headline.required" class="text-xs text-error pl-error-message">
                 {{ stringHeadlineByCategoryName }} is required
@@ -41,6 +42,7 @@
                 isAnswersCategory ? stringDescriptionByCategoryName : 'Put the content of your article here.'
               "
               :error="$v.description.$dirty && $v.description.$invalid"
+              :model="$v.description"
             >
               <span
                 v-if="$v.description.$dirty && !$v.description.required"
