@@ -257,14 +257,14 @@ export default {
     },
     images: {
       get() {
-        return [
-          {
-            src: this.get_image
-          }
-        ];
+        return [this.get_image];
       },
       set(value) {
-        this.update_image(get(value, '[0].src', ''));
+        let image = {};
+        try {
+          image = value[0];
+        } catch (error) {}
+        this.update_image(image);
       }
     },
     dates() {
@@ -354,11 +354,11 @@ export default {
         body: {
           date: date_time,
           categorySlug: this.selectedArticle.category.slug,
+          image: this.get_image && this.get_image.url ? this.get_image : undefined,
           headline: this.get_headline,
           description: this.get_description,
           price: this.get_price,
-          eventDate: event_date_time,
-          image: this.get_image
+          eventDate: event_date_time
         }
       };
       this.put_article(data)
