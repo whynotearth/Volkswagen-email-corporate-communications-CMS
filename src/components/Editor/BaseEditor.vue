@@ -55,6 +55,12 @@ export default {
   watch: {
     content() {
       this.updateValue();
+    },
+    value: {
+      immediate: true,
+      handler() {
+        this.content = this.value;
+      }
     }
   }
 };
