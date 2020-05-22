@@ -37,12 +37,7 @@ export default {
     prop: 'value',
     event: 'change'
   },
-  props: ['emailDate'],
-  data() {
-    return {
-      selectedTime: null
-    };
-  },
+  props: ['emailDate', 'selectedTime'],
   computed: {
     time_slots() {
       let time = [];

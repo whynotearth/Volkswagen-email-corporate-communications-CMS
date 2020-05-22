@@ -5,7 +5,9 @@
         <BaseAppBarHeader
           class="sticky top-0 bg-white"
           title="Rearrange Blue Delta "
-          :to-link="{ name: 'EditBlueDelta', params: { id: id } }"
+          :to-link="
+            id ? { name: 'EditBlueDelta', params: { id: id } } : { name: 'AddBlueDelta', params: { date: date } }
+          "
         />
         <div class="flex mb-40">
           <div class="flex-grow">
@@ -14,6 +16,9 @@
                 <EmailPreview @error="$v.$touch()" />
               </div>
               <h2 class="text-primary font-bold text-xl">Rearrange the Jumpstart</h2>
+              <p v-if="get_response_message.message" class="font-bold" :class="get_response_message.class">
+                {{ get_response_message.message }}
+              </p>
               <span v-if="$v.get_selected_articles.$error" class="text-xs text-error">
                 Please select atleast one article.
               </span>
@@ -22,7 +27,7 @@
               </div>
               <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-4">
                 <Article
-                  v-for="(article, index) in get_all_articles"
+                  v-for="(article, index) in get_available_articles"
                   :key="index"
                   :article="article"
                   @clicked="selectArticle(article)"
@@ -56,8 +61,10 @@ export default {
   components: { Article, BaseButton, EmailPreview, LayoutFixedScrollable, BaseAppBarHeader, NavigationBottom },
   props: {
     id: {
-      type: [String, Number],
-      required: true
+      type: [String, Number]
+    },
+    date: {
+      type: [String]
     }
   },
   validations: {
@@ -66,17 +73,24 @@ export default {
     }
   },
   mounted() {
-    if (!this.id) this.$router.push({ name: 'JumpStartLists' });
-    this.fetch_available_articles({ jumpStartId: this.id });
+    if (!(this.id || this.date) || this.get_selected_articles.length === 0)
+      this.$router.push({ name: 'JumpStartLists' });
     this.update_preview_link();
   },
+  destroyed() {
+    this.update_response_message({
+      message: '',
+      type: '',
+      class: ''
+    });
+  },
   methods: {
+    ...mapMutations('email', ['update_response_message']),
     ...mapActions('email', [
       'debounced_preview',
       'update_preview_link',
       'create_jumpstart',
       'update_selected_articles',
-      'fetch_available_articles',
       'update_available_articles',
       'clear_email_data'
     ]),
@@ -86,7 +100,6 @@ export default {
       if (this.get_selected_articles.length >= 5 && this.isActive(article) === -1) return false;
       this.$v.$reset();
       this.update_selected_articles(article);
-      this.update_available_articles(article);
       this.update_preview_link('');
       this.debounced_preview();
     },
@@ -100,10 +113,10 @@ export default {
       d.setHours(0, 0, 0, 0);
       let total_time = new Date(d.getTime() + this.get_schedule_time).toISOString();
       const params = {
-        jumpStartId: this.id,
         body: {
-          dateTime: total_time,
+          id: this.id,
           articleIds: this.get_selected_articles.map(article => article.id),
+          dateTime: this.get_schedule_time ? total_time : this.get_email_date,
           distributionGroups: this.get_email_recipients
         }
       };
@@ -143,13 +156,10 @@ export default {
       'get_email_date',
       'get_schedule_time',
       'get_selected_articles',
+      'get_email_recipients',
       'get_available_articles',
-      'get_selected_jumpstart',
-      'get_email_recipients'
-    ]),
-    get_all_articles() {
-      return [...this.get_selected_articles, ...this.get_available_articles];
-    }
+      'get_response_message'
+    ])
   }
 };
 </script>

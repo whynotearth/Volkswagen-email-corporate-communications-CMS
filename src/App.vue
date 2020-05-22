@@ -1,7 +1,7 @@
 <template>
   <div id="app" class="text-center">
     <transition name="fade" mode="out-in">
-      <router-view />
+      <router-view @hook:mounted="hideWelcomeMessage" />
     </transition>
     <transition name="fade">
       <div v-if="overlayModel.title || overlayModel.message" class="w-full h-full fixed block top-0 left-0 z-50">
@@ -22,6 +22,20 @@ export default {
   computed: {
     overlayModel() {
       return this.$store.getters['overlay/model'];
+    }
+  },
+  created() {
+    this.$store.commit('overlay/updateModel', {
+      title: 'Welcome!'
+    });
+  },
+  methods: {
+    hideWelcomeMessage() {
+      setTimeout(() => {
+        this.$store.commit('overlay/updateModel', {
+          title: ''
+        });
+      }, 1500);
     }
   }
 };

@@ -4,7 +4,7 @@
       <BaseAppBarHeader title="Blue Delta" :to-link="{ name: 'Dashboard' }" />
     </template>
     <template #content>
-      <div class="flex flex-col py-3">
+      <div class="flex flex-col py-6">
         <div class="container px-0 md:px-6">
           <div v-for="(plan, index) in get_daily_plan" :key="index" class="cursor-pointer" @click="selectPlan(plan)">
             <JumpStartItem :model="plan" />
@@ -29,23 +29,29 @@ export default {
   name: 'JumpStart',
   components: { BaseAppBarHeader, JumpStartItem, LayoutFixedScrollable, NavigationBottom },
   computed: {
-    ...mapGetters('article', ['get_daily_plan'])
+    ...mapGetters('email', ['get_daily_plan'])
   },
   mounted() {
     this.fetch_daily_plan();
   },
   methods: {
-    ...mapActions('article', ['fetch_daily_plan']),
-    ...mapActions('email', ['update_selected_articles']),
-    ...mapMutations('email', ['update_selected_plan', 'update_email_date']),
+    ...mapActions('email', ['fetch_daily_plan', 'update_selected_articles']),
+    ...mapMutations('email', ['update_selected_plan', 'update_email_date', 'update_available_articles']),
     selectPlan(plan) {
-      this.update_selected_articles();
       this.update_selected_plan(plan);
-      plan.articles.forEach(plan => {
-        this.update_selected_articles(plan);
-      });
-      this.update_email_date(plan.date);
-      this.$router.push({ name: 'EditBlueDelta', params: { id: plan.jumpStartId } });
+      this.update_available_articles(plan.articles);
+      this.update_selected_articles();
+      for (let i = 0; i < 5; i++) {
+        if (plan.articles[i]) {
+          this.update_selected_articles(plan.articles[i]);
+        } else break;
+      }
+      this.update_email_date(plan.dateTime);
+      if (plan.jumpStartId) {
+        this.$router.push({ name: 'EditBlueDelta', params: { id: plan.jumpStartId } });
+      } else {
+        this.$router.push({ name: 'AddBlueDelta', params: { date: plan.dateTime } });
+      }
     }
   }
 };

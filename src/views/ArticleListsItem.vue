@@ -23,6 +23,7 @@
               :label="stringHeadlineByCategoryName"
               :placeholder="stringHeadlineByCategoryName"
               :error="$v.headline.$dirty && $v.headline.$invalid"
+              :model="$v.headline"
             >
               <span v-if="$v.headline.$dirty && !$v.headline.required" class="text-xs text-error pl-error-message">
                 {{ stringHeadlineByCategoryName }} is required
@@ -32,15 +33,16 @@
               </span>
             </BaseInputText>
 
-            <BaseInputTextarea
+            <BaseEditor
               v-if="isFieldRequired('description')"
-              class="body-1-mobile bg-surface"
+              class="body-1-mobile bg-surface mb-4"
               v-model="$v.description.$model"
               :label="stringDescriptionByCategoryName"
               :placeholder="
                 isAnswersCategory ? stringDescriptionByCategoryName : 'Put the content of your article here.'
               "
               :error="$v.description.$dirty && $v.description.$invalid"
+              :model="$v.description"
             >
               <span
                 v-if="$v.description.$dirty && !$v.description.required"
@@ -54,23 +56,7 @@
               >
                 {{ stringDescriptionByCategoryName }} should be less than 750 characters
               </span>
-            </BaseInputTextarea>
-
-            <BaseInputText
-              v-if="isFieldRequired('price')"
-              class="bg-surface mb-4"
-              v-model="$v.price.$model"
-              label="Price"
-              placeholder="Price"
-              :error="$v.price.$dirty && $v.price.$invalid"
-            >
-              <span v-if="$v.price.$dirty && !$v.price.required" class="text-xs text-error pl-error-message">
-                Price is required
-              </span>
-              <span v-if="$v.price.$dirty && !$v.price.decimal" class="text-xs text-error pl-error-message">
-                Price is not a valid number
-              </span>
-            </BaseInputText>
+            </BaseEditor>
 
             <BaseInputText
               v-if="isFieldRequired('eventDate')"
@@ -89,25 +75,33 @@
             </BaseInputText>
           </div>
 
-          <div class="border-divider border-b-1 w-auto my-5 md:mx-6 "></div>
+          <hr v-if="isFieldRequired('image')" class="bg-background border-black em-low -mx-4 sm:mx-0 mb-4" />
+          <ImageUpload v-if="isFieldRequired('image')" class="px-4 md:px-6" v-model="images" :defaultImages="images" />
+
+          <hr class="border-divider w-auto mt-5 md:mx-6" />
+          <BaseDropdown
+            class="relative bg-surface"
+            placeholder="Schedule time"
+            :options="dates"
+            v-model="$v.date.$model"
+          >
+            <template #title="{ selectedOption }">
+              Schedule
+              <span v-if="dates.length === 0" class="text-gray-500">
+                No time slots!
+              </span>
+              <span v-else-if="selectedOption" class="ml-2 em-medium text-black">
+                {{ formatDate(selectedOption) }}
+              </span>
+            </template>
+            <template #option="{ option }">
+              <span>
+                {{ formatDate(option) }}
+              </span>
+            </template>
+          </BaseDropdown>
 
           <div class="px-4 md:px-6">
-            <div class="w-full text-left py-3 tg-body-mobile">Schedule Article</div>
-            <BaseDropdown class="relative" placeholder="Schedule time" :options="dates" v-model="$v.date.$model">
-              <template #title="{ selectedOption }">
-                <span v-if="dates.length === 0" class="text-gray-500">
-                  No time slots!
-                </span>
-                <span v-else-if="selectedOption" class="em-medium">
-                  {{ formatDate(selectedOption) }}
-                </span>
-              </template>
-              <template #option="{ option }">
-                <span>
-                  {{ formatDate(option) }}
-                </span>
-              </template>
-            </BaseDropdown>
             <p v-if="get_response_message.message" class="font-bold px-4 mb-4" :class="get_response_message.class">
               {{ get_response_message.message }}
             </p>
@@ -137,13 +131,15 @@
 <script>
 import BaseAppBarHeader from '@/components/BaseAppBarHeader.vue';
 import BaseInputText from '@/components/BaseInputText.vue';
-import BaseInputTextarea from '@/components/BaseInputTextarea.vue';
+import BaseEditor from '@/components/Editor/BaseEditor.vue';
 import BaseDropdown from '@/components/BaseDropdown';
+import ImageUpload from '@/components/ImageUpload/ImageUpload.vue';
+import LayoutFixedScrollable from '@/components/LayoutFixedScrollable.vue';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
 import { required, decimal, maxLength, requiredIf } from 'vuelidate/lib/validators';
 import { mustBeDate } from '@/validations.js';
 import { formatISODate, formatDate } from '@/helpers.js';
-import LayoutFixedScrollable from '@/components/LayoutFixedScrollable.vue';
+import { get } from 'lodash-es';
 
 export default {
   name: 'ArticleListsItem',
@@ -151,8 +147,9 @@ export default {
     LayoutFixedScrollable,
     BaseAppBarHeader,
     BaseInputText,
-    BaseInputTextarea,
-    BaseDropdown
+    BaseEditor,
+    BaseDropdown,
+    ImageUpload
   },
   validations: {
     headline: {
@@ -167,12 +164,6 @@ export default {
       }),
       maxLength: maxLength(750)
     },
-    price: {
-      required: requiredIf(context => {
-        return context.isFieldRequired('price');
-      }),
-      decimal
-    },
     eventDate: {
       mustBeDate: value => mustBeDate({ value })
     },
@@ -184,13 +175,13 @@ export default {
     ...mapGetters('article', [
       'get_headline',
       'get_description',
-      'get_price',
       'get_eventDate',
       'get_articles',
       'get_response_message',
       'get_date',
-      'get_daily_plan'
+      'get_image'
     ]),
+    ...mapGetters('email', ['get_daily_plan']),
     isAnswersCategory() {
       return this.selectedArticle.category.slug === 'answers-at-a-glance';
     },
@@ -219,14 +210,6 @@ export default {
         this.update_description(value);
       }
     },
-    price: {
-      get() {
-        return this.get_price;
-      },
-      set(value) {
-        this.update_price(value);
-      }
-    },
     eventDate: {
       get() {
         return this.get_eventDate;
@@ -241,6 +224,18 @@ export default {
       },
       set(value) {
         this.update_date(value);
+      }
+    },
+    images: {
+      get() {
+        return [this.get_image];
+      },
+      set(value) {
+        let image = {};
+        try {
+          image = value[0];
+        } catch (error) {}
+        this.update_image(image);
       }
     },
     dates() {
@@ -275,22 +270,22 @@ export default {
     });
   },
   methods: {
-    ...mapActions('article', ['fetch_daily_plan', 'put_article', 'delete_article']),
+    ...mapActions('article', ['put_article', 'delete_article']),
+    ...mapActions('email', ['fetch_daily_plan']),
     ...mapMutations('article', [
       'update_headline',
       'update_description',
       'update_date',
-      'update_price',
       'update_eventDate',
       'update_date',
-      'update_response_message'
+      'update_response_message',
+      'update_image'
     ]),
     formatDate,
     initialForm() {
       this.update_headline(this.selectedArticle.headline);
       this.update_description(this.selectedArticle.description);
       this.update_date(this.selectedArticle.date);
-      this.update_price(this.selectedArticle.price);
       this.update_eventDate(formatDate(this.selectedArticle.eventDate));
       this.update_date(formatDate(this.selectedArticle.date));
     },
@@ -302,7 +297,7 @@ export default {
       let isRequired = false;
       switch (categoryName) {
         case 'Events':
-          isRequired = ['headline', 'description', 'price', 'eventDate', 'images', 'date'].includes(fieldName);
+          isRequired = ['headline', 'description', 'eventDate', 'image', 'date'].includes(fieldName);
           break;
         case 'One Team':
         case 'Answers At A Glance':
@@ -312,7 +307,7 @@ export default {
         case 'People':
         case 'Community':
         case 'Plant':
-          isRequired = ['headline', 'description', 'images', 'date'].includes(fieldName);
+          isRequired = ['headline', 'description', 'image', 'date'].includes(fieldName);
           break;
 
         default:
@@ -328,11 +323,10 @@ export default {
         body: {
           date: date_time,
           categorySlug: this.selectedArticle.category.slug,
+          image: this.get_image && this.get_image.url ? this.get_image : undefined,
           headline: this.get_headline,
           description: this.get_description,
-          price: this.get_price,
           eventDate: event_date_time
-          //image: this.get_images
         }
       };
       this.put_article(data)

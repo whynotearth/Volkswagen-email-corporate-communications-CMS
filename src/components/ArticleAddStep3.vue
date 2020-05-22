@@ -1,41 +1,42 @@
 <template>
   <div class="flex flex-col h-full">
-    <div class="flex items-strech items-center border-b-1 border-divider bg-surface" @click="toggleDropdown()">
-      <div
-        class="container relative md:px-6 block flex-grow justify-between flex h-full items-center select-none px-4 pr-6 py-5"
+    <div class="container md:px-2 px-0 select-none">
+      <BaseDropdown
+        class="relative bg-surface text-left"
+        placeholder="Schedule time"
+        :options="dates"
+        v-model="$v.date.$model"
       >
-        <span class="tg-body-mobile">
+        <template #title="{ selectedOption }">
           Schedule
-          <span class="ml-2 text-black em-medium">{{ formatDate(get_date, 'dd MMM, yyyy') }}</span>
-        </span>
-        <ArrowDown class="transform scale-x-1 text-gray" :class="{ 'rotate-180': isOpenDropdown }" />
-        <ul v-if="isOpenDropdown" class="menu shadow-8dp mx-2 md:mx-6 z-10 py-2">
-          <li
-            class="text-left"
-            :class="{ active: get_date === date }"
-            v-for="(date, index) in dates"
-            :key="index"
-            @click="update_date(date)"
-          >
-            <div class="tg-body-mobile p-4 block w-full cursor-pointer">{{ formatDate(date, 'dd MMM, yyyy') }}</div>
-          </li>
-        </ul>
-      </div>
+          <span v-if="dates.length === 0" class="text-gray-500">
+            No time slots!
+          </span>
+          <span v-else-if="selectedOption" class="ml-2 em-medium text-black">
+            {{ formatDate(selectedOption) }}
+          </span>
+        </template>
+        <template #option="{ option }">
+          <span>
+            {{ formatDate(option) }}
+          </span>
+        </template>
+      </BaseDropdown>
     </div>
     <div class="flex flex-grow bg-brand-gradient overflow-y-auto narrow-scrollbars h-full">
       <div class="container relative px-0 md:px-6 text-left ">
         <div
-          class="flex flex-wrap relative bg-white text-black mx-4 my-6 mt-12 p-4 bg-surface border-1"
+          class="preview-box flex flex-wrap relative bg-white text-black mx-4 my-6 mt-12 p-4 bg-surface border-1"
           :style="{ borderColor: `#${get_selected_category.color}` }"
         >
           <div
-            class="h-6 px-3 border-1 category-tag bg-white border-b-0 rounded rounded-bl-none
+            class="h-6 px-3 border-1 category-tag absolute bg-white border-b-0 rounded rounded-bl-none
           rounded-br-none tg-caps-title-print"
             :style="{ borderColor: `#${get_selected_category.color}`, color: `#${get_selected_category.color}` }"
           >
             {{ get_selected_category.name }}
           </div>
-          <div class="flex items-center justify-center w-8 h-8 rounded-full bg-white circle-icon">
+          <div class="flex items-center justify-center w-8 h-8 rounded-full bg-white circle-icon absolute">
             <img class="m-auto w-4 h-4" :src="get_selected_category.image" />
           </div>
           <div class="w-full tg-h2-mobile text-black py-3 hidden sm:block">
@@ -45,11 +46,11 @@
             <div class="w-full tg-h2-mobile text-black py-3 sm:hidden order-2">
               {{ get_headline }}
             </div>
-            <div class="w-full tg-body-mobile text-black em-high whitespace-pre-line break-words flex-grow order-2">
-              {{ get_description }}
+            <div class="w-1/2 tg-body-mobile text-black em-high whitespace-pre-line break-words flex-grow order-2">
+              <BaseEditorPreview :content="get_description" />
             </div>
-            <div class="order-1 mb-4 sm:mb-0 w-full sm:w-auto sm:order-3 flex-shrink-0">
-              <img class="mx-auto article-image" :src="get_image" />
+            <div v-if="get_image.url" class="order-1 mb-4 sm:mb-0 w-1/2 sm:order-3 flex-shrink-0 w-full sm:w-1/2">
+              <img class="w-full" :src="get_image.url" />
             </div>
           </div>
         </div>
@@ -62,33 +63,32 @@
 </template>
 
 <script>
-import ArrowDown from '@/assets/arrow-down.svg';
+import BaseDropdown from '@/components/BaseDropdown';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
+import { mustBeDate } from '@/validations.js';
 import { formatDate } from '@/helpers.js';
+import BaseEditorPreview from '@/components/Editor/BaseEditorPreview.vue';
 
 export default {
   name: 'ArticleAddStep3',
-  components: { ArrowDown },
+  components: { BaseDropdown, BaseEditorPreview },
   props: {
     error: {
       type: Boolean,
       default: false
     }
   },
-  data() {
-    return {
-      isOpenDropdown: false
-    };
+  validations: {
+    date: {
+      mustBeDate: value => mustBeDate({ value })
+    }
   },
   mounted() {
     this.update_date(this.dates[0]);
   },
   methods: {
     ...mapMutations('article', ['update_date']),
-    formatDate,
-    toggleDropdown() {
-      this.isOpenDropdown = !this.isOpenDropdown;
-    }
+    formatDate
   },
   computed: {
     ...mapGetters('article', [
@@ -99,6 +99,14 @@ export default {
       'get_headline',
       'get_description'
     ]),
+    date: {
+      get() {
+        return this.get_date;
+      },
+      set(value) {
+        this.update_date(value);
+      }
+    },
     dates() {
       let d = new Date();
       let dtzOffset = d.getTimezoneOffset() * 60000;
@@ -116,36 +124,16 @@ export default {
 </script>
 
 <style scoped>
-.menu {
-  height: 224px;
-  position: absolute;
-  top: 54px;
-  background: white;
-  border-radius: 4px;
-  right: 0;
-  left: 0;
-  overflow-y: scroll;
-}
-.active {
-  background: rgba(3, 179, 249, 0.12);
+.preview-box {
+  max-width: 572px;
 }
 .circle-icon {
-  position: absolute;
   top: -16px;
   right: 16px;
 }
-
 .category-tag {
   min-width: 130px;
-  position: absolute;
   top: -24px;
   left: 24px;
-}
-.rotate-180 {
-  transform: rotate(180deg);
-}
-.article-image {
-  width: 92px;
-  max-height: 92px;
 }
 </style>

@@ -14,7 +14,11 @@
                 <EmailPreview />
               </div>
               <router-link
-                :to="{ name: 'BlueDeltaRearrange', params: { id: id } }"
+                :to="
+                  id
+                    ? { name: 'BlueDeltaRearrange', params: { id: id } }
+                    : { name: 'AddBlueDeltaRearrange', params: { date: date } }
+                "
                 class="absolute bg-opacity-50 bg-black -mx-4 md:m-0 inset-0 text-white"
               >
                 <div class="flex h-full bg-transparent justify-center items-center">
@@ -63,7 +67,7 @@
               </div>
             </div>
             <div class="text-left">
-              <BaseTimePicker v-model="$v.time.$model" :emailDate="get_email_date" @blur="$v.time.$touch()" />
+              <BaseTimePicker v-model="$v.time.$model" :emailDate="get_email_date" :selectedTime="get_schedule_time" />
               <span v-if="$v.time.$error" class="text-xs text-error">
                 Please schedule time.
               </span>
@@ -99,8 +103,10 @@ export default {
   name: 'EditBlueDelta',
   props: {
     id: {
-      type: [String, Number],
-      required: true
+      type: [String, Number]
+    },
+    date: {
+      type: [String]
     }
   },
   validations: {
@@ -127,15 +133,17 @@ export default {
     };
   },
   mounted() {
-    if (!this.id) this.$router.push({ name: 'JumpStartLists' });
+    if (!(this.id || this.date) || this.get_email_date === null) this.$router.push({ name: 'JumpStartLists' });
     this.fetch_recipients();
     this.update_preview_link();
+    this.update_email_recipients(this.get_selected_plan.distributionGroups);
+    this.setDefaultScheduleTime();
   },
   computed: {
     ...mapGetters('email', [
       'get_email_recipients',
       'get_schedule_time',
-      'get_selected_jumpstart',
+      'get_selected_plan',
       'get_selected_articles',
       'get_email_date'
     ]),
@@ -158,12 +166,19 @@ export default {
     }
   },
   methods: {
-    ...mapMutations('email', ['update_email_recipients', 'update_schedule_time']),
+    ...mapMutations('email', ['update_email_recipients', 'update_schedule_time', 'update_email_date']),
     ...mapActions('recipient', ['fetch_recipients']),
     ...mapActions('email', ['create_jumpstart', 'update_preview_link', 'clear_email_data']),
     formatDate,
     onToSearchChange(query) {
       this.to_query = query;
+    },
+    setDefaultScheduleTime() {
+      let d = new Date(this.get_selected_plan.dateTime);
+      let dtzOffset = d.getTimezoneOffset() * 60000;
+      d = d.getTime();
+      d = d - dtzOffset;
+      this.update_schedule_time(d);
     },
     updateBlueDelta() {
       this.$v.$touch();
@@ -172,10 +187,10 @@ export default {
       d.setHours(0, 0, 0, 0);
       let total_time = new Date(d.getTime() + this.time).toISOString();
       const params = {
-        jumpStartId: this.id,
         body: {
-          dateTime: total_time,
+          id: this.id,
           articleIds: this.get_selected_articles.map(article => article.id),
+          dateTime: this.time ? total_time : this.get_email_date,
           distributionGroups: this.get_email_recipients
         }
       };
