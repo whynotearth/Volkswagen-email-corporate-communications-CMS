@@ -1,17 +1,27 @@
-<template functional>
-  <div class="ql-container ql-snow">
-    <div class="ql-editor" v-html="props.content"></div>
-  </div>
+<template>
+  <MarkDownStyle>
+    <div class="markdown-preview" v-html="preview"></div>
+  </MarkDownStyle>
 </template>
 
-<style scoped>
-@import '~vue2-editor/dist/vue2-editor.css';
+<script>
+import Simplemde from 'simplemde';
+import MarkDownStyle from './BaseMarkDownStyleProvider.vue';
 
-.ql-container.ql-snow {
-  @apply border-0;
-}
-
-.ql-editor {
-  @apply p-0 min-h-0;
-}
-</style>
+export default {
+  name: 'MarkDownPreview',
+  props: {
+    content: {
+      required: true
+    }
+  },
+  components: {
+    MarkDownStyle
+  },
+  computed: {
+    preview() {
+      return Simplemde.prototype.markdown(this.content);
+    }
+  }
+};
+</script>

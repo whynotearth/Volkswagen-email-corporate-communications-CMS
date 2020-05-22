@@ -1,23 +1,20 @@
 <template>
-  <div>
-    <VueEditor
-      class="editor"
-      :class="error ? 'editor-error' : 'editor-grey'"
-      v-model="content"
-      :placeholder="placeholder"
-      :editor-toolbar="customToolbar"
-    />
-    <div class="flex items-center">
+  <div class="relative" :class="[error ? 'markdown-error' : 'markdown-grey']">
+    <MarkDownStyle>
+      <vue-simplemde v-model="content" :configs="configs" ref="markdownEditor" />
+    </MarkDownStyle>
+    <div class="flex items-center error absolute bottom-0 left-0">
       <slot></slot>
     </div>
   </div>
 </template>
 
 <script>
-import { VueEditor } from 'vue2-editor';
+import VueSimplemde from 'vue-simplemde';
+import MarkDownStyle from './BaseMarkDownStyleProvider.vue';
 
 export default {
-  name: 'BaseEditor',
+  name: 'MarkDownEditor',
   model: {
     prop: 'value',
     event: 'change'
@@ -35,22 +32,20 @@ export default {
       type: String
     }
   },
-  components: { VueEditor },
   data() {
     return {
       content: this.value,
-      customToolbar: [
-        [{ header: [false, 1, 2, 3, 4, 5, 6] }],
-        ['bold', 'italic', 'underline', 'strike'], // toggled buttons
-        [{ align: '' }, { align: 'center' }, { align: 'right' }, { align: 'justify' }],
-        ['blockquote', 'code-block'],
-        [{ list: 'ordered' }, { list: 'bullet' }, { list: 'check' }],
-        [{ indent: '-1' }, { indent: '+1' }], // outdent/indent
-        [{ color: [] }, { background: [] }], // dropdown with defaults from theme
-        ['link'],
-        ['image', 'clean'] // remove formatting button
-      ]
+      configs: {
+        status: ['lines', 'words'],
+        spellChecker: false,
+        placeholder: this.placeholder,
+        hideIcons: ['code', 'table', 'side-by-side', 'fullscreen', 'image']
+      }
     };
+  },
+  components: {
+    VueSimplemde,
+    MarkDownStyle
   },
   methods: {
     updateValue() {
@@ -60,35 +55,36 @@ export default {
   watch: {
     content() {
       this.updateValue();
-    },
-    value: {
-      immediate: true,
-      handler() {
-        this.content = this.value;
-      }
     }
   }
 };
 </script>
 
 <style scoped>
-.editor-error,
-.editor-error /deep/ .ql-container,
-.editor-error /deep/ .ql-toolbar {
+@import '~simplemde/dist/simplemde.min.css';
+
+.error {
+  bottom: 8px;
+  height: 18px;
+}
+
+.markdown-error,
+.markdown-error /deep/ .CodeMirror,
+.markdown-error /deep/ .editor-toolbar {
   @apply border-red-600;
 }
 
-.editor-grey,
-.editor-grey /deep/ .ql-container,
-.editor-grey /deep/ .ql-toolbar {
-  @apply border-gray-600;
+.markdown-grey,
+.markdown-grey /deep/ .CodeMirror,
+.markdown-grey /deep/ .editor-toolbar {
+  @apply opacity-100 border-gray-600;
 }
 
-.editor /deep/ .ql-container {
-  @apply rounded-bl rounded-br;
+.markdown-error /deep/ .editor-toolbar a {
+  @apply opacity-75;
 }
 
-.editor /deep/ .ql-toolbar {
-  @apply rounded-tl rounded-tr;
+.markdown-grey /deep/ .editor-toolbar a {
+  @apply opacity-50;
 }
 </style>
