@@ -9,7 +9,7 @@ const defaultArticleFormData = {
   price: undefined,
   eventDate: '',
   // this is filelist
-  image: '',
+  image: {},
   selected_category: {}
 };
 
