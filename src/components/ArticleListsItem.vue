@@ -23,7 +23,7 @@
         <div class="tg-caption-mobile lg:tg-caption-desktop font-bold text-black whitespace-no-wrap pb-2">
           {{ formatDate(model.date) }}
         </div>
-        <div class="tg-caption-mobile em-disabled text-black text-left pr-2 h-20">
+        <div class="tg-caption-mobile lg:tg-caption-desktop em-disabled text-black text-left pr-2 h-20">
           <BaseEditorPreview :content="model.description" />
         </div>
       </div>
