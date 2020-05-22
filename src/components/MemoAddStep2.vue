@@ -20,7 +20,9 @@
             <p class="mb-2"><b>Date:</b> {{ get_date }}</p>
             <p class="mb-2"><b>To:</b> {{ get_to }}</p>
             <p class="mb-2">{{ get_subject }}</p>
-            <div class="whitespace-pre-line break-words">{{ get_description }}</div>
+            <div class="w-full tg-body-mobile text-black em-high whitespace-pre-line break-words flex-grow order-2">
+              <BaseEditorPreview :content="get_description" />
+            </div>
           </div>
         </div>
       </div>
@@ -30,8 +32,12 @@
 
 <script>
 import { mapGetters } from 'vuex';
+
+import BaseEditorPreview from '@/components/Editor/BaseEditorPreview.vue';
+
 export default {
   name: 'MemoAddStep2',
+  components: { BaseEditorPreview },
   computed: {
     ...mapGetters('memo', ['get_to', 'get_subject', 'get_date', 'get_description', 'get_response_message'])
   }

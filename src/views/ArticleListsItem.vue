@@ -32,9 +32,9 @@
               </span>
             </BaseInputText>
 
-            <BaseInputTextarea
+            <BaseEditor
               v-if="isFieldRequired('description')"
-              class="body-1-mobile bg-surface"
+              class="body-1-mobile bg-surface mb-4"
               v-model="$v.description.$model"
               :label="stringDescriptionByCategoryName"
               :placeholder="
@@ -54,7 +54,7 @@
               >
                 {{ stringDescriptionByCategoryName }} should be less than 750 characters
               </span>
-            </BaseInputTextarea>
+            </BaseEditor>
 
             <BaseInputText
               v-if="isFieldRequired('price')"
@@ -145,7 +145,7 @@
 <script>
 import BaseAppBarHeader from '@/components/BaseAppBarHeader.vue';
 import BaseInputText from '@/components/BaseInputText.vue';
-import BaseInputTextarea from '@/components/BaseInputTextarea.vue';
+import BaseEditor from '@/components/Editor/BaseEditor.vue';
 import BaseDropdown from '@/components/BaseDropdown';
 import ImageUpload from '@/components/ImageUpload/ImageUpload.vue';
 import LayoutFixedScrollable from '@/components/LayoutFixedScrollable.vue';
@@ -161,7 +161,7 @@ export default {
     LayoutFixedScrollable,
     BaseAppBarHeader,
     BaseInputText,
-    BaseInputTextarea,
+    BaseEditor,
     BaseDropdown,
     ImageUpload
   },
