@@ -1,10 +1,5 @@
 <template>
-  <BaseDropdown
-    class="relative dropdown-text__align-left border-t"
-    placeholder=""
-    :options="time_slots"
-    v-model="selectedTime"
-  >
+  <BaseDropdown class="relative dropdown-text__align-left border-t" placeholder="" :options="time_slots" v-model="time">
     <template #title="{ selectedOption }">
       <span v-if="time_slots.length === 0" class="text-gray-500">
         No time slots!
@@ -37,10 +32,10 @@ export default {
     prop: 'value',
     event: 'change'
   },
-  props: ['emailDate'],
+  props: ['emailDate', 'defaultTime'],
   data() {
     return {
-      selectedTime: null
+      time: null
     };
   },
   computed: {
@@ -77,7 +72,8 @@ export default {
     }
   },
   watch: {
-    selectedTime(value) {
+    defaultTime(value) {
+      this.time = value;
       this.$emit('change', value);
     }
   }
