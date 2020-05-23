@@ -1,7 +1,7 @@
 <template>
   <LayoutFixedScrollable>
     <template #content>
-      <div class="z-40 relative">
+      <div class="relative">
         <BaseAppBarHeader title="Blue Delta Settings" :to-link="{ name: 'Settings' }" />
 
         <div class="container px-0 md:px-6">
