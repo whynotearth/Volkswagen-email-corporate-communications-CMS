@@ -1,32 +1,32 @@
 <template>
   <LayoutFixedScrollable>
+    <template #header>
+      <BaseAppBarHeader
+        title="Add Email"
+        :to-link="`/settings/email-lists/${$route.params.groupName}`"
+        :action="{ label: 'Finish', link: '', method: 'addEmail', disabled: $v.email.$invalid }"
+        @addEmail="addEmail"
+      ></BaseAppBarHeader>
+    </template>
     <template #content>
-      <div>
-        <BaseAppBarHeader
-          title="Add Email"
-          :to-link="`/settings/email-lists/${$route.params.groupName}`"
-          :action="{ label: 'Finish', link: '', method: 'addEmail', disabled: $v.email.$invalid }"
-          @addEmail="addEmail"
-        />
-        <div class="container px-6 py-3">
-          <div class="flex flex-wrap items-strech items-center">
-            <label class="w-full text-left mb-2">Add New:</label>
-            <div class="mb-4 w-full">
-              <BaseInputText
-                class="bg-surface text-left"
-                v-model="$v.email.$model"
-                label="Email Subject Line"
-                placeholder="Email Subject Line"
-                :error="$v.email.$dirty && (!$v.email.required || !$v.email.email)"
-              >
-                <span v-if="$v.email.$dirty && !$v.email.required" class="text-xs text-error pl-error-message">
-                  Email is required
-                </span>
-                <span v-if="$v.email.$dirty && !$v.email.email" class="text-xs text-error pl-error-message">
-                  Please enter valid email
-                </span>
-              </BaseInputText>
-            </div>
+      <div class="container px-6 py-3">
+        <div class="flex flex-wrap items-strech items-center">
+          <label class="w-full text-left mb-2">Add New:</label>
+          <div class="mb-4 w-full">
+            <BaseInputText
+              class="bg-surface text-left"
+              v-model="$v.email.$model"
+              label="Email Subject Line"
+              placeholder="Email Subject Line"
+              :error="$v.email.$dirty && (!$v.email.required || !$v.email.email)"
+            >
+              <span v-if="$v.email.$dirty && !$v.email.required" class="text-xs text-error pl-error-message">
+                Email is required
+              </span>
+              <span v-if="$v.email.$dirty && !$v.email.email" class="text-xs text-error pl-error-message">
+                Please enter valid email
+              </span>
+            </BaseInputText>
           </div>
         </div>
       </div>
