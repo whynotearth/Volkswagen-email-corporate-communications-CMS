@@ -57,7 +57,7 @@ import { required } from 'vuelidate/lib/validators';
 import { formatISODate, formatDate, sleep } from '@/helpers.js';
 
 export default {
-  name: 'BlueDeltaRearrange',
+  name: 'DraftEmail',
   components: { Article, BaseButton, EmailPreview, LayoutFixedScrollable, BaseAppBarHeader, NavigationBottom },
   props: {
     id: {
