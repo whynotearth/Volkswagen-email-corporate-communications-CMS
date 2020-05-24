@@ -11,6 +11,7 @@
       :id="idName"
       :value="value"
       @blur="$emit('input', $event.target.value)"
+      @input="onInput"
       :placeholder="placeholder || label"
     ></textarea>
     <label
@@ -20,7 +21,18 @@
     >
       {{ label }}
     </label>
-    <slot></slot>
+    <div>
+      <div class="flex justify-between">
+        <div><slot></slot></div>
+        <div
+          v-if="model && model.maxLength"
+          class="tg-caption-mobile"
+          :class="[value.length > model.$params.maxLength.max ? 'text-error' : 'text-gray-500']"
+        >
+          {{ value.length }} / {{ model.$params.maxLength.max }}
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -47,12 +59,20 @@ export default {
     idName: {
       type: String,
       default: randomId
+    },
+    model: {
+      type: Object
     }
   },
   data() {
     return {
       labelClicked: false
     };
+  },
+  methods: {
+    onInput($event) {
+      this.$emit('input', $event.target.value);
+    }
   }
 };
 </script>

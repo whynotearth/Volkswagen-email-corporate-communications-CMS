@@ -8,6 +8,7 @@
         :label="stringHeadlineByCategoryName"
         :placeholder="stringHeadlineByCategoryName"
         :error="$v.headline.$dirty && $v.headline.$invalid"
+        :model="$v.headline"
       >
         <span v-if="$v.headline.$dirty && !$v.headline.required" class="text-xs text-error pl-error-message">
           {{ stringHeadlineByCategoryName }} is required
@@ -17,13 +18,15 @@
         </span>
       </BaseInputText>
 
-      <BaseInputTextarea
-        v-if="isFieldVisible('description')"
-        class="body-1-mobile bg-surface"
-        v-model="$v.description.$model"
-        :label="stringDescriptionByCategoryName"
+      <BaseEditor
+        class="mb-4 body-1-mobile bg-surface"
+        :error="
+          $v.description.$dirty && ($v.description.$invalid || !$v.description.required || !$v.description.maxLength)
+        "
         :placeholder="isAnswersCategory ? stringDescriptionByCategoryName : 'Put the content of your article here.'"
-        :error="$v.description.$dirty && $v.description.$invalid"
+        v-if="isFieldVisible('description')"
+        v-model="$v.description.$model"
+        :model="$v.description"
       >
         <span v-if="$v.description.$dirty && !$v.description.required" class="text-xs text-error pl-error-message">
           {{ stringDescriptionByCategoryName }} is required
@@ -31,23 +34,7 @@
         <span v-if="$v.description.$dirty && !$v.description.maxLength" class="text-xs text-error pl-error-message">
           {{ stringDescriptionByCategoryName }} should be less than 750 characters
         </span>
-      </BaseInputTextarea>
-
-      <BaseInputText
-        v-if="isFieldVisible('price')"
-        class="bg-surface mb-4"
-        v-model="$v.price.$model"
-        label="Price"
-        placeholder="Price"
-        :error="$v.price.$dirty && $v.price.$invalid"
-      >
-        <span v-if="$v.price.$dirty && !$v.price.required" class="text-xs text-error pl-error-message">
-          Price is required
-        </span>
-        <span v-if="$v.price.$dirty && !$v.price.decimal" class="text-xs text-error pl-error-message">
-          Price is not a valid number
-        </span>
-      </BaseInputText>
+      </BaseEditor>
 
       <BaseInputText
         v-if="isFieldVisible('eventDate')"
@@ -73,7 +60,7 @@
 
 <script>
 import BaseInputText from '@/components/BaseInputText.vue';
-import BaseInputTextarea from '@/components/BaseInputTextarea.vue';
+import BaseEditor from '@/components/Editor/BaseEditor.vue';
 import ImageUpload from '@/components/ImageUpload/ImageUpload.vue';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
 import { required, decimal, maxLength, requiredIf } from 'vuelidate/lib/validators';
@@ -87,7 +74,7 @@ export default {
   name: 'ArticleAddStep2',
   components: {
     BaseInputText,
-    BaseInputTextarea,
+    BaseEditor,
     ImageUpload
   },
   validations: {
@@ -103,12 +90,6 @@ export default {
       }),
       maxLength: maxLength(750)
     },
-    price: {
-      required: requiredIf(context => {
-        return context.isFieldVisible('price');
-      }),
-      decimal
-    },
     eventDate: {
       mustBeDate: value => mustBeDate({ value })
     }
@@ -122,7 +103,6 @@ export default {
       'update_headline',
       'update_description',
       'update_date',
-      'update_price',
       'update_eventDate',
       'update_image'
     ]),
@@ -131,7 +111,7 @@ export default {
       let isVisible = false;
       switch (categoryName) {
         case 'Events':
-          isVisible = ['headline', 'description', 'price', 'eventDate', 'image'].includes(fieldName);
+          isVisible = ['headline', 'description', 'eventDate', 'image'].includes(fieldName);
           break;
         case 'One Team':
         case 'Answers At A Glance':
@@ -154,7 +134,6 @@ export default {
     ...mapGetters('article', [
       'get_headline',
       'get_description',
-      'get_price',
       'get_eventDate',
       'get_image',
       'get_selected_category',
@@ -185,14 +164,6 @@ export default {
         this.update_description(value);
       }
     },
-    price: {
-      get() {
-        return this.get_price;
-      },
-      set(value) {
-        this.update_price(value);
-      }
-    },
     eventDate: {
       get() {
         return this.get_eventDate;
@@ -206,8 +177,6 @@ export default {
         return [this.get_image];
       },
       set(value) {
-        console.log('value', value);
-
         let image = {};
         try {
           image = value[0];

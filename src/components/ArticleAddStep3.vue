@@ -47,7 +47,7 @@
               {{ get_headline }}
             </div>
             <div class="w-1/2 tg-body-mobile text-black em-high whitespace-pre-line break-words flex-grow order-2">
-              {{ get_description }}
+              <BaseEditorPreview :content="get_description" />
             </div>
             <div v-if="get_image.url" class="order-1 mb-4 sm:mb-0 w-1/2 sm:order-3 flex-shrink-0 w-full sm:w-1/2">
               <img class="w-full" :src="get_image.url" />
@@ -67,10 +67,11 @@ import BaseDropdown from '@/components/BaseDropdown';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
 import { mustBeDate } from '@/validations.js';
 import { formatDate } from '@/helpers.js';
+import BaseEditorPreview from '@/components/Editor/BaseEditorPreview.vue';
 
 export default {
   name: 'ArticleAddStep3',
-  components: { BaseDropdown },
+  components: { BaseDropdown, BaseEditorPreview },
   props: {
     error: {
       type: Boolean,

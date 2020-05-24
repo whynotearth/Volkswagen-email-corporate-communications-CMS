@@ -41,7 +41,6 @@ export default {
       'get_date',
       'get_headline',
       'get_description',
-      'get_price',
       'get_eventDate',
       'get_image',
       'get_selected_category'
@@ -101,12 +100,10 @@ export default {
         body: {
           date: date_time,
           categorySlug: this.get_selected_category.slug,
-          image: this.get_image,
+          image: this.get_image && this.get_image.url ? this.get_image : undefined,
           headline: this.get_headline,
           description: this.get_description,
-          price: this.get_price,
-          eventDate: event_date_time,
-          images: this.get_images
+          eventDate: event_date_time
         }
       };
       this.add_article({ params })

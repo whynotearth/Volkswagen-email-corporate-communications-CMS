@@ -23,12 +23,24 @@
           :value="value"
           @blur="onBlur"
           @focus="onFocus"
+          @input="onInput"
           :placeholder="placeholder || label"
         />
       </div>
     </div>
 
-    <slot></slot>
+    <div>
+      <div class="flex justify-between">
+        <div><slot></slot></div>
+        <div
+          v-if="model"
+          class="text-xs"
+          :class="[value.length > model.$params.maxLength.max ? 'text-error' : 'text-gray-500']"
+        >
+          {{ value.length }} / {{ model.$params.maxLength.max }}
+        </div>
+      </div>
+    </div>
 
     <label
       v-show="!$slots.iconBefore"
@@ -72,6 +84,9 @@ export default {
     hasBorder: {
       type: Boolean,
       default: true
+    },
+    model: {
+      type: Object
     }
   },
   data() {
@@ -87,6 +102,9 @@ export default {
     },
     onFocus($event) {
       this.isFocused = true;
+    },
+    onInput($event) {
+      this.$emit('input', $event.target.value);
     }
   }
 };
