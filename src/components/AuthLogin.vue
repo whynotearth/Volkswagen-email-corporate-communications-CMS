@@ -8,6 +8,7 @@
           label="Email"
           placeholder="Email"
           :error="$v.email.$dirty && (!$v.email.required || !$v.email.email)"
+          @keyup.enter.native="submit()"
         >
           <span v-if="$v.email.$dirty && !$v.email.required" class="text-xs text-error pl-error-message">
             Email is required
@@ -25,6 +26,7 @@
           placeholder="Password"
           type="password"
           :error="$v.password.$dirty && !$v.password.required"
+          @keyup.enter.native="submit()"
         >
           <span v-if="$v.password.$dirty && !$v.password.required" class="text-xs text-error pl-error-message">
             Password is required
@@ -42,6 +44,7 @@
           class="bg-secondary w-full hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline transition duration-100 ease-in-out transition-all label-mobile"
           type="button"
           @click="submit()"
+          @keyup.enter="submit()"
         >
           Log In
         </button>
