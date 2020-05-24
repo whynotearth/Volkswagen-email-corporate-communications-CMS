@@ -18,26 +18,37 @@
       {{ article.headline | truncate }}
     </div>
     <!-- Disabled for MVP -->
-    <!-- <div class="my-auto text-right relative outline-none">
-        <More class="cursor-pointer" @click.stop.prevent="toggleMenu" />
-        <div v-show="menu" class="absolute top-0 right-0 text-left bg-white shadow-8dp rounded-md mr-5 py-2 text-base">
-          <router-link to="/edit" class="block py-2 px-4 leading-5 hover:text-secondary cursor-pointer">
-            Edit
-          </router-link>
-          <router-link to="/delete" class="block py-2 px-4 leading-5 hover:text-error cursor-pointer">
-            Delete
-          </router-link>
-        </div>
-      </div> -->
+    <div class="my-auto text-right relative outline-none">
+      <More class="cursor-pointer" @click.stop.prevent="toggleMenu" />
+      <div
+        v-show="menu"
+        :id="`modal${_uid}`"
+        class="absolute top-0 right-0 text-left bg-white shadow-8dp rounded-md mr-5 py-2 text-base"
+      >
+        <router-link
+          :to="{ name: 'ArticleListsItem', params: { id: article.id } }"
+          class="block py-2 px-4 leading-5 hover:text-secondary cursor-pointer"
+        >
+          Edit
+        </router-link>
+        <button
+          @click.stop.prevent="$emit('clicked')"
+          class="block py-2 px-4 leading-5 hover:text-error cursor-pointer"
+        >
+          <span v-if="active === -1">Add</span>
+          <span v-else>Delete</span>
+        </button>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-// import More from '@/assets/more.svg';
+import More from '@/assets/more.svg';
 
 export default {
   name: 'Article',
-  // components: { More },
+  components: { More },
   props: {
     article: {
       type: Object
@@ -53,17 +64,17 @@ export default {
     };
   },
   methods: {
-    hideMenu() {
-      this.menu = false;
-    },
-    showMenu() {
-      this.menu = true;
-    },
     toggleMenu() {
+      this.menu = !this.menu;
       if (this.menu) {
-        this.hideMenu();
+        document.addEventListener('click', this.onBodyClick);
       } else {
-        this.showMenu();
+        document.removeEventListener('click', this.onBodyClick);
+      }
+    },
+    onBodyClick() {
+      if (this.menu) {
+        this.toggleMenu();
       }
     }
   },
