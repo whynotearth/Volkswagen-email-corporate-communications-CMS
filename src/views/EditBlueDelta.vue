@@ -68,7 +68,7 @@
             </div>
           </div>
           <div class="text-left">
-            <BaseTimePicker v-model="$v.time.$model" :emailDate="get_email_date" @blur="$v.time.$touch()" />
+            <BaseTimePicker v-model="$v.time.$model" :emailDate="get_email_date" />
             <span v-if="$v.time.$error" class="text-xs text-error">
               Please schedule time.
             </span>
@@ -89,6 +89,7 @@
 import { mapGetters, mapMutations, mapActions } from 'vuex';
 import { required } from 'vuelidate/lib/validators';
 import { sleep, formatDate } from '@/helpers.js';
+import { parseISO } from 'date-fns';
 
 import BaseButton from '@/components/BaseButton.vue';
 import BaseTimePicker from '@/components/BaseTimePicker.vue';
@@ -137,6 +138,7 @@ export default {
     this.fetch_recipients();
     this.update_preview_link();
     this.update_email_recipients(this.get_selected_plan.distributionGroups);
+    this.setDefaultScheduleTime();
   },
   computed: {
     ...mapGetters('email', [
@@ -172,6 +174,11 @@ export default {
     onToSearchChange(query) {
       this.to_query = query;
     },
+    setDefaultScheduleTime() {
+      let time = parseISO(this.get_selected_plan.dateTime);
+      let d = (time.getHours() * 3600 + time.getMinutes() * 60 - time.getTimezoneOffset() * 60) * 1000;
+      this.update_schedule_time(d);
+    },
     updateBlueDelta() {
       this.$v.$touch();
       if (this.$v.$invalid) return false;
@@ -182,7 +189,7 @@ export default {
         body: {
           id: this.id,
           articleIds: this.get_selected_articles.map(article => article.id),
-          dateTime: this.time ? total_time : this.get_email_date,
+          dateTime: total_time,
           distributionGroups: this.get_email_recipients
         }
       };
