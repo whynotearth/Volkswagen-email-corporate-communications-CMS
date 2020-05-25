@@ -68,7 +68,7 @@
             </div>
           </div>
           <div class="text-left">
-            <BaseTimePicker v-model="$v.time.$model" :emailDate="get_email_date" :defaultTime="get_schedule_time" />
+            <BaseTimePicker v-model="$v.time.$model" :emailDate="get_email_date" />
             <span v-if="$v.time.$error" class="text-xs text-error">
               Please schedule time.
             </span>
