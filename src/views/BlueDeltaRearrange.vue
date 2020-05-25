@@ -116,7 +116,7 @@ export default {
         body: {
           id: this.id,
           articleIds: this.get_selected_articles.map(article => article.id),
-          dateTime: this.get_schedule_time ? total_time : this.get_email_date,
+          dateTime: total_time,
           distributionGroups: this.get_email_recipients
         }
       };

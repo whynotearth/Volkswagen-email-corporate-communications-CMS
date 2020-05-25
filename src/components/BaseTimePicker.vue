@@ -69,12 +69,20 @@ export default {
       minutes = minutes < 10 ? '0' + minutes : minutes;
 
       return hours + ':' + minutes;
+    },
+    updateValue() {
+      this.$emit('change', this.time);
     }
   },
   watch: {
-    defaultTime(value) {
-      this.time = value;
-      this.$emit('change', value);
+    time() {
+      this.updateValue();
+    },
+    defaultTime: {
+      immediate: true,
+      handler() {
+        this.time = this.defaultTime;
+      }
     }
   }
 };
