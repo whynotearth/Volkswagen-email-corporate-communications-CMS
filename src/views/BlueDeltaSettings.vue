@@ -196,7 +196,7 @@ export default {
       }
       return time;
     },
-    dateTimezon() {
+    dateTimezone() {
       let now = new Date();
       return now.getTimezoneOffset() * 60000;
     }
@@ -244,7 +244,7 @@ export default {
       if (typeof value === 'string') {
         const hoursMillisecond = parseInt(value.split(':')[0]) * 3600 * 1000;
         const minuteMillisecond = parseInt(value.split(':')[1]) * 60 * 1000;
-        return hoursMillisecond + minuteMillisecond - this.dateTimezon;
+        return hoursMillisecond + minuteMillisecond - this.dateTimezone;
       }
       return value;
     },
@@ -296,7 +296,7 @@ export default {
       if (isNaN(this.get_send_time)) {
         this.update_send_time(this.timeToMillisecond(this.get_send_time));
       }
-      const time = this.millisecondToTime(this.get_send_time + this.dateTimezon);
+      const time = this.millisecondToTime(this.get_send_time + this.dateTimezone);
       const params = {
         body: {
           distributionGroups: this.get_distribution_groups,
