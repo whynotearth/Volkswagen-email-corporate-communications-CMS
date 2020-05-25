@@ -10,7 +10,8 @@
       <div class="min-h-full relative bg-background">
         <BaseDropdown
           class="relative bg-surface text-left container px-0 md:px-6"
-          :dropDownClasses="'dropdown-top-auto'"
+          :optionContainerClasses="'dropdown-top-auto'"
+          :dropdownContainerClasses="'dropdown-border-0'"
           placeholder="Choose Type"
           :options="get_categories.filter(category => category.slug !== 'community')"
           v-model="$v.selected_category.$model"
@@ -98,7 +99,8 @@ export default {
       'get_description',
       'get_eventDate',
       'get_image',
-      'get_selected_category'
+      'get_selected_category',
+      'get_excerpt'
     ]),
     selected_category: {
       get() {
@@ -124,7 +126,8 @@ export default {
           image: this.get_image && this.get_image.url ? this.get_image : undefined,
           headline: this.get_headline,
           description: this.get_description,
-          eventDate: event_date_time
+          eventDate: event_date_time,
+          excerpt: this.get_excerpt
         }
       };
       this.add_article({ params })
