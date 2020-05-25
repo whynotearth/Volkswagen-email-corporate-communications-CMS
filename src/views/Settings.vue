@@ -1,46 +1,46 @@
 <template>
   <LayoutFixedScrollable>
+    <template #header>
+      <BaseAppBarHeader title="Settings" :to-link="{ name: 'Dashboard' }"></BaseAppBarHeader>
+    </template>
     <template #content>
-      <div>
-        <BaseAppBarHeader title="Settings" :to-link="{ name: 'Dashboard' }" />
-        <div class="container px-0 md:px-6">
-          <div class="flex items-strech items-center border-b-1 border-divider">
-            <router-link
-              :to="{ name: 'MyAccount' }"
-              class="link-fordward block flex-grow justify-between flex h-full items-center cursor-pointer select-none px-4 pr-6 py-5"
-            >
-              <span class="mr-2 tg-body-mobile">My Account</span>
-              <ArrowRightIcon />
-            </router-link>
-          </div>
-          <div class="flex items-strech items-center border-b-1 border-divider">
-            <router-link
-              :to="{ name: 'BlueDeltaSettings' }"
-              class="link-fordward block flex-grow justify-between flex h-full items-center cursor-pointer select-none px-4 pr-6 py-5"
-            >
-              <span class="mr-2 tg-body-mobile">Blue Delta Settings</span>
-              <ArrowRightIcon />
-            </router-link>
-          </div>
-          <div class="flex items-strech items-center border-b-1 border-divider">
-            <router-link
-              :to="{ name: 'EmailLists' }"
-              class="link-fordward block flex-grow justify-between flex h-full items-center cursor-pointer select-none px-4 pr-6 py-5"
-            >
-              <span class="mr-2 tg-body-mobile">Distribution Groups</span>
-              <ArrowRightIcon />
-            </router-link>
-          </div>
-          <div class="flex items-strech items-center border-b-1 border-divider">
-            <a
-              @click.prevent="logout()"
-              href="#"
-              class="link-fordward block flex-grow justify-between flex h-full items-center cursor-pointer select-none px-4 pr-6 py-5"
-            >
-              <span class="mr-2 tg-body-mobile text-error">Log Out</span>
-              <ArrowRightIcon />
-            </a>
-          </div>
+      <div class="container px-0 md:px-6">
+        <div class="flex items-strech items-center border-b-1 border-divider">
+          <router-link
+            :to="{ name: 'MyAccount' }"
+            class="link-fordward block flex-grow justify-between flex h-full items-center cursor-pointer select-none px-4 pr-6 py-5"
+          >
+            <span class="mr-2 tg-body-mobile">My Account</span>
+            <ArrowRightIcon />
+          </router-link>
+        </div>
+        <div class="flex items-strech items-center border-b-1 border-divider">
+          <router-link
+            :to="{ name: 'BlueDeltaSettings' }"
+            class="link-fordward block flex-grow justify-between flex h-full items-center cursor-pointer select-none px-4 pr-6 py-5"
+          >
+            <span class="mr-2 tg-body-mobile">Blue Delta Settings</span>
+            <ArrowRightIcon />
+          </router-link>
+        </div>
+        <div class="flex items-strech items-center border-b-1 border-divider">
+          <router-link
+            :to="{ name: 'EmailLists' }"
+            class="link-fordward block flex-grow justify-between flex h-full items-center cursor-pointer select-none px-4 pr-6 py-5"
+          >
+            <span class="mr-2 tg-body-mobile">Distribution Groups</span>
+            <ArrowRightIcon />
+          </router-link>
+        </div>
+        <div class="flex items-strech items-center border-b-1 border-divider">
+          <a
+            @click.prevent="logout()"
+            href="#"
+            class="link-fordward block flex-grow justify-between flex h-full items-center cursor-pointer select-none px-4 pr-6 py-5"
+          >
+            <span class="mr-2 tg-body-mobile text-error">Log Out</span>
+            <ArrowRightIcon />
+          </a>
         </div>
       </div>
     </template>
