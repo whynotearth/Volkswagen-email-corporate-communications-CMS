@@ -24,8 +24,8 @@ export default {
   data() {
     return {
       pageInfo: {
-        title: 'Jump Start',
-        backRoute: '/',
+        title: 'Blue Delta Stats',
+        backRoute: '/stats',
         listItemDetailPath: 'ActivityFeedJumpStartItem'
       }
     };

@@ -12,7 +12,7 @@ export default {
     return {
       pageInfo: {
         title: 'Memo Stats',
-        backRoute: '/',
+        backRoute: '/stats',
         listItemDetailPath: 'ActivityFeedMemoItem'
       }
     };
