@@ -1,5 +1,5 @@
 <template>
-  <BaseDropdown class="relative dropdown-text__align-left border-t" placeholder="" :options="time_slots" v-model="time">
+  <BaseDropdown class="relative dropdown-text__align-left border-t" :options="time_slots" v-model="time">
     <template #title="{ selectedOption }">
       <span v-if="time_slots.length === 0" class="text-gray-500">
         No time slots!
@@ -32,13 +32,23 @@ export default {
     prop: 'value',
     event: 'change'
   },
-  props: ['emailDate', 'defaultTime'],
-  data() {
-    return {
-      time: null
-    };
+  props: {
+    value: {
+      type: [String, Date, Number]
+    },
+    emailDate: {
+      type: [String, Date, Number]
+    }
   },
   computed: {
+    time: {
+      get() {
+        return this.value;
+      },
+      set(val) {
+        this.$emit('change', val);
+      }
+    },
     time_slots() {
       let time = [];
       if (this.emailDate) {
@@ -69,20 +79,6 @@ export default {
       minutes = minutes < 10 ? '0' + minutes : minutes;
 
       return hours + ':' + minutes;
-    },
-    updateValue() {
-      this.$emit('change', this.time);
-    }
-  },
-  watch: {
-    time() {
-      this.updateValue();
-    },
-    defaultTime: {
-      immediate: true,
-      handler() {
-        this.time = this.defaultTime;
-      }
     }
   }
 };
