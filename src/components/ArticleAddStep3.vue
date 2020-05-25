@@ -1,8 +1,8 @@
 <template>
   <div class="flex flex-col">
-    <div class="container md:px-2 px-0 select-none border-t">
+    <div class="container px-4 md:px-6 select-none">
       <BaseDropdown
-        class="relative bg-surface text-left"
+        class="relative bg-surface text-left border-t"
         placeholder="Schedule time"
         :options="dates"
         v-model="$v.date.$model"

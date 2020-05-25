@@ -9,7 +9,7 @@
     <template #content>
       <div class="min-h-full relative bg-background">
         <BaseDropdown
-          class="relative bg-surface text-left"
+          class="relative bg-surface text-left container px-0 md:px-6"
           :dropDownClasses="'dropdown-top-auto'"
           placeholder="Choose Type"
           :options="get_categories.filter(category => category.slug !== 'community')"
