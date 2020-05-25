@@ -89,6 +89,7 @@
 import { mapGetters, mapMutations, mapActions } from 'vuex';
 import { required } from 'vuelidate/lib/validators';
 import { sleep, formatDate } from '@/helpers.js';
+import { parseISO } from 'date-fns';
 
 import BaseButton from '@/components/BaseButton.vue';
 import BaseTimePicker from '@/components/BaseTimePicker.vue';
@@ -174,10 +175,8 @@ export default {
       this.to_query = query;
     },
     setDefaultScheduleTime() {
-      let d = new Date(this.get_selected_plan.dateTime);
-      let dtzOffset = d.getTimezoneOffset() * 60000;
-      d = d.getTime();
-      d = d - dtzOffset;
+      let time = parseISO(this.get_selected_plan.dateTime);
+      let d = (time.getHours() * 3600 + time.getMinutes() * 60 - time.getTimezoneOffset() * 60) * 1000;
       this.update_schedule_time(d);
     },
     updateBlueDelta() {
