@@ -1,9 +1,10 @@
 <template>
   <LayoutFixedScrollable>
+    <template #header>
+      <BaseAppBarHeader title="Blue Delta Settings" :to-link="{ name: 'Settings' }"></BaseAppBarHeader>
+    </template>
     <template #content>
-      <div class="z-40 relative">
-        <BaseAppBarHeader title="Blue Delta Settings" :to-link="{ name: 'Settings' }" />
-
+      <div class="relative">
         <div class="container px-0 md:px-6">
           <div class="flex justify-between text-left py-6 px-4 mt-2">
             <div class="">Send email automatically</div>

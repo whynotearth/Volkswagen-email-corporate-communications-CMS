@@ -40,8 +40,6 @@ export default {
       content: this.value,
       configs: {
         status: [
-          'lines',
-          'words',
           {
             className: 'max-length',
             onUpdate: el => {

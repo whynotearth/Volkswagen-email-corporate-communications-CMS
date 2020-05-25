@@ -1,45 +1,44 @@
 <template>
   <LayoutFixedScrollable>
+    <template #header>
+      <BaseAppBarHeader title="Import" to-link="/settings/email-lists"></BaseAppBarHeader>
+    </template>
     <template #content>
-      <div>
-        <BaseAppBarHeader title="Import" to-link="/settings/email-lists" />
+      <div class="container px-0 md:px-6">
+        <div class="text-left py-6 px-4">
+          <p class="mb-6">
+            Please upload your contact file below. A template file can be downloaded
+            <router-link class="text-secondary underline" :to="{ name: 'EmailListImportHelp' }">here</router-link>.
+          </p>
 
-        <div class="container px-0 md:px-6">
-          <div class="text-left py-6 px-4">
-            <p class="mb-6">
-              Please upload your contact file below. A template file can be downloaded
-              <router-link class="text-secondary underline" :to="{ name: 'EmailListImportHelp' }">here</router-link>.
-            </p>
-
-            <!-- uploader -->
+          <!-- uploader -->
+          <div class="mb-6">
+            <div class="pb-6">
+              <BaseInputFile
+                :error="Boolean(error)"
+                :files="files"
+                placeholder="Upload Files"
+                accepts=".csv"
+                @change="onChangeFile"
+              >
+                <template v-if="error" #error>
+                  <span class="text-xs text-error pl-error-message">
+                    {{ error }}
+                  </span>
+                </template>
+              </BaseInputFile>
+            </div>
             <div class="mb-6">
-              <div class="pb-6">
-                <BaseInputFile
-                  :error="Boolean(error)"
-                  :files="files"
-                  placeholder="Upload Files"
-                  accepts=".csv"
-                  @change="onChangeFile"
-                >
-                  <template v-if="error" #error>
-                    <span class="text-xs text-error pl-error-message">
-                      {{ error }}
-                    </span>
-                  </template>
-                </BaseInputFile>
-              </div>
-              <div class="mb-6">
-                <div class="max-w-xs mx-auto">
-                  <div class=" mx-12">
-                    <button
-                      :class="{ 'bg-gray': !files }"
-                      class="bg-secondary w-full block hover:bg-blue-500 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline transition duration-100 ease-in-out transition-all label-mobile"
-                      type="button"
-                      @click="submit()"
-                    >
-                      Import New Group
-                    </button>
-                  </div>
+              <div class="max-w-xs mx-auto">
+                <div class=" mx-12">
+                  <button
+                    :class="{ 'bg-gray': !files }"
+                    class="bg-secondary w-full block hover:bg-blue-500 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline transition duration-100 ease-in-out transition-all label-mobile"
+                    type="button"
+                    @click="submit()"
+                  >
+                    Import New Group
+                  </button>
                 </div>
               </div>
             </div>

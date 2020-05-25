@@ -1,39 +1,37 @@
 <template>
   <LayoutFixedScrollable>
+    <template #header>
+      <BaseAppBarHeader
+        class="sticky top-0 bg-white"
+        title="Rearrange Blue Delta "
+        :to-link="id ? { name: 'EditBlueDelta', params: { id: id } } : { name: 'AddBlueDelta', params: { date: date } }"
+      ></BaseAppBarHeader>
+    </template>
     <template #content>
-      <div>
-        <BaseAppBarHeader
-          class="sticky top-0 bg-white"
-          title="Rearrange Blue Delta "
-          :to-link="
-            id ? { name: 'EditBlueDelta', params: { id: id } } : { name: 'AddBlueDelta', params: { date: date } }
-          "
-        />
-        <div class="flex mb-40">
-          <div class="flex-grow">
-            <div class="container px-4 text-left h-full">
-              <div class="my-4 w-full">
-                <EmailPreview @error="$v.$touch()" />
-              </div>
-              <h2 class="text-primary font-bold text-xl">Rearrange the Jumpstart</h2>
-              <p v-if="get_response_message.message" class="font-bold" :class="get_response_message.class">
-                {{ get_response_message.message }}
-              </p>
-              <span v-if="$v.get_selected_articles.$error" class="text-xs text-error">
-                Please select atleast one article.
-              </span>
-              <div class="md:px-12 py-4 text-center">
-                <BaseButton @selectButton="updateBlueDelta" class="w-full sm:w-1/2" bgType="secondary">Save</BaseButton>
-              </div>
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-4">
-                <Article
-                  v-for="(article, index) in get_available_articles"
-                  :key="index"
-                  :article="article"
-                  @clicked="selectArticle(article)"
-                  :active="isActive(article)"
-                />
-              </div>
+      <div class="flex mb-40">
+        <div class="flex-grow">
+          <div class="container px-4 text-left h-full">
+            <div class="my-4 w-full">
+              <EmailPreview @error="$v.$touch()" />
+            </div>
+            <h2 class="text-primary font-bold text-xl">Rearrange the Jumpstart</h2>
+            <p v-if="get_response_message.message" class="font-bold" :class="get_response_message.class">
+              {{ get_response_message.message }}
+            </p>
+            <span v-if="$v.get_selected_articles.$error" class="text-xs text-error">
+              Please select atleast one article.
+            </span>
+            <div class="md:px-12 py-4 text-center">
+              <BaseButton @selectButton="updateBlueDelta" class="w-full sm:w-1/2" bgType="secondary">Save</BaseButton>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-4">
+              <Article
+                v-for="(article, index) in get_available_articles"
+                :key="index"
+                :article="article"
+                @clicked="selectArticle(article)"
+                :active="isActive(article)"
+              />
             </div>
           </div>
         </div>
