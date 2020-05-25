@@ -31,11 +31,10 @@ import BaseDropdown from '@/components/BaseDropdown';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
 import { mustBeDate } from '@/validations.js';
 import { formatDate } from '@/helpers.js';
-import BaseEditorPreview from '@/components/Editor/BaseEditorPreview.vue';
 
 export default {
   name: 'ArticleAddStep3',
-  components: { BaseDropdown, BaseEditorPreview },
+  components: { BaseDropdown },
   props: {
     error: {
       type: Boolean,
