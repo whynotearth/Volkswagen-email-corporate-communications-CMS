@@ -73,6 +73,9 @@
               Please schedule time.
             </span>
           </div>
+          <p v-if="get_response_message.message" class="font-bold py-6 text-left" :class="get_response_message.class">
+            {{ get_response_message.message }}
+          </p>
           <div class="md:px-12 py-4">
             <BaseButton @selectButton="updateBlueDelta" class="w-full sm:w-1/2" bgType="secondary">Save</BaseButton>
           </div>
@@ -140,13 +143,21 @@ export default {
     this.update_email_recipients(this.get_selected_plan.distributionGroups);
     this.setDefaultScheduleTime();
   },
+  destroyed() {
+    this.update_response_message({
+      message: '',
+      type: '',
+      class: ''
+    });
+  },
   computed: {
     ...mapGetters('email', [
       'get_email_recipients',
       'get_schedule_time',
       'get_selected_articles',
       'get_email_date',
-      'get_selected_plan'
+      'get_selected_plan',
+      'get_response_message'
     ]),
     ...mapGetters('recipient', ['get_recipients_available']),
     email_recipients: {
@@ -167,7 +178,12 @@ export default {
     }
   },
   methods: {
-    ...mapMutations('email', ['update_email_recipients', 'update_schedule_time', 'update_email_date']),
+    ...mapMutations('email', [
+      'update_email_recipients',
+      'update_schedule_time',
+      'update_email_date',
+      'update_response_message'
+    ]),
     ...mapActions('recipient', ['fetch_recipients']),
     ...mapActions('email', ['create_jumpstart', 'update_preview_link', 'clear_email_data']),
     formatDate,
