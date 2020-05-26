@@ -81,12 +81,10 @@ export default {
       return plan && isToday(parseISO(plan.dateTime)) && plan.articles.length;
     },
     title() {
-      /* eslint-disable */
       return this.isTodayArticles
         ? // eslint-disable-next-line
           "Hi Xavier, here's your Jumpstart email for the day."
         : 'Hi Xavier, there’s no Blue Delta scheduled for today';
-      /* eslint-enable */
     }
   }
 };
