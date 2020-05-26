@@ -1,6 +1,6 @@
 <template>
   <div>
-    <form ref="form" name="Login" @keyup.enter="submit($event)" @submit.prevent="" class="pt-6 pb-8 mb-4 text-left">
+    <form ref="form" name="Login" @submit.prevent="" class="pt-6 pb-8 mb-4 text-left">
       <div class="mb-4">
         <BaseInputText
           class="bg-surface"
@@ -103,8 +103,7 @@ export default {
     updateActiveState(value) {
       this.$store.dispatch('auth/updateActiveState', value);
     },
-    submit(event) {
-      event.preventDefault();
+    submit() {
       this.$v.$touch();
       if (this.$v.$invalid) {
         return false;
