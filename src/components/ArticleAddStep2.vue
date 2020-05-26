@@ -53,9 +53,6 @@
         <span v-if="$v.description.$dirty && !$v.description.required" class="text-xs text-error pl-error-message">
           {{ stringDescriptionByCategoryName }} is required
         </span>
-        <span v-if="$v.description.$dirty && !$v.description.maxLength" class="text-xs text-error pl-error-message">
-          {{ stringDescriptionByCategoryName }} should be less than 750 characters
-        </span>
       </BaseEditor>
 
       <BaseInputText
