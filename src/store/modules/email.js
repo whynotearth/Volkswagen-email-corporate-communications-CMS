@@ -1,5 +1,5 @@
 import { JumpStartService } from '@whynotearth/meredith-axios';
-import { BASE_API } from '@/connection/api.js';
+import qs from 'qs';
 import { debounce } from 'lodash-es';
 import store from '@/store';
 
@@ -60,12 +60,19 @@ export default {
         state.preview_link = payload;
         return false;
       }
-      const base = `${BASE_API}/api/v0/volkswagen/jumpstart/${state.selected_plan.dateTime}/preview`;
-      const url = new URL(base);
-      state.selected_articles.forEach(article => {
-        url.searchParams.append('articleIds', article.id);
+      const data = {
+        params: {
+          date: state.selected_plan.dateTime,
+          articleIds: state.selected_articles.map(article => article.id)
+        }
+      };
+      JumpStartService.preview(data.params, {
+        paramsSerializer: params => {
+          return qs.stringify(params);
+        }
+      }).then(response => {
+        state.preview_link = response;
       });
-      state.preview_link = url.href;
     },
     async fetch_daily_plan({ commit }) {
       const data = await JumpStartService.dailyplan();
