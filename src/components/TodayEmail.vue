@@ -82,7 +82,8 @@ export default {
     },
     title() {
       return this.isTodayArticles
-        ? "Hi Xavier, here's your Jumpstart email for the day."
+        ? // eslint-disable-next-line
+          "Hi Xavier, here's your Jumpstart email for the day."
         : 'Hi Xavier, there’s no Blue Delta scheduled for today';
     }
   }
