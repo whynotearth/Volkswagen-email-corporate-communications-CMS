@@ -22,7 +22,7 @@
       <ImageUpload v-if="isFieldVisible('image')" v-model="images" :defaultImages="images" />
 
       <BaseInputTextArea
-        v-if="isFieldVisible('excerpt')"
+        v-if="isFieldVisible('excerpt') && !isImagesEmpty"
         class="bg-surface my-4"
         v-model="$v.excerpt.$model"
         label="Excerpt"
@@ -98,28 +98,30 @@ export default {
     ImageUpload,
     BaseInputTextArea
   },
-  validations: {
-    headline: {
-      required: requiredIf(context => {
-        return context.isFieldVisible('headline');
-      }),
-      maxLength: maxLength(80)
-    },
-    description: {
-      required: requiredIf(context => {
-        return context.isFieldVisible('description');
-      }),
-      maxLength: maxLength(450)
-    },
-    eventDate: {
-      mustBeDate: value => mustBeDate({ value })
-    },
-    excerpt: {
-      required: requiredIf(context => {
-        return context.isFieldVisible('headline');
-      }),
-      maxLength: maxLength(175)
-    }
+  validations() {
+    return {
+      headline: {
+        required: requiredIf(context => {
+          return context.isFieldVisible('headline');
+        }),
+        maxLength: maxLength(80)
+      },
+      description: {
+        required: requiredIf(context => {
+          return context.isFieldVisible('description');
+        }),
+        maxLength: maxLength(this.descriptionMaxLength)
+      },
+      eventDate: {
+        mustBeDate: value => mustBeDate({ value })
+      },
+      excerpt: {
+        required: requiredIf(context => {
+          return context.isFieldVisible('headline') && !this.isImagesEmpty;
+        }),
+        maxLength: maxLength(175)
+      }
+    };
   },
   mounted() {
     this.fetch_categories();
@@ -220,6 +222,14 @@ export default {
       set(value) {
         this.update_excerpt(value);
       }
+    },
+    isImagesEmpty() {
+      return this.images.some(image => {
+        return Object.keys(image).length === 0 && image.constructor === Object;
+      });
+    },
+    descriptionMaxLength() {
+      return this.isImagesEmpty ? 650 : 450;
     }
   }
 };
