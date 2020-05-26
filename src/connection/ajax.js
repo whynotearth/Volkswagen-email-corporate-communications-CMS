@@ -37,7 +37,7 @@ ajax.interceptors.response.use(
       store.commit('auth/logout');
     }
     if (error.response.status === 403) {
-      confirm('Incorrect permissions, please contact your account owner (chris@whynot.earth).');
+      alert('Incorrect permissions, please contact your account owner chris@whynot.earth');
     }
     return Promise.reject(error);
   }
