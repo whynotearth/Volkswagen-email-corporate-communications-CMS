@@ -14,7 +14,7 @@
         </div>
         <div class="w-full flex justify-center flex-shrink-0">
           <div class="py-4">
-            <img class="max-h-full" :src="image.src" alt="image" />
+            <img class="max-h-full" :src="image.url" alt="image" />
           </div>
         </div>
         <div class="bg-white flex-shrink-0">

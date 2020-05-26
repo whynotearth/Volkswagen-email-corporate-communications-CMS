@@ -189,34 +189,36 @@ export default {
     ImageUpload,
     BaseInputTextArea
   },
-  validations: {
-    selected_category: {
-      required
-    },
-    headline: {
-      required: requiredIf(context => {
-        return context.isFieldRequired('headline');
-      }),
-      maxLength: maxLength(80)
-    },
-    description: {
-      required: requiredIf(context => {
-        return context.isFieldRequired('description');
-      }),
-      maxLength: maxLength(750)
-    },
-    eventDate: {
-      mustBeDate: value => mustBeDate({ value })
-    },
-    date: {
-      mustBeDate: value => mustBeDate({ value })
-    },
-    excerpt: {
-      required: requiredIf(context => {
-        return context.isFieldRequired('headline');
-      }),
-      maxLength: maxLength(175)
-    }
+  validations() {
+    return {
+      selected_category: {
+        required
+      },
+      headline: {
+        required: requiredIf(context => {
+          return context.isFieldRequired('headline');
+        }),
+        maxLength: maxLength(80)
+      },
+      description: {
+        required: requiredIf(context => {
+          return context.isFieldRequired('description');
+        }),
+        maxLength: maxLength(this.descriptionMaxLength)
+      },
+      eventDate: {
+        mustBeDate: value => mustBeDate({ value })
+      },
+      date: {
+        mustBeDate: value => mustBeDate({ value })
+      },
+      excerpt: {
+        required: requiredIf(context => {
+          return context.isFieldRequired('headline');
+        }),
+        maxLength: maxLength(175)
+      }
+    };
   },
   computed: {
     ...mapGetters('article', [
@@ -324,6 +326,15 @@ export default {
       set(value) {
         this.update_excerpt(value);
       }
+    },
+    isImagesEmpty() {
+      return this.images.some(image => {
+        if (image) return Object.keys(image).length === 0 && image.constructor === Object;
+        return true;
+      });
+    },
+    descriptionMaxLength() {
+      return this.isImagesEmpty ? 625 : 450;
     }
   },
   created() {

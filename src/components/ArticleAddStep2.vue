@@ -225,11 +225,12 @@ export default {
     },
     isImagesEmpty() {
       return this.images.some(image => {
-        return Object.keys(image).length === 0 && image.constructor === Object;
+        if (image) return Object.keys(image).length === 0 && image.constructor === Object;
+        return true;
       });
     },
     descriptionMaxLength() {
-      return this.isImagesEmpty ? 650 : 450;
+      return this.isImagesEmpty ? 625 : 450;
     }
   }
 };

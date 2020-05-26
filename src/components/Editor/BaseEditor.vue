@@ -1,7 +1,7 @@
 <template>
   <div class="relative" :class="[error ? 'markdown-error' : 'markdown-grey']">
     <MarkDownStyle>
-      <vue-simplemde v-model="content" :configs="configs" ref="markdownEditor" />
+      <vue-simplemde v-model="content" :key="key" :configs="configs" ref="markdownEditor" />
     </MarkDownStyle>
     <div class="flex items-center error absolute bottom-0 left-0">
       <slot></slot>
@@ -38,6 +38,7 @@ export default {
   data() {
     return {
       content: this.value,
+      key: 1,
       configs: {
         status: [
           {
@@ -79,6 +80,15 @@ export default {
       immediate: true,
       handler() {
         this.content = this.value;
+      }
+    },
+    model: {
+      immediate: true,
+      deep: true,
+      handler() {
+        this.key = Math.random()
+          .toString(36)
+          .substr(2, 9);
       }
     }
   }
