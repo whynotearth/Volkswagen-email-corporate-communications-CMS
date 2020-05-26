@@ -280,6 +280,8 @@ export default {
         return [this.get_image];
       },
       set(value) {
+        console.log(value);
+
         let image = {};
         try {
           image = value[0];
@@ -364,6 +366,14 @@ export default {
       this.update_date(this.selectedArticle.date);
       this.update_eventDate(formatDate(this.selectedArticle.eventDate));
       this.update_date(formatDate(this.selectedArticle.date));
+      if (this.selectedArticle.image) {
+        this.images = [
+          {
+            url: this.selectedArticle.image
+          }
+        ];
+      }
+      this.update_excerpt(this.selectedArticle.excerpt);
     },
     isFieldRequired(fieldName) {
       if (!this.selectedArticle) {
