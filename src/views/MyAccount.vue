@@ -1,8 +1,10 @@
 <template>
   <LayoutFixedScrollable>
+    <template #header>
+      <BaseAppBarHeader title="My Account" :to-link="{ name: 'Settings' }"></BaseAppBarHeader>
+    </template>
     <template #content>
       <div>
-        <BaseAppBarHeader title="My Account" :to-link="{ name: 'Settings' }" />
         <div class="bg-brand-gradient ">
           <BaseUserAccountCard class="w-full relative container px-0 py-8" />
         </div>

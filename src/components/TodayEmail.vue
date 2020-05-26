@@ -28,6 +28,9 @@ import { formatISODate, formatDate } from '@/helpers.js';
 export default {
   name: 'TodaysEmail',
   components: { BaseButton, BaseCounter, EmailPreview },
+  beforeMount() {
+    this.update_selected_articles();
+  },
   mounted() {
     this.fetch_daily_plan()
       .then(() => {
@@ -41,6 +44,9 @@ export default {
         this.debounced_preview();
       })
       .catch();
+  },
+  destroyed() {
+    this.update_selected_articles();
   },
   methods: {
     ...mapActions('email', ['debounced_preview', 'fetch_daily_plan', 'update_selected_articles']),

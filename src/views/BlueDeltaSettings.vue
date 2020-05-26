@@ -1,9 +1,10 @@
 <template>
   <LayoutFixedScrollable>
+    <template #header>
+      <BaseAppBarHeader title="Blue Delta Settings" :to-link="{ name: 'Settings' }"></BaseAppBarHeader>
+    </template>
     <template #content>
-      <div class="z-40 relative">
-        <BaseAppBarHeader title="Blue Delta Settings" :to-link="{ name: 'Settings' }" />
-
+      <div class="relative">
         <div class="container px-0 md:px-6">
           <div class="flex justify-between text-left py-6 px-4 mt-2">
             <div class="">Send email automatically</div>
@@ -194,6 +195,10 @@ export default {
         time.push(i);
       }
       return time;
+    },
+    dateTimezone() {
+      let now = new Date();
+      return now.getTimezoneOffset() * 60000;
     }
   },
   mounted() {
@@ -239,7 +244,7 @@ export default {
       if (typeof value === 'string') {
         const hoursMillisecond = parseInt(value.split(':')[0]) * 3600 * 1000;
         const minuteMillisecond = parseInt(value.split(':')[1]) * 60 * 1000;
-        return hoursMillisecond + minuteMillisecond;
+        return hoursMillisecond + minuteMillisecond - this.dateTimezone;
       }
       return value;
     },
@@ -287,11 +292,16 @@ export default {
     },
     updateSettings() {
       if (this.$v.$invalid) return false;
+      // if user not change send time
+      if (isNaN(this.get_send_time)) {
+        this.update_send_time(this.timeToMillisecond(this.get_send_time));
+      }
+      const time = this.millisecondToTime(this.get_send_time + this.dateTimezone);
       const params = {
         body: {
           distributionGroups: this.get_distribution_groups,
           enableAutoSend: this.get_enable_auto_send,
-          sendTime: isNaN(this.get_send_time) ? this.get_send_time : this.millisecondToTime(this.get_send_time)
+          sendTime: time
         }
       };
       this.post_settings({ params })
