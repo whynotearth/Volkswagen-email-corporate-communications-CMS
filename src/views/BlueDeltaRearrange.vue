@@ -30,6 +30,7 @@
                 :key="index"
                 :article="article"
                 @clicked="selectArticle(article)"
+                @removeArticleById="removeItemFromArticleList"
                 :active="isActive(article)"
               />
             </div>
@@ -103,6 +104,16 @@ export default {
     },
     isActive(article) {
       return this.get_selected_articles.indexOf(article);
+    },
+    removeItemFromArticleList(id) {
+      console.log(id);
+      for (var i in this.get_available_articles) {
+        if (this.get_available_articles[i].id == id) {
+          this.get_available_articles.splice(i, 1);
+          return this.get_available_articles;
+        }
+      }
+      return this.get_available_articles;
     },
     updateBlueDelta() {
       this.$v.$touch();
