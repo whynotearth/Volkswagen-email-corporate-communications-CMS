@@ -32,7 +32,7 @@
         />
       </div>
       <ImagePreviewModal
-        v-if="selectedImageInfo.url && selectedImageInfo.index >= 0"
+        v-if="selectedImageInfo && selectedImageInfo.url && selectedImageInfo.index >= 0"
         @deleteImage="deleteImage"
         @resetSelectedImage="resetSelectedImage"
         :image.sync="selectedImageInfo"

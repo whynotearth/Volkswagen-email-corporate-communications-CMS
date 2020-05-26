@@ -204,7 +204,7 @@ export default {
         required: requiredIf(context => {
           return context.isFieldRequired('description');
         }),
-        maxLength: maxLength(this.descriptionMaxLength)
+        maxLength: maxLength(this.isImagesEmpty ? 625 : 450)
       },
       eventDate: {
         mustBeDate: value => mustBeDate({ value })
@@ -332,9 +332,6 @@ export default {
         if (image) return Object.keys(image).length === 0 && image.constructor === Object;
         return true;
       });
-    },
-    descriptionMaxLength() {
-      return this.isImagesEmpty ? 625 : 450;
     }
   },
   created() {

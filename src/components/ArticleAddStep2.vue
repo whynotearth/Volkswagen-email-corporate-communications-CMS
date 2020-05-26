@@ -110,7 +110,7 @@ export default {
         required: requiredIf(context => {
           return context.isFieldVisible('description');
         }),
-        maxLength: maxLength(this.descriptionMaxLength)
+        maxLength: maxLength(this.isImagesEmpty ? 625 : 450)
       },
       eventDate: {
         mustBeDate: value => mustBeDate({ value })
