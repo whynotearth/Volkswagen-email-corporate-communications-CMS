@@ -1,8 +1,8 @@
 <template>
-  <div class="flex flex-col h-full">
-    <div class="container md:px-2 px-0 select-none">
+  <div class="flex flex-col">
+    <div class="container px-4 md:px-6 select-none">
       <BaseDropdown
-        class="relative bg-surface text-left"
+        class="relative bg-surface text-left border-t"
         placeholder="Schedule time"
         :options="dates"
         v-model="$v.date.$model"
@@ -23,42 +23,6 @@
         </template>
       </BaseDropdown>
     </div>
-    <div class="flex flex-grow bg-brand-gradient overflow-y-auto narrow-scrollbars h-full">
-      <div class="container relative px-0 md:px-6 text-left ">
-        <div
-          class="preview-box flex flex-wrap relative bg-white text-black mx-4 my-6 mt-12 p-4 bg-surface border-1"
-          :style="{ borderColor: `#${get_selected_category.color}` }"
-        >
-          <div
-            class="h-6 px-3 border-1 category-tag absolute bg-white border-b-0 rounded rounded-bl-none
-          rounded-br-none tg-caps-title-print"
-            :style="{ borderColor: `#${get_selected_category.color}`, color: `#${get_selected_category.color}` }"
-          >
-            {{ get_selected_category.name }}
-          </div>
-          <div class="flex items-center justify-center w-8 h-8 rounded-full bg-white circle-icon absolute">
-            <img class="m-auto w-4 h-4" :src="get_selected_category.image" />
-          </div>
-          <div class="w-full tg-h2-mobile text-black py-3 hidden sm:block">
-            {{ get_headline }}
-          </div>
-          <div class="flex w-full flex-col sm:flex-row">
-            <div class="w-full tg-h2-mobile text-black py-3 sm:hidden order-2">
-              {{ get_headline }}
-            </div>
-            <div class="w-1/2 tg-body-mobile text-black em-high whitespace-pre-line break-words flex-grow order-2">
-              <BaseEditorPreview :content="get_description" />
-            </div>
-            <div v-if="get_image.url" class="order-1 mb-4 sm:mb-0 w-1/2 sm:order-3 flex-shrink-0 w-full sm:w-1/2">
-              <img class="w-full" :src="get_image.url" />
-            </div>
-          </div>
-        </div>
-        <p v-if="get_response_message.message" class="font-bold px-4 mb-4" :class="get_response_message.class">
-          {{ get_response_message.message }}
-        </p>
-      </div>
-    </div>
   </div>
 </template>
 
@@ -67,11 +31,10 @@ import BaseDropdown from '@/components/BaseDropdown';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
 import { mustBeDate } from '@/validations.js';
 import { formatDate } from '@/helpers.js';
-import BaseEditorPreview from '@/components/Editor/BaseEditorPreview.vue';
 
 export default {
   name: 'ArticleAddStep3',
-  components: { BaseDropdown, BaseEditorPreview },
+  components: { BaseDropdown },
   props: {
     error: {
       type: Boolean,

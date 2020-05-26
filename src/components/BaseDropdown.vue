@@ -3,6 +3,7 @@
     <div
       @click="showDropdown = !showDropdown"
       class="flex flex-grow justify-between items-strech p-5 cursor-pointer border-b-1 border-divider"
+      :class="dropdownContainerClasses"
     >
       <img
         :src="icon"
@@ -25,6 +26,7 @@
     <div
       v-if="showDropdown"
       class="dropdown absolute right-0 left-0 bg-white mt-1 mx-2 md:mx-4 py-2 rounded shadow-8dp overflow-x-hidden overflow-y-auto z-10"
+      :class="optionContainerClasses"
     >
       <div
         class="option p-4 first:rounded-t-lg last:rounded-b-lg cursor-pointer"
@@ -54,7 +56,7 @@ export default {
       default: null
     },
     selectedOption: {
-      type: [String, Date, Number]
+      type: [String, Date, Number, Object]
     },
     options: {
       type: Array,
@@ -65,6 +67,14 @@ export default {
     placeholder: {
       type: String,
       default: 'Select an option'
+    },
+    optionContainerClasses: {
+      type: String,
+      default: ''
+    },
+    dropdownContainerClasses: {
+      type: String,
+      default: ''
     }
   },
   data() {
@@ -104,5 +114,13 @@ export default {
 .option:hover,
 .active {
   background: rgba(3, 179, 249, 0.12);
+}
+
+.dropdown-top-auto {
+  @apply top-auto !important;
+}
+
+.dropdown-border-0 {
+  @apply border-b-0 !important;
 }
 </style>

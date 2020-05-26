@@ -11,7 +11,7 @@
         @opened="onUploaderOpened"
         :uploaderOptions="{
           maxFiles: 1,
-          maxImageWidth: 160
+          maxImageWidth: 560
         }"
       >
         <label class="bg-background m-1 block cursor-pointer" for="add-post-image-upload">
@@ -32,7 +32,7 @@
         />
       </div>
       <ImagePreviewModal
-        v-if="selectedImageInfo.url && selectedImageInfo.index >= 0"
+        v-if="selectedImageInfo && selectedImageInfo.url && selectedImageInfo.index >= 0"
         @deleteImage="deleteImage"
         @resetSelectedImage="resetSelectedImage"
         :image.sync="selectedImageInfo"
@@ -53,6 +53,10 @@ export default {
   props: {
     defaultImages: {
       type: Array
+    },
+    value: {
+      type: Array,
+      required: true
     }
   },
   data() {
@@ -78,6 +82,7 @@ export default {
   methods: {
     deleteImage(index) {
       this.images.splice(index, 1);
+      this.$emit('change', [...this.images]);
     },
     selectImage([url, index]) {
       this.selectedImageInfo.url = url;
@@ -96,6 +101,7 @@ export default {
       if (result.event === 'success') {
         const images = [this.getCloudinaryImageAdaptedObject(result.info)];
         this.images = images;
+        this.$emit('change', [...this.images]);
       }
     },
     getCloudinaryImageAdaptedObject(cloudinaryImageInfo) {
@@ -108,8 +114,7 @@ export default {
     }
   },
   watch: {
-    images(val) {
-      this.$emit('change', [...val]);
+    value(val) {
       this.imagesToPreview = [...val];
     }
   }

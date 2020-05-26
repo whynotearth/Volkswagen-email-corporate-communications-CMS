@@ -1,96 +1,119 @@
 <template>
-  <StepperManager
-    :step="currentStep"
-    :steps="steps"
-    :options="{ submitText: 'Finish', isLastStep: currentStep === steps.length }"
-    @changeStep="changeStep"
-  >
-    <div v-if="currentStep !== 3" class="px-0 overflow-y-auto flex flex-col h-full narrow-scrollbars">
-      <ArticleAddStep1 v-if="currentStep === 1" ref="formStep1" :error="validationError" />
-      <ArticleAddStep2 v-if="currentStep === 2" ref="formStep2" :error="validationError" />
-    </div>
-    <ArticleAddStep3 v-if="currentStep === 3" :error="validationError" />
-  </StepperManager>
+  <LayoutFixedScrollable>
+    <template #header>
+      <BaseAppBarHeader
+        :title="$v.selected_category.$model && $v.selected_category.$model.name ? 'New Post ' : 'Choose Category'"
+        :to-link="{ name: 'Dashboard' }"
+      />
+    </template>
+    <template #content>
+      <div class="min-h-full relative bg-background">
+        <BaseDropdown
+          class="relative bg-surface text-left container px-0 md:px-6"
+          :optionContainerClasses="'dropdown-top-auto'"
+          :dropdownContainerClasses="'dropdown-border-0'"
+          placeholder="Choose Type"
+          :options="get_categories.filter(category => category.slug !== 'community')"
+          v-model="$v.selected_category.$model"
+        >
+          <template #title="{ selectedOption }">
+            <div v-if="!get_categories.filter(category => category.slug !== 'community')">No option found</div>
+            <div v-if="selectedOption && selectedOption.name" class="flex items-center">
+              <div class="w-12 h-12">
+                <img class="p-2" :src="selectedOption.image" alt="" />
+              </div>
+              <div class="flex-auto">
+                <div class="w-full body-1-mobile">{{ selectedOption.name }}</div>
+                <div class="w-full text-xs text-black em-disabled">{{ selectedOption.description }}</div>
+              </div>
+            </div>
+            <div v-else>
+              No category selected
+            </div>
+          </template>
+          <template #option="{ option }">
+            <a @click.prevent="selected_category = option" href="#" class="flex items-center">
+              <div class="w-12 h-12">
+                <img class="p-2" :src="option.image" alt="" />
+              </div>
+              <div class="flex-auto">
+                <div class="w-full body-1-mobile">{{ option.name }}</div>
+                <div class="w-full text-xs text-black em-disabled">{{ option.description }}</div>
+              </div>
+            </a>
+          </template>
+        </BaseDropdown>
+        <div v-if="$v.selected_category.$model && $v.selected_category.$model.name">
+          <ArticleAddStep2 :error="validationError" />
+          <ArticleAddStep3 :error="validationError" />
+          <div class="my-6">
+            <BaseButton @selectButton="submit" class="w-64" bgType="secondary"> Save </BaseButton>
+          </div>
+        </div>
+        <div class="mt-4" v-else>Please select category to continue</div>
+      </div>
+    </template>
+  </LayoutFixedScrollable>
 </template>
 
 <script>
-import StepperManager from '@/components/StepperManager.vue';
-import ArticleAddStep1 from '@/components/ArticleAddStep1.vue';
+import store from '@/store';
+import LayoutFixedScrollable from '@/components/LayoutFixedScrollable';
+import BaseAppBarHeader from '@/components/BaseAppBarHeader.vue';
+import BaseDropdown from '@/components/BaseDropdown';
+import { mapGetters, mapMutations, mapActions } from 'vuex';
+import { required } from 'vuelidate/lib/validators';
 import ArticleAddStep2 from '@/components/ArticleAddStep2.vue';
 import ArticleAddStep3 from '@/components/ArticleAddStep3.vue';
-import { mapGetters, mapMutations, mapActions } from 'vuex';
+import BaseButton from '@/components/BaseButton.vue';
 import { sleep, formatISODate } from '@/helpers.js';
 
 export default {
-  name: 'ArticleAdd',
-  components: { StepperManager, ArticleAddStep1, ArticleAddStep2, ArticleAddStep3 },
-  props: {
-    step: {
-      default: 1
+  name: 'AddArticle',
+  components: {
+    LayoutFixedScrollable,
+    BaseAppBarHeader,
+    BaseDropdown,
+    ArticleAddStep2,
+    ArticleAddStep3,
+    BaseButton
+  },
+  validations: {
+    selected_category: {
+      required
     }
   },
   data() {
     return {
-      steps: ['Choose Category', 'New Article', 'Schedule Article'],
-      showResult: false,
       validationError: false
     };
   },
+  mounted() {
+    this.fetch_categories();
+  },
   computed: {
     ...mapGetters('article', [
+      'get_categories',
       'get_date',
       'get_headline',
       'get_description',
       'get_eventDate',
       'get_image',
-      'get_selected_category'
+      'get_selected_category',
+      'get_excerpt'
     ]),
-    currentStep() {
-      return parseInt(this.step);
+    selected_category: {
+      get() {
+        return this.get_selected_category;
+      },
+      set(value) {
+        this.update_selected_category(value);
+      }
     }
   },
   methods: {
-    ...mapActions('article', ['add_article']),
-    ...mapMutations('article', ['update_response_message']),
-    changeStep(change) {
-      this.update_response_message({ message: '' });
-      const newStep = this.currentStep + change;
-
-      // go forward
-      if (change > 0) {
-        const isCurrentStepValid = this.processValidations(change);
-        if (!isCurrentStepValid) return;
-      }
-
-      // exit
-      const wantToExit = newStep < 1;
-      if (wantToExit) {
-        this.$store.dispatch('article/clear_form_data');
-        return this.$router.push({ name: 'Dashboard' });
-      }
-
-      // finish
-      const wantToFinish = newStep > this.steps.length;
-      if (wantToFinish) {
-        return this.submit();
-      }
-
-      // back or forward
-      this.$router.push({ name: 'ArticleAdd', params: { step: newStep } });
-    },
-
-    processValidations(change) {
-      if (!this.$refs['formStep' + this.currentStep]) {
-        return true;
-      }
-      this.$refs['formStep' + this.currentStep].$v.$touch();
-      if (this.$refs['formStep' + this.currentStep].$v.$invalid) {
-        this.validationError = true;
-        return false;
-      }
-      return true;
-    },
-
+    ...mapMutations('article', ['update_response_message', 'update_selected_category']),
+    ...mapActions('article', ['add_article', 'fetch_categories']),
     submit() {
       const date_time = this.get_date ? new Date(formatISODate(this.get_date)).toISOString() : undefined;
       const event_date_time = this.get_eventDate
@@ -103,7 +126,8 @@ export default {
           image: this.get_image && this.get_image.url ? this.get_image : undefined,
           headline: this.get_headline,
           description: this.get_description,
-          eventDate: event_date_time
+          eventDate: event_date_time,
+          excerpt: this.get_excerpt
         }
       };
       this.add_article({ params })
@@ -126,7 +150,6 @@ export default {
           });
         });
     },
-
     async onSuccessSubmit() {
       // TODO: refactor, rename and move to helpers
       this.$store.commit('overlay/updateModel', {
