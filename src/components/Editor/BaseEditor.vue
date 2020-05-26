@@ -84,7 +84,6 @@ export default {
     },
     model: {
       immediate: true,
-      deep: true,
       handler() {
         this.key = Math.random()
           .toString(36)
