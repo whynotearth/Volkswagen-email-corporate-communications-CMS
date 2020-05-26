@@ -6,7 +6,7 @@
       </span>
       <span v-else>
         <span class="text-black">Schedule:</span>
-        <span v-if="selectedOption" class="ml-2 em-medium text-gray-500">
+        <span v-if="selectedOption" class="ml-2 em-medium">
           {{ millisecondToTime(selectedOption) }}
         </span>
         <span class="ml-2 em-medium" v-else>
