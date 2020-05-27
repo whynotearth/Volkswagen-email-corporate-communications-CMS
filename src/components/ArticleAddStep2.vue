@@ -78,7 +78,6 @@
 
 <script>
 import BaseInputText from '@/components/BaseInputText.vue';
-import BaseInputTextArea from '@/components/BaseInputTextarea.vue';
 import BaseEditor from '@/components/Editor/BaseEditor.vue';
 import ImageUpload from '@/components/ImageUpload/ImageUpload.vue';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
@@ -94,8 +93,7 @@ export default {
   components: {
     BaseInputText,
     BaseEditor,
-    ImageUpload,
-    BaseInputTextArea
+    ImageUpload
   },
   validations() {
     return {
