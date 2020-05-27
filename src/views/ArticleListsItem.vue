@@ -315,11 +315,9 @@ export default {
     },
     selected_category: {
       get() {
-        return this.get_selected_category.slug
-          ? this.get_selected_category
-          : this.selectedArticle
-          ? this.selectedArticle.category
-          : '';
+        if (this.get_selected_category.slug) return this.get_selected_category;
+        else if (this.selectedArticle) return this.selectedArticle.category;
+        return '';
       },
       set(value) {
         this.update_selected_category(value);

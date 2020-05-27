@@ -91,7 +91,8 @@ export default {
       'create_jumpstart',
       'update_selected_articles',
       'update_available_articles',
-      'clear_email_data'
+      'clear_email_data',
+      'delete_article_by_id'
     ]),
     formatDate,
     formatISODate,
@@ -106,14 +107,7 @@ export default {
       return this.get_selected_articles.indexOf(article);
     },
     removeItemFromArticleList(id) {
-      console.log(id);
-      for (var i in this.get_available_articles) {
-        if (this.get_available_articles[i].id == id) {
-          this.get_available_articles.splice(i, 1);
-          return this.get_available_articles;
-        }
-      }
-      return this.get_available_articles;
+      this.delete_article_by_id(id);
     },
     updateBlueDelta() {
       this.$v.$touch();
