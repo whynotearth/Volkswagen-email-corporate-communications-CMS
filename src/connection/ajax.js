@@ -33,6 +33,12 @@ ajax.interceptors.response.use(
   },
   error => {
     store.commit('loading/loading', false);
+    if (error.response.status === 401) {
+      store.commit('auth/logout');
+    }
+    if (error.response.status === 403) {
+      alert('Incorrect permissions, please contact your account owner chris@whynot.earth');
+    }
     return Promise.reject(error);
   }
 );

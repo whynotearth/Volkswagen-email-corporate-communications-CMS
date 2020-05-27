@@ -28,6 +28,8 @@ import BlueDeltaRearrange from '../views/BlueDeltaRearrange';
 // import DeveloperTesting from '../views/DeveloperTesting.vue';
 import ResetPassword from '../views/AuthResetPassword';
 import NewPassword from '../views/AuthNewPassword';
+import ActivityFeedJumpStartList from '../views/ActivityFeedJumpStartList.vue';
+import ActivityFeedJumpStartItem from '../views/ActivityFeedJumpStartItem.vue';
 import store from '../store';
 
 Vue.use(VueRouter);
@@ -262,6 +264,23 @@ const routes = [
     path: '/article-lists/:id',
     name: 'ArticleListsItem',
     component: ArticleListsItem,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/activity-feed/jump-starts',
+    name: 'ActivityFeedJumpStartList',
+    component: ActivityFeedJumpStartList,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/activity-feed/jump-starts/:id',
+    name: 'ActivityFeedJumpStartItem',
+    component: ActivityFeedJumpStartItem,
+    props: true,
     meta: {
       requiresAuth: true
     }

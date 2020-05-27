@@ -1,8 +1,8 @@
 <template>
-  <div class="flex flex-col h-full">
-    <div class="container md:px-2 px-0 select-none">
+  <div class="flex flex-col">
+    <div class="container px-4 md:px-6 select-none">
       <BaseDropdown
-        class="relative bg-surface text-left"
+        class="relative bg-surface text-left border-t"
         placeholder="Schedule time"
         :options="dates"
         v-model="$v.date.$model"
@@ -22,42 +22,6 @@
           </span>
         </template>
       </BaseDropdown>
-    </div>
-    <div class="flex flex-grow bg-brand-gradient overflow-y-auto narrow-scrollbars h-full">
-      <div class="container relative px-0 md:px-6 text-left ">
-        <div
-          class="flex flex-wrap relative bg-white text-black mx-4 my-6 mt-12 p-4 bg-surface border-1"
-          :style="{ borderColor: `#${get_selected_category.color}` }"
-        >
-          <div
-            class="h-6 px-3 border-1 category-tag absolute bg-white border-b-0 rounded rounded-bl-none
-          rounded-br-none tg-caps-title-print"
-            :style="{ borderColor: `#${get_selected_category.color}`, color: `#${get_selected_category.color}` }"
-          >
-            {{ get_selected_category.name }}
-          </div>
-          <div class="flex items-center justify-center w-8 h-8 rounded-full bg-white circle-icon absolute">
-            <img class="m-auto w-4 h-4" :src="get_selected_category.image" />
-          </div>
-          <div class="w-full tg-h2-mobile text-black py-3 hidden sm:block">
-            {{ get_headline }}
-          </div>
-          <div class="flex w-full flex-col sm:flex-row">
-            <div class="w-full tg-h2-mobile text-black py-3 sm:hidden order-2">
-              {{ get_headline }}
-            </div>
-            <div class="w-full tg-body-mobile text-black em-high whitespace-pre-line break-words flex-grow order-2">
-              {{ get_description }}
-            </div>
-            <div class="order-1 mb-4 sm:mb-0 w-full sm:w-auto sm:order-3 flex-shrink-0">
-              <img class="mx-auto article-image" :src="get_image" />
-            </div>
-          </div>
-        </div>
-        <p v-if="get_response_message.message" class="font-bold px-4 mb-4" :class="get_response_message.class">
-          {{ get_response_message.message }}
-        </p>
-      </div>
     </div>
   </div>
 </template>
@@ -123,18 +87,16 @@ export default {
 </script>
 
 <style scoped>
+.preview-box {
+  max-width: 572px;
+}
 .circle-icon {
   top: -16px;
   right: 16px;
 }
-
 .category-tag {
   min-width: 130px;
   top: -24px;
   left: 24px;
-}
-.article-image {
-  width: 92px;
-  max-height: 92px;
 }
 </style>

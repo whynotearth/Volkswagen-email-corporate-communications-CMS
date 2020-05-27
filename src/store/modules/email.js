@@ -1,6 +1,7 @@
 import { JumpStartService } from '@whynotearth/meredith-axios';
 import qs from 'qs';
 import { debounce } from 'lodash-es';
+import store from '@/store';
 
 export default {
   namespaced: true,
@@ -22,7 +23,9 @@ export default {
     default_schedule_time: null,
     selected_plan: {},
     daily_plan: [],
-    available_articles: []
+    available_articles: [],
+    stats: [],
+    stat: {}
   },
   getters: {
     get_email_date: state => state.email_date,
@@ -36,7 +39,9 @@ export default {
     get_default_schedule_time: state => state.default_schedule_time,
     get_selected_plan: state => state.selected_plan,
     get_daily_plan: state => state.daily_plan,
-    get_available_articles: state => state.available_articles
+    get_available_articles: state => state.available_articles,
+    get_stats: state => state.stats,
+    get_stat: state => state.stat
   },
   actions: {
     async create_jumpstart({ commit }, payload) {
@@ -86,7 +91,15 @@ export default {
       },
       3000,
       { maxWait: 3000 }
-    )
+    ),
+    async fetch_stats({ commit }) {
+      const data = await JumpStartService.stats();
+      commit('update_stats', data);
+    },
+    async fetch_stat({ commit }, params) {
+      const data = await JumpStartService.stats1(params);
+      commit('update_stat', data);
+    }
   },
   mutations: {
     update_email_date(state, payload) {
@@ -118,6 +131,12 @@ export default {
     },
     update_daily_plan(state, payload) {
       state.daily_plan = payload;
+    },
+    update_stats(state, payload) {
+      state.stats = payload;
+    },
+    update_stat(state, payload) {
+      state.stat = payload;
     }
   }
 };

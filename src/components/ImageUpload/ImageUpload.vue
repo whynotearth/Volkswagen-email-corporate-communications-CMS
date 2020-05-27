@@ -11,7 +11,7 @@
         @opened="onUploaderOpened"
         :uploaderOptions="{
           maxFiles: 1,
-          maxImageWidth: 160
+          maxImageWidth: 560
         }"
       >
         <label class="bg-background m-1 block cursor-pointer" for="add-post-image-upload">
@@ -27,12 +27,12 @@
           :selectImage="selectImage"
           v-for="(image, index) in imagesToPreview"
           :key="index"
-          :image="image.src"
+          :image="image.url"
           :index="index"
         />
       </div>
       <ImagePreviewModal
-        v-if="selectedImageInfo.src && selectedImageInfo.index >= 0"
+        v-if="selectedImageInfo && selectedImageInfo.url && selectedImageInfo.index >= 0"
         @deleteImage="deleteImage"
         @resetSelectedImage="resetSelectedImage"
         :image.sync="selectedImageInfo"
@@ -53,6 +53,10 @@ export default {
   props: {
     defaultImages: {
       type: Array
+    },
+    value: {
+      type: Array,
+      required: true
     }
   },
   data() {
@@ -60,7 +64,7 @@ export default {
       images: [],
       imagesToPreview: [],
       selectedImageInfo: {
-        src: '',
+        url: '',
         index: null
       }
     };
@@ -78,14 +82,15 @@ export default {
   methods: {
     deleteImage(index) {
       this.images.splice(index, 1);
+      this.$emit('change', [...this.images]);
     },
-    selectImage([src, index]) {
-      this.selectedImageInfo.src = src;
+    selectImage([url, index]) {
+      this.selectedImageInfo.url = url;
       this.selectedImageInfo.index = index;
     },
     resetSelectedImage() {
       this.selectedImageInfo = {
-        src: '',
+        url: '',
         index: null
       };
     },
@@ -96,17 +101,20 @@ export default {
       if (result.event === 'success') {
         const images = [this.getCloudinaryImageAdaptedObject(result.info)];
         this.images = images;
+        this.$emit('change', [...this.images]);
       }
     },
     getCloudinaryImageAdaptedObject(cloudinaryImageInfo) {
+      const { url, height, width } = cloudinaryImageInfo;
       return {
-        src: cloudinaryImageInfo.url
+        url,
+        height,
+        width
       };
     }
   },
   watch: {
-    images(val) {
-      this.$emit('change', [...val]);
+    value(val) {
       this.imagesToPreview = [...val];
     }
   }

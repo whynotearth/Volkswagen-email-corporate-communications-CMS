@@ -6,32 +6,33 @@
         :class="[
           {
             'is-query-empty': to_query === '',
-            'is-filled': recipients.length > 0,
-            error: recipientsIsDirthy && recipients.length === 0
+            'is-filled': !$v.recipients.$invalid,
+            error: $v.recipients.$error
           },
-          recipientsIsDirthy && recipients.length === 0
-            ? 'text-red-600 border-red-600'
-            : 'text-gray-500 border-gray-600'
+          $v.recipients.$error ? 'text-red-600 border-red-600' : 'text-gray-500 border-gray-600'
         ]"
       >
-        <label class="multiselect--material-label absolute" v-if="recipients.length > 0" for="memoadd-step1-recipients"
+        <label
+          class="multiselect--material-label absolute"
+          v-if="!$v.recipients.$invalid"
+          for="memoadd-step1-recipients"
           >To:</label
         >
         <Multiselect
           id="memoadd-step1-recipients"
-          v-model="recipients"
-          :placeholder="recipients.length === 0 ? 'To:' : ''"
+          v-model="$v.recipients.$model"
+          :placeholder="$v.recipients.$invalid ? 'To:' : ''"
           :options="get_recipients_available"
           :multiple="true"
           :hide-selected="true"
           :show-labels="false"
-          @close="recipientsIsDirthy = true"
+          @blur="$v.recipients.$touch()"
           @search-change="onToSearchChange"
         >
           <template v-slot:noResult>Nothing found</template>
           <template v-slot:noOptions>No options available</template>
         </Multiselect>
-        <span v-if="recipientsIsDirthy && recipients.length === 0" class="text-xs text-error pl-error-message">
+        <span v-if="$v.recipients.$error" class="text-xs text-error pl-error-message">
           To is required
         </span>
       </div>
@@ -69,17 +70,16 @@
           Audience is required
         </span>
       </BaseInputText>
-      <BaseInputTextarea
+      <BaseEditor
         class="body-1-mobile bg-surface"
         v-model="$v.description.$model"
-        label="Memo Body"
         placeholder="Memo Body"
         :error="$v.description.$dirty && !$v.description.required"
       >
         <span v-if="$v.description.$dirty && !$v.description.required" class="text-xs text-error pl-error-message">
           Description is required
         </span>
-      </BaseInputTextarea>
+      </BaseEditor>
       <span v-if="$v.$invalid" v-show="error" class="font-bold text-error pl-error-message">
         Please fill the memo form properly.
       </span>
@@ -91,17 +91,15 @@
 
 <script>
 import BaseInputText from '@/components/BaseInputText.vue';
-import BaseInputTextarea from '@/components/BaseInputTextarea.vue';
+import BaseEditor from '@/components/Editor/BaseEditor.vue';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
 import { required } from 'vuelidate/lib/validators';
 import Multiselect from 'vue-multiselect';
 
 export default {
   name: 'MemoAddStep1',
-  components: { BaseInputText, BaseInputTextarea, Multiselect },
+  components: { BaseInputText, BaseEditor, Multiselect },
   data: () => ({
-    // TODO: refactor, use vuelidate
-    recipientsIsDirthy: false,
     to_query: ''
   }),
   props: {
@@ -111,9 +109,6 @@ export default {
     }
   },
   validations: {
-    // recipients: {
-    //   required
-    // },
     subject: {
       required
     },
@@ -124,6 +119,9 @@ export default {
       required
     },
     description: {
+      required
+    },
+    recipients: {
       required
     }
   },

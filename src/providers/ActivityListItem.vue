@@ -1,0 +1,63 @@
+<template>
+  <div class="text-left block shadow-card p-6 rounded">
+    <!-- title and date -->
+    <div class="">
+      <h2
+        class="tg-body-emphasis-mobile capitalize em-high text-inherit flex-grow whitespace-no-wrap overflow-x-hidden truncate transition transition-colors duration-100"
+        :title="model.subject"
+      >
+        {{ formatDate(model.dateTime, 'dd MMM, yyyy') }}
+      </h2>
+    </div>
+    <div class="my-4">
+      <div class="mr-2 flex flex-wrap" v-for="(distributionGroup, index) in model.distributionGroups" :key="index">
+        <BaseChip :text="distributionGroup" />
+      </div>
+    </div>
+    <!-- contents -->
+    <div class="flex justify-between flex-no-wrap">
+      <div class="">
+        <div class="flex items-center">
+          <div class="h-2 w-2 mr-2 rounded-full bg-secondary"></div>
+          <div class="em-high text-black">
+            <span class="tg-caption-mobile">Open rate: </span>
+            <span class="tg-caption-bold-mobile">{{ model.openPercentage }}%</span>
+          </div>
+        </div>
+        <div
+          class="memo-list-item--description mt-2 tg-caption-mobile em-disabled text-black whitespace-pre-line overflow-hidden"
+        >
+          <ul class="list-inside list-disc">
+            <li v-for="(article, index) in model.articles" :key="index">{{ article }}</li>
+          </ul>
+        </div>
+      </div>
+      <div class="w-20 flex-shrink-0">
+        <img
+          src="https://res.cloudinary.com/whynotearth/image/upload/v1590392840/Volkswagen/cms/A4_-_7_Draft_69_vg8atj.png"
+          alt=""
+        />
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import BaseChip from '@/components/BaseChip.vue';
+import { formatDate } from '@/helpers.js';
+
+export default {
+  name: 'ActivityListItem',
+  props: ['model'],
+  components: { BaseChip },
+  methods: {
+    formatDate
+  }
+};
+</script>
+
+<style scoped>
+.memo-list-item--description {
+  height: 80px;
+}
+</style>

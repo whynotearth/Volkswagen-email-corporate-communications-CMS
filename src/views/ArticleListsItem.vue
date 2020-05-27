@@ -4,97 +4,114 @@
       <BaseAppBarHeader :title="get_headline" :to-link="{ name: 'ArticleLists' }" />
     </template>
     <template #content>
-      <div class="flex-grow">
-        <div v-if="selectedArticle.id" class="container px-0 py-6 text-left">
-          <div class="px-4 md:px-6 md:pb-4">
-            <div class="flex items-center pb-5 bg-surface">
-              <div class="w-8 h-8">
-                <img :src="selectedArticle.category.image" alt="" />
+      <div v-if="selectedArticle.id" class="min-h-full relative bg-background">
+        <BaseDropdown
+          class="relative bg-surface text-left container px-0 md:px-6"
+          :optionContainerClasses="'dropdown-top-auto'"
+          :dropdownContainerClasses="'dropdown-border-0'"
+          placeholder="Choose Type"
+          :options="get_categories.filter(category => category.slug !== 'community')"
+          v-model="$v.selected_category.$model"
+        >
+          <template #title="{ selectedOption }">
+            <div v-if="!get_categories.filter(category => category.slug !== 'community')">No option found</div>
+            <div v-if="selectedOption && selectedOption.name" class="flex items-center">
+              <div class="w-12 h-12">
+                <img class="p-2" :src="selectedOption.image" alt="" />
               </div>
-              <div class="flex-auto pl-4">
-                <div class="w-full body-1-mobile">{{ selectedArticle.category.name }}</div>
-                <div class="w-full text-xs text-black em-disabled">{{ selectedArticle.category.description }}</div>
+              <div class="flex-auto">
+                <div class="w-full body-1-mobile">{{ selectedOption.name }}</div>
+                <div class="w-full text-xs text-black em-disabled">{{ selectedOption.description }}</div>
               </div>
             </div>
-            <BaseInputText
-              v-if="isFieldRequired('headline')"
-              class="bg-surface mb-4"
-              v-model="$v.headline.$model"
-              :label="stringHeadlineByCategoryName"
-              :placeholder="stringHeadlineByCategoryName"
-              :error="$v.headline.$dirty && $v.headline.$invalid"
-            >
-              <span v-if="$v.headline.$dirty && !$v.headline.required" class="text-xs text-error pl-error-message">
-                {{ stringHeadlineByCategoryName }} is required
-              </span>
-              <span v-if="$v.headline.$dirty && !$v.headline.maxLength" class="text-xs text-error pl-error-message">
-                {{ stringHeadlineByCategoryName }} should be less than 80 characters
-              </span>
-            </BaseInputText>
+            <div v-else>
+              No category selected
+            </div>
+          </template>
+          <template #option="{ option }">
+            <a @click.prevent="selected_category = option" href="#" class="flex items-center">
+              <div class="w-12 h-12">
+                <img class="p-2" :src="option.image" alt="" />
+              </div>
+              <div class="flex-auto">
+                <div class="w-full body-1-mobile">{{ option.name }}</div>
+                <div class="w-full text-xs text-black em-disabled">{{ option.description }}</div>
+              </div>
+            </a>
+          </template>
+        </BaseDropdown>
+        <div class="container px-4 md:px-6 text-left">
+          <BaseInputText
+            v-if="isFieldRequired('headline')"
+            class="bg-surface mb-4"
+            v-model="$v.headline.$model"
+            :label="stringHeadlineByCategoryName"
+            :placeholder="stringHeadlineByCategoryName"
+            :error="$v.headline.$dirty && $v.headline.$invalid"
+            :model="$v.headline"
+          >
+            <span v-if="$v.headline.$dirty && !$v.headline.required" class="text-xs text-error pl-error-message">
+              {{ stringHeadlineByCategoryName }} is required
+            </span>
+            <span v-if="$v.headline.$dirty && !$v.headline.maxLength" class="text-xs text-error pl-error-message">
+              {{ stringHeadlineByCategoryName }} should be less than 80 characters
+            </span>
+          </BaseInputText>
 
-            <BaseInputTextarea
-              v-if="isFieldRequired('description')"
-              class="body-1-mobile bg-surface"
-              v-model="$v.description.$model"
-              :label="stringDescriptionByCategoryName"
-              :placeholder="
-                isAnswersCategory ? stringDescriptionByCategoryName : 'Put the content of your article here.'
-              "
-              :error="$v.description.$dirty && $v.description.$invalid"
-            >
-              <span
-                v-if="$v.description.$dirty && !$v.description.required"
-                class="text-xs text-error pl-error-message"
-              >
-                {{ stringDescriptionByCategoryName }} is required
-              </span>
-              <span
-                v-if="$v.description.$dirty && !$v.description.maxLength"
-                class="text-xs text-error pl-error-message"
-              >
-                {{ stringDescriptionByCategoryName }} should be less than 750 characters
-              </span>
-            </BaseInputTextarea>
+          <hr v-if="isFieldRequired('image')" class="my-4 bg-background border-black em-low -mx-4 sm:mx-0 mb-4" />
+          <ImageUpload v-if="isFieldRequired('image')" v-model="images" :defaultImages="images" />
 
-            <BaseInputText
-              v-if="isFieldRequired('price')"
-              class="bg-surface mb-4"
-              v-model="$v.price.$model"
-              label="Price"
-              placeholder="Price"
-              :error="$v.price.$dirty && $v.price.$invalid"
-            >
-              <span v-if="$v.price.$dirty && !$v.price.required" class="text-xs text-error pl-error-message">
-                Price is required
-              </span>
-              <span v-if="$v.price.$dirty && !$v.price.decimal" class="text-xs text-error pl-error-message">
-                Price is not a valid number
-              </span>
-            </BaseInputText>
+          <BaseInputTextArea
+            v-if="isFieldRequired('excerpt')"
+            class="bg-surface my-4"
+            v-model="$v.excerpt.$model"
+            label="Excerpt"
+            placeholder="Excerpt"
+            :error="$v.excerpt.$dirty && $v.excerpt.$invalid"
+            :model="$v.excerpt"
+          >
+            <span v-if="$v.excerpt.$dirty && !$v.excerpt.required" class="text-xs text-error pl-error-message">
+              Excerpt is required
+            </span>
+            <span v-if="$v.excerpt.$dirty && !$v.excerpt.maxLength" class="text-xs text-error pl-error-message">
+              Excerpt should be less than 175 characters
+            </span>
+          </BaseInputTextArea>
 
-            <BaseInputText
-              v-if="isFieldRequired('eventDate')"
-              class="bg-surface mb-4"
-              v-model="$v.eventDate.$model"
-              label="Date/Time"
-              placeholder="20 March, 2020, 7:00 PM"
-              :error="$v.eventDate.$dirty && $v.eventDate.$invalid"
-            >
-              <span v-if="$v.eventDate.$dirty && !$v.eventDate.required" class="text-xs text-error pl-error-message">
-                Date/Time is required
-              </span>
-              <span v-if="$v.eventDate.$dirty && !$v.eventDate.mustBeDate" class="text-xs text-error pl-error-message">
-                Date/Time is invalid. Example: 20 March, 2020, 7:30 pm
-              </span>
-            </BaseInputText>
-          </div>
+          <hr class="my-4 bg-background border-black em-low -mx-4 sm:mx-0 mb-4" />
 
-          <hr v-if="isFieldRequired('image')" class="bg-background border-black em-low -mx-4 sm:mx-0 mb-4" />
-          <ImageUpload v-if="isFieldRequired('image')" class="px-4 md:px-6" v-model="images" :defaultImages="images" />
+          <BaseEditor
+            v-if="isFieldRequired('description')"
+            class="body-1-mobile bg-surface mb-4"
+            v-model="$v.description.$model"
+            :label="stringDescriptionByCategoryName"
+            :placeholder="isAnswersCategory ? stringDescriptionByCategoryName : 'Put the content of your article here.'"
+            :error="$v.description.$dirty && $v.description.$invalid"
+            :model="$v.description"
+          >
+            <span v-if="$v.description.$dirty && !$v.description.required" class="text-xs text-error pl-error-message">
+              {{ stringDescriptionByCategoryName }} is required
+            </span>
+          </BaseEditor>
 
-          <hr class="border-divider w-auto mt-5 md:mx-6" />
+          <BaseInputText
+            v-if="isFieldRequired('eventDate')"
+            class="bg-surface mb-4"
+            v-model="$v.eventDate.$model"
+            label="Date/Time"
+            placeholder="20 March, 2020, 7:00 PM"
+            :error="$v.eventDate.$dirty && $v.eventDate.$invalid"
+          >
+            <span v-if="$v.eventDate.$dirty && !$v.eventDate.required" class="text-xs text-error pl-error-message">
+              Date/Time is required
+            </span>
+            <span v-if="$v.eventDate.$dirty && !$v.eventDate.mustBeDate" class="text-xs text-error pl-error-message">
+              Date/Time is invalid. Example: 20 March, 2020, 7:30 pm
+            </span>
+          </BaseInputText>
+
           <BaseDropdown
-            class="relative bg-surface"
+            class="relative bg-surface text-left border-t"
             placeholder="Schedule time"
             :options="dates"
             v-model="$v.date.$model"
@@ -115,25 +132,27 @@
             </template>
           </BaseDropdown>
 
-          <div class="px-4 md:px-6">
-            <p v-if="get_response_message.message" class="font-bold px-4 mb-4" :class="get_response_message.class">
-              {{ get_response_message.message }}
-            </p>
+          <div>
+            <div class="px-4 md:px-6">
+              <p v-if="get_response_message.message" class="font-bold px-4 mb-4" :class="get_response_message.class">
+                {{ get_response_message.message }}
+              </p>
 
-            <div
-              class="block text-center bg-secondary w-full hover:bg-blue-700 text-white font-bold py-2
-           px-4 rounded-full focus:outline-none focus:shadow-outline transition duration-100
-           ease-in-out transition-all label-mobile my-6 cursor-pointer mt-16 md:w-1/3 m-auto"
-              @click="submit()"
-            >
-              Save
-            </div>
-            <div
-              class="block text-center m-auto text-error font-bold label-mobile my-6 w-16
-           cursor-pointer"
-              @click="deleteItem()"
-            >
-              DELETE
+              <div
+                class="block text-center bg-secondary w-full hover:bg-blue-700 text-white font-bold py-2
+            px-4 rounded-full focus:outline-none focus:shadow-outline transition duration-100
+            ease-in-out transition-all label-mobile my-6 cursor-pointer md:w-1/3 m-auto"
+                @click="submit()"
+              >
+                Save
+              </div>
+              <div
+                class="block text-center m-auto text-error font-bold label-mobile my-6 w-16
+            cursor-pointer"
+                @click="deleteItem()"
+              >
+                DELETE
+              </div>
             </div>
           </div>
         </div>
@@ -145,7 +164,8 @@
 <script>
 import BaseAppBarHeader from '@/components/BaseAppBarHeader.vue';
 import BaseInputText from '@/components/BaseInputText.vue';
-import BaseInputTextarea from '@/components/BaseInputTextarea.vue';
+import BaseInputTextArea from '@/components/BaseInputTextarea.vue';
+import BaseEditor from '@/components/Editor/BaseEditor.vue';
 import BaseDropdown from '@/components/BaseDropdown';
 import ImageUpload from '@/components/ImageUpload/ImageUpload.vue';
 import LayoutFixedScrollable from '@/components/LayoutFixedScrollable.vue';
@@ -161,46 +181,54 @@ export default {
     LayoutFixedScrollable,
     BaseAppBarHeader,
     BaseInputText,
-    BaseInputTextarea,
+    BaseEditor,
     BaseDropdown,
-    ImageUpload
+    ImageUpload,
+    BaseInputTextArea
   },
-  validations: {
-    headline: {
-      required: requiredIf(context => {
-        return context.isFieldRequired('headline');
-      }),
-      maxLength: maxLength(80)
-    },
-    description: {
-      required: requiredIf(context => {
-        return context.isFieldRequired('description');
-      }),
-      maxLength: maxLength(750)
-    },
-    price: {
-      required: requiredIf(context => {
-        return context.isFieldRequired('price');
-      }),
-      decimal
-    },
-    eventDate: {
-      mustBeDate: value => mustBeDate({ value })
-    },
-    date: {
-      mustBeDate: value => mustBeDate({ value })
-    }
+  validations() {
+    return {
+      selected_category: {
+        required
+      },
+      headline: {
+        required: requiredIf(context => {
+          return context.isFieldRequired('headline');
+        }),
+        maxLength: maxLength(80)
+      },
+      description: {
+        required: requiredIf(context => {
+          return context.isFieldRequired('description');
+        }),
+        maxLength: maxLength(this.isImagesEmpty ? 625 : 450)
+      },
+      eventDate: {
+        mustBeDate: value => mustBeDate({ value })
+      },
+      date: {
+        mustBeDate: value => mustBeDate({ value })
+      },
+      excerpt: {
+        required: requiredIf(context => {
+          return context.isFieldRequired('headline');
+        }),
+        maxLength: maxLength(175)
+      }
+    };
   },
   computed: {
     ...mapGetters('article', [
+      'get_categories',
       'get_headline',
       'get_description',
-      'get_price',
       'get_eventDate',
       'get_articles',
       'get_response_message',
       'get_date',
-      'get_image'
+      'get_image',
+      'get_selected_category',
+      'get_excerpt'
     ]),
     ...mapGetters('email', ['get_daily_plan']),
     isAnswersCategory() {
@@ -231,14 +259,6 @@ export default {
         this.update_description(value);
       }
     },
-    price: {
-      get() {
-        return this.get_price;
-      },
-      set(value) {
-        this.update_price(value);
-      }
-    },
     eventDate: {
       get() {
         return this.get_eventDate;
@@ -257,14 +277,16 @@ export default {
     },
     images: {
       get() {
-        return [
-          {
-            src: this.get_image
-          }
-        ];
+        return [this.get_image];
       },
       set(value) {
-        this.update_image(get(value, '[0].src', ''));
+        console.log(value);
+
+        let image = {};
+        try {
+          image = value[0];
+        } catch (error) {}
+        this.update_image(image);
       }
     },
     dates() {
@@ -287,7 +309,32 @@ export default {
       return articles.find(item => {
         return item.id === this.articleId;
       });
+    },
+    selected_category: {
+      get() {
+        return this.get_selected_category.slug ? this.get_selected_category : this.selectedArticle.category;
+      },
+      set(value) {
+        this.update_selected_category(value);
+      }
+    },
+    excerpt: {
+      get() {
+        return this.get_excerpt;
+      },
+      set(value) {
+        this.update_excerpt(value);
+      }
+    },
+    isImagesEmpty() {
+      return this.images.some(image => {
+        if (image) return Object.keys(image).length === 0 && image.constructor === Object;
+        return true;
+      });
     }
+  },
+  created() {
+    this.fetch_categories();
   },
   mounted() {
     this.initialForm();
@@ -299,26 +346,34 @@ export default {
     });
   },
   methods: {
-    ...mapActions('article', ['put_article', 'delete_article']),
+    ...mapActions('article', ['put_article', 'delete_article', 'fetch_categories']),
     ...mapActions('email', ['fetch_daily_plan']),
     ...mapMutations('article', [
       'update_headline',
       'update_description',
       'update_date',
-      'update_price',
       'update_eventDate',
       'update_date',
       'update_response_message',
-      'update_image'
+      'update_image',
+      'update_selected_category',
+      'update_excerpt'
     ]),
     formatDate,
     initialForm() {
       this.update_headline(this.selectedArticle.headline);
       this.update_description(this.selectedArticle.description);
       this.update_date(this.selectedArticle.date);
-      this.update_price(this.selectedArticle.price);
       this.update_eventDate(formatDate(this.selectedArticle.eventDate));
       this.update_date(formatDate(this.selectedArticle.date));
+      if (this.selectedArticle.image) {
+        this.images = [
+          {
+            url: this.selectedArticle.image
+          }
+        ];
+      }
+      this.update_excerpt(this.selectedArticle.excerpt);
     },
     isFieldRequired(fieldName) {
       if (!this.selectedArticle) {
@@ -328,17 +383,17 @@ export default {
       let isRequired = false;
       switch (categoryName) {
         case 'Events':
-          isRequired = ['headline', 'description', 'price', 'eventDate', 'image', 'date'].includes(fieldName);
+          isRequired = ['headline', 'description', 'eventDate', 'image', 'date', 'excerpt'].includes(fieldName);
           break;
         case 'One Team':
         case 'Answers At A Glance':
-          isRequired = ['headline', 'description', 'date'].includes(fieldName);
+          isRequired = ['headline', 'description', 'date', 'excerpt'].includes(fieldName);
           break;
         case 'Priority':
         case 'People':
         case 'Community':
         case 'Plant':
-          isRequired = ['headline', 'description', 'image', 'date'].includes(fieldName);
+          isRequired = ['headline', 'description', 'image', 'date', 'excerpt'].includes(fieldName);
           break;
 
         default:
@@ -354,11 +409,10 @@ export default {
         body: {
           date: date_time,
           categorySlug: this.selectedArticle.category.slug,
+          image: this.get_image && this.get_image.url ? this.get_image : undefined,
           headline: this.get_headline,
           description: this.get_description,
-          price: this.get_price,
-          eventDate: event_date_time,
-          image: this.get_image
+          eventDate: event_date_time
         }
       };
       this.put_article(data)

@@ -1,27 +1,21 @@
 <template>
   <LayoutFixedScrollable>
     <template #header>
-      <BaseAppBarHeader :title="'Open Rate'" :to-link="'/activity-feed/memos'" />
-
-      <!-- <div class="container px-0 md:px-6">
-        <div class="px-2 pt-4 mb-4">
-          <ActivityFeedSearchBox />
-        </div>
-      </div> -->
+      <BaseAppBarHeader :title="pageInfo.title" :to-link="pageInfo.backRoute" />
     </template>
 
     <template #content>
       <div class="bg-background z-10 relative">
         <div class="container px-0 md:px-6">
           <div class="px-4 pb-4 pt-2">
-            <MemoListItem v-if="get(get_stat, `[${id}].memoStat`)" :model="get(get_stat, `[${id}].memoStat`)" />
+            <ActivityListItem v-if="get(activity, `jumpStartStat`)" :model="get(activity, `jumpStartStat`)" />
           </div>
         </div>
       </div>
       <BaseTabs>
         <BaseTab class="text-left" name="Opened" :selected="true">
           <div class="px-4 pt-4 bg-background">
-            <div class="mb-4" v-for="(readReportLog, index) in get(get_stat, `${id}.opened`, [])" :key="index">
+            <div class="mb-4" v-for="(readReportLog, index) in get(activity, `opened`, [])" :key="index">
               <ActivityFeedReadReportLog
                 :deliverDateTime="formatDate(readReportLog.deliverDateTime, 'dd MMM, yyyy h:mm aaa')"
                 :openDateTime="formatDate(readReportLog.openDateTime, 'dd MMM, yyyy h:mm aaa')"
@@ -32,7 +26,7 @@
         </BaseTab>
         <BaseTab class="text-left" name="Unread">
           <div class="px-4 pt-4 bg-background">
-            <div class="mb-4" v-for="(readReportLog, index) in get(get_stat, `${id}.notOpened`, [])" :key="index">
+            <div class="mb-4" v-for="(readReportLog, index) in get(activity, `notOpened`, [])" :key="index">
               <ActivityFeedReadReportLog
                 :deliverDateTime="formatDate(readReportLog.deliverDateTime, 'dd MMM, yyyy h:mm aaa')"
                 :openDateTime="formatDate(readReportLog.openDateTime, 'dd MMM, yyyy h:mm aaa')"
@@ -54,12 +48,10 @@
 import BaseAppBarHeader from '@/components/BaseAppBarHeader.vue';
 import BaseTabs from '@/components/BaseTabs.vue';
 import BaseTab from '@/components/BaseTab.vue';
-// import ActivityFeedSearchBox from '@/components/ActivityFeedSearchBox.vue';
-import MemoListItem from '@/components/MemoListItem.vue';
+import ActivityListItem from './ActivityListItem.vue';
 import ActivityFeedReadReportLog from '@/components/ActivityFeedReadReportLog.vue';
 import LayoutFixedScrollable from '@/components/LayoutFixedScrollable.vue';
 import NavigationBottom from '@/components/BaseNavigationBottom';
-import { mapGetters, mapActions } from 'vuex';
 import { get } from 'lodash-es';
 import { formatDate } from '@/helpers.js';
 
@@ -70,24 +62,25 @@ export default {
     BaseAppBarHeader,
     BaseTabs,
     BaseTab,
-    // ActivityFeedSearchBox,
-    MemoListItem,
+    ActivityListItem,
     ActivityFeedReadReportLog,
     NavigationBottom
   },
-  props: ['id'],
-  computed: {
-    ...mapGetters('memo', ['get_stat'])
+  props: {
+    id: {
+      required: true
+    },
+    pageInfo: {
+      type: Object,
+      required: true
+    },
+    activity: {
+      required: true
+    }
   },
   methods: {
-    ...mapActions('memo', ['fetch_stat']),
     get,
     formatDate
-  },
-  mounted() {
-    this.fetch_stat({
-      memoId: this.id
-    });
   }
 };
 </script>
