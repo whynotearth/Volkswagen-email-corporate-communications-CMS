@@ -21,9 +21,7 @@
           :id="idName"
           :type="type"
           :value="value"
-          @blur="onBlur"
-          @focus="onFocus"
-          @input="onInput"
+          v-on="inputListeners"
           :placeholder="placeholder || label"
         />
       </div>
@@ -94,6 +92,16 @@ export default {
       isFocused: false,
       labelClicked: false
     };
+  },
+  computed: {
+    inputListeners: function() {
+      var vm = this;
+      return Object.assign({}, this.$listeners, {
+        blur: this.onBlur,
+        focus: this.onFocus,
+        input: this.onInput
+      });
+    }
   },
   methods: {
     onBlur($event) {

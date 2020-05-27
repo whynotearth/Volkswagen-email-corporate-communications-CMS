@@ -1,6 +1,6 @@
 <template>
   <div>
-    <form ref="form" name="Login" @submit.prevent="" class="pt-6 pb-8 mb-4 text-left">
+    <form ref="form" name="Login" @submit.prevent="submit" class="pt-6 pb-8 mb-4 text-left">
       <div class="mb-4">
         <BaseInputText
           class="bg-surface"
@@ -40,7 +40,7 @@
         <!-- submit button -->
         <button
           class="bg-secondary w-full hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline transition duration-100 ease-in-out transition-all label-mobile"
-          type="button"
+          type="submit"
           @click="submit()"
         >
           Log In
