@@ -71,7 +71,7 @@ export default {
       );
     },
     selectNewArticle() {
-      this.$router.push({ name: 'ArticleAdd' });
+      this.$router.push({ name: 'ArticleCategorySelection' });
     }
   },
   computed: {

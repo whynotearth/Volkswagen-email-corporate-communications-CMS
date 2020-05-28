@@ -3,7 +3,7 @@
     <template #header>
       <BaseAppBarHeader
         :title="$v.selected_category.$model && $v.selected_category.$model.name ? 'New Post ' : 'Choose Category'"
-        :to-link="{ name: 'Dashboard' }"
+        :to-link="{ name: 'ArticleCategorySelection' }"
       />
     </template>
     <template #content>
@@ -57,7 +57,6 @@
 </template>
 
 <script>
-import store from '@/store';
 import LayoutFixedScrollable from '@/components/LayoutFixedScrollable';
 import BaseAppBarHeader from '@/components/BaseAppBarHeader.vue';
 import BaseDropdown from '@/components/BaseDropdown';
