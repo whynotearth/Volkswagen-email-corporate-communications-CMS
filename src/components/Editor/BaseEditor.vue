@@ -44,16 +44,18 @@ export default {
           {
             className: 'max-length',
             onUpdate: el => {
-              if (
-                this.content.length > this.model.$params.maxLength.max &&
-                !el.classList.value.includes('text-error')
-              ) {
-                el.classList.add('text-error');
-              } else if (this.content.length <= this.model.$params.maxLength.max) {
-                el.classList.remove('text-error');
+              if (this.model) {
+                if (
+                  this.content.length > this.model.$params.maxLength.max &&
+                  !el.classList.value.includes('text-error')
+                ) {
+                  el.classList.add('text-error');
+                } else if (this.content.length <= this.model.$params.maxLength.max) {
+                  el.classList.remove('text-error');
+                }
+                this.counter = this.content.length;
+                el.innerHTML = `${this.counter} / ${this.model.$params.maxLength.max}`;
               }
-              this.counter = this.content.length;
-              el.innerHTML = `${this.counter} / ${this.model.$params.maxLength.max}`;
             }
           }
         ],
