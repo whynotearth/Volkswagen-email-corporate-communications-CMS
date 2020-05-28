@@ -25,7 +25,6 @@ export default {
       default: false
     },
     value: {
-      type: String,
       required: true
     },
     placeholder: {
@@ -37,7 +36,7 @@ export default {
   },
   data() {
     return {
-      content: this.value,
+      content: this.value || '',
       key: 1,
       configs: {
         status: [
@@ -81,7 +80,7 @@ export default {
     value: {
       immediate: true,
       handler() {
-        this.content = this.value;
+        this.content = this.value || '';
       }
     },
     model: {
