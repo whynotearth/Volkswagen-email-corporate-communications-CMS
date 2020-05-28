@@ -23,13 +23,15 @@
         </label>
       </CloudinaryWidget>
       <div class="upload-previews-wrapper flex flex-wrap">
-        <BaseImagePreview
-          :selectImage="selectImage"
-          v-for="(image, index) in imagesToPreview"
-          :key="index"
-          :image="image.url"
-          :index="index"
-        />
+        <template v-for="(image, index) in imagesToPreview">
+          <BaseImagePreview
+            :selectImage="selectImage"
+            v-if="image && image.url"
+            :key="index"
+            :image="image.url"
+            :index="index"
+          />
+        </template>
       </div>
       <ImagePreviewModal
         v-if="selectedImageInfo && selectedImageInfo.url && selectedImageInfo.index >= 0"
