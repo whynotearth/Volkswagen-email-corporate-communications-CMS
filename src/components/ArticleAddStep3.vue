@@ -22,6 +22,12 @@
           </span>
         </template>
       </BaseDropdown>
+
+      <div class="mt-8">
+        <p v-if="get_response_message.message" class="font-bold px-4 mb-4" :class="get_response_message.class">
+          {{ get_response_message.message }}
+        </p>
+      </div>
     </div>
   </div>
 </template>

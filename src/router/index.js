@@ -30,6 +30,7 @@ import ResetPassword from '../views/AuthResetPassword';
 import NewPassword from '../views/AuthNewPassword';
 import ActivityFeedJumpStartList from '../views/ActivityFeedJumpStartList.vue';
 import ActivityFeedJumpStartItem from '../views/ActivityFeedJumpStartItem.vue';
+import ArticleCategorySelection from '../views/ArticleCategorySelection.vue';
 import store from '../store';
 
 Vue.use(VueRouter);
@@ -80,6 +81,14 @@ const routes = [
     name: 'ArticleAdd',
     component: ArticleAdd,
     props: true,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/articles/category-selection',
+    name: 'ArticleCategorySelection',
+    component: ArticleCategorySelection,
     meta: {
       requiresAuth: true
     }
