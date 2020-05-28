@@ -168,7 +168,6 @@
 <script>
 import BaseAppBarHeader from '@/components/BaseAppBarHeader.vue';
 import BaseInputText from '@/components/BaseInputText.vue';
-import BaseInputTextArea from '@/components/BaseInputTextarea.vue';
 import BaseEditor from '@/components/Editor/BaseEditor.vue';
 import BaseDropdown from '@/components/BaseDropdown';
 import ImageUpload from '@/components/ImageUpload/ImageUpload.vue';
@@ -187,8 +186,7 @@ export default {
     BaseInputText,
     BaseEditor,
     BaseDropdown,
-    ImageUpload,
-    BaseInputTextArea
+    ImageUpload
   },
   validations() {
     return {
