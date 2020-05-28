@@ -86,7 +86,7 @@ const routes = [
     }
   },
   {
-    path: '/articles/category_selection',
+    path: '/articles/category-selection',
     name: 'ArticleCategorySelection',
     component: ArticleCategorySelection,
     meta: {

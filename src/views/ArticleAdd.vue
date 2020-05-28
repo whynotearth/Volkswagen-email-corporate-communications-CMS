@@ -44,8 +44,8 @@
           </template>
         </BaseDropdown>
         <div v-if="$v.selected_category.$model && $v.selected_category.$model.name">
-          <ArticleAddStep2 :error="validationError" />
-          <ArticleAddStep3 :error="validationError" />
+          <ArticleAddStep2 ref="articleAdd" :error="validationError" />
+          <ArticleAddStep3 ref="articleAdd2" :error="validationError" />
           <div class="my-6">
             <BaseButton @selectButton="submit" class="w-64" bgType="secondary"> Save </BaseButton>
           </div>
@@ -110,44 +110,60 @@ export default {
       }
     }
   },
+  destroyed() {
+    this.update_response_message({
+      message: ''
+    });
+  },
   methods: {
     ...mapMutations('article', ['update_response_message', 'update_selected_category']),
     ...mapActions('article', ['add_article', 'fetch_categories']),
     submit() {
-      const date_time = this.get_date ? new Date(formatISODate(this.get_date)).toISOString() : undefined;
-      const event_date_time = this.get_eventDate
-        ? new Date(formatISODate(this.get_eventDate)).toISOString()
-        : undefined;
-      const params = {
-        body: {
-          date: date_time,
-          categorySlug: this.get_selected_category.slug,
-          image: this.get_image && this.get_image.url ? this.get_image : undefined,
-          headline: this.get_headline,
-          description: this.get_description,
-          eventDate: event_date_time,
-          excerpt: this.get_excerpt
-        }
-      };
-      this.add_article({ params })
-        .then(() => {
-          this.$store.dispatch('article/clear_form_data');
-          this.onSuccessSubmit();
-        })
-        .catch(error => {
-          let message = 'An error occured!';
-          try {
-            message = error.response.data.message;
-          } catch (error) {
-            //
+      if (this.processValidation()) {
+        const date_time = this.get_date ? new Date(formatISODate(this.get_date)).toISOString() : undefined;
+        const event_date_time = this.get_eventDate
+          ? new Date(formatISODate(this.get_eventDate)).toISOString()
+          : undefined;
+        const params = {
+          body: {
+            date: date_time,
+            categorySlug: this.get_selected_category.slug,
+            image: this.get_image && this.get_image.url ? this.get_image : undefined,
+            headline: this.get_headline,
+            description: this.get_description,
+            eventDate: event_date_time,
+            excerpt: this.get_excerpt
           }
+        };
+        this.add_article({ params })
+          .then(() => {
+            this.$store.dispatch('article/clear_form_data');
+            this.onSuccessSubmit();
+          })
+          .catch(error => {
+            let message = 'An error occured!';
+            try {
+              message = error.response.data.message;
+            } catch (error) {
+              //
+            }
 
-          this.update_response_message({
-            message: message,
-            type: 'error',
-            class: 'text-error'
+            this.update_response_message({
+              message: message,
+              type: 'error',
+              class: 'text-error'
+            });
           });
-        });
+      }
+    },
+    processValidation() {
+      this.$refs.articleAdd.$v.$touch();
+      this.$refs.articleAdd2.$v.$touch();
+      if (this.$refs.articleAdd.$v.$invalid || this.$refs.articleAdd2.$v.$invalid) {
+        this.validationError = true;
+        return false;
+      }
+      return true;
     },
     async onSuccessSubmit() {
       // TODO: refactor, rename and move to helpers

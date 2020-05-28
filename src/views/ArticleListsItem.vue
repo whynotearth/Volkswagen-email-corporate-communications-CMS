@@ -134,7 +134,11 @@
 
           <div>
             <div class="px-4 md:px-6">
-              <p v-if="get_response_message.message" class="font-bold px-4 mb-4" :class="get_response_message.class">
+              <p
+                v-if="get_response_message.message"
+                class="font-bold px-4 my-4 text-center"
+                :class="get_response_message.class"
+              >
                 {{ get_response_message.message }}
               </p>
 
