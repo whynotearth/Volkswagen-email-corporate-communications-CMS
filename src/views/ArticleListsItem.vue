@@ -280,8 +280,6 @@ export default {
         return [this.get_image];
       },
       set(value) {
-        console.log(value);
-
         let image = {};
         try {
           image = value[0];
@@ -335,6 +333,9 @@ export default {
   },
   created() {
     this.fetch_categories();
+    if (this.get_daily_plan) {
+      this.fetch_daily_plan();
+    }
   },
   mounted() {
     this.initialForm();
