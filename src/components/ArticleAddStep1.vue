@@ -13,7 +13,7 @@
           class="text-left py-1 px-2"
           :class="{ active: category.slug === get_selected_category.slug }"
         >
-          <a @click.prevent="selected_category = category" href="#" class="flex items-center">
+          <a @click.prevent="selectCategory(category)" href="#" class="flex items-center">
             <div class="w-12 h-12">
               <img class="p-2" :src="category.image" alt="" />
             </div>
@@ -50,7 +50,11 @@ export default {
   },
   methods: {
     ...mapMutations('article', ['update_selected_category']),
-    ...mapActions('article', ['fetch_categories'])
+    ...mapActions('article', ['fetch_categories']),
+    selectCategory(category) {
+      this.selected_category = category;
+      this.$router.push({ name: 'ArticleAdd' });
+    }
   },
   computed: {
     ...mapGetters('article', ['get_categories', 'get_selected_category']),

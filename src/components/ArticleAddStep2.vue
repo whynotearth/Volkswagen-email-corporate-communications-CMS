@@ -14,29 +14,28 @@
           {{ stringHeadlineByCategoryName }} is required
         </span>
         <span v-if="$v.headline.$dirty && !$v.headline.maxLength" class="text-xs text-error pl-error-message">
-          {{ stringHeadlineByCategoryName }} should be less than 80 characters
+          Max {{ $v.headline.$params.maxLength.max }} characters
         </span>
       </BaseInputText>
 
       <hr v-if="isFieldVisible('image')" class="my-4 bg-background border-black em-low -mx-4 sm:mx-0 mb-4" />
       <ImageUpload v-if="isFieldVisible('image')" v-model="images" :defaultImages="images" />
 
-      <BaseInputTextArea
+      <BaseEditor
         v-if="isFieldVisible('excerpt') && !isImagesEmpty"
-        class="bg-surface my-4"
-        v-model="$v.excerpt.$model"
-        label="Excerpt"
+        class="my-4 body-1-mobile bg-surface"
+        :error="$v.excerpt.$dirty && ($v.excerpt.$invalid || !$v.excerpt.required || !$v.excerpt.maxLength)"
         placeholder="Excerpt"
-        :error="$v.excerpt.$dirty && $v.excerpt.$invalid"
+        v-model="$v.excerpt.$model"
         :model="$v.excerpt"
       >
         <span v-if="$v.excerpt.$dirty && !$v.excerpt.required" class="text-xs text-error pl-error-message">
           Excerpt is required
         </span>
         <span v-if="$v.excerpt.$dirty && !$v.excerpt.maxLength" class="text-xs text-error pl-error-message">
-          Excerpt should be less than 175 characters
+          Max {{ $v.excerpt.$params.maxLength.max }} characters
         </span>
-      </BaseInputTextArea>
+      </BaseEditor>
 
       <hr class="my-4 bg-background border-black em-low -mx-4 sm:mx-0 mb-4" />
 
@@ -52,6 +51,9 @@
       >
         <span v-if="$v.description.$dirty && !$v.description.required" class="text-xs text-error pl-error-message">
           {{ stringDescriptionByCategoryName }} is required
+        </span>
+        <span v-if="$v.description.$dirty && !$v.description.maxLength" class="text-xs text-error pl-error-message">
+          Max {{ $v.description.$params.maxLength.max }} characters
         </span>
       </BaseEditor>
 
@@ -76,7 +78,6 @@
 
 <script>
 import BaseInputText from '@/components/BaseInputText.vue';
-import BaseInputTextArea from '@/components/BaseInputTextarea.vue';
 import BaseEditor from '@/components/Editor/BaseEditor.vue';
 import ImageUpload from '@/components/ImageUpload/ImageUpload.vue';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
@@ -92,8 +93,7 @@ export default {
   components: {
     BaseInputText,
     BaseEditor,
-    ImageUpload,
-    BaseInputTextArea
+    ImageUpload
   },
   validations() {
     return {

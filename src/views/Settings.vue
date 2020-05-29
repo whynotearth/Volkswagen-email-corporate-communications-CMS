@@ -51,7 +51,6 @@
 </template>
 
 <script>
-import PageNavigation from '@/components/PageNavigation.vue';
 import AuthLogin from '@/components/AuthLogin';
 import BaseAppBarHeader from '@/components/BaseAppBarHeader.vue';
 import LayoutFixedScrollable from '@/components/LayoutFixedScrollable';
