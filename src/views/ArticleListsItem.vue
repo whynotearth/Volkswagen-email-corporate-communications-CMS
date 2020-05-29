@@ -61,36 +61,40 @@
           <hr v-if="isFieldRequired('image')" class="my-4 bg-background border-black em-low -mx-4 sm:mx-0 mb-4" />
           <ImageUpload v-if="isFieldRequired('image')" v-model="images" :defaultImages="images" />
 
-          <BaseInputTextArea
-            v-if="isFieldRequired('excerpt')"
-            class="bg-surface my-4"
-            v-model="$v.excerpt.$model"
-            label="Excerpt"
+          <BaseEditor
+            v-if="isFieldRequired('excerpt') && !isImagesEmpty"
+            class="my-4 body-1-mobile bg-surface"
+            :error="$v.excerpt.$dirty && ($v.excerpt.$invalid || !$v.excerpt.required || !$v.excerpt.maxLength)"
             placeholder="Excerpt"
-            :error="$v.excerpt.$dirty && $v.excerpt.$invalid"
+            v-model="$v.excerpt.$model"
             :model="$v.excerpt"
           >
             <span v-if="$v.excerpt.$dirty && !$v.excerpt.required" class="text-xs text-error pl-error-message">
               Excerpt is required
             </span>
             <span v-if="$v.excerpt.$dirty && !$v.excerpt.maxLength" class="text-xs text-error pl-error-message">
-              Excerpt should be less than 175 characters
+              Max {{ $v.excerpt.$params.maxLength.max }} characters
             </span>
-          </BaseInputTextArea>
+          </BaseEditor>
 
           <hr class="my-4 bg-background border-black em-low -mx-4 sm:mx-0 mb-4" />
 
           <BaseEditor
             v-if="isFieldRequired('description')"
-            class="body-1-mobile bg-surface mb-4"
+            class="mt-6 mb-4 body-1-mobile bg-surface"
             v-model="$v.description.$model"
-            :label="stringDescriptionByCategoryName"
             :placeholder="isAnswersCategory ? stringDescriptionByCategoryName : 'Put the content of your article here.'"
-            :error="$v.description.$dirty && $v.description.$invalid"
+            :error="
+              $v.description.$dirty &&
+                ($v.description.$invalid || !$v.description.required || !$v.description.maxLength)
+            "
             :model="$v.description"
           >
             <span v-if="$v.description.$dirty && !$v.description.required" class="text-xs text-error pl-error-message">
               {{ stringDescriptionByCategoryName }} is required
+            </span>
+            <span v-if="$v.description.$dirty && !$v.description.maxLength" class="text-xs text-error pl-error-message">
+              Max {{ $v.description.$params.maxLength.max }} characters
             </span>
           </BaseEditor>
 
@@ -134,7 +138,11 @@
 
           <div>
             <div class="px-4 md:px-6">
-              <p v-if="get_response_message.message" class="font-bold px-4 mb-4" :class="get_response_message.class">
+              <p
+                v-if="get_response_message.message"
+                class="font-bold px-4 my-4 text-center"
+                :class="get_response_message.class"
+              >
                 {{ get_response_message.message }}
               </p>
 
@@ -164,7 +172,6 @@
 <script>
 import BaseAppBarHeader from '@/components/BaseAppBarHeader.vue';
 import BaseInputText from '@/components/BaseInputText.vue';
-import BaseInputTextArea from '@/components/BaseInputTextarea.vue';
 import BaseEditor from '@/components/Editor/BaseEditor.vue';
 import BaseDropdown from '@/components/BaseDropdown';
 import ImageUpload from '@/components/ImageUpload/ImageUpload.vue';
@@ -183,8 +190,7 @@ export default {
     BaseInputText,
     BaseEditor,
     BaseDropdown,
-    ImageUpload,
-    BaseInputTextArea
+    ImageUpload
   },
   validations() {
     return {
