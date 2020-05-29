@@ -4,7 +4,7 @@
       <BaseAppBarHeader :title="get_headline" :to-link="{ name: 'ArticleLists' }" />
     </template>
     <template #content>
-      <div v-if="selectedArticle.id" class="min-h-full relative bg-background">
+      <div v-if="selectedArticle && selectedArticle.id" class="min-h-full relative bg-background">
         <BaseDropdown
           class="relative bg-surface text-left container px-0 md:px-6"
           :optionContainerClasses="'dropdown-top-auto'"
@@ -207,7 +207,7 @@ export default {
         required: requiredIf(context => {
           return context.isFieldRequired('description');
         }),
-        maxLength: maxLength(this.isImagesEmpty ? 625 : 450)
+        maxLength: maxLength(this.isImagesEmpty ? 750 : 450)
       },
       eventDate: {
         mustBeDate: value => mustBeDate({ value })
@@ -229,7 +229,6 @@ export default {
       'get_headline',
       'get_description',
       'get_eventDate',
-      'get_articles',
       'get_response_message',
       'get_date',
       'get_image',
@@ -286,8 +285,6 @@ export default {
         return [this.get_image];
       },
       set(value) {
-        console.log(value);
-
         let image = {};
         try {
           image = value[0];
@@ -318,7 +315,11 @@ export default {
     },
     selected_category: {
       get() {
-        return this.get_selected_category.slug ? this.get_selected_category : this.selectedArticle.category;
+        return this.get_selected_category.slug
+          ? this.get_selected_category
+          : this.selectedArticle
+          ? this.selectedArticle.category
+          : '';
       },
       set(value) {
         this.update_selected_category(value);
@@ -341,6 +342,9 @@ export default {
   },
   created() {
     this.fetch_categories();
+    if (this.get_daily_plan) {
+      this.fetch_daily_plan();
+    }
   },
   mounted() {
     this.initialForm();
@@ -367,19 +371,21 @@ export default {
     ]),
     formatDate,
     initialForm() {
-      this.update_headline(this.selectedArticle.headline);
-      this.update_description(this.selectedArticle.description);
-      this.update_date(this.selectedArticle.date);
-      this.update_eventDate(formatDate(this.selectedArticle.eventDate));
-      this.update_date(formatDate(this.selectedArticle.date));
-      if (this.selectedArticle.image) {
-        this.images = [
-          {
-            url: this.selectedArticle.image
-          }
-        ];
+      if (this.selectedArticle) {
+        this.update_headline(this.selectedArticle.headline);
+        this.update_description(this.selectedArticle.description);
+        this.update_date(this.selectedArticle.date);
+        this.update_eventDate(formatDate(this.selectedArticle.eventDate));
+        this.update_date(formatDate(this.selectedArticle.date));
+        if (this.selectedArticle.image) {
+          this.images = [
+            {
+              url: this.selectedArticle.image
+            }
+          ];
+        }
+        this.update_excerpt(this.selectedArticle.excerpt);
       }
-      this.update_excerpt(this.selectedArticle.excerpt);
     },
     isFieldRequired(fieldName) {
       if (!this.selectedArticle) {

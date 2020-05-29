@@ -3,7 +3,7 @@
     <template #header>
       <BaseAppBarHeader
         :title="$v.selected_category.$model && $v.selected_category.$model.name ? 'New Post ' : 'Choose Category'"
-        :to-link="{ name: 'ArticleCategorySelection' }"
+        :to-link="{ name: 'ArticleMain' }"
       />
     </template>
     <template #content>

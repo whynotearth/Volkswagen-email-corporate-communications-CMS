@@ -1,7 +1,7 @@
 <template>
   <LayoutFixedScrollable>
     <template #header>
-      <BaseAppBarHeader title="Articles" to-link="/" />
+      <BaseAppBarHeader title="Articles" :to-link="{ name: 'ArticleMain' }" />
     </template>
     <template #content>
       <BaseTabs>
