@@ -21,6 +21,7 @@ import EmailListImportHelp from '../views/EmailListImportHelp';
 import Email from '@/views/Email';
 import Dashboard from '../views/Dashboard';
 import JumpStartLists from '../views/JumpStartLists';
+import ArticleMain from '../views/ArticleMain';
 import ArticleLists from '../views/ArticleLists';
 import ArticleListsItem from '../views/ArticleListsItem';
 import EditBlueDelta from '../views/EditBlueDelta';
@@ -75,6 +76,11 @@ const routes = [
     path: '/new-password',
     name: 'NewPassword',
     component: NewPassword
+  },
+  {
+    path: '/articles',
+    name: 'ArticleMain',
+    component: ArticleMain
   },
   {
     path: '/articles/add/:step?',
