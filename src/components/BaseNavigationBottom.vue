@@ -26,7 +26,7 @@
               <router-link
                 :active-class="'router-active-link'"
                 class="router-normal-link"
-                :to="{ name: 'JumpStartLists' }"
+                :to="{ name: 'BlueDeltaMain' }"
               >
                 <MemoStatslIcon class="m-auto" />
                 Blue Delta

@@ -20,6 +20,7 @@ import EmailListImport from '../views/EmailListImport';
 import EmailListImportHelp from '../views/EmailListImportHelp';
 import Email from '@/views/Email';
 import Dashboard from '../views/Dashboard';
+import BlueDeltaMain from '@/views/BlueDeltaMain';
 import JumpStartLists from '../views/JumpStartLists';
 import ArticleMain from '../views/ArticleMain';
 import ArticleLists from '../views/ArticleLists';
@@ -137,6 +138,14 @@ const routes = [
     path: '/settings/my-account/change-password',
     name: 'ChangePassword',
     component: ChangePassword,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/blue-delta',
+    name: 'BlueDeltaMain',
+    component: BlueDeltaMain,
     meta: {
       requiresAuth: true
     }
