@@ -49,7 +49,7 @@
           />
           <ul :class="{ opened: isOpen }" class="absolute toggle-menu list-none">
             <li class="absolute top-0 right-0 flex whitespace-no-wrap text-white text-xs justify-end my-3">
-              <router-link :to="{ name: 'ArticleMain' }" class="flex items-center">
+              <router-link :to="{ name: 'ArticleCategorySelection' }" class="flex items-center">
                 Article
                 <div
                   class="rounded-full h-10 w-10 flex items-center justify-center bg-secondary ml-2
