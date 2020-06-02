@@ -24,11 +24,6 @@ var pxtoremOptions = {
 };
 
 module.exports = {
-  plugins: [
-    tailwindcss,
-    postcssNested,
-    pxtorem(pxtoremOptions),
-    autoprefixer,
-    ...(process.env.NODE_ENV === 'production' ? [purgecss] : [])
-  ]
+  plugins: [tailwindcss, postcssNested, pxtorem(pxtoremOptions), autoprefixer]
+  // , ...(process.env.NODE_ENV === 'production' ? [purgecss] : [])
 };
