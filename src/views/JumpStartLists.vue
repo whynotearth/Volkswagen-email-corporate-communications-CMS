@@ -1,7 +1,7 @@
 <template>
   <LayoutFixedScrollable>
     <template #header>
-      <BaseAppBarHeader title="Blue Delta" :to-link="{ name: 'Dashboard' }" />
+      <BaseAppBarHeader title="Blue Delta" :to-link="{ name: 'BlueDeltaMain' }" />
     </template>
     <template #content>
       <div class="flex flex-col py-6">
