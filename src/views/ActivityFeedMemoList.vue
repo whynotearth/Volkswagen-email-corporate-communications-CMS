@@ -1,5 +1,5 @@
 <template>
-  <LayoutFixedScrollable>
+  <LayoutFixedScrollableWithNav>
     <template #header>
       <BaseAppBarHeader :title="'Memo Stats'" :to-link="{ name: 'Stats' }" />
 
@@ -27,21 +27,21 @@
     <template #footer>
       <NavigationBottom />
     </template>
-  </LayoutFixedScrollable>
+  </LayoutFixedScrollableWithNav>
 </template>
 
 <script>
 import BaseAppBarHeader from '@/components/BaseAppBarHeader.vue';
 // import ActivityFeedSearchBox from '@/components/ActivityFeedSearchBox.vue';
 import MemoListItem from '@/components/MemoListItem.vue';
-import LayoutFixedScrollable from '@/components/LayoutFixedScrollable.vue';
+import LayoutFixedScrollableWithNav from '@/components/LayoutFixedScrollableWithNav.vue';
 import { mapGetters, mapActions } from 'vuex';
 import NavigationBottom from '@/components/BaseNavigationBottom';
 
 export default {
   name: 'ActivityFeedMemoList',
   // ActivityFeedSearchBox
-  components: { MemoListItem, BaseAppBarHeader, LayoutFixedScrollable, NavigationBottom },
+  components: { MemoListItem, BaseAppBarHeader, LayoutFixedScrollableWithNav, NavigationBottom },
   computed: {
     ...mapGetters('memo', ['get_stats'])
   },

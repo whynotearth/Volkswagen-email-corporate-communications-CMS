@@ -1,5 +1,5 @@
 <template>
-  <LayoutFixedScrollable>
+  <LayoutFixedScrollableWithNav>
     <template #header>
       <BaseAppBarHeader title="Settings" :to-link="{ name: 'Dashboard' }"></BaseAppBarHeader>
     </template>
@@ -47,19 +47,19 @@
     <template #footer>
       <NavigationBottom />
     </template>
-  </LayoutFixedScrollable>
+  </LayoutFixedScrollableWithNav>
 </template>
 
 <script>
 import AuthLogin from '@/components/AuthLogin';
 import BaseAppBarHeader from '@/components/BaseAppBarHeader.vue';
-import LayoutFixedScrollable from '@/components/LayoutFixedScrollable';
+import LayoutFixedScrollableWithNav from '@/components/LayoutFixedScrollableWithNav';
 import NavigationBottom from '@/components/BaseNavigationBottom';
 import ArrowRightIcon from '@/assets/arrow-right.svg';
 
 export default {
   name: 'SettingsPage',
-  components: { BaseAppBarHeader, NavigationBottom, LayoutFixedScrollable, ArrowRightIcon },
+  components: { BaseAppBarHeader, NavigationBottom, LayoutFixedScrollableWithNav, ArrowRightIcon },
   methods: {
     async logout() {
       try {

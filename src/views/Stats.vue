@@ -1,10 +1,10 @@
 <template>
-  <LayoutFixedScrollable>
+  <LayoutFixedScrollableWithNav>
     <template #header>
       <BaseAppBarHeader :title="'Stats'" :toLink="{ name: 'Dashboard' }" />
     </template>
     <template #content>
-      <div class="bg-white flex items-center justify-center min-h-full relative">
+      <div class="bg-white flex items-center justify-center min-h-full relative flex-shrink-0 py-6">
         <div class="w-full">
           <!-- <router-link v-if="isAuthenticated" to="/settings" class="absolute top-0 right-0 p-4 text-sm">
             <img
@@ -19,7 +19,7 @@
                 alt=""
               />
             </div>
-            <h1 class="text-primary h1-mobile md:h1 mb-h1-mobile">Let's crunch the numbers...</h1>
+            <h1 class="text-primary h1-mobile md:h1 mb-h1-mobile mb-14">Let's crunch the numbers...</h1>
 
             <div>
               <router-link
@@ -42,22 +42,16 @@
     <template #footer>
       <NavigationBottom />
     </template>
-  </LayoutFixedScrollable>
+  </LayoutFixedScrollableWithNav>
 </template>
 
 <script>
-import LayoutFixedScrollable from '@/components/LayoutFixedScrollable';
+import LayoutFixedScrollableWithNav from '@/components/LayoutFixedScrollableWithNav';
 import NavigationBottom from '@/components/BaseNavigationBottom';
 import BaseAppBarHeader from '@/components/BaseAppBarHeader.vue';
 
 export default {
   name: 'StatsPage',
-  components: { BaseAppBarHeader, NavigationBottom, LayoutFixedScrollable }
+  components: { BaseAppBarHeader, NavigationBottom, LayoutFixedScrollableWithNav }
 };
 </script>
-
-<style scoped>
-.mb-h1-mobile {
-  margin-bottom: 56px;
-}
-</style>

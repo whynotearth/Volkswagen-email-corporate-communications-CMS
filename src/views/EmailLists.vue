@@ -1,5 +1,5 @@
 <template>
-  <LayoutFixedScrollable>
+  <LayoutFixedScrollableWithNav>
     <template #header>
       <BaseAppBarHeader title="Distribution Groups" :to-link="{ name: 'Settings' }"></BaseAppBarHeader>
     </template>
@@ -36,18 +36,18 @@
     <template #footer>
       <NavigationBottom />
     </template>
-  </LayoutFixedScrollable>
+  </LayoutFixedScrollableWithNav>
 </template>
 
 <script>
 import BaseAppBarHeader from '@/components/BaseAppBarHeader.vue';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
-import LayoutFixedScrollable from '@/components/LayoutFixedScrollable';
+import LayoutFixedScrollableWithNav from '@/components/LayoutFixedScrollableWithNav';
 import NavigationBottom from '@/components/BaseNavigationBottom';
 
 export default {
   name: 'EmailLists',
-  components: { BaseAppBarHeader, NavigationBottom, LayoutFixedScrollable },
+  components: { BaseAppBarHeader, NavigationBottom, LayoutFixedScrollableWithNav },
   computed: {
     emailList() {
       return this.$store.getters['distributionGroup/getEmailLists'];

@@ -9,7 +9,7 @@
             alt=""
           />
         </div>
-        <h1 class="h1-mobile md:h1 mb-20 text-primary mb-h1-mobile">Welcome to Blue Delta</h1>
+        <h1 class="h1-mobile md:h1 mb-20 text-primary mb-h1-mobile mb-14">Welcome to Blue Delta</h1>
         <AuthLogin @success="onSuccess" />
       </div>
     </div>
@@ -36,9 +36,3 @@ export default {
   }
 };
 </script>
-
-<style scoped>
-.mb-h1-mobile {
-  margin-bottom: 56px;
-}
-</style>

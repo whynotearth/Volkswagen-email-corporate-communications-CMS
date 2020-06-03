@@ -314,6 +314,7 @@ export default {
       });
     },
     selected_category: {
+      /* eslint-disable indent */
       get() {
         return this.get_selected_category.slug
           ? this.get_selected_category
@@ -321,6 +322,7 @@ export default {
           ? this.selectedArticle.category
           : '';
       },
+      /* eslint-enable indent */
       set(value) {
         this.update_selected_category(value);
       }

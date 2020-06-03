@@ -4,7 +4,7 @@
       <BaseAppBarHeader :title="'Blue Delta'" :to-link="{ name: 'Dashboard' }" />
     </template>
     <template #content>
-      <div class="bg-white flex items-center justify-center min-h-full relative">
+      <div class="bg-white flex items-center justify-center min-h-full relative flex-shrink-0 py-6">
         <div class="w-full">
           <div class="max-w-sm mx-auto px-12">
             <div class="mb-4">
@@ -14,7 +14,7 @@
                 alt=""
               />
             </div>
-            <h1 class="text-primary h1-mobile md:h1 mb-h1-mobile">
+            <h1 class="text-primary h1-mobile md:h1 mb-h1-mobile mb-14">
               Manage the Blue Delta
             </h1>
 
@@ -52,9 +52,3 @@ export default {
   components: { LayoutFixedScrollable, BaseAppBarHeader, BaseNavigationBottom }
 };
 </script>
-
-<style scoped>
-.mb-h1-mobile {
-  margin-bottom: 56px;
-}
-</style>

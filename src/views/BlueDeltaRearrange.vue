@@ -1,5 +1,5 @@
 <template>
-  <LayoutFixedScrollable>
+  <LayoutFixedScrollableWithNav>
     <template #header>
       <BaseAppBarHeader
         class="sticky top-0 bg-white"
@@ -40,7 +40,7 @@
     <template #footer>
       <NavigationBottom />
     </template>
-  </LayoutFixedScrollable>
+  </LayoutFixedScrollableWithNav>
 </template>
 
 <script>
@@ -49,14 +49,14 @@ import EmailPreview from '@/components/Email/EmailPreview.vue';
 import BaseButton from '@/components/BaseButton.vue';
 import BaseAppBarHeader from '@/components/BaseAppBarHeader.vue';
 import NavigationBottom from '@/components/BaseNavigationBottom';
-import LayoutFixedScrollable from '@/components/LayoutFixedScrollable';
+import LayoutFixedScrollableWithNav from '@/components/LayoutFixedScrollableWithNav';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
 import { required } from 'vuelidate/lib/validators';
 import { formatISODate, formatDate, sleep } from '@/helpers.js';
 
 export default {
   name: 'DraftEmail',
-  components: { Article, BaseButton, EmailPreview, LayoutFixedScrollable, BaseAppBarHeader, NavigationBottom },
+  components: { Article, BaseButton, EmailPreview, LayoutFixedScrollableWithNav, BaseAppBarHeader, NavigationBottom },
   props: {
     id: {
       type: [String, Number]
