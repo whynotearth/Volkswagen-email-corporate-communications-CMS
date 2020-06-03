@@ -1,7 +1,7 @@
 <template functional>
   <div class="page h-full flex flex-col position-relative">
     <slot name="header" />
-    <div class="flex-grow z-2 overflow-y-hidden">
+    <div class="flex-grow z-2">
       <div class="px-0 overflow-y-auto overflow-x-hidden flex flex-col h-full narrow-scrollbars pb-14">
         <slot name="content" />
       </div>
