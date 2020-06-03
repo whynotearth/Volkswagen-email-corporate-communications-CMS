@@ -1,5 +1,5 @@
 <template>
-  <LayoutFixedScrollableWithNav>
+  <LayoutFixedFooter>
     <template #header>
       <BaseAppBarHeader :title="'Stats'" :toLink="{ name: 'Dashboard' }" />
     </template>
@@ -42,16 +42,16 @@
     <template #footer>
       <NavigationBottom />
     </template>
-  </LayoutFixedScrollableWithNav>
+  </LayoutFixedFooter>
 </template>
 
 <script>
-import LayoutFixedScrollableWithNav from '@/components/LayoutFixedScrollableWithNav';
+import LayoutFixedFooter from '@/components/LayoutFixedFooter';
 import NavigationBottom from '@/components/BaseNavigationBottom';
 import BaseAppBarHeader from '@/components/BaseAppBarHeader.vue';
 
 export default {
   name: 'StatsPage',
-  components: { BaseAppBarHeader, NavigationBottom, LayoutFixedScrollableWithNav }
+  components: { BaseAppBarHeader, NavigationBottom, LayoutFixedFooter }
 };
 </script>

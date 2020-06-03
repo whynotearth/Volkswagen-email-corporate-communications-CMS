@@ -1,5 +1,5 @@
 <template>
-  <LayoutFixedScrollableWithNav>
+  <LayoutFixedFooter>
     <template #header>
       <BaseAppBarHeader title="Email" :to-link="backLink">
         <template #menu>
@@ -36,19 +36,19 @@
     <template #footer>
       <NavigationBottom />
     </template>
-  </LayoutFixedScrollableWithNav>
+  </LayoutFixedFooter>
 </template>
 
 <script>
 import BaseAppBarHeader from '@/components/BaseAppBarHeader.vue';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
 import { formatDate } from '@/helpers.js';
-import LayoutFixedScrollableWithNav from '@/components/LayoutFixedScrollableWithNav';
+import LayoutFixedFooter from '@/components/LayoutFixedFooter';
 import NavigationBottom from '@/components/BaseNavigationBottom';
 
 export default {
   name: 'EmailListItem',
-  components: { BaseAppBarHeader, NavigationBottom, LayoutFixedScrollableWithNav },
+  components: { BaseAppBarHeader, NavigationBottom, LayoutFixedFooter },
   data() {
     return {
       isMenu: false

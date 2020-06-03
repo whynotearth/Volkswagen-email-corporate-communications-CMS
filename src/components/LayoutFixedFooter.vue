@@ -12,6 +12,6 @@
 
 <script>
 export default {
-  name: 'LayoutFixedScrollableWithNav'
+  name: 'LayoutFixedFooter'
 };
 </script>

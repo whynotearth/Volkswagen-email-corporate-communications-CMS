@@ -1,5 +1,5 @@
 <template>
-  <LayoutFixedScrollableWithNav>
+  <LayoutFixedFooter>
     <template #header>
       <BaseAppBarHeader
         class="sticky top-0 bg-white"
@@ -85,7 +85,7 @@
     <template #footer>
       <NavigationBottom />
     </template>
-  </LayoutFixedScrollableWithNav>
+  </LayoutFixedFooter>
 </template>
 
 <script>
@@ -98,7 +98,7 @@ import BaseButton from '@/components/BaseButton.vue';
 import BaseTimePicker from '@/components/BaseTimePicker.vue';
 import BaseAppBarHeader from '@/components/BaseAppBarHeader.vue';
 import NavigationBottom from '@/components/BaseNavigationBottom';
-import LayoutFixedScrollableWithNav from '@/components/LayoutFixedScrollableWithNav';
+import LayoutFixedFooter from '@/components/LayoutFixedFooter';
 import EmailPreview from '@/components/Email/EmailPreview.vue';
 import Multiselect from 'vue-multiselect';
 import RearrangeIcon from '@/assets/Rearrange.svg';
@@ -123,7 +123,7 @@ export default {
   },
   components: {
     BaseAppBarHeader,
-    LayoutFixedScrollableWithNav,
+    LayoutFixedFooter,
     Multiselect,
     BaseButton,
     BaseTimePicker,

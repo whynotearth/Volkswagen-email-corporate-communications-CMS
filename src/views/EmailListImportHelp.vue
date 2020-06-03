@@ -1,5 +1,5 @@
 <template>
-  <LayoutFixedScrollableWithNav>
+  <LayoutFixedFooter>
     <template #header>
       <BaseAppBarHeader title="Import Instructions" to-link="/settings/email-lists/import"></BaseAppBarHeader>
     </template>
@@ -69,16 +69,16 @@
     <template #footer>
       <NavigationBottom />
     </template>
-  </LayoutFixedScrollableWithNav>
+  </LayoutFixedFooter>
 </template>
 
 <script>
 import BaseAppBarHeader from '@/components/BaseAppBarHeader.vue';
-import LayoutFixedScrollableWithNav from '@/components/LayoutFixedScrollableWithNav';
+import LayoutFixedFooter from '@/components/LayoutFixedFooter';
 import NavigationBottom from '@/components/BaseNavigationBottom';
 
 export default {
   name: 'EmailListImportHelp',
-  components: { BaseAppBarHeader, NavigationBottom, LayoutFixedScrollableWithNav }
+  components: { BaseAppBarHeader, NavigationBottom, LayoutFixedFooter }
 };
 </script>

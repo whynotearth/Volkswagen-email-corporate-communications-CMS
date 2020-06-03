@@ -1,5 +1,5 @@
 <template>
-  <LayoutFixedScrollableWithNav>
+  <LayoutFixedFooter>
     <template #header>
       <BaseAppBarHeader :title="'Open Rate'" :to-link="'/activity-feed/memos'" />
 
@@ -47,7 +47,7 @@
     <template #footer>
       <NavigationBottom />
     </template>
-  </LayoutFixedScrollableWithNav>
+  </LayoutFixedFooter>
 </template>
 
 <script>
@@ -57,7 +57,7 @@ import BaseTab from '@/components/BaseTab.vue';
 // import ActivityFeedSearchBox from '@/components/ActivityFeedSearchBox.vue';
 import MemoListItem from '@/components/MemoListItem.vue';
 import ActivityFeedReadReportLog from '@/components/ActivityFeedReadReportLog.vue';
-import LayoutFixedScrollableWithNav from '@/components/LayoutFixedScrollableWithNav.vue';
+import LayoutFixedFooter from '@/components/LayoutFixedFooter.vue';
 import NavigationBottom from '@/components/BaseNavigationBottom';
 import { mapGetters, mapActions } from 'vuex';
 import { get } from 'lodash-es';
@@ -66,7 +66,7 @@ import { formatDate } from '@/helpers.js';
 export default {
   name: 'ActivityFeedMemoItem',
   components: {
-    LayoutFixedScrollableWithNav,
+    LayoutFixedFooter,
     BaseAppBarHeader,
     BaseTabs,
     BaseTab,

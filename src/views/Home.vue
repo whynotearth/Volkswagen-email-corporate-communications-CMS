@@ -1,5 +1,5 @@
 <template>
-  <LayoutFixedScrollableWithNav>
+  <LayoutFixedFooter>
     <template #content>
       <div class="bg-white flex items-center justify-center min-h-full relative flex-shrink-0 py-6">
         <div class="w-full">
@@ -41,19 +41,19 @@
     <template #footer v-if="isAuthenticated">
       <NavigationBottom />
     </template>
-  </LayoutFixedScrollableWithNav>
+  </LayoutFixedFooter>
 </template>
 
 <script>
 import store from '@/store';
 import isEmail from 'validator/lib/isEmail';
 import AuthLogin from '@/components/AuthLogin';
-import LayoutFixedScrollableWithNav from '@/components/LayoutFixedScrollableWithNav';
+import LayoutFixedFooter from '@/components/LayoutFixedFooter';
 import NavigationBottom from '@/components/BaseNavigationBottom';
 
 export default {
   name: 'LoginPage',
-  components: { AuthLogin, NavigationBottom, LayoutFixedScrollableWithNav },
+  components: { AuthLogin, NavigationBottom, LayoutFixedFooter },
   computed: {
     isAuthenticated() {
       return this.$store.getters['authKeep/isAuthenticated'];

@@ -1,5 +1,5 @@
 <template>
-  <LayoutFixedScrollableWithNav>
+  <LayoutFixedFooter>
     <template #header>
       <BaseAppBarHeader title="Blue Delta" :to-link="{ name: 'BlueDeltaMain' }" />
     </template>
@@ -15,19 +15,19 @@
     <template #footer>
       <NavigationBottom />
     </template>
-  </LayoutFixedScrollableWithNav>
+  </LayoutFixedFooter>
 </template>
 
 <script>
 import BaseAppBarHeader from '@/components/BaseAppBarHeader.vue';
 import JumpStartItem from '@/components/JumpStartListItem.vue';
 import NavigationBottom from '@/components/BaseNavigationBottom';
-import LayoutFixedScrollableWithNav from '@/components/LayoutFixedScrollableWithNav.vue';
+import LayoutFixedFooter from '@/components/LayoutFixedFooter.vue';
 import { mapGetters, mapActions, mapMutations } from 'vuex';
 
 export default {
   name: 'JumpStart',
-  components: { BaseAppBarHeader, JumpStartItem, LayoutFixedScrollableWithNav, NavigationBottom },
+  components: { BaseAppBarHeader, JumpStartItem, LayoutFixedFooter, NavigationBottom },
   computed: {
     ...mapGetters('email', ['get_daily_plan'])
   },

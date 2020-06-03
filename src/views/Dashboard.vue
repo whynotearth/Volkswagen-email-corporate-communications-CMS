@@ -1,5 +1,5 @@
 <template>
-  <LayoutFixedScrollableWithNav>
+  <LayoutFixedFooter>
     <template #header>
       <BaseAppBarHeader
         :showSettingsLink="true"
@@ -33,13 +33,13 @@
     <template #footer>
       <NavigationBottom />
     </template>
-  </LayoutFixedScrollableWithNav>
+  </LayoutFixedFooter>
 </template>
 
 <script>
 import store from '@/store';
 import NavigationBottom from '@/components/BaseNavigationBottom';
-import LayoutFixedScrollableWithNav from '@/components/LayoutFixedScrollableWithNav';
+import LayoutFixedFooter from '@/components/LayoutFixedFooter';
 import UserCard from '@/components/BaseUserCard';
 import TodayEmail from '@/components/TodayEmail';
 import BaseAppBarHeader from '@/components/BaseAppBarHeader.vue';
@@ -49,7 +49,7 @@ export default {
   name: 'Dashboard',
   components: {
     NavigationBottom,
-    LayoutFixedScrollableWithNav,
+    LayoutFixedFooter,
     BaseAppBarHeader,
     TodayEmail
     //SmartSuggestions

@@ -1,5 +1,5 @@
 <template>
-  <LayoutFixedScrollableWithNav>
+  <LayoutFixedFooter>
     <template #header>
       <BaseAppBarHeader
         class="sticky top-0 bg-white"
@@ -28,19 +28,19 @@
     <template #footer>
       <NavigationBottom />
     </template>
-  </LayoutFixedScrollableWithNav>
+  </LayoutFixedFooter>
 </template>
 
 <script>
 import BaseAppBarHeader from '@/components/BaseAppBarHeader.vue';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
 import { formatDate } from '@/helpers.js';
-import LayoutFixedScrollableWithNav from '@/components/LayoutFixedScrollableWithNav';
+import LayoutFixedFooter from '@/components/LayoutFixedFooter';
 import NavigationBottom from '@/components/BaseNavigationBottom';
 
 export default {
   name: 'EmailList',
-  components: { BaseAppBarHeader, NavigationBottom, LayoutFixedScrollableWithNav },
+  components: { BaseAppBarHeader, NavigationBottom, LayoutFixedFooter },
   computed: {
     ...mapGetters('distributionGroup', ['getEmails', 'selectedEmailList']),
     titleHeader() {

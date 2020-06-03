@@ -1,5 +1,5 @@
 <template>
-  <LayoutFixedScrollable>
+  <LayoutFixedFooter>
     <template #header>
       <BaseAppBarHeader :title="'Blue Delta'" :to-link="{ name: 'Dashboard' }" />
     </template>
@@ -39,16 +39,16 @@
     <template #footer>
       <BaseNavigationBottom />
     </template>
-  </LayoutFixedScrollable>
+  </LayoutFixedFooter>
 </template>
 
 <script>
 import BaseAppBarHeader from '@/components/BaseAppBarHeader.vue';
-import LayoutFixedScrollable from '@/components/LayoutFixedScrollable.vue';
+import LayoutFixedFooter from '@/components/LayoutFixedFooter.vue';
 import BaseNavigationBottom from '@/components/BaseNavigationBottom.vue';
 
 export default {
   name: 'BlueDeltaMain',
-  components: { LayoutFixedScrollable, BaseAppBarHeader, BaseNavigationBottom }
+  components: { LayoutFixedFooter, BaseAppBarHeader, BaseNavigationBottom }
 };
 </script>

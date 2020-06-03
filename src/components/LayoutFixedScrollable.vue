@@ -12,6 +12,6 @@
 
 <script>
 export default {
-  name: 'LayoutFixedScrollable'
+  name: 'LayoutMiddleScrollable'
 };
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <LayoutFixedScrollable>
+  <LayoutFixedFooter>
     <template #header>
       <BaseAppBarHeader
         title="Add Email"
@@ -34,7 +34,7 @@
     <template #footer>
       <NavigationBottom />
     </template>
-  </LayoutFixedScrollable>
+  </LayoutFixedFooter>
 </template>
 
 <script>
@@ -44,12 +44,12 @@ import BaseInputText from '@/components/BaseInputText.vue';
 import { required, email } from 'vuelidate/lib/validators';
 import BaseAppBarHeader from '@/components/BaseAppBarHeader.vue';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
-import LayoutFixedScrollable from '@/components/LayoutFixedScrollable';
+import LayoutFixedFooter from '@/components/LayoutFixedFooter';
 import NavigationBottom from '@/components/BaseNavigationBottom';
 
 export default {
   name: 'EmailListAdd',
-  components: { BaseInputText, BaseAppBarHeader, NavigationBottom, LayoutFixedScrollable },
+  components: { BaseInputText, BaseAppBarHeader, NavigationBottom, LayoutFixedFooter },
   validations: {
     email: {
       required,
