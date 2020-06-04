@@ -6,10 +6,10 @@
     <template #content>
       <div>
         <div class="bg-brand-gradient ">
-          <UserAccountCard fullname="Xavier Jasso" class="w-full relative container px-0 py-8" />
+          <UserAccountCard fullname="Xavier Jasso" />
         </div>
         <div class="container pt-6 pb-8 mb-4 text-left">
-          <UserAccountInfo :to-link="{ name: 'ResetPassword' }" />
+          <UserAccountInfo :to-link="{ name: 'AuthResetPassword' }" />
         </div>
       </div>
     </template>

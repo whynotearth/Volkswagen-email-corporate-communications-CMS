@@ -27,8 +27,8 @@ import ArticleListsItem from '../views/ArticleListsItem';
 import EditBlueDelta from '../views/EditBlueDelta';
 import BlueDeltaRearrange from '../views/BlueDeltaRearrange';
 // import DeveloperTesting from '../views/DeveloperTesting.vue';
-import ResetPassword from '../views/AuthResetPassword';
-import NewPassword from '../views/AuthNewPassword';
+import AuthResetPassword from '../views/AuthResetPassword';
+import AuthNewPassword from '../views/AuthNewPassword';
 import ActivityFeedJumpStartList from '../views/ActivityFeedJumpStartList.vue';
 import ActivityFeedJumpStartItem from '../views/ActivityFeedJumpStartItem.vue';
 import ArticleCategorySelection from '../views/ArticleCategorySelection.vue';
@@ -69,13 +69,13 @@ const routes = [
   },
   {
     path: '/reset-password',
-    name: 'ResetPassword',
-    component: ResetPassword
+    name: 'AuthResetPassword',
+    component: AuthResetPassword
   },
   {
     path: '/new-password',
-    name: 'NewPassword',
-    component: NewPassword
+    name: 'AuthNewPassword',
+    component: AuthNewPassword
   },
   {
     path: '/articles',
@@ -109,38 +109,7 @@ const routes = [
       needsUserInfo: false
     }
   },
-  {
-    path: '/settings',
-    name: 'Settings',
-    component: Settings,
-    meta: {
-      requiresAuth: true
-    }
-  },
-  {
-    path: '/settings/blue-delta-settings',
-    name: 'BlueDeltaSettings',
-    component: BlueDeltaSettings,
-    meta: {
-      requiresAuth: true
-    }
-  },
-  {
-    path: '/settings/my-account',
-    name: 'MyAccount',
-    component: MyAccount,
-    meta: {
-      requiresAuth: true
-    }
-  },
-  {
-    path: '/settings/my-account/change-password',
-    name: 'ChangePassword',
-    component: ChangePassword,
-    meta: {
-      requiresAuth: true
-    }
-  },
+
   {
     path: '/blue-delta',
     name: 'BlueDeltaMain',
@@ -171,6 +140,118 @@ const routes = [
     name: 'EmailsAdd',
     component: Email,
     props: true,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/blue-delta/edit/:id',
+    name: 'EditBlueDelta',
+    component: EditBlueDelta,
+    props: true,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/blue-delta/add/:date',
+    name: 'AddBlueDelta',
+    component: EditBlueDelta,
+    props: true,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/blue-delta/rearrange/:id',
+    name: 'BlueDeltaRearrange',
+    component: BlueDeltaRearrange,
+    props: true,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/blue-delta/rearrange/add/:date',
+    name: 'AddBlueDeltaRearrange',
+    component: BlueDeltaRearrange,
+    props: true,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/blue-delta/list',
+    name: 'JumpStartLists',
+    component: JumpStartLists,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/article-lists',
+    name: 'ArticleLists',
+    component: ArticleLists,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/article-lists/:id',
+    name: 'ArticleListsItem',
+    component: ArticleListsItem,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/activity-feed/jump-starts',
+    name: 'ActivityFeedJumpStartList',
+    component: ActivityFeedJumpStartList,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/activity-feed/jump-starts/:id',
+    name: 'ActivityFeedJumpStartItem',
+    component: ActivityFeedJumpStartItem,
+    props: true,
+    meta: {
+      requiresAuth: true
+    }
+  },
+
+  // settings
+  // -----------------------
+  {
+    path: '/settings',
+    name: 'Settings',
+    component: Settings,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/settings/blue-delta',
+    name: 'BlueDeltaSettings',
+    component: BlueDeltaSettings,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/settings/my-account',
+    name: 'MyAccount',
+    component: MyAccount,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/settings/my-account/change-password',
+    name: 'ChangePassword',
+    component: ChangePassword,
     meta: {
       requiresAuth: true
     }
@@ -227,83 +308,6 @@ const routes = [
     path: '/settings/email-lists/:groupName/:id',
     name: 'EmailListItem',
     component: EmailListItem,
-    meta: {
-      requiresAuth: true
-    }
-  },
-  {
-    path: '/blue-delta/edit/:id',
-    name: 'EditBlueDelta',
-    component: EditBlueDelta,
-    props: true,
-    meta: {
-      requiresAuth: true
-    }
-  },
-  {
-    path: '/blue-delta/add/:date',
-    name: 'AddBlueDelta',
-    component: EditBlueDelta,
-    props: true,
-    meta: {
-      requiresAuth: true
-    }
-  },
-  {
-    path: '/blue-delta/rearrange/:id',
-    name: 'BlueDeltaRearrange',
-    component: BlueDeltaRearrange,
-    props: true,
-    meta: {
-      requiresAuth: true
-    }
-  },
-  {
-    path: '/blue-delta/rearrange/add/:date',
-    name: 'AddBlueDeltaRearrange',
-    component: BlueDeltaRearrange,
-    props: true,
-    meta: {
-      requiresAuth: true
-    }
-  },
-  {
-    path: '/jumpstart-lists',
-    name: 'JumpStartLists',
-    component: JumpStartLists,
-    meta: {
-      requiresAuth: true
-    }
-  },
-  {
-    path: '/article-lists',
-    name: 'ArticleLists',
-    component: ArticleLists,
-    meta: {
-      requiresAuth: true
-    }
-  },
-  {
-    path: '/article-lists/:id',
-    name: 'ArticleListsItem',
-    component: ArticleListsItem,
-    meta: {
-      requiresAuth: true
-    }
-  },
-  {
-    path: '/activity-feed/jump-starts',
-    name: 'ActivityFeedJumpStartList',
-    component: ActivityFeedJumpStartList,
-    meta: {
-      requiresAuth: true
-    }
-  },
-  {
-    path: '/activity-feed/jump-starts/:id',
-    name: 'ActivityFeedJumpStartItem',
-    component: ActivityFeedJumpStartItem,
-    props: true,
     meta: {
       requiresAuth: true
     }

@@ -26,7 +26,7 @@ import LayoutFixedScrollable from '@/components/LayoutFixedScrollable.vue';
 import { mapGetters, mapActions, mapMutations } from 'vuex';
 
 export default {
-  name: 'JumpStart',
+  name: 'JumpStartLists',
   components: { BaseAppBarHeader, JumpStartItem, LayoutFixedScrollable, NavigationBottom },
   computed: {
     ...mapGetters('email', ['get_daily_plan'])
