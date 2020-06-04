@@ -1,5 +1,5 @@
 <template>
-  <LayoutFixedScrollable>
+  <LayoutFixedFooter>
     <template #header>
       <BaseAppBarHeader title="Blue Delta Settings" :to-link="{ name: 'Settings' }"></BaseAppBarHeader>
     </template>
@@ -108,7 +108,7 @@
     <template #footer>
       <NavigationBottom />
     </template>
-  </LayoutFixedScrollable>
+  </LayoutFixedFooter>
 </template>
 
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
@@ -117,7 +117,7 @@
 import BaseAppBarHeader from '@/components/BaseAppBarHeader';
 import BaseDropdown from '@/components/BaseDropdown';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
-import LayoutFixedScrollable from '@/components/LayoutFixedScrollable';
+import LayoutFixedFooter from '@/components/LayoutFixedFooter';
 import NavigationBottom from '@/components/BaseNavigationBottom';
 import BaseButton from '@/components/BaseButton';
 import BaseToggleSwitch from '@/components/BaseToggleSwitch';
@@ -132,7 +132,7 @@ export default {
     BaseAppBarHeader,
     BaseDropdown,
     NavigationBottom,
-    LayoutFixedScrollable,
+    LayoutFixedFooter,
     Multiselect,
     BaseButton,
     BaseToggleSwitch

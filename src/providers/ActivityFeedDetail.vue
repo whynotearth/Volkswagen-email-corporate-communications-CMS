@@ -1,5 +1,5 @@
 <template>
-  <LayoutFixedScrollable>
+  <LayoutFixedFooter>
     <template #header>
       <BaseAppBarHeader :title="pageInfo.title" :to-link="pageInfo.backRoute" />
     </template>
@@ -41,7 +41,7 @@
     <template #footer>
       <NavigationBottom />
     </template>
-  </LayoutFixedScrollable>
+  </LayoutFixedFooter>
 </template>
 
 <script>
@@ -50,7 +50,7 @@ import BaseTabs from '@/components/BaseTabs.vue';
 import BaseTab from '@/components/BaseTab.vue';
 import ActivityListItem from './ActivityListItem.vue';
 import ActivityFeedReadReportLog from '@/components/ActivityFeedReadReportLog.vue';
-import LayoutFixedScrollable from '@/components/LayoutFixedScrollable.vue';
+import LayoutFixedFooter from '@/components/LayoutFixedFooter.vue';
 import NavigationBottom from '@/components/BaseNavigationBottom';
 import { get } from 'lodash-es';
 import { formatDate } from '@/helpers.js';
@@ -58,7 +58,7 @@ import { formatDate } from '@/helpers.js';
 export default {
   name: 'ActivityFeedMemoItem',
   components: {
-    LayoutFixedScrollable,
+    LayoutFixedFooter,
     BaseAppBarHeader,
     BaseTabs,
     BaseTab,

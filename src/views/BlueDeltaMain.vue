@@ -1,10 +1,10 @@
 <template>
-  <LayoutFixedScrollable>
+  <LayoutFixedFooter>
     <template #header>
       <BaseAppBarHeader :title="'Blue Delta'" :to-link="{ name: 'Dashboard' }" />
     </template>
     <template #content>
-      <div class="bg-white flex items-center justify-center min-h-full relative">
+      <div class="bg-white flex items-center justify-center min-h-full relative flex-shrink-0 py-6">
         <div class="w-full">
           <div class="max-w-sm mx-auto px-12">
             <div class="mb-4">
@@ -14,7 +14,7 @@
                 alt=""
               />
             </div>
-            <h1 class="text-primary h1-mobile md:h1 mb-h1-mobile">
+            <h1 class="text-primary h1-mobile md:h1 mb-h1-mobile mb-14">
               Manage the Blue Delta
             </h1>
 
@@ -39,22 +39,16 @@
     <template #footer>
       <BaseNavigationBottom />
     </template>
-  </LayoutFixedScrollable>
+  </LayoutFixedFooter>
 </template>
 
 <script>
 import BaseAppBarHeader from '@/components/BaseAppBarHeader.vue';
-import LayoutFixedScrollable from '@/components/LayoutFixedScrollable.vue';
+import LayoutFixedFooter from '@/components/LayoutFixedFooter.vue';
 import BaseNavigationBottom from '@/components/BaseNavigationBottom.vue';
 
 export default {
   name: 'BlueDeltaMain',
-  components: { LayoutFixedScrollable, BaseAppBarHeader, BaseNavigationBottom }
+  components: { LayoutFixedFooter, BaseAppBarHeader, BaseNavigationBottom }
 };
 </script>
-
-<style scoped>
-.mb-h1-mobile {
-  margin-bottom: 56px;
-}
-</style>

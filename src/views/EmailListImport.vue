@@ -1,5 +1,5 @@
 <template>
-  <LayoutFixedScrollable>
+  <LayoutFixedFooter>
     <template #header>
       <BaseAppBarHeader title="Import" to-link="/settings/email-lists"></BaseAppBarHeader>
     </template>
@@ -49,7 +49,7 @@
     <template #footer>
       <NavigationBottom />
     </template>
-  </LayoutFixedScrollable>
+  </LayoutFixedFooter>
 </template>
 
 <script>
@@ -59,12 +59,12 @@ import { mapGetters, mapMutations, mapActions } from 'vuex';
 import { ajax } from '@/connection/ajax.js';
 import { sleep } from '@/helpers.js';
 import { get } from 'lodash-es';
-import LayoutFixedScrollable from '@/components/LayoutFixedScrollable';
+import LayoutFixedFooter from '@/components/LayoutFixedFooter';
 import NavigationBottom from '@/components/BaseNavigationBottom';
 
 export default {
   name: 'EmailLists',
-  components: { BaseAppBarHeader, BaseInputFile, NavigationBottom, LayoutFixedScrollable },
+  components: { BaseAppBarHeader, BaseInputFile, NavigationBottom, LayoutFixedFooter },
   data: () => ({
     files: undefined,
     error: ''

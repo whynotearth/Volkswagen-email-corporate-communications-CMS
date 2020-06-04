@@ -1,10 +1,10 @@
 <template>
-  <LayoutFixedScrollable>
+  <LayoutFixedFooter>
     <template #header>
       <BaseAppBarHeader :title="'Stats'" :toLink="{ name: 'Dashboard' }" />
     </template>
     <template #content>
-      <div class="bg-white flex items-center justify-center min-h-full relative">
+      <div class="bg-white flex items-center justify-center min-h-full relative flex-shrink-0 py-6">
         <div class="w-full">
           <div class="max-w-sm mx-auto px-12">
             <div class="mb-4">
@@ -14,7 +14,7 @@
                 alt=""
               />
             </div>
-            <h1 class="text-primary h1-mobile md:h1 mb-h1-mobile">Let's crunch the numbers...</h1>
+            <h1 class="text-primary h1-mobile md:h1 mb-h1-mobile mb-14">Let's crunch the numbers...</h1>
 
             <div>
               <router-link
@@ -37,22 +37,16 @@
     <template #footer>
       <NavigationBottom />
     </template>
-  </LayoutFixedScrollable>
+  </LayoutFixedFooter>
 </template>
 
 <script>
-import LayoutFixedScrollable from '@/components/LayoutFixedScrollable';
+import LayoutFixedFooter from '@/components/LayoutFixedFooter';
 import NavigationBottom from '@/components/BaseNavigationBottom';
 import BaseAppBarHeader from '@/components/BaseAppBarHeader.vue';
 
 export default {
   name: 'StatsPage',
-  components: { BaseAppBarHeader, NavigationBottom, LayoutFixedScrollable }
+  components: { BaseAppBarHeader, NavigationBottom, LayoutFixedFooter }
 };
 </script>
-
-<style scoped>
-.mb-h1-mobile {
-  margin-bottom: 56px;
-}
-</style>
