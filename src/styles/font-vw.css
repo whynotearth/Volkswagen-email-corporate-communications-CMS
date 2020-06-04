@@ -1,0 +1,62 @@
+@font-face {
+  font-family: 'VWHead-Bold';
+  src: url('../assets/fonts/VWHead-Bold.otf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'VWHead-Bold-Italic';
+  src: url('../assets/fonts/VWHead-BoldItalic.otf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'VWHead-Extra-Bold';
+  src: url('../assets/fonts/VWHead-ExtraBold.otf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'VWHead-Light';
+  src: url('../assets/fonts/VWHead-Light.otf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'VWHead-Regular';
+  src: url('../assets/fonts/VWHead-Regular.otf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'VWText-Bold';
+  src: url('../assets/fonts/VWText-Bold.otf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'VWText-BoldItalic';
+  src: url('../assets/fonts/VWText-BoldItalic.otf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'VWText-Regular';
+  src: url('../assets/fonts/VWText-Regular.otf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'VWText-RegularItalic';
+  src: url('../assets/fonts/VWText-RegularItalic.otf');
+  font-weight: normal;
+  font-style: normal;
+}
