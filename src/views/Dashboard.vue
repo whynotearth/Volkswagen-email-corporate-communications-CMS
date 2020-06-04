@@ -36,10 +36,10 @@
 import store from '@/store';
 import NavigationBottom from '@/components/BaseNavigationBottom';
 import LayoutFixedScrollable from '@/components/LayoutFixedScrollable';
-import UserCard from '@/components/BaseUserCard';
-import TodayEmail from '@/components/TodayEmail';
+import UserCard from '@/components/UserCard.vue';
+import TodayEmail from '@/components/TodayEmail.vue';
 import BaseAppBarHeader from '@/components/BaseAppBarHeader.vue';
-//import SmartSuggestions from '@/components/BaseSmartSuggestions';
+//import SmartSuggestions from '@/components/SmartSuggestions';
 
 export default {
   name: 'Dashboard',

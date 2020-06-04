@@ -1,6 +1,5 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import Home from '../views/Home.vue';
 import ArticleAdd from '../views/ArticleAdd.vue';
 import Stats from '../views/Stats.vue';
 import AuthLogin from '../views/AuthLogin.vue';

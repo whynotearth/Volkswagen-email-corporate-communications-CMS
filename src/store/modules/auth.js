@@ -299,13 +299,13 @@ export default {
         const user = await AuthenticationService.ping(params, options);
         await store.dispatch('authKeep/updateUser', user);
       } catch (error) {
-        const isStatus401 = error.response.status;
+        const isStatus401 = error.response && error.response.status;
         if (isStatus401) {
           console.log('ping 401');
           await store.dispatch('authKeep/clear');
           return 'IS_LOGGED_OUT';
         } else {
-          console.log('ping response is unknown.');
+          console.log('ping error unknown');
           return false;
         }
       }
