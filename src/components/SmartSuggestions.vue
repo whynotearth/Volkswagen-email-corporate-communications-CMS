@@ -27,5 +27,3 @@ export default {
   components: { SmartSuggestionCard }
 };
 </script>
-
-<style scoped></style>

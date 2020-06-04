@@ -51,7 +51,7 @@ import BaseButton from '@/components/BaseButton.vue';
 import { sleep } from '@/helpers.js';
 
 export default {
-  name: 'BaseUserAccountInfo',
+  name: 'UserAccountInfo',
   components: { BaseInputText, BaseButton },
   validations: {
     name: {

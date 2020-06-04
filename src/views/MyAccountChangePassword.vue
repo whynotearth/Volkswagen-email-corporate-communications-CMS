@@ -74,6 +74,8 @@ import { mapGetters, mapMutations, mapActions } from 'vuex';
 import { required, password, sameAs } from 'vuelidate/lib/validators';
 import { sleep } from '@/helpers.js';
 
+// TODO: move logics to a component
+
 export default {
   name: 'ChangePassword',
   components: { BaseAppBarHeader, BaseInputText, LayoutFixedScrollable, BaseButton },
