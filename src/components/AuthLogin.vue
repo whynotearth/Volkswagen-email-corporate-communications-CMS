@@ -1,6 +1,6 @@
 <template>
   <div>
-    <form ref="form" name="Login" @submit.prevent="submit" class="pt-6 pb-8 mb-4 text-left">
+    <form ref="form" name="Login" @submit.prevent="submit" class="py-4 text-left">
       <div class="mb-4">
         <BaseInputText
           class="bg-surface"
@@ -47,7 +47,7 @@
         </button>
         <div class="auth-recovery">
           <router-link
-            :to="{ name: 'ResetPassword' }"
+            :to="{ name: 'AuthResetPassword' }"
             class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
           >
             Forgot Password?

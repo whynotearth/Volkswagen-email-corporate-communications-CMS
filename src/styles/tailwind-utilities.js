@@ -113,7 +113,8 @@ const customUtils = plugin(function({ addUtilities, theme, variants }) {
       background: '#ddd'
     },
     '.narrow-scrollbars::-webkit-scrollbar-thumb': {
-      background: '#666'
+      background: '#666',
+      minHeight: '112px'
     }
   };
 

@@ -1,7 +1,7 @@
 <template>
   <LayoutFixedFooter>
     <template #header>
-      <BaseAppBarHeader :title="'Stats'" :toLink="{ name: 'Dashboard' }" />
+      <BaseAppBarHeader :title="'Blue Delta'" :to-link="{ name: 'Dashboard' }" />
     </template>
     <template #content>
       <div class="bg-white flex items-center justify-center min-h-full relative flex-shrink-0 py-6">
@@ -14,20 +14,22 @@
                 alt=""
               />
             </div>
-            <h1 class="text-primary h1-mobile md:h1 mb-h1-mobile mb-14">Let's crunch the numbers...</h1>
+            <h1 class="text-primary h1-mobile md:h1 mb-h1-mobile mb-14">
+              Manage the Blue Delta
+            </h1>
 
             <div>
               <router-link
-                :to="{ name: 'ActivityFeedJumpStartList' }"
+                :to="{ name: 'JumpStartLists' }"
                 class="block bg-secondary w-full hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline transition duration-100 ease-in-out transition-all label-mobile mb-6"
               >
-                BLUE DELTA STATS
+                Scheduled Newsletters
               </router-link>
               <router-link
-                :to="{ name: 'ActivityFeedMemoList' }"
+                :to="{ name: 'ActivityFeedJumpStartList' }"
                 class="block bg-secondary w-full hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline transition duration-100 ease-in-out transition-all label-mobile"
               >
-                MEMO STATS
+                Blue Delta Stats
               </router-link>
             </div>
           </div>
@@ -35,18 +37,18 @@
       </div>
     </template>
     <template #footer>
-      <NavigationBottom />
+      <BaseNavigationBottom />
     </template>
   </LayoutFixedFooter>
 </template>
 
 <script>
-import LayoutFixedFooter from '@/components/LayoutFixedFooter';
-import NavigationBottom from '@/components/BaseNavigationBottom';
 import BaseAppBarHeader from '@/components/BaseAppBarHeader.vue';
+import LayoutFixedFooter from '@/components/LayoutFixedFooter.vue';
+import BaseNavigationBottom from '@/components/BaseNavigationBottom.vue';
 
 export default {
-  name: 'StatsPage',
-  components: { BaseAppBarHeader, NavigationBottom, LayoutFixedFooter }
+  name: 'BlueDeltaMain',
+  components: { LayoutFixedFooter, BaseAppBarHeader, BaseNavigationBottom }
 };
 </script>

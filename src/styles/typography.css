@@ -1,93 +1,109 @@
+@import './font-vw.css';
+
 @responsive {
   /* Desktop */
   .tg-h1-desktop {
+    font-family: 'VWHead-Bold', sans-serif;
     font-style: normal;
-    font-weight: bold;
+    font-weight: 800;
     font-size: 64px;
     line-height: 40px;
   }
 
   .tg-h2-desktop {
+    font-family: 'VWHead-Bold', sans-serif;
     font-style: normal;
-    font-weight: 600;
-    font-size: 40px;
-    line-height: 44px;
+    font-weight: bold;
+    font-size: 44px;
+    line-height: 40px;
   }
 
   .tg-h3-desktop {
+    font-family: 'VWHead-Bold', sans-serif;
     font-style: normal;
-    font-weight: 500;
+    font-weight: bold;
     font-size: 40px;
-    line-height: 47px;
+    line-height: 49px;
   }
 
   .tg-body-desktop {
+    font-family: 'VWText-Regular', sans-serif;
     font-style: normal;
     font-weight: normal;
     font-size: 32px;
-    line-height: 38px;
+    line-height: 39px;
   }
 
   .tg-body-emphasis-desktop {
+    font-family: 'VWText-Bold', sans-serif;
     font-style: normal;
-    font-weight: 600;
+    font-weight: bold;
     font-size: 32px;
-    line-height: 38px;
+    line-height: 39px;
   }
 
   .tg-caption-desktop {
+    font-family: 'VWText-Regular', sans-serif;
     font-style: normal;
     font-weight: normal;
     font-size: 24px;
-    line-height: 28px;
+    line-height: 29px;
   }
 
   .tg-caption-bold-desktop {
+    font-family: 'VWText-Bold', sans-serif;
     font-style: normal;
     font-weight: bold;
     font-size: 24px;
-    line-height: 28px;
+    line-height: 29px;
   }
 
   .tg-tab-title-desktop {
+    font-family: 'VWHead-Bold', sans-serif;
     font-style: normal;
-    font-weight: bold;
+    font-weight: 800;
     font-size: 32px;
     line-height: 20px;
+    text-transform: uppercase;
   }
 
   .tg-color-label-desktop {
+    font-family: 'VWHead-Regular', sans-serif;
     font-style: normal;
-    font-weight: 500;
+    font-weight: normal;
     font-size: 28px;
-    line-height: 33px;
+    line-height: 34px;
     letter-spacing: 0.02em;
     text-transform: uppercase;
   }
 
   /* Mobile */
   .tg-h1-mobile {
+    font-family: 'VWHead-Bold', sans-serif;
     font-style: normal;
-    font-weight: bold;
+    font-weight: 800;
     font-size: 32px;
-    line-height: 38px;
+    line-height: 39px;
   }
 
   .tg-h2-mobile {
+    font-family: 'VWHead-Bold', sans-serif;
     font-style: normal;
-    font-weight: 600;
+    font-weight: bold;
     font-size: 22px;
-    line-height: 26px;
+    line-height: 27px;
   }
 
   .tg-h3-mobile {
+    font-family: 'VWHead-Bold', sans-serif;
     font-style: normal;
-    font-weight: 500;
+    font-weight: bold;
     font-size: 20px;
     line-height: 25px;
   }
 
   .tg-body-mobile {
+    font-family: 'VWText-Regular', sans-serif;
     font-style: normal;
     font-weight: normal;
     font-size: 16px;
@@ -95,20 +111,24 @@
   }
 
   .tg-body-emphasis-mobile {
-    font-style: normal;
-    font-weight: 600;
-    font-size: 16px;
-    line-height: 20px;
-  }
-
-  .tg-tab-title-mobile {
+    font-family: 'VWText-Bold', sans-serif;
     font-style: normal;
     font-weight: bold;
     font-size: 16px;
     line-height: 20px;
   }
 
+  .tg-tab-title-mobile {
+    font-family: 'VWHead-Bold', sans-serif;
+    font-style: normal;
+    font-weight: 800;
+    font-size: 16px;
+    line-height: 20px;
+    text-transform: uppercase;
+  }
+
   .tg-caption-mobile {
+    font-family: 'VWText-Regular', sans-serif;
     font-style: normal;
     font-weight: normal;
     font-size: 12px;
@@ -116,6 +136,7 @@
   }
 
   .tg-caption-bold-mobile {
+    font-family: 'VWText-Bold', sans-serif;
     font-style: normal;
     font-weight: bold;
     font-size: 12px;
@@ -123,18 +144,20 @@
   }
 
   .tg-color-label-mobile {
+    font-family: 'VWHead-Regular', sans-serif;
     font-style: normal;
     font-weight: 500;
     font-size: 14px;
-    line-height: 16px;
+    line-height: 24px;
     letter-spacing: 0.02em;
     text-transform: uppercase;
   }
 
   /* Print */
   .tg-caps-title-print {
+    font-family: 'VWHead-Bold', sans-serif;
     font-style: normal;
-    font-weight: bold;
+    font-weight: 800;
     font-size: 14px;
     line-height: 20px;
     letter-spacing: 0.05em;
@@ -142,13 +165,15 @@
   }
 
   .tg-large-title-print {
+    font-family: 'VWHead-Bold', sans-serif;
     font-style: normal;
-    font-weight: 600;
+    font-weight: bold;
     font-size: 12px;
-    line-height: 14px;
+    line-height: 15px;
   }
 
   .tg-body-print {
+    font-family: 'VWText-Regular', sans-serif;
     font-style: normal;
     font-weight: normal;
     font-size: 9px;
@@ -157,15 +182,17 @@
   }
 
   .tg-body-emphasis-print {
+    font-family: 'VWText-Bold', sans-serif;
     font-style: normal;
-    font-weight: 600;
+    font-weight: bold;
     font-size: 9px;
     line-height: 140%;
   }
 
   .tg-title-print {
+    font-family: 'VWHead-Bold', sans-serif;
     font-style: normal;
-    font-weight: 600;
+    font-weight: bold;
     font-size: 10px;
     line-height: 140%;
   }

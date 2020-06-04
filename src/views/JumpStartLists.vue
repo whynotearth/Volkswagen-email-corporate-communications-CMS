@@ -1,7 +1,7 @@
 <template>
-  <LayoutFixedScrollable>
+  <LayoutFixedFooter>
     <template #header>
-      <BaseAppBarHeader title="Blue Delta" :to-link="{ name: 'Dashboard' }" />
+      <BaseAppBarHeader title="Blue Delta" :to-link="{ name: 'BlueDeltaMain' }" />
     </template>
     <template #content>
       <BaseTabs>
@@ -22,7 +22,7 @@
     <template #footer>
       <NavigationBottom />
     </template>
-  </LayoutFixedScrollable>
+  </LayoutFixedFooter>
 </template>
 
 <script>
@@ -31,13 +31,13 @@ import BaseTabs from '@/components/BaseTabs.vue';
 import BaseTab from '@/components/BaseTab.vue';
 import JumpStartItem from '@/components/JumpStartListItem.vue';
 import NavigationBottom from '@/components/BaseNavigationBottom';
-import LayoutFixedScrollable from '@/components/LayoutFixedScrollable.vue';
+import LayoutFixedFooter from '@/components/LayoutFixedFooter.vue';
 import { mapGetters, mapActions, mapMutations } from 'vuex';
 import { isToday, parseISO } from 'date-fns';
 
 export default {
-  name: 'JumpStart',
-  components: { BaseAppBarHeader, BaseTabs, BaseTab, JumpStartItem, LayoutFixedScrollable, NavigationBottom },
+  name: 'JumpStartLists',
+  components: { BaseAppBarHeader, BaseTabs, BaseTab, JumpStartItem, LayoutFixedFooter, NavigationBottom },
   computed: {
     ...mapGetters('email', ['get_daily_plan']),
     todayPlan() {
