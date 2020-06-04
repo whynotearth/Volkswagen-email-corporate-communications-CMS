@@ -4,13 +4,34 @@
       <BaseAppBarHeader title="Blue Delta" :to-link="{ name: 'BlueDeltaMain' }" />
     </template>
     <template #content>
-      <div class="flex flex-col py-6">
-        <div class="container px-0 md:px-6">
-          <div v-for="(plan, index) in get_daily_plan" :key="index" class="cursor-pointer" @click="selectPlan(plan)">
+      <BaseTabs>
+        <BaseTab name="Today" selected="true">
+          <div v-for="(plan, index) in todayPlan" :key="index" class="cursor-pointer" @click="selectPlan(plan)">
             <JumpStartItem :model="plan" />
           </div>
-        </div>
-      </div>
+          <div v-if="!todayPlan.length" class="py-8">
+            <p>
+              There is nothing scheduled today.
+              <router-link class="text-secondary" :to="{ name: 'ArticleCategorySelection' }"
+                >Write some articles to start creating your Blue Delta</router-link
+              >.
+            </p>
+          </div>
+        </BaseTab>
+        <BaseTab name="Upcoming">
+          <div v-for="(plan, index) in upcomingPlan" :key="index" class="cursor-pointer" @click="selectPlan(plan)">
+            <JumpStartItem :model="plan" />
+          </div>
+          <div v-if="!upcomingPlan.length" class="py-8">
+            <p>
+              There is nothing scheduled.
+              <router-link class="text-secondary" :to="{ name: 'ArticleCategorySelection' }"
+                >Write some articles to start creating your Blue Delta</router-link
+              >.
+            </p>
+          </div>
+        </BaseTab>
+      </BaseTabs>
     </template>
     <template #footer>
       <NavigationBottom />
@@ -20,16 +41,37 @@
 
 <script>
 import BaseAppBarHeader from '@/components/BaseAppBarHeader.vue';
+import BaseTabs from '@/components/BaseTabs.vue';
+import BaseTab from '@/components/BaseTab.vue';
 import JumpStartItem from '@/components/JumpStartListItem.vue';
 import NavigationBottom from '@/components/BaseNavigationBottom';
 import LayoutFixedFooter from '@/components/LayoutFixedFooter.vue';
 import { mapGetters, mapActions, mapMutations } from 'vuex';
+import { isToday, parseISO } from 'date-fns';
 
 export default {
   name: 'JumpStartLists',
-  components: { BaseAppBarHeader, JumpStartItem, LayoutFixedFooter, NavigationBottom },
+  components: { BaseAppBarHeader, BaseTabs, BaseTab, JumpStartItem, LayoutFixedFooter, NavigationBottom },
   computed: {
-    ...mapGetters('email', ['get_daily_plan'])
+    ...mapGetters('email', ['get_daily_plan']),
+    todayPlan() {
+      let data = [];
+      for (let i = 0; i < this.get_daily_plan.length; i++) {
+        if (isToday(parseISO(this.get_daily_plan[i].dateTime))) {
+          data.push(this.get_daily_plan[i]);
+        }
+      }
+      return data;
+    },
+    upcomingPlan() {
+      let data = [];
+      for (let i = 0; i < this.get_daily_plan.length; i++) {
+        if (!isToday(parseISO(this.get_daily_plan[i].dateTime))) {
+          data.push(this.get_daily_plan[i]);
+        }
+      }
+      return data;
+    }
   },
   mounted() {
     this.fetch_daily_plan();
