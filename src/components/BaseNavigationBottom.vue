@@ -5,7 +5,7 @@
       <div class="container container--border px-0">
         <div class="flex relative">
           <ul class="flex-auto flex justify-around text-left menu list-none bg-primary px-2 md:px-0">
-            <li class="text-white inline-block m-2 mb-1 text-xs">
+            <li class="text-white inline-block m-2 mb-1 text-xs flex-shrink-0">
               <router-link
                 :active-class="'router-active-link'"
                 class="router-normal-link"
@@ -16,13 +16,13 @@
                 Home
               </router-link>
             </li>
-            <li class="text-white inline-block m-2 mb-1 text-xs">
+            <li class="text-white inline-block m-2 mb-1 text-xs flex-shrink-0">
               <router-link :active-class="'router-active-link'" class="router-normal-link" :to="{ name: 'Stats' }">
                 <StatsIcon class="m-auto" />
                 Stats
               </router-link>
             </li>
-            <li class="text-white inline-block m-2 mb-1 text-xs">
+            <li class="text-white inline-block m-2 mb-1 text-xs flex-shrink-0">
               <router-link
                 :active-class="'router-active-link'"
                 class="router-normal-link"
@@ -32,7 +32,7 @@
                 Blue Delta
               </router-link>
             </li>
-            <li class="text-white inline-block m-2 mb-1 text-xs">
+            <li class="text-white inline-block m-2 mb-1 text-xs flex-shrink-0">
               <router-link
                 :active-class="'router-active-link'"
                 class="router-normal-link"
@@ -43,10 +43,7 @@
               </router-link>
             </li>
           </ul>
-          <img
-            class="h-14"
-            src="https://res.cloudinary.com/whynotearth/image/upload/v1588090427/Volkswagen/cms/Bottom_Nav_2x_vzwf6q.svg"
-          />
+          <IconBottomNavFabOutcircle class="h-14 text-primary flex-shrink-0" />
           <ul :class="{ opened: isOpen }" class="absolute toggle-menu list-none">
             <li class="absolute top-0 right-0 flex whitespace-no-wrap text-white text-xs justify-end my-3">
               <router-link :to="{ name: 'ArticleCategorySelection' }" class="flex items-center">
@@ -93,10 +90,20 @@ import MemoStatslIcon from '@/assets/memo-stats.svg';
 import ArticleIcon from '@/assets/article.svg';
 import BookingIcon from '@/assets/booking.svg';
 import StatsIcon from '@/assets/stats.svg';
+import IconBottomNavFabOutcircle from '@/assets/bottom-nav-fab-outcircle.svg';
 
 export default {
   name: 'NavigationBottom',
-  components: { AddIcon, HomeIcon, MemoIcon, MemoStatslIcon, ArticleIcon, BookingIcon, StatsIcon },
+  components: {
+    AddIcon,
+    HomeIcon,
+    MemoIcon,
+    MemoStatslIcon,
+    ArticleIcon,
+    BookingIcon,
+    StatsIcon,
+    IconBottomNavFabOutcircle
+  },
   data() {
     return {
       isOpen: false,

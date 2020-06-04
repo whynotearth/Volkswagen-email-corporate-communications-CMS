@@ -1,7 +1,7 @@
 <template>
-  <LayoutFixedScrollable>
+  <LayoutFixedFooter>
     <template #content>
-      <div class="bg-white flex items-center justify-center min-h-full relative">
+      <div class="bg-white flex items-center justify-center min-h-full relative flex-shrink-0 py-6">
         <div class="w-full">
           <router-link v-if="isAuthenticated" to="/settings" class="absolute top-0 right-0 p-4 text-sm">
             <img
@@ -16,7 +16,7 @@
                 alt=""
               />
             </div>
-            <h1 class="text-primary h1-mobile md:h1 mb-h1-mobile">Welcome to Blue Delta</h1>
+            <h1 class="text-primary h1-mobile md:h1 mb-h1-mobile mb-14">Welcome to Blue Delta</h1>
 
             <div v-if="isAuthenticated">
               <router-link
@@ -41,19 +41,19 @@
     <template #footer v-if="isAuthenticated">
       <NavigationBottom />
     </template>
-  </LayoutFixedScrollable>
+  </LayoutFixedFooter>
 </template>
 
 <script>
 import store from '@/store';
 import isEmail from 'validator/lib/isEmail';
 import AuthLogin from '@/components/AuthLogin';
-import LayoutFixedScrollable from '@/components/LayoutFixedScrollable';
+import LayoutFixedFooter from '@/components/LayoutFixedFooter';
 import NavigationBottom from '@/components/BaseNavigationBottom';
 
 export default {
   name: 'LoginPage',
-  components: { AuthLogin, NavigationBottom, LayoutFixedScrollable },
+  components: { AuthLogin, NavigationBottom, LayoutFixedFooter },
   computed: {
     isAuthenticated() {
       return this.$store.getters['authKeep/isAuthenticated'];
@@ -62,9 +62,3 @@ export default {
   methods: {}
 };
 </script>
-
-<style scoped>
-.mb-h1-mobile {
-  margin-bottom: 56px;
-}
-</style>
