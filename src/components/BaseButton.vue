@@ -1,7 +1,8 @@
 <template>
   <button
+    :type="type"
     @click="select()"
-    class="bg-primary em-high text-white text-sm font-medium leading-6 uppercase py-2 px-4 rounded-full"
+    class="em-high text-white text-sm font-medium leading-6 uppercase py-2 px-4 rounded-full"
     :class="`bg-${bgType}`"
   >
     <slot></slot>
@@ -19,6 +20,10 @@ export default {
   props: {
     bgType: {
       default: 'primary'
+    },
+    type: {
+      type: String,
+      default: 'button'
     }
   }
 };

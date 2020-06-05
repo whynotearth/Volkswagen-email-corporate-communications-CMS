@@ -27,7 +27,8 @@ import ArticleLists from '../views/ArticleLists';
 import ArticleListsItem from '../views/ArticleListsItem';
 import EditBlueDelta from '../views/EditBlueDelta';
 import BlueDeltaRearrange from '../views/BlueDeltaRearrange';
-import AuthResetPassword from '../views/AuthResetPassword';
+// import DeveloperTesting from '../views/DeveloperTesting.vue';
+import AuthForgotPassword from '../views/AuthForgotPassword';
 import AuthNewPassword from '../views/AuthNewPassword';
 import ActivityFeedJumpStartList from '../views/ActivityFeedJumpStartList.vue';
 import ActivityFeedJumpStartItem from '../views/ActivityFeedJumpStartItem.vue';
@@ -61,9 +62,9 @@ const routes = [
     }
   },
   {
-    path: '/reset-password',
-    name: 'AuthResetPassword',
-    component: AuthResetPassword,
+    path: '/forgot-password',
+    name: 'AuthForgotPassword',
+    component: AuthForgotPassword,
     meta: {
       isPublic: true
     }

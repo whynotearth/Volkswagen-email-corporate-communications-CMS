@@ -1,7 +1,7 @@
 <template>
   <div
     class="base-input-text relative rounded"
-    :class="[{ 'is-focused': isFocused, 'is-filled': value.length > 0, 'has-icon-before': $slots.iconBefore }]"
+    :class="[{ 'is-focused': isFocused, 'is-filled': valueLength > 0, 'has-icon-before': $slots.iconBefore }]"
   >
     <div
       class="flex rounded"
@@ -94,6 +94,12 @@ export default {
     };
   },
   computed: {
+    valueLength() {
+      if (!this.value) {
+        return 0;
+      }
+      return this.value.length;
+    },
     inputListeners: function() {
       var vm = this;
       return Object.assign({}, this.$listeners, {
@@ -106,7 +112,9 @@ export default {
   methods: {
     onBlur($event) {
       this.isFocused = false;
-      this.$emit('input', $event.target.value);
+      if ($event.target.value) {
+        this.$emit('input', $event.target.value);
+      }
     },
     onFocus($event) {
       this.isFocused = true;
