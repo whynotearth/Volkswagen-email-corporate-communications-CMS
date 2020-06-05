@@ -9,7 +9,7 @@
           <span class="reset-title tg-body-mobile">Please input your email:</span>
         </div>
         <div class="reset-content-form">
-          <form ref="form" name="reset-password" @submit.prevent="" class="pb-8 mb-4 text-left">
+          <form ref="form" name="reset-password" @submit.prevent="submit" class="pb-8 mb-4 text-left">
             <div class="mb-4">
               <BaseInputText
                 class="bg-surface"
@@ -18,16 +18,22 @@
                 placeholder="Email"
                 :error="$v.recoveryEmail.$dirty && (!$v.recoveryEmail.required || !$v.recoveryEmail.email)"
               >
-                <span v-if="$v.recoveryEmail.$dirty && !$v.recoveryEmail.required" class="text-xs text-error">
+                <span
+                  v-if="$v.recoveryEmail.$dirty && !$v.recoveryEmail.required"
+                  class="text-xs text-error pl-error-message"
+                >
                   Email is required
                 </span>
-                <span v-if="$v.recoveryEmail.$dirty && !$v.recoveryEmail.email" class="text-xs text-error">
+                <span
+                  v-if="$v.recoveryEmail.$dirty && !$v.recoveryEmail.email"
+                  class="text-xs text-error pl-error-message"
+                >
                   Please enter valid email
                 </span>
               </BaseInputText>
             </div>
-            <div class="reset-submit" @click="submit()">
-              <BaseButton>Send reset email</BaseButton>
+            <div class="reset-submit">
+              <BaseButton type="submit">Send reset email</BaseButton>
             </div>
           </form>
         </div>
@@ -47,7 +53,7 @@ import { required, email } from 'vuelidate/lib/validators';
 import { sleep } from '@/helpers.js';
 
 export default {
-  name: 'AuthResetPassword',
+  name: 'AuthForgotPassword',
   components: { BaseAppBarHeader, BaseInputText, LayoutFixedScrollable, BaseButton },
   validations: {
     recoveryEmail: {
@@ -74,7 +80,7 @@ export default {
       await sleep(1000);
 
       await this.$router.push({
-        name: 'Home'
+        name: 'AuthLogin'
       });
 
       this.$store.commit('overlay/updateModel', {

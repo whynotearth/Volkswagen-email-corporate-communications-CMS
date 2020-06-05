@@ -1,50 +1,72 @@
 <template>
   <LayoutFixedScrollable>
     <template #header>
-      <BaseAppBarHeader :title="'Set New Password'" :to-link="'/reset-password'" />
+      <BaseAppBarHeader :title="'Set New Password'" :to-link="{ name: 'AuthForgotPassword' }" />
     </template>
     <template #content>
-      <div class="container px-0 md:px-6 text-left py-4">
-        <div class="reset-content mb-2">
-          <span class="reset-title tg-body-mobile">Enter new password:</span>
+      <div class="container px-0 md:px-6 text-left py-4 min-h-full">
+        <div
+          v-if="!$v.token.required || !$v.recoveryEmail.required"
+          class="min-h-full flex items-center justify-center"
+        >
+          <p class="font-bold text-error px-4 mb-4 text-error">
+            This URL is not valid
+          </p>
         </div>
-        <div class="reset-content-form">
-          <form ref="form" name="reset-password" @submit.prevent="" class="pb-8 mb-4 text-left">
-            <div class="mb-4">
-              <BaseInputText
-                class="bg-surface"
-                v-model="$v.newPassword.$model"
-                label="New Password"
-                placeholder="New Password"
-                type="password"
-                :error="$v.newPassword.$dirty && !$v.newPassword.required"
-              >
-                <span v-if="$v.newPassword.$dirty && !$v.newPassword.required" class="text-xs text-error">
-                  New Password is required
-                </span>
-              </BaseInputText>
-            </div>
-            <div class="mb-4">
-              <BaseInputText
-                class="bg-surface"
-                v-model="$v.confirmPassword.$model"
-                label="Confirm Password"
-                placeholder="Confirm Password"
-                type="password"
-                :error="$v.confirmPassword.$dirty && !$v.confirmPassword.required"
-              >
-                <span v-if="$v.confirmPassword.$dirty && !$v.confirmPassword.required" class="text-xs text-error">
-                  Confirm Password is required
-                </span>
-                <span v-if="showMessage" class="text-xs text-error">
-                  Password don't match
-                </span>
-              </BaseInputText>
-            </div>
-            <div class="reset-submit" @click="submit()">
-              <BaseButton>Reset Password</BaseButton>
-            </div>
-          </form>
+
+        <div v-else>
+          <div class="reset-content mb-2">
+            <span class="reset-title tg-body-mobile">Enter new password:</span>
+          </div>
+
+          <div class="reset-content-form">
+            <form ref="form" name="reset-password" @submit.prevent="submit" class="pb-8 mb-4 text-left">
+              <div class="mb-4">
+                <BaseInputText
+                  class="bg-surface"
+                  v-model="$v.newPassword.$model"
+                  label="New Password"
+                  placeholder="New Password"
+                  type="password"
+                  :error="$v.newPassword.$dirty && !$v.newPassword.required"
+                >
+                  <span
+                    v-if="$v.newPassword.$dirty && !$v.newPassword.required"
+                    class="text-xs text-error pl-error-message"
+                  >
+                    New Password is required
+                  </span>
+                </BaseInputText>
+              </div>
+              <div class="mb-4">
+                <BaseInputText
+                  class="bg-surface"
+                  v-model="$v.confirmPassword.$model"
+                  label="Confirm Password"
+                  placeholder="Confirm Password"
+                  type="password"
+                  :error="$v.confirmPassword.$dirty && !$v.confirmPassword.required"
+                >
+                  <span
+                    v-if="$v.confirmPassword.$dirty && !$v.confirmPassword.required"
+                    class="text-xs text-error pl-error-message"
+                  >
+                    Confirm Password is required
+                  </span>
+                  <span
+                    v-if="$v.confirmPassword.$dirty && !$v.confirmPassword.sameAsPassword"
+                    class="text-xs text-error pl-error-message"
+                  >
+                    Password don't match
+                  </span>
+                </BaseInputText>
+              </div>
+
+              <div class="reset-submit">
+                <BaseButton type="submit">Reset Password</BaseButton>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </template>
@@ -57,11 +79,11 @@ import BaseAppBarHeader from '@/components/BaseAppBarHeader';
 import BaseInputText from '@/components/BaseInputText';
 import LayoutFixedScrollable from '@/components/LayoutFixedScrollable.vue';
 import BaseButton from '@/components/BaseButton.vue';
-import { required, password } from 'vuelidate/lib/validators';
+import { required, sameAs } from 'vuelidate/lib/validators';
 import { sleep } from '@/helpers.js';
 
 export default {
-  name: 'NewPassword',
+  name: 'AuthNewPassword',
   components: { BaseAppBarHeader, BaseInputText, LayoutFixedScrollable, BaseButton },
   validations: {
     newPassword: {
@@ -71,16 +93,12 @@ export default {
       required
     },
     confirmPassword: {
-      required
+      required,
+      sameAsPassword: sameAs('newPassword')
     },
     token: {
       required
     }
-  },
-  data() {
-    return {
-      showMessage: false
-    };
   },
   created() {
     const urlParams = new URLSearchParams(window.location.search);
@@ -97,7 +115,7 @@ export default {
       await sleep(1000);
 
       await this.$router.push({
-        name: 'Home'
+        name: 'Dashboard'
       });
 
       this.$store.commit('overlay/updateModel', {
@@ -112,14 +130,9 @@ export default {
         return false;
       }
 
-      if (this.passwordMatch) {
-        this.showMessage = true;
-        return;
-      } else {
-        this.newPasswordRecovery().then(() => {
-          this.onSuccess();
-        });
-      }
+      this.newPasswordRecovery().then(() => {
+        this.onSuccess();
+      });
     },
     async newPasswordRecovery() {
       await this.$store.dispatch('auth/setNewPassword');
@@ -131,9 +144,6 @@ export default {
     }
   },
   computed: {
-    passwordMatch() {
-      return this.confirmPassword !== this.newPassword;
-    },
     newPassword: {
       get() {
         return this.$store.getters['auth/get_new_password'];

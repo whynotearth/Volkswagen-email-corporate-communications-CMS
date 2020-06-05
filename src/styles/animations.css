@@ -8,3 +8,23 @@
   opacity: 0;
 }
 
+/* page transitions */
+.fadeslow-enter-active,
+.fadeslow-leave-active {
+  transition: opacity 1000ms ease;
+}
+
+.fadeslow-enter,
+.fadeslow-leave-to {
+  opacity: 0;
+}
+
+.fadeslower-enter-active,
+.fadeslower-leave-active {
+  transition: opacity 150ms ease;
+}
+
+.fadeslower-enter,
+.fadeslower-leave-to {
+  opacity: 0;
+}

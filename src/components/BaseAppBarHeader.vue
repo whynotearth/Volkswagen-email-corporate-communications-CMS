@@ -62,7 +62,8 @@ export default {
       type: String
     },
     toLink: {
-      default: null
+      type: [String, Object],
+      default: ''
     },
     action: {
       type: Object,
