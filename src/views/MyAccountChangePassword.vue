@@ -55,6 +55,7 @@
           <p v-if="get_response_message.message" class="px-4 mb-4" :class="get_response_message.class">
             {{ get_response_message.message }}
           </p>
+          <!-- FIXME: remove submit by click and use form.submit -->
           <div class="text-center my-8" @click="submit()">
             <BaseButton>Change Password</BaseButton>
           </div>

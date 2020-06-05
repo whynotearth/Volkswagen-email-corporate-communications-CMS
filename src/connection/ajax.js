@@ -33,6 +33,8 @@ ajax.interceptors.response.use(
   },
   error => {
     store.commit('loading/loading', false);
+    // TODO: handle no connection
+    // const status = error.response && error.response.status;
     if (error.response.status === 401) {
       store.commit('auth/logout');
     }

@@ -38,6 +38,7 @@
       </div>
       <div class="auth-button">
         <!-- submit button -->
+        <!-- FIXME: remove double submit by click -->
         <button
           class="bg-secondary w-full hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline transition duration-100 ease-in-out transition-all label-mobile"
           type="submit"

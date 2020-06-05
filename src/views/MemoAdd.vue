@@ -1,19 +1,21 @@
 <template>
-  <StepperManager
+  <LayoutStepperManager
     :step="currentStep"
     :steps="steps"
     :options="{ submitText: 'Finish & Send', isLastStep: currentStep === steps.length }"
     @changeStep="changeStep"
   >
     <div class="px-0 overflow-y-auto flex flex-col h-full narrow-scrollbars">
-      <MemoAddStep1 v-if="currentStep === 1" ref="memoForm" :error="validationError"></MemoAddStep1>
-      <MemoAddStep2 v-if="currentStep === 2"></MemoAddStep2>
+      <transition name="fadeslower" mode="out-in">
+        <MemoAddStep1 v-if="currentStep === 1" ref="memoForm" :error="validationError"></MemoAddStep1>
+        <MemoAddStep2 v-if="currentStep === 2"></MemoAddStep2>
+      </transition>
     </div>
-  </StepperManager>
+  </LayoutStepperManager>
 </template>
 
 <script>
-import StepperManager from '@/components/StepperManager.vue';
+import LayoutStepperManager from '@/components/LayoutStepperManager.vue';
 import MemoAddStep1 from '@/components/MemoAddStep1.vue';
 import MemoAddStep2 from '@/components/MemoAddStep2.vue';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
@@ -21,7 +23,7 @@ import { sleep } from '@/helpers.js';
 
 export default {
   name: 'MemoAdd',
-  components: { StepperManager, MemoAddStep1, MemoAddStep2 },
+  components: { LayoutStepperManager, MemoAddStep1, MemoAddStep2 },
   props: {
     step: {
       default: 1

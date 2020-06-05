@@ -41,6 +41,7 @@
                 </span>
               </BaseInputText>
             </div>
+            <!-- FIXME: remove submit by click and use form.submit -->
             <div class="reset-submit" @click="submit()">
               <BaseButton>Reset Password</BaseButton>
             </div>
