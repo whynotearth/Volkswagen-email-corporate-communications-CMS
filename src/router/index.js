@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+// import DeveloperTesting from '../views/DeveloperTesting.vue';
 import ArticleAdd from '../views/ArticleAdd.vue';
 import Stats from '../views/Stats.vue';
 import AuthLogin from '../views/AuthLogin.vue';
@@ -37,45 +38,44 @@ import store from '../store';
 Vue.use(VueRouter);
 
 const routes = [
-  {
-    path: '/',
-    name: 'Dashboard',
-    component: Dashboard,
-    meta: {
-      requiresAuth: true
-    }
-  },
-  {
-    path: '/dashboard',
-    redirect: '/'
-  },
   // {
   //   path: '/test',
   //   name: 'DeveloperTesting',
   //   component: DeveloperTesting
   // },
   {
+    path: '/',
+    name: 'Dashboard',
+    component: Dashboard
+  },
+  {
     path: '/stats',
     name: 'Stats',
-    component: Stats,
-    meta: {
-      requiresAuth: true
-    }
+    component: Stats
   },
   {
     path: '/login',
     name: 'AuthLogin',
-    component: AuthLogin
+    component: AuthLogin,
+    meta: {
+      isPublic: true
+    }
   },
   {
     path: '/forgot-password',
     name: 'AuthForgotPassword',
-    component: AuthForgotPassword
+    component: AuthForgotPassword,
+    meta: {
+      isPublic: true
+    }
   },
   {
     path: '/new-password',
     name: 'AuthNewPassword',
-    component: AuthNewPassword
+    component: AuthNewPassword,
+    meta: {
+      isPublic: true
+    }
   },
   {
     path: '/articles',
@@ -86,140 +86,91 @@ const routes = [
     path: '/articles/add/:step?',
     name: 'ArticleAdd',
     component: ArticleAdd,
-    props: true,
-    meta: {
-      requiresAuth: true
-    }
+    props: true
   },
   {
     path: '/articles/category-selection',
     name: 'ArticleCategorySelection',
-    component: ArticleCategorySelection,
-    meta: {
-      requiresAuth: true
-    }
+    component: ArticleCategorySelection
   },
   {
     path: '/memo/add/:step?',
     name: 'MemoAdd',
     component: MemoAdd,
-    props: true,
-    meta: {
-      requiresAuth: true,
-      needsUserInfo: false
-    }
+    props: true
   },
 
   {
     path: '/blue-delta',
     name: 'BlueDeltaMain',
-    component: BlueDeltaMain,
-    meta: {
-      requiresAuth: true
-    }
+    component: BlueDeltaMain
   },
   {
     path: '/activity-feed/memos',
     name: 'ActivityFeedMemoList',
-    component: ActivityFeedMemoList,
-    meta: {
-      requiresAuth: true
-    }
+    component: ActivityFeedMemoList
   },
   {
     path: '/activity-feed/memos/:id',
     name: 'ActivityFeedMemoItem',
     component: ActivityFeedMemoItem,
-    props: true,
-    meta: {
-      requiresAuth: true
-    }
+    props: true
   },
   {
     path: '/emails/add/:step?',
     name: 'EmailsAdd',
     component: Email,
-    props: true,
-    meta: {
-      requiresAuth: true
-    }
+    props: true
   },
   {
     path: '/blue-delta/edit/:id',
     name: 'EditBlueDelta',
     component: EditBlueDelta,
-    props: true,
-    meta: {
-      requiresAuth: true
-    }
+    props: true
   },
   {
     path: '/blue-delta/add/:date',
     name: 'AddBlueDelta',
     component: EditBlueDelta,
-    props: true,
-    meta: {
-      requiresAuth: true
-    }
+    props: true
   },
   {
     path: '/blue-delta/rearrange/:id',
     name: 'BlueDeltaRearrange',
     component: BlueDeltaRearrange,
-    props: true,
-    meta: {
-      requiresAuth: true
-    }
+    props: true
   },
   {
     path: '/blue-delta/rearrange/add/:date',
     name: 'AddBlueDeltaRearrange',
     component: BlueDeltaRearrange,
-    props: true,
-    meta: {
-      requiresAuth: true
-    }
+    props: true
   },
   {
     path: '/blue-delta/list',
     name: 'JumpStartLists',
-    component: JumpStartLists,
-    meta: {
-      requiresAuth: true
-    }
+    component: JumpStartLists
   },
   {
     path: '/article-lists',
     name: 'ArticleLists',
-    component: ArticleLists,
-    meta: {
-      requiresAuth: true
-    }
+    component: ArticleLists
   },
   {
     path: '/article-lists/:id',
     name: 'ArticleListsItem',
-    component: ArticleListsItem,
-    meta: {
-      requiresAuth: true
-    }
+    component: ArticleListsItem
   },
   {
     path: '/activity-feed/jump-starts',
     name: 'ActivityFeedJumpStartList',
-    component: ActivityFeedJumpStartList,
-    meta: {
-      requiresAuth: true
-    }
+    component: ActivityFeedJumpStartList
   },
   {
     path: '/activity-feed/jump-starts/:id',
     name: 'ActivityFeedJumpStartItem',
     component: ActivityFeedJumpStartItem,
-    props: true,
-    meta: {
-      requiresAuth: true
-    }
+    props: true
   },
 
   // settings
@@ -227,90 +178,57 @@ const routes = [
   {
     path: '/settings',
     name: 'Settings',
-    component: Settings,
-    meta: {
-      requiresAuth: true
-    }
+    component: Settings
   },
   {
     path: '/settings/blue-delta',
     name: 'BlueDeltaSettings',
-    component: BlueDeltaSettings,
-    meta: {
-      requiresAuth: true
-    }
+    component: BlueDeltaSettings
   },
   {
     path: '/settings/my-account',
     name: 'MyAccount',
-    component: MyAccount,
-    meta: {
-      requiresAuth: true
-    }
+    component: MyAccount
   },
   {
     path: '/settings/my-account/change-password',
     name: 'ChangePassword',
-    component: ChangePassword,
-    meta: {
-      requiresAuth: true
-    }
+    component: ChangePassword
   },
   {
     path: '/settings/email-lists',
     name: 'EmailLists',
-    component: EmailLists,
-    meta: {
-      requiresAuth: true
-    }
+    component: EmailLists
   },
   {
     path: '/settings/email-lists/import',
     name: 'EmailListImport',
-    component: EmailListImport,
-    meta: {
-      requiresAuth: true
-    }
+    component: EmailListImport
   },
   {
     path: '/settings/email-lists/import-help',
     name: 'EmailListImportHelp',
-    component: EmailListImportHelp,
-    meta: {
-      requiresAuth: true
-    }
+    component: EmailListImportHelp
   },
   {
     path: '/settings/email-lists/:groupName',
     name: 'EmailList',
-    component: EmailList,
-    meta: {
-      requiresAuth: true
-    }
+    component: EmailList
   },
   {
     path: '/settings/email-lists/:groupName/add',
     name: 'EmailListAdd',
-    component: EmailListAdd,
-    meta: {
-      requiresAuth: true
-    }
+    component: EmailListAdd
   },
   {
     path: '/settings/email-lists/:groupName/:id/edit',
     name: 'EmailListEdit',
-    component: EmailListEdit,
-    meta: {
-      requiresAuth: true
-    }
+    component: EmailListEdit
   },
   {
     path: '/settings/email-lists/:groupName/:id',
     name: 'EmailListItem',
-    component: EmailListItem,
-    meta: {
-      requiresAuth: true
-    }
+    component: EmailListItem
   }
 ];
 
@@ -320,30 +238,20 @@ const router = new VueRouter({
   routes
 });
 
-router.beforeEach(async (to, from, next) => {
-  // needsUserInfo IS DEPRECATED
-  // TODO: REMOVE
-  if (!to.meta.needsUserInfo) {
-    next();
-  }
+router.beforeEach((to, from, next) => {
+  next();
 
-  const pingResult = await store.dispatch('auth/ping');
-
-  if (to.meta.requiresAuth) {
-    if (pingResult === 'IS_LOGGED_OUT') {
-      await router.push({ name: 'AuthLogin' });
-
-      setTimeout(function() {
-        window.location.reload();
-      });
-    }
-  }
-
-  // DEPRECATED
-  // TODO: REMOVE
-  if (to.meta.needsUserInfo) {
-    // wait for user info, then go to route
-    next();
+  if (!to.meta.isPublic) {
+    const pingPromise = store.dispatch('auth/ping');
+    pingPromise.then(result => {
+      if (result === 'IS_LOGGED_OUT') {
+        router.push({ name: 'AuthLogin' }).then(() => {
+          setTimeout(function() {
+            window.location.reload();
+          });
+        });
+      }
+    });
   }
 });
 

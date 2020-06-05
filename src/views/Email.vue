@@ -1,23 +1,23 @@
 <template>
-  <StepperManager
+  <LayoutStepperManager
     :step="currentStep"
     :steps="steps"
     :options="{ submitText: 'Finish', isLastStep: currentStep === steps.length }"
     @changeStep="changeStep"
   >
     <div class="px-0 overflow-y-auto flex flex-col h-full narrow-scrollbars">
-      <transition name="fade" mode="out-in">
+      <transition name="fadeslower" mode="out-in">
         <SelectEmailDate v-if="currentStep === 1" ref="formStep1" />
         <DraftEmail v-if="currentStep === 2" ref="formStep2" />
         <ScheduleEmail v-if="currentStep === 3" ref="formStep3" />
         <SelectRecipents v-if="currentStep === 4" ref="formStep4" />
       </transition>
     </div>
-  </StepperManager>
+  </LayoutStepperManager>
 </template>
 
 <script>
-import StepperManager from '@/components/StepperManager.vue';
+import LayoutStepperManager from '@/components/LayoutStepperManager.vue';
 import SelectEmailDate from '@/components/Email/SelectEmailDate.vue';
 import DraftEmail from '@/components/Email/DraftEmail.vue';
 import ScheduleEmail from '@/components/Email/ScheduleEmail.vue';
@@ -27,7 +27,7 @@ import { sleep } from '@/helpers.js';
 
 export default {
   name: 'EmailsAdd',
-  components: { StepperManager, SelectEmailDate, DraftEmail, ScheduleEmail, SelectRecipents },
+  components: { LayoutStepperManager, SelectEmailDate, DraftEmail, ScheduleEmail, SelectRecipents },
   props: {
     step: {
       default: 1
