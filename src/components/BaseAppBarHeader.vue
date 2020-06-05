@@ -1,5 +1,5 @@
 <template>
-  <nav class="px-4 py-4 shadow-4dp z-10">
+  <nav class="px-4 py-4 shadow-4dp z-30">
     <div class="container flex items-center justify-between px-0 md:px-6">
       <!-- start side -->
       <div class="appbar-startside flex items-center">
