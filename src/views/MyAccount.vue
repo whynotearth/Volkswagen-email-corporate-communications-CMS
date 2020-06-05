@@ -9,7 +9,7 @@
           <UserAccountCard fullname="Xavier Jasso" />
         </div>
         <div class="container pt-6 pb-8 mb-4 text-left">
-          <UserAccountInfo :to-link="{ name: 'AuthResetPassword' }" />
+          <UserAccountInfo :to-link="{ name: 'AuthForgotPassword' }" />
         </div>
       </div>
     </template>

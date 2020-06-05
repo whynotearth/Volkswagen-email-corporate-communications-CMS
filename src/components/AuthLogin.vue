@@ -41,13 +41,12 @@
         <button
           class="bg-secondary w-full hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline transition duration-100 ease-in-out transition-all label-mobile"
           type="submit"
-          @click="submit()"
         >
           Log In
         </button>
         <div class="auth-recovery">
           <router-link
-            :to="{ name: 'AuthResetPassword' }"
+            :to="{ name: 'AuthForgotPassword' }"
             class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
           >
             Forgot Password?
