@@ -1,7 +1,7 @@
 <template>
   <div class="page h-full flex flex-col">
     <StepperHeader :steps="steps" :step="step" :options="options" />
-    <div class="flex-grow z-2">
+    <div class="flex-grow z-10 overflow-y-auto narrow-scrollbars">
       <transition name="fadeslow" mode="out-in">
         <slot />
       </transition>

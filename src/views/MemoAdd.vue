@@ -5,7 +5,7 @@
     :options="{ submitText: 'Finish & Send', isLastStep: currentStep === steps.length }"
     @changeStep="changeStep"
   >
-    <div class="px-0 overflow-y-auto flex flex-col h-full narrow-scrollbars">
+    <div class="px-0 flex flex-col">
       <transition name="fadeslower" mode="out-in">
         <MemoAddStep1 v-if="currentStep === 1" ref="memoForm" :error="validationError"></MemoAddStep1>
         <MemoAddStep2 v-if="currentStep === 2"></MemoAddStep2>
