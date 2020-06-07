@@ -106,19 +106,8 @@
               </span>
             </BaseEditor>
 
-            <BaseInputFile
-              :error="Boolean(error)"
-              :files="files"
-              placeholder="Upload Files"
-              accepts=".pdf"
-              @change="onChangeFile"
-            >
-              <template v-if="error" #error>
-                <span class="text-xs text-error pl-error-message">
-                  {{ error }}
-                </span>
-              </template>
-            </BaseInputFile>
+            <PDFUpload @change="updatePdfFiles" />
+
             <div class="my-6 text-center">
               <BaseButton @selectButton="submit" class="w-64" bgType="secondary"> Save </BaseButton>
             </div>
@@ -139,9 +128,9 @@ import NavigationBottom from '@/components/BaseNavigationBottom';
 import BaseTimePicker from '@/components/BaseTimePicker.vue';
 import BaseEditor from '@/components/Editor/BaseEditor.vue';
 import BaseInputText from '@/components/BaseInputText.vue';
-import BaseInputFile from '@/components/BaseInputFile.vue';
 import BaseButton from '@/components/BaseButton.vue';
 import BaseDropdown from '@/components/BaseDropdown';
+import PDFUpload from '@/components/PDFUpload';
 import Multiselect from 'vue-multiselect';
 import { mapGetters, mapActions, mapMutations } from 'vuex';
 import { required } from 'vuelidate/lib/validators';
@@ -157,11 +146,11 @@ export default {
     NavigationBottom,
     BaseTimePicker,
     BaseInputText,
-    BaseInputFile,
     BaseDropdown,
     BaseButton,
     Multiselect,
-    BaseEditor
+    BaseEditor,
+    PDFUpload
   },
   validations: {
     subject: {
@@ -286,6 +275,9 @@ export default {
       let tags = this.get_email_recipients;
       tags.push(tag);
       this.update_email_recipients(tags);
+    },
+    updatePdfFiles(res) {
+      console.log(res);
     },
     submit() {}
   }

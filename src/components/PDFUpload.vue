@@ -1,0 +1,39 @@
+<template>
+  <div>
+    <CloudinaryWidget
+      @uploaded="onUploaded"
+      :uploaderOptions="{
+        maxFiles: 1,
+        clientAllowedFormats: ['pdf']
+      }"
+    >
+      <button>Upload PDF</button>
+    </CloudinaryWidget>
+
+    <BaseCarouselIndicator v-if="pages.length" :items="pages" />
+  </div>
+</template>
+
+<script>
+import CloudinaryWidget from '@/components/ImageUpload/CloudinaryWidget';
+import BaseCarouselIndicator from '@/components/BaseCarouselIndicator';
+
+export default {
+  name: 'DeveloperTesting',
+  components: { CloudinaryWidget, BaseCarouselIndicator },
+  data() {
+    return {
+      pages: []
+    };
+  },
+  methods: {
+    onUploaded(result) {
+      this.file = result.info;
+      for (let i = 1; i <= this.file.pages; i++) {
+        this.pages.push(`https://res.cloudinary.com/whynotearth/image/upload/pg_${i}/${this.file.public_id}.jpg`);
+      }
+      this.$emit('change', this.file);
+    }
+  }
+};
+</script>
