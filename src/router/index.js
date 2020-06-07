@@ -21,6 +21,7 @@ import EmailListImportHelp from '../views/EmailListImportHelp';
 import Email from '@/views/Email';
 import Dashboard from '../views/Dashboard';
 import BlueDeltaMain from '@/views/BlueDeltaMain';
+import JumpStartAdd from '../views/JumpStartAdd';
 import JumpStartLists from '../views/JumpStartLists';
 import ArticleMain from '../views/ArticleMain';
 import ArticleLists from '../views/ArticleLists';
@@ -99,7 +100,11 @@ const routes = [
     component: MemoAdd,
     props: true
   },
-
+  {
+    path: '/jumpstart/add',
+    name: 'JumpStartAdd',
+    component: JumpStartAdd
+  },
   {
     path: '/blue-delta',
     name: 'BlueDeltaMain',
