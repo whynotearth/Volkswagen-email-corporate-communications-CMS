@@ -7,7 +7,7 @@
         clientAllowedFormats: ['pdf']
       }"
     >
-      <button>Upload PDF</button>
+      <button class="border m-3 p-3">Upload PDF</button>
     </CloudinaryWidget>
 
     <BaseCarouselIndicator v-if="pages.length" :items="pages" />

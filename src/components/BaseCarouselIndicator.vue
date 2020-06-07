@@ -1,7 +1,7 @@
 <template>
   <agile :options="options">
     <div class="slide" v-for="(item, index) in items" :key="index">
-      <img :src="item" />
+      <img class="m-auto" :src="item" />
     </div>
   </agile>
 </template>
@@ -23,7 +23,8 @@ export default {
     return {
       options: {
         dots: true,
-        navButtons: false
+        navButtons: false,
+        centerMode: true
       }
     };
   }

@@ -7,17 +7,19 @@
       <div class="flex-grow text-left">
         <div class="container px-0 md:px-6 pt-4 px-4 bg-background">
           <BaseDropdown
-            class="relative bg-surface text-left"
+            class="relative bg-surface text-left border rounded mb-4 border-gray-600"
+            :dropdownContainerClasses="'dropdown-border-0 py-3 px-3'"
+            :optionContainerClasses="'mt-0 pt-0'"
             placeholder="Schedule time"
             :options="dates"
+            @updateSelectedOption="updateSubjectInput()"
             v-model="$v.date.$model"
           >
             <template #title="{ selectedOption }">
-              Schedule
               <span v-if="dates.length === 0" class="text-gray-500">
                 No time slots!
               </span>
-              <span v-else-if="selectedOption" class="ml-2 em-medium text-black">
+              <span v-else-if="selectedOption" class="ml-2 text-black">
                 {{ formatDate(selectedOption) }}
               </span>
             </template>
@@ -28,7 +30,32 @@
             </template>
           </BaseDropdown>
           <template v-if="get_email_date">
-            <BaseTimePicker v-model="$v.time.$model" :emailDate="get_email_date" />
+            <BaseDropdown
+              class="relative bg-surface text-left border rounded mb-4 border-gray-600"
+              :options="time_slots"
+              :dropdownContainerClasses="'dropdown-border-0 py-3 px-3'"
+              :optionContainerClasses="'mt-0 pt-0'"
+              v-model="$v.time.$model"
+            >
+              <template #title="{ selectedOption }">
+                <span v-if="time_slots.length === 0" class="text-gray-500">
+                  No time slots!
+                </span>
+                <span v-else>
+                  <span v-if="selectedOption" class="ml-2 text-black">
+                    {{ millisecondToTime(selectedOption) }}
+                  </span>
+                  <span class="text-gray-500" v-else>
+                    No time selected
+                  </span>
+                </span>
+              </template>
+              <template #option="{ option }">
+                <span>
+                  {{ millisecondToTime(option) }}
+                </span>
+              </template>
+            </BaseDropdown>
 
             <BaseInputText
               class="bg-surface mb-4"
@@ -106,7 +133,26 @@
               </span>
             </BaseEditor>
 
-            <PDFUpload @change="updatePdfFiles" />
+            <div class="h-full overflow-y-auto">
+              <div class="p-4 flex items-center">
+                <img
+                  src="https://res.cloudinary.com/whynotearth/image/upload/v1586844643/Volkswagen/cms/logo_tjf9ej.svg"
+                  alt=""
+                  class="h-8 mr-2"
+                />
+                <span class="font-semibold text-2xs text-blue-900">Chattanooga</span>
+              </div>
+              <hr />
+              <div class="p-4 body-1-mobile">
+                <p class="mb-2"><b>Date:</b> {{ formatDate(date) }}</p>
+                <p class="mb-2">{{ audience }}</p>
+                <div
+                  class="w-full tg-body-mobile text-center text-black em-high whitespace-pre-line break-words flex-grow order-2"
+                >
+                  <PDFUpload class="text-center" @change="updatePdfFiles" />
+                </div>
+              </div>
+            </div>
 
             <div class="my-6 text-center">
               <BaseButton @selectButton="submit" class="w-64" bgType="secondary"> Save </BaseButton>
@@ -125,7 +171,6 @@
 import LayoutFixedFooter from '@/components/LayoutFixedFooter.vue';
 import BaseAppBarHeader from '@/components/BaseAppBarHeader.vue';
 import NavigationBottom from '@/components/BaseNavigationBottom';
-import BaseTimePicker from '@/components/BaseTimePicker.vue';
 import BaseEditor from '@/components/Editor/BaseEditor.vue';
 import BaseInputText from '@/components/BaseInputText.vue';
 import BaseButton from '@/components/BaseButton.vue';
@@ -144,7 +189,6 @@ export default {
     LayoutFixedFooter,
     BaseAppBarHeader,
     NavigationBottom,
-    BaseTimePicker,
     BaseInputText,
     BaseDropdown,
     BaseButton,
@@ -180,6 +224,7 @@ export default {
       'get_email_date',
       'get_response_message',
       'get_subject',
+      'get_audience',
       'get_description'
     ]),
     ...mapGetters('recipient', ['get_recipients_available']),
@@ -205,6 +250,14 @@ export default {
       },
       set(value) {
         this.update_audience(value);
+      }
+    },
+    subject: {
+      get() {
+        return this.get_subject;
+      },
+      set(value) {
+        this.update_subject(value);
       }
     },
     description: {
@@ -234,11 +287,32 @@ export default {
         days.push(new Date(a));
       }
       return days;
+    },
+    time_slots() {
+      let time = [];
+      if (this.get_email_date) {
+        let d = new Date(this.get_email_date);
+        let start = 800;
+        let end = 2400;
+        let startHours = Math.floor(start / 100) * 3600000;
+        let endHours = Math.floor(end / 100) * 3600000;
+        let startMinutes = (start % 100) * 60000;
+        let endMinutes = (end % 100) * 60000;
+        let startTime = startHours + startMinutes;
+        let endTime = endHours + endMinutes;
+        d.setHours(0, 0, 0, 0);
+        if (Date.now() > d.getTime()) startTime = Date.now() - d.getTime() + 900000;
+        for (let i = startTime; i <= endTime; i += 900000) {
+          time.push(i);
+        }
+      }
+      return time;
     }
   },
   data() {
     return {
       to_query: '',
+      pdfFileInfo: {},
       files: undefined,
       error: ''
     };
@@ -276,10 +350,35 @@ export default {
       tags.push(tag);
       this.update_email_recipients(tags);
     },
-    updatePdfFiles(res) {
-      console.log(res);
+    updateSubjectInput(value) {
+      const date = this.formatDate(this.get_email_date);
+      this.update_subject(date);
     },
-    submit() {}
+    millisecondToTime(duration) {
+      let minutes = parseInt((duration / (1000 * 60)) % 60),
+        hours = parseInt((duration / (1000 * 60 * 60)) % 24);
+
+      hours = hours < 10 ? '0' + hours : hours;
+      minutes = minutes < 10 ? '0' + minutes : minutes;
+
+      return hours + ':' + minutes;
+    },
+    updatePdfFiles(result) {
+      this.pdfFileInfo = result;
+    },
+    submit() {
+      const data = {
+        date: this.get_email_date,
+        time: this.get_schedule_time,
+        distributionGroups: this.get_email_recipients,
+        subject: this.get_subject,
+        audience: this.get_audience,
+        description: this.get_description,
+        files: this.pdfFileInfo
+      };
+
+      console.log(data);
+    }
   }
 };
 </script>
