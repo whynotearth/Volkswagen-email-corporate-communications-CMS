@@ -11,7 +11,8 @@
         @opened="onUploaderOpened"
         :uploaderOptions="{
           maxFiles: 1,
-          maxImageWidth: 560
+          maxImageWidth: 560,
+          clientAllowedFormats: ['jpg', 'png']
         }"
       >
         <label class="bg-background m-1 block cursor-pointer" for="add-post-image-upload">
