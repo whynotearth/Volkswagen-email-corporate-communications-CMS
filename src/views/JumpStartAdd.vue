@@ -86,7 +86,7 @@
               <Multiselect
                 id="audience"
                 v-model="$v.audience.$model"
-                :placeholder="$v.audience.$invalid ? 'To:' : ''"
+                :placeholder="$v.audience.$invalid ? 'Audience:' : ''"
                 :options="get_recipients_available"
                 :multiple="true"
                 :hide-selected="true"
@@ -163,7 +163,7 @@
                 <div
                   class="w-full tg-body-mobile text-center text-black em-high whitespace-pre-line break-words flex-grow order-2"
                 >
-                  <PDFUpload class="text-center" @change="updatePdfFiles" />
+                  <PDFUpload class="text-center" @change="updatePdfFiles" :settings-carousel="optionsCarousel" />
                 </div>
               </div>
             </div>
@@ -326,13 +326,15 @@ export default {
   data() {
     return {
       to_query: '',
-      pdfFileInfo: {}
+      pdfFileInfo: {},
+      optionsCarousel: {
+        dots: true,
+        navButtons: false
+      }
     };
   },
   mounted() {
-    this.fetch_recipients().then(() => {
-      this.update_email_recipients(this.get_recipients_available);
-    });
+    this.fetch_recipients();
   },
   methods: {
     ...mapMutations('email', [

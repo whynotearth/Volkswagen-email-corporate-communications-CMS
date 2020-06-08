@@ -10,7 +10,7 @@
       <button class="border m-3 p-3">Upload PDF</button>
     </CloudinaryWidget>
 
-    <BaseCarouselIndicator v-if="pages.length" :items="pages" />
+    <BaseCarouselIndicator v-if="pages.length" :items="pages" :settings="settingsCarousel" />
   </div>
 </template>
 
@@ -20,6 +20,12 @@ import BaseCarouselIndicator from '@/components/BaseCarouselIndicator';
 
 export default {
   name: 'DeveloperTesting',
+  props: {
+    settingsCarousel: {
+      type: Object,
+      default: () => {}
+    }
+  },
   components: { CloudinaryWidget, BaseCarouselIndicator },
   data() {
     return {
