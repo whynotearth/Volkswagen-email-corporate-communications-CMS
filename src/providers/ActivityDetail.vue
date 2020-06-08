@@ -9,7 +9,7 @@
         <div class="bg-background z-10 relative">
           <div class="container px-0 md:px-6">
             <div class="px-4 pb-4 pt-2">
-              <ActivityListItem v-if="get(activity, `jumpStartStat`)" :model="get(activity, `jumpStartStat`)" />
+              <ActivityListItem v-if="get(activity, `stat`)" :model="get(activity, `stat`)" />
             </div>
           </div>
         </div>
@@ -58,7 +58,7 @@ import { get } from 'lodash-es';
 import { formatDate } from '@/helpers.js';
 
 export default {
-  name: 'ActivityFeedMemoItem',
+  name: 'ActivityDetail',
   components: {
     LayoutFixedFooter,
     BaseAppBarHeader,
@@ -77,6 +77,7 @@ export default {
       required: true
     },
     activity: {
+      type: Object,
       required: true
     }
   },
