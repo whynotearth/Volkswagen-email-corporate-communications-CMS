@@ -6,7 +6,7 @@
 
 <script>
 import { mapActions } from 'vuex';
-import { MemoStatToActivity } from '@/bridges/StatToActivity.js';
+import { MemoStatToActivityListItem } from '@/bridges/StatToActivity.js';
 
 export default {
   name: 'MemoList',
@@ -15,14 +15,14 @@ export default {
       pageInfo: {
         title: 'Memo Stats',
         backRoute: { name: 'StatsOverviewMemos' },
-        listItemDetailPath: 'MemoDetailPage'
+        listItemDetailPath: 'MemoActivityDetail'
       }
     };
   },
   computed: {
     list() {
       const stats = this.$store.getters['memo/get_stats'];
-      return stats.map(MemoStatToActivity);
+      return stats.map(MemoStatToActivityListItem);
     }
   },
   methods: {

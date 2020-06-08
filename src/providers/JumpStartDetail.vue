@@ -6,6 +6,7 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
+import { JumpStartStatDetailToActivityDetail } from '@/bridges/StatToActivity.js';
 
 export default {
   name: 'JumpStartDetail',
@@ -13,15 +14,16 @@ export default {
     return {
       pageInfo: {
         title: 'Open Rate',
-        backRoute: { name: 'StatsOverviewJumpstarts' }
+        backRoute: { name: 'JumpStartActivityList' }
       }
     };
   },
   props: ['id'],
   computed: {
-    ...mapGetters('email', {
-      activity: 'get_stat'
-    })
+    activity() {
+      const stat = this.$store.getters['email/get_stat'];
+      return JumpStartStatDetailToActivityDetail(stat);
+    }
   },
   methods: {
     ...mapActions('email', ['fetch_stat'])

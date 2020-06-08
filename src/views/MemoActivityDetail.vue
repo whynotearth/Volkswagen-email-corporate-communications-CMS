@@ -9,7 +9,7 @@ import Provider from '../providers/MemoDetail.vue';
 import Consumer from '../providers/ActivityDetail.vue';
 
 export default {
-  name: 'MemoDetailPage',
+  name: 'MemoActivityDetail',
   components: {
     Provider,
     Consumer

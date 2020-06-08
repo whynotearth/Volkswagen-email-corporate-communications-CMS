@@ -47,7 +47,7 @@
 |                                                                     |
 |                                                                     |
 |   +-----------------------------+   +-----------------------------+ |
-|   | JumpStartActivityDetail     |   | MemoDetailPage              | |
+|   | JumpStartActivityDetail     |   | MemoActivityDetail          | |
 |   +-----------------------------+   +-----------------------------+ |
 |   | Provider: JumpStartDetail   |   | Provider: MemoDetail        | |
 |   | Comsumer: ActivityList      |   | Comsumer: ActivityList      | |

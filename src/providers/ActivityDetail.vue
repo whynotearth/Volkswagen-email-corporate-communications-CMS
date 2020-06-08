@@ -9,8 +9,7 @@
         <div class="bg-background z-10 relative">
           <div class="container px-0 md:px-6">
             <div class="px-4 pb-4 pt-2">
-              {{ activity }}
-              <ActivityListItem v-if="get(activity, `jumpStartStat`)" :model="get(activity, `jumpStartStat`)" />
+              <ActivityListItem v-if="get(activity, `stat`)" :model="get(activity, `stat`)" />
             </div>
           </div>
         </div>

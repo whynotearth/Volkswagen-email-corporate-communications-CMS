@@ -6,6 +6,7 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
+import { MemoStatDetailToActivityDetail } from '@/bridges/StatToActivity.js';
 
 export default {
   name: 'MemoDetail',
@@ -13,15 +14,16 @@ export default {
     return {
       pageInfo: {
         title: 'Open Rate',
-        backRoute: { name: 'StatsOverviewMemos' }
+        backRoute: { name: 'MemoListActivity' }
       }
     };
   },
   props: ['id'],
   computed: {
-    ...mapGetters('memo', {
-      activity: 'get_stat'
-    })
+    activity() {
+      const stat = this.$store.getters['memo/get_stat'][this.id];
+      return MemoStatDetailToActivityDetail(stat);
+    }
   },
   methods: {
     ...mapActions('memo', ['fetch_stat'])

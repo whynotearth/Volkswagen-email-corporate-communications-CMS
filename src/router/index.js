@@ -13,7 +13,7 @@ import StatsOverviewMemos from '../views/StatsOverviewMemos.vue';
 import StatsOverviewJumpstarts from '../views/StatsOverviewJumpstarts.vue';
 // import StatsOverviewJumpstart from '../views/StatsOverviewJumpstart.vue';
 import MemoListActivity from '../views/MemoListActivity.vue';
-import MemoDetailPage from '../views/MemoDetailPage.vue';
+import MemoActivityDetail from '../views/MemoActivityDetail.vue';
 import EmailLists from '../views/EmailLists';
 import EmailList from '../views/EmailList';
 import EmailListAdd from '../views/EmailListAdd';
@@ -120,8 +120,8 @@ const routes = [
   },
   {
     path: '/stats/memos/activity/:id',
-    name: 'MemoDetailPage',
-    component: MemoDetailPage,
+    name: 'MemoActivityDetail',
+    component: MemoActivityDetail,
     props: true
   },
   {

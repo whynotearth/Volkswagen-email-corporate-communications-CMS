@@ -1,7 +1,7 @@
 <template>
   <LayoutFixedFooter>
     <template #header>
-      <BaseAppBarHeader :title="'Memo Overview'" :toLink="{ name: 'Stats' }" />
+      <BaseAppBarHeader :title="'JumpStart Overview'" :toLink="{ name: 'Stats' }" />
     </template>
     <template #content>
       <div class="bg-white flex items-center justify-center min-h-full relative flex-shrink-0 py-6">

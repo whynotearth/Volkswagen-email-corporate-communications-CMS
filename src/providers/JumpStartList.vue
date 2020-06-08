@@ -6,7 +6,7 @@
 
 <script>
 import { mapActions } from 'vuex';
-import { JumpStartStatToActivity } from '@/bridges/StatToActivity.js';
+import { JumpStartStatToActivityListItem } from '@/bridges/StatToActivity.js';
 
 export default {
   name: 'JumpStartList',
@@ -14,7 +14,7 @@ export default {
     return {
       pageInfo: {
         title: 'Blue Delta Stats',
-        backRoute: { name: 'Stats' },
+        backRoute: { name: 'StatsOverviewJumpstarts' },
         listItemDetailPath: 'JumpStartActivityDetail'
       }
     };
@@ -22,7 +22,7 @@ export default {
   computed: {
     list() {
       const stats = this.$store.getters['email/get_stats'];
-      return stats.map(JumpStartStatToActivity);
+      return stats.map(JumpStartStatToActivityListItem);
     }
   },
   methods: {
