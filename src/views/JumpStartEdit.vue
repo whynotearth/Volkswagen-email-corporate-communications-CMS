@@ -1,7 +1,7 @@
 <template>
   <LayoutFixedFooter>
     <template #header>
-      <BaseAppBarHeader title="New Jumpstart" :to-link="{ name: 'Dashboard' }" />
+      <BaseAppBarHeader title="Edit Jumpstart" :to-link="{ name: 'JumpStartLists' }" />
     </template>
     <template #content>
       <div class="flex-grow text-left">
@@ -198,7 +198,7 @@ import { mustBeDate } from '@/validations.js';
 import { isToday, parseISO } from 'date-fns';
 
 export default {
-  name: 'JumpStartForm',
+  name: 'JumpStartFormEdit',
   components: {
     LayoutFixedFooter,
     BaseAppBarHeader,
@@ -239,7 +239,8 @@ export default {
       'get_response_message',
       'get_subject',
       'get_tags',
-      'get_description'
+      'get_description',
+      'get_selected_plan'
     ]),
     ...mapGetters('recipient', ['get_recipients_available']),
     time: {
@@ -330,9 +331,8 @@ export default {
     };
   },
   mounted() {
-    this.fetch_recipients().then(() => {
-      this.update_email_recipients(this.get_recipients_available);
-    });
+    this.fetch_recipients();
+    this.initForm();
   },
   methods: {
     ...mapMutations('email', [
@@ -346,6 +346,15 @@ export default {
     ]),
     ...mapActions('recipient', ['fetch_recipients']),
     ...mapActions('email', ['create_jumpstart', 'update_preview_link', 'clear_email_data']),
+    initForm() {
+      console.log(this.get_selected_plan);
+      const plan = this.get_selected_plan;
+      this.update_email_recipients(plan.distributionGroups);
+      let time = parseISO(plan.dateTime);
+      let d = (time.getHours() * 3600 + time.getMinutes() * 60 - time.getTimezoneOffset() * 60) * 1000;
+      this.update_schedule_time(d);
+      this.update_email_date(this.formatTime(plan.dateTime));
+    },
     formatDate,
     onToSearchChange(query) {
       this.to_query = query;

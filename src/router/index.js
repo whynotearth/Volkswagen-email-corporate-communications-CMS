@@ -22,6 +22,7 @@ import Email from '@/views/Email';
 import Dashboard from '../views/Dashboard';
 import BlueDeltaMain from '@/views/BlueDeltaMain';
 import JumpStartAdd from '../views/JumpStartAdd';
+import JumpStartEdit from '../views/JumpStartEdit';
 import JumpStartLists from '../views/JumpStartLists';
 import ArticleMain from '../views/ArticleMain';
 import ArticleLists from '../views/ArticleLists';
@@ -104,6 +105,11 @@ const routes = [
     path: '/jumpstart/add',
     name: 'JumpStartAdd',
     component: JumpStartAdd
+  },
+  {
+    path: '/jumpstart/edit',
+    name: 'JumpStartEdit',
+    component: JumpStartEdit
   },
   {
     path: '/blue-delta',

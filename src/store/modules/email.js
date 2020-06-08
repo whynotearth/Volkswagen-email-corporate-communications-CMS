@@ -15,7 +15,7 @@ export default {
     email_recipients: [],
     description: '',
     subject: '',
-    audience: '',
+    tags: [],
     jumpstarts: [],
     response_message: {
       type: '', // error, success
@@ -38,7 +38,7 @@ export default {
     get_email_recipients: state => state.email_recipients,
     get_description: state => state.description,
     get_subject: state => state.subject,
-    get_audience: state => state.audience,
+    get_tags: state => state.tags,
     get_response_message: state => state.response_message,
     get_articles: state => state.articles,
     get_default_distribution_groups: state => state.default_distribution_groups,
@@ -123,8 +123,8 @@ export default {
     update_subject(state, payload) {
       state.subject = payload;
     },
-    update_audience(state, payload) {
-      state.audience = payload;
+    update_tags(state, payload) {
+      state.tags = payload;
     },
     update_response_message(state, payload) {
       state.response_message = payload;
