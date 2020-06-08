@@ -1,5 +1,5 @@
 <template>
-  <agile :options="options">
+  <agile :options="settings">
     <div class="slide" v-for="(item, index) in items" :key="index">
       <img class="m-auto" :src="item" />
     </div>
@@ -15,18 +15,12 @@ export default {
   props: {
     items: {
       type: Array,
-      required: true,
+      required: true
+    },
+    settings: {
+      type: Object,
       default: () => {}
     }
-  },
-  data() {
-    return {
-      options: {
-        dots: true,
-        navButtons: false,
-        centerMode: true
-      }
-    };
   }
 };
 </script>
