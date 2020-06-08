@@ -12,7 +12,7 @@ export default {
     return {
       pageInfo: {
         title: 'Open Rate',
-        backRoute: '/activity-feed/memos'
+        backRoute: { name: 'StatsOverviewMemos' }
       }
     };
   },

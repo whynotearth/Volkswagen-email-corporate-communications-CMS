@@ -2,13 +2,16 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 // import DeveloperTesting from '../views/DeveloperTesting.vue';
 import ArticleAdd from '../views/ArticleAdd.vue';
-import Stats from '../views/Stats.vue';
 import AuthLogin from '../views/AuthLogin.vue';
 import MemoAdd from '../views/MemoAdd.vue';
 import Settings from '../views/Settings';
 import BlueDeltaSettings from '../views/BlueDeltaSettings';
 import MyAccount from '../views/MyAccount';
 import ChangePassword from '../views/MyAccountChangePassword';
+import Stats from '../views/Stats.vue';
+import StatsOverviewMemos from '../views/StatsOverviewMemos.vue';
+import StatsOverviewJumpstarts from '../views/StatsOverviewJumpstarts.vue';
+// import StatsOverviewJumpstart from '../views/StatsOverviewJumpstart.vue';
 import ActivityFeedMemoList from '../views/ActivityFeedMemoList.vue';
 import ActivityFeedMemoItem from '../views/ActivityFeedMemoItem.vue';
 import EmailLists from '../views/EmailLists';
@@ -106,12 +109,17 @@ const routes = [
     component: BlueDeltaMain
   },
   {
-    path: '/activity-feed/memos',
+    path: '/stats/memos',
+    name: 'StatsOverviewMemos',
+    component: StatsOverviewMemos
+  },
+  {
+    path: '/stats/memos/activity',
     name: 'ActivityFeedMemoList',
     component: ActivityFeedMemoList
   },
   {
-    path: '/activity-feed/memos/:id',
+    path: '/stats/memos/activity/:id',
     name: 'ActivityFeedMemoItem',
     component: ActivityFeedMemoItem,
     props: true
@@ -162,12 +170,17 @@ const routes = [
     component: ArticleListsItem
   },
   {
-    path: '/activity-feed/jump-starts',
+    path: '/stats/jumpstarts',
+    name: 'StatsOverviewJumpstarts',
+    component: StatsOverviewJumpstarts
+  },
+  {
+    path: '/stats/jumpstarts/activity',
     name: 'ActivityFeedJumpStartList',
     component: ActivityFeedJumpStartList
   },
   {
-    path: '/activity-feed/jump-starts/:id',
+    path: '/stats/jumpstarts/activity/:id',
     name: 'ActivityFeedJumpStartItem',
     component: ActivityFeedJumpStartItem,
     props: true
