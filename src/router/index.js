@@ -12,8 +12,8 @@ import Stats from '../views/Stats.vue';
 import StatsOverviewMemos from '../views/StatsOverviewMemos.vue';
 import StatsOverviewJumpstarts from '../views/StatsOverviewJumpstarts.vue';
 // import StatsOverviewJumpstart from '../views/StatsOverviewJumpstart.vue';
-import ActivityFeedMemoList from '../views/ActivityFeedMemoList.vue';
-import ActivityFeedMemoItem from '../views/ActivityFeedMemoItem.vue';
+import MemoListPage from '../views/MemoListPage.vue';
+import MemoDetailPage from '../views/MemoDetailPage.vue';
 import EmailLists from '../views/EmailLists';
 import EmailList from '../views/EmailList';
 import EmailListAdd from '../views/EmailListAdd';
@@ -33,8 +33,8 @@ import BlueDeltaRearrange from '../views/BlueDeltaRearrange';
 // import DeveloperTesting from '../views/DeveloperTesting.vue';
 import AuthForgotPassword from '../views/AuthForgotPassword';
 import AuthNewPassword from '../views/AuthNewPassword';
-import ActivityFeedJumpStartList from '../views/ActivityFeedJumpStartList.vue';
-import ActivityFeedJumpStartItem from '../views/ActivityFeedJumpStartItem.vue';
+import JumpStartListPage from '../views/JumpStartListPage.vue';
+import JumpStartDetailPage from '../views/JumpStartDetailPage.vue';
 import ArticleCategorySelection from '../views/ArticleCategorySelection.vue';
 import store from '../store';
 
@@ -115,13 +115,13 @@ const routes = [
   },
   {
     path: '/stats/memos/activity',
-    name: 'ActivityFeedMemoList',
-    component: ActivityFeedMemoList
+    name: 'MemoListPage',
+    component: MemoListPage
   },
   {
     path: '/stats/memos/activity/:id',
-    name: 'ActivityFeedMemoItem',
-    component: ActivityFeedMemoItem,
+    name: 'MemoDetailPage',
+    component: MemoDetailPage,
     props: true
   },
   {
@@ -176,13 +176,13 @@ const routes = [
   },
   {
     path: '/stats/jumpstarts/activity',
-    name: 'ActivityFeedJumpStartList',
-    component: ActivityFeedJumpStartList
+    name: 'JumpStartListPage',
+    component: JumpStartListPage
   },
   {
     path: '/stats/jumpstarts/activity/:id',
-    name: 'ActivityFeedJumpStartItem',
-    component: ActivityFeedJumpStartItem,
+    name: 'JumpStartDetailPage',
+    component: JumpStartDetailPage,
     props: true
   },
 

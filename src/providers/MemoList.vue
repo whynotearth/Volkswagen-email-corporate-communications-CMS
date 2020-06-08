@@ -1,6 +1,6 @@
 <template>
   <div class="h-screen">
-    <slot v-bind="{ activity, pageInfo }" />
+    <slot v-bind="{ list, pageInfo }" />
   </div>
 </template>
 
@@ -8,27 +8,26 @@
 import { mapGetters, mapActions } from 'vuex';
 
 export default {
+  name: 'MemoList',
   data() {
     return {
       pageInfo: {
-        title: 'Open Rate',
-        backRoute: { name: 'StatsOverviewMemos' }
+        title: 'Memo Stats',
+        backRoute: { name: 'StatsOverviewMemos' },
+        listItemDetailPath: 'MemoDetailPage'
       }
     };
   },
-  props: ['id'],
   computed: {
     ...mapGetters('memo', {
-      activity: 'get_stats'
+      list: 'get_stats'
     })
   },
   methods: {
     ...mapActions('memo', ['fetch_stats'])
   },
   mounted() {
-    this.fetch_stats({
-      memoId: this.id
-    });
+    this.fetch_stats();
   }
 };
 </script>

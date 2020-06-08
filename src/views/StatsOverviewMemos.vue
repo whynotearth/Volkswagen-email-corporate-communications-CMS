@@ -7,7 +7,8 @@
       <div class="bg-white flex items-center justify-center min-h-full relative flex-shrink-0 py-6">
         <div class="w-full">
           <div class="max-w-sm mx-auto px-12">
-            TODO: memo stats overview
+            TODO: memo stats overview <br />
+            <router-link :to="{ name: 'MemoListPage' }">link to MemoListPage</router-link>
           </div>
         </div>
       </div>

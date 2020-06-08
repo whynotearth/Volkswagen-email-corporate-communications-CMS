@@ -5,10 +5,11 @@
 </template>
 
 <script>
-import Provider from '../providers/JumpStartDetailProvider.vue';
-import Consumer from '../providers/ActivityFeedDetail.vue';
+import Provider from '../providers/MemoDetail.vue';
+import Consumer from '../providers/ActivityDetail.vue';
 
 export default {
+  name: 'MemoDetailPage',
   components: {
     Provider,
     Consumer
