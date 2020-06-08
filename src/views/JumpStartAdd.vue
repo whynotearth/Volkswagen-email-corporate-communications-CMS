@@ -383,8 +383,6 @@ export default {
         description: this.get_description,
         files: this.pdfFileInfo
       };
-
-      console.log(data);
     }
   }
 };

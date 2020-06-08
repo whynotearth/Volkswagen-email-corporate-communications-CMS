@@ -12,7 +12,6 @@
             :optionContainerClasses="'mt-0 pt-0'"
             placeholder="Schedule time"
             :options="dates"
-            @updateSelectedOption="updateSubjectInput()"
             v-model="$v.date.$model"
           >
             <template #title="{ selectedOption }">
@@ -29,149 +28,144 @@
               </span>
             </template>
           </BaseDropdown>
-          <template v-if="get_email_date">
-            <BaseDropdown
-              class="relative bg-surface text-left border rounded mb-4 border-gray-600"
-              :options="time_slots"
-              :dropdownContainerClasses="'dropdown-border-0 py-3 px-3'"
-              :optionContainerClasses="'mt-0 pt-0'"
-              v-model="$v.time.$model"
-            >
-              <template #title="{ selectedOption }">
-                <span v-if="time_slots.length === 0" class="text-gray-500">
-                  No time slots!
-                </span>
-                <span v-else>
-                  <span v-if="selectedOption" class="ml-2 text-black">
-                    {{ millisecondToTime(selectedOption) }}
-                  </span>
-                  <span class="text-gray-500" v-else>
-                    No time selected
-                  </span>
-                </span>
-              </template>
-              <template #option="{ option }">
-                <span>
-                  {{ millisecondToTime(option) }}
-                </span>
-              </template>
-            </BaseDropdown>
-
-            <BaseInputText
-              class="bg-surface mb-4"
-              v-model="$v.subject.$model"
-              label="Email Subject Line"
-              placeholder="Email Subject Line"
-              :error="$v.subject.$dirty && !$v.subject.required"
-            >
-              <span v-if="$v.subject.$dirty && !$v.subject.required" class="text-xs text-error pl-error-message">
-                Subject is required
+          <BaseDropdown
+            class="relative bg-surface text-left border rounded mb-4 border-gray-600"
+            :options="time_slots"
+            :dropdownContainerClasses="'dropdown-border-0 py-3 px-3'"
+            :optionContainerClasses="'mt-0 pt-0'"
+            v-model="$v.time.$model"
+          >
+            <template #title="{ selectedOption }">
+              <span v-if="time_slots.length === 0" class="text-gray-500">
+                No time slots!
               </span>
-            </BaseInputText>
-
-            <div
-              class="mb-4 bg-white relative"
-              :class="[
-                {
-                  'is-query-empty': to_query === '',
-                  'is-filled': !$v.audience.$invalid,
-                  error: $v.audience.$error
-                },
-                $v.audience.$error ? 'text-red-600 border-red-600' : 'text-gray-500 border-gray-600'
-              ]"
-            >
-              <label class="multiselect--material-label absolute" v-if="!$v.audience.$invalid" for="audience"
-                >Audience:</label
-              >
-              <Multiselect
-                id="audience"
-                v-model="$v.audience.$model"
-                :placeholder="$v.audience.$invalid ? 'Audience:' : ''"
-                :options="get_recipients_available"
-                :multiple="true"
-                :hide-selected="true"
-                :show-labels="false"
-                @blur="$v.audience.$touch()"
-                @search-change="onToSearchChange"
-              >
-                <template v-slot:noResult>Nothing found</template>
-                <template v-slot:noOptions>No options available</template>
-              </Multiselect>
-              <span v-if="$v.audience.$error" class="text-xs text-error pl-error-message">
-                To is required
+              <span v-else>
+                <span v-if="selectedOption" class="ml-2 text-black">
+                  {{ millisecondToTime(selectedOption) }}
+                </span>
+                <span class="text-gray-500" v-else>
+                  No time selected
+                </span>
               </span>
+            </template>
+            <template #option="{ option }">
+              <span>
+                {{ millisecondToTime(option) }}
+              </span>
+            </template>
+          </BaseDropdown>
+
+          <BaseInputText
+            class="bg-surface mb-4"
+            v-model="$v.subject.$model"
+            label="Email Subject Line"
+            placeholder="Email Subject Line"
+            :error="$v.subject.$dirty && !$v.subject.required"
+          >
+            <span v-if="$v.subject.$dirty && !$v.subject.required" class="text-xs text-error pl-error-message">
+              Subject is required
+            </span>
+          </BaseInputText>
+
+          <div
+            class="mb-4 bg-white relative"
+            :class="[
+              {
+                'is-query-empty': to_query === '',
+                'is-filled': !$v.audience.$invalid,
+                error: $v.audience.$error
+              },
+              $v.audience.$error ? 'text-red-600 border-red-600' : 'text-gray-500 border-gray-600'
+            ]"
+          >
+            <label class="multiselect--material-label absolute" v-if="!$v.audience.$invalid" for="audience"
+              >Audience:</label
+            >
+            <Multiselect
+              id="audience"
+              v-model="$v.audience.$model"
+              :placeholder="$v.audience.$invalid ? 'Audience:' : ''"
+              :options="get_recipients_available"
+              :multiple="true"
+              :hide-selected="true"
+              :show-labels="false"
+              @blur="$v.audience.$touch()"
+              @search-change="onToSearchChange"
+            >
+              <template v-slot:noResult>Nothing found</template>
+              <template v-slot:noOptions>No options available</template>
+            </Multiselect>
+            <span v-if="$v.audience.$error" class="text-xs text-error pl-error-message">
+              To is required
+            </span>
+          </div>
+
+          <div
+            class="mb-4 bg-white relative"
+            :class="[
+              {
+                'is-filled': !$v.tags.$invalid,
+                error: $v.tags.$error
+              },
+              $v.tags.$error ? 'text-red-600 border-red-600' : 'text-gray-500 border-gray-600'
+            ]"
+          >
+            <label class="multiselect--material-label absolute" v-if="!$v.tags.$invalid" for="tags">Tags:</label>
+            <Multiselect
+              id="tags"
+              v-model="$v.tags.$model"
+              :placeholder="$v.tags.$invalid ? 'Tags:' : ''"
+              :multiple="true"
+              :hide-selected="true"
+              :options="[]"
+              :show-labels="false"
+              :taggable="true"
+              @tag="addTag"
+              @blur="$v.tags.$touch()"
+            >
+              <template v-slot:noResult>Nothing found</template>
+              <template v-slot:noOptions>No options available</template>
+            </Multiselect>
+            <span v-if="$v.tags.$error" class="text-xs text-error pl-error-message">
+              To is required
+            </span>
+          </div>
+
+          <BaseEditor
+            class="body-1-mobile bg-surface"
+            v-model="$v.description.$model"
+            placeholder="Jumpstart Body"
+            :error="$v.description.$dirty && !$v.description.required"
+          >
+            <span v-if="$v.description.$dirty && !$v.description.required" class="text-xs text-error pl-error-message">
+              Description is required
+            </span>
+          </BaseEditor>
+
+          <div class="h-full overflow-y-auto">
+            <div class="p-4 flex items-center">
+              <img
+                src="https://res.cloudinary.com/whynotearth/image/upload/v1586844643/Volkswagen/cms/logo_tjf9ej.svg"
+                alt=""
+                class="h-8 mr-2"
+              />
+              <span class="font-semibold text-2xs text-blue-900">Chattanooga</span>
             </div>
-
-            <div
-              class="mb-4 bg-white relative"
-              :class="[
-                {
-                  'is-filled': !$v.tags.$invalid,
-                  error: $v.tags.$error
-                },
-                $v.tags.$error ? 'text-red-600 border-red-600' : 'text-gray-500 border-gray-600'
-              ]"
-            >
-              <label class="multiselect--material-label absolute" v-if="!$v.tags.$invalid" for="tags">Tags:</label>
-              <Multiselect
-                id="tags"
-                v-model="$v.tags.$model"
-                :placeholder="$v.tags.$invalid ? 'Tags:' : ''"
-                :multiple="true"
-                :hide-selected="true"
-                :options="[]"
-                :show-labels="false"
-                :taggable="true"
-                @tag="addTag"
-                @blur="$v.tags.$touch()"
+            <hr />
+            <div class="p-4 body-1-mobile">
+              <p class="mb-2"><b>Date:</b> {{ formatDate(date) }}</p>
+              <p class="mb-2">{{ audience[0] }}</p>
+              <div
+                class="w-full tg-body-mobile text-center text-black em-high whitespace-pre-line break-words flex-grow order-2"
               >
-                <template v-slot:noResult>Nothing found</template>
-                <template v-slot:noOptions>No options available</template>
-              </Multiselect>
-              <span v-if="$v.tags.$error" class="text-xs text-error pl-error-message">
-                To is required
-              </span>
-            </div>
-
-            <BaseEditor
-              class="body-1-mobile bg-surface"
-              v-model="$v.description.$model"
-              placeholder="Jumpstart Body"
-              :error="$v.description.$dirty && !$v.description.required"
-            >
-              <span
-                v-if="$v.description.$dirty && !$v.description.required"
-                class="text-xs text-error pl-error-message"
-              >
-                Description is required
-              </span>
-            </BaseEditor>
-
-            <div class="h-full overflow-y-auto">
-              <div class="p-4 flex items-center">
-                <img
-                  src="https://res.cloudinary.com/whynotearth/image/upload/v1586844643/Volkswagen/cms/logo_tjf9ej.svg"
-                  alt=""
-                  class="h-8 mr-2"
-                />
-                <span class="font-semibold text-2xs text-blue-900">Chattanooga</span>
-              </div>
-              <hr />
-              <div class="p-4 body-1-mobile">
-                <p class="mb-2"><b>Date:</b> {{ formatDate(date) }}</p>
-                <p class="mb-2">{{ audience[0] }}</p>
-                <div
-                  class="w-full tg-body-mobile text-center text-black em-high whitespace-pre-line break-words flex-grow order-2"
-                >
-                  <PDFUpload class="text-center" @change="updatePdfFiles" :settings-carousel="optionsCarousel" />
-                </div>
+                <PDFUpload class="text-center" @change="updatePdfFiles" :settings-carousel="optionsCarousel" />
               </div>
             </div>
+          </div>
 
-            <div class="my-6 text-center">
-              <BaseButton @selectButton="submit" class="w-64" bgType="secondary"> Save </BaseButton>
-            </div>
-          </template>
+          <div class="my-6 text-center">
+            <BaseButton @selectButton="submit" class="w-64" bgType="secondary"> Save </BaseButton>
+          </div>
         </div>
       </div>
     </template>
@@ -351,7 +345,6 @@ export default {
     ...mapActions('recipient', ['fetch_recipients']),
     ...mapActions('email', ['create_jumpstart', 'update_preview_link', 'clear_email_data']),
     initForm() {
-      console.log(this.get_selected_plan);
       const plan = this.get_selected_plan;
       this.update_email_recipients(plan.distributionGroups);
       let time = parseISO(plan.dateTime);
@@ -367,10 +360,6 @@ export default {
       let tags = this.get_tags;
       tags.push(tag);
       this.update_tags(tags);
-    },
-    updateSubjectInput(value) {
-      const date = this.formatDate(this.get_email_date);
-      this.update_subject(date);
     },
     millisecondToTime(duration) {
       let minutes = parseInt((duration / (1000 * 60)) % 60),
@@ -394,8 +383,6 @@ export default {
         description: this.get_description,
         files: this.pdfFileInfo
       };
-
-      console.log(data);
     }
   }
 };
