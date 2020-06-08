@@ -8,7 +8,7 @@
         <div class="w-full">
           <div class="max-w-sm mx-auto px-12">
             TODO: memo stats overview <br />
-            <router-link :to="{ name: 'MemoListPage' }">link to MemoListPage</router-link>
+            <router-link :to="{ name: 'MemoListActivity' }">link to MemoListActivity</router-link>
           </div>
         </div>
       </div>

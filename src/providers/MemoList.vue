@@ -5,7 +5,8 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex';
+import { mapActions } from 'vuex';
+import { MemoStatToActivity } from '@/bridges/StatToActivity.js';
 
 export default {
   name: 'MemoList',
@@ -19,9 +20,10 @@ export default {
     };
   },
   computed: {
-    ...mapGetters('memo', {
-      list: 'get_stats'
-    })
+    list() {
+      const stats = this.$store.getters['memo/get_stats'];
+      return stats.map(MemoStatToActivity);
+    }
   },
   methods: {
     ...mapActions('memo', ['fetch_stats'])

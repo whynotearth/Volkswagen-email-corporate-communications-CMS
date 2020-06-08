@@ -9,7 +9,7 @@
           <div class="max-w-sm mx-auto px-12">
             TODO: StatsOverviewJumpstarts...
             <br />
-            <router-link :to="{ name: 'JumpStartListPage' }">link to JumpStartListPage</router-link>
+            <router-link :to="{ name: 'JumpStartActivityList' }">link to JumpStartListPage</router-link>
           </div>
         </div>
       </div>

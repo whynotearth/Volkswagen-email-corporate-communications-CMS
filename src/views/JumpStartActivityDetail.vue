@@ -9,7 +9,7 @@ import Provider from '../providers/JumpStartDetail.vue';
 import Consumer from '../providers/ActivityDetail.vue';
 
 export default {
-  name: 'JumpStartDetailPage',
+  name: 'JumpStartActivityDetail',
   components: {
     Provider,
     Consumer

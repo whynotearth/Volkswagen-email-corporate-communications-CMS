@@ -12,7 +12,7 @@ import Stats from '../views/Stats.vue';
 import StatsOverviewMemos from '../views/StatsOverviewMemos.vue';
 import StatsOverviewJumpstarts from '../views/StatsOverviewJumpstarts.vue';
 // import StatsOverviewJumpstart from '../views/StatsOverviewJumpstart.vue';
-import MemoListPage from '../views/MemoListPage.vue';
+import MemoListActivity from '../views/MemoListActivity.vue';
 import MemoDetailPage from '../views/MemoDetailPage.vue';
 import EmailLists from '../views/EmailLists';
 import EmailList from '../views/EmailList';
@@ -33,8 +33,8 @@ import BlueDeltaRearrange from '../views/BlueDeltaRearrange';
 // import DeveloperTesting from '../views/DeveloperTesting.vue';
 import AuthForgotPassword from '../views/AuthForgotPassword';
 import AuthNewPassword from '../views/AuthNewPassword';
-import JumpStartListPage from '../views/JumpStartListPage.vue';
-import JumpStartDetailPage from '../views/JumpStartDetailPage.vue';
+import JumpStartActivityList from '../views/JumpStartActivityList.vue';
+import JumpStartActivityDetail from '../views/JumpStartActivityDetail.vue';
 import ArticleCategorySelection from '../views/ArticleCategorySelection.vue';
 import store from '../store';
 
@@ -115,8 +115,8 @@ const routes = [
   },
   {
     path: '/stats/memos/activity',
-    name: 'MemoListPage',
-    component: MemoListPage
+    name: 'MemoListActivity',
+    component: MemoListActivity
   },
   {
     path: '/stats/memos/activity/:id',
@@ -176,13 +176,13 @@ const routes = [
   },
   {
     path: '/stats/jumpstarts/activity',
-    name: 'JumpStartListPage',
-    component: JumpStartListPage
+    name: 'JumpStartActivityList',
+    component: JumpStartActivityList
   },
   {
     path: '/stats/jumpstarts/activity/:id',
-    name: 'JumpStartDetailPage',
-    component: JumpStartDetailPage,
+    name: 'JumpStartActivityDetail',
+    component: JumpStartActivityDetail,
     props: true
   },
 

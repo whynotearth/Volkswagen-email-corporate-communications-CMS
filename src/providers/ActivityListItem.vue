@@ -1,7 +1,7 @@
 <template>
   <div class="text-left block shadow-card p-6 rounded">
     <!-- title and date -->
-    <div class="">
+    <div v-if="model.subject">
       <h2
         class="md:tg-body-emphasis-desktop tg-body-emphasis-mobile capitalize em-high text-inherit flex-grow whitespace-no-wrap overflow-x-hidden truncate transition transition-colors duration-100"
         :title="model.subject"
@@ -10,18 +10,20 @@
       </h2>
     </div>
     <div class="my-4">
-      <div class="mr-2 flex flex-wrap" v-for="(distributionGroup, index) in model.distributionGroups" :key="index">
-        <BaseChip :text="distributionGroup" />
+      <div class="mr-2 flex flex-wrap" v-for="(tag, index) in model.tags" :key="index">
+        <BaseChip :text="tag" />
       </div>
     </div>
 
     <!-- contents -->
-    <div class="flex justify-between flex-no-wrap">
-      <div class="">
-        <div class="md:tg-caption-desktop tg-caption-mobile em-high text-black">To: {{ model.to }}</div>
+    <div class="flex justify-between">
+      <div>
+        <div v-if="model.subtitle" class="md:tg-caption-desktop tg-caption-mobile em-high text-black">
+          {{ model.subtitle }}
+        </div>
         <div class="flex items-center">
           <div class="md:tg-caption-bold-desktop tg-caption-bold-mobile text-black whitespace-no-wrap">
-            {{ formatDate(model.creationDateTime, 'd MMM') }}
+            {{ formatDate(model.date, 'd MMM') }}
           </div>
           <div class="h-2 w-2 mx-2 rounded-full bg-secondary"></div>
           <div class="em-high text-black">
@@ -30,7 +32,7 @@
           </div>
         </div>
         <div
-          class="memo-list-item--description mt-2 md:tg-caption-desktop tg-caption-mobile em-disabled text-black whitespace-pre-line overflow-hidden"
+          class="memo-list-item--description mt-2 md:tg-caption-desktop tg-caption-mobile em-disabled text-black break-all whitespace-pre-line overflow-hidden"
         >
           {{ model.description }}
         </div>
