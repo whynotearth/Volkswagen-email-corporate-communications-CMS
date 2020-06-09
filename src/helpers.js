@@ -166,3 +166,14 @@ export function randomId() {
     .toString()
     .substr(2);
 }
+
+export function addScriptTag(params) {
+  const script = document.createElement('script');
+  script.setAttribute('src', 'http://example.com/site.js');
+  document.head.appendChild(script);
+
+  return new Promise(resolve => {
+    console.log('loaded.');
+    script.onload = resolve;
+  });
+}
