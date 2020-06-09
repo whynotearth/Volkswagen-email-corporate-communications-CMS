@@ -374,15 +374,61 @@ export default {
       this.pdfFileInfo = result;
     },
     submit() {
-      const data = {
-        date: this.get_email_date,
-        time: this.get_schedule_time,
-        distributionGroups: this.get_email_recipients,
-        subject: this.get_subject,
-        audience: this.get_audience,
-        description: this.get_description,
-        files: this.pdfFileInfo
+      const total_time = new Date(this.get_email_date + this.get_schedule_time).toISOString();
+      const params = {
+        body: {
+          dateTime: total_time,
+          distributionGroups: this.get_email_recipients,
+          subject: this.get_subject,
+          body: this.get_description,
+          tags: this.get_tags
+        }
       };
+      const attachmentData = {
+        body: {
+          files: this.pdfFileInfo.url
+        },
+        date: total_time
+      };
+      this.create_jumpstart(params)
+        .then(() => {
+          this.attachment(attachmentData)
+            .then(() => {
+              this.clear_email_data();
+              this.onSuccessSubmit();
+            })
+            .catch(error => {
+              this.update_response_message({
+                message: error.response.data.message,
+                type: 'error',
+                class: 'text-error'
+              });
+            });
+        })
+        .catch(error => {
+          this.update_response_message({
+            message: error.response.data.message,
+            type: 'error',
+            class: 'text-error'
+          });
+        });
+    },
+    async onSuccessSubmit() {
+      this.$store.commit('overlay/updateModel', {
+        title: 'Success!',
+        message: ''
+      });
+
+      await sleep(1000);
+
+      await this.$router.push({
+        name: 'Dashboard'
+      });
+
+      this.$store.commit('overlay/updateModel', {
+        title: '',
+        message: ''
+      });
     }
   }
 };

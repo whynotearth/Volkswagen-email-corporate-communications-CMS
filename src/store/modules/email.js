@@ -51,7 +51,10 @@ export default {
   },
   actions: {
     async create_jumpstart({ commit }, payload) {
-      await JumpStartService.jumpstart(payload.params);
+      await JumpStartService.jumpstart(payload);
+    },
+    async attachment({ commit }, payload) {
+      await JumpStartService.attachment(payload);
     },
     update_selected_articles({ state }, payload) {
       if (!payload) {
