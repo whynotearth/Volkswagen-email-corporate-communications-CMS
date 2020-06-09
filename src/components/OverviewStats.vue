@@ -10,21 +10,21 @@
         <span class="flex items-center text-community"> <ArrowUp class="mr-2" :height="12" />90% </span>
       </template>
       <BaseTab name="Users" selected="true">
-        chart
+        <BaseChart :config="getChartConfig({ label: 'Users', data: usersData })" />
       </BaseTab>
       <template #Opens>
         <span class="text-brand-light-blue-gradient tg-h1-mobile">1634</span>
         <span class="flex items-center text-error"> <ArrowDown class="mr-2" :height="12" />12% </span>
       </template>
       <BaseTab name="Opens">
-        chart
+        <BaseChart :config="getChartConfig({ label: 'Users', data: usersData })" />
       </BaseTab>
       <template #Clicks>
         <span class="text-brand-light-blue-gradient tg-h1-mobile">1256</span>
         <span class="flex items-center text-community"> <ArrowUp class="mr-2" :height="12" />12% </span>
       </template>
       <BaseTab name="Clicks">
-        chart
+        <BaseChart :config="getChartConfig({ label: 'Users', data: usersData })" />
       </BaseTab>
     </BaseTabs>
   </div>
@@ -33,8 +33,10 @@
 <script>
 import BaseTabs from '@/components/BaseTabs.vue';
 import BaseTab from '@/components/BaseTab.vue';
+import BaseChart from '@/components/BaseChart.vue';
 import ArrowDown from '@/assets/arrow-down-red.svg';
 import ArrowUp from '@/assets/arrow-up.svg';
+import { colors } from '@/constants/theme.js';
 
 export default {
   name: 'OverviewStats',
@@ -44,12 +46,80 @@ export default {
     ArrowDown,
     ArrowUp
   },
-  data() {
-    return {
-      showDropdown: false
-    };
-  },
-  methods: {}
+  data: () => ({
+    // TODO: read from store
+    usersData: [100, 500, 100, 200, 300, 800, 900]
+  }),
+  methods: {
+    getChartConfig({ label, data }) {
+      const config = {
+        type: 'line',
+        data: {
+          labels: ['M', 'T', 'W', 'Th', 'F', 'S', 'Su'],
+          datasets: [
+            {
+              label,
+              data,
+              borderWidth: 2,
+              backgroundColor: 'transparent',
+              borderColor: colors.secondary,
+              fill: false
+            }
+          ]
+        },
+        options: {
+          elements: {
+            point: {
+              radius: 0
+            }
+          },
+          legend: {
+            display: false
+          },
+          tooltips: false,
+          responsive: true,
+          hover: {
+            mode: 'nearest',
+            intersect: true
+          },
+          scales: {
+            yAxes: [
+              {
+                ticks: { min: 0, display: false },
+                gridLines: {
+                  drawBorder: false,
+                  display: false
+                }
+              }
+            ],
+            xAxes: [
+              {
+                position: 'bottom',
+                gridLines: {
+                  drawBorder: false,
+                  lineWidth: 1,
+                  color: colors.divider
+                }
+              },
+              {
+                position: 'top',
+                gridLines: {
+                  drawBorder: false,
+                  display: false
+                },
+                ticks: {
+                  callback: function(value, index, values) {
+                    return data[index];
+                  }
+                }
+              }
+            ]
+          }
+        }
+      };
+      return config;
+    }
+  }
 };
 </script>
 

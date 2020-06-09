@@ -48,7 +48,6 @@ import BaseDropdown from '@/components/BaseDropdown';
 import OverviewStats from '@/components/OverviewStats';
 import BaseChart from '@/components/BaseChart.vue';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
-import { formatDate } from '@/helpers.js';
 import { colors } from '@/constants/theme.js';
 
 export default {
@@ -74,7 +73,6 @@ export default {
   }),
   methods: {
     ...mapMutations('memo', ['update_date']),
-    formatDate,
     getChartConfig({ label, data }) {
       const config = {
         type: 'line',
