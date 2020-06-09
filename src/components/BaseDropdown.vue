@@ -2,7 +2,7 @@
   <div>
     <div
       @click="showDropdown = !showDropdown"
-      class="flex flex-grow justify-between items-strech p-5 cursor-pointer rounded-lg shadow"
+      class="flex flex-grow items-strech p-5 cursor-pointer rounded-lg shadow"
       :class="dropdownContainerClasses"
     >
       <img
@@ -16,7 +16,7 @@
           {{ selectedOption || placeholder }}
         </slot>
       </span>
-      <div class="h-full">
+      <div class="flex flex-grow items-center justify-end">
         <Down
           class="transform inline-block pointer-events-none scale-x-1 text-gray"
           :class="{ 'rotate-180': showDropdown }"

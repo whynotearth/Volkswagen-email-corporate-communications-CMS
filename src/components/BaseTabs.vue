@@ -6,7 +6,7 @@
           <li
             class="block flex-grow"
             v-for="(tab, index) in tabs"
-            :class="[tab.isActive ? 'is-active border-b-2 border-secondary' : '']"
+            :class="{ 'is-active border-b-2 border-secondary': tab.isActive }"
             :key="index"
           >
             <a class="block p-4 text-center" :href="tab.href" @click.prevent="selectTab(tab)">
