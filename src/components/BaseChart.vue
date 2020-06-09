@@ -38,41 +38,17 @@ var config = {
     ]
   },
   options: {
+    legend: {
+      display: false
+    },
+    tooltips: false,
     responsive: true,
-    // title: {
-    //   display: true,
-    //   text: 'Chart.js Line Chart'
-    // },
-    // tooltips: {
-    //   mode: 'index',
-    //   intersect: false
-    // },
     hover: {
       mode: 'nearest',
       intersect: true
     },
     scales: {
-      xAxes: [{ position: 'bottom' }],
-      yAxes: [{ position: 'top' }]
-
-      // xAxes: [
-      //   {
-      //     display: true,
-      //     scaleLabel: {
-      //       display: true,
-      //       labelString: 'Month'
-      //     }
-      //   }
-      // ],
-      // yAxes: [
-      //   {
-      //     display: true,
-      //     scaleLabel: {
-      //       display: true,
-      //       labelString: 'Value'
-      //     }
-      //   }
-      // ]
+      xAxes: [{ position: 'bottom' }]
     }
   }
 };
@@ -89,3 +65,5 @@ export default {
   }
 };
 </script>
+
+<style></style>
