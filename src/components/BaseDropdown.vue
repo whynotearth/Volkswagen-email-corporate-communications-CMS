@@ -2,7 +2,7 @@
   <div>
     <div
       @click="showDropdown = !showDropdown"
-      class="flex flex-grow justify-between items-strech p-5 cursor-pointer border-b-1 border-divider"
+      class="flex flex-grow justify-between items-strech p-5 cursor-pointer rounded-lg shadow"
       :class="dropdownContainerClasses"
     >
       <img
@@ -25,7 +25,7 @@
     </div>
     <div
       v-if="showDropdown"
-      class="dropdown absolute right-0 left-0 bg-white mt-1 mx-2 md:mx-4 py-2 rounded shadow-8dp overflow-x-hidden overflow-y-auto z-10"
+      class="dropdown absolute right-0 left-0 bg-white mt-1 mx-2 md:mx-4 py-2 rounded-lg shadow-8dp overflow-x-hidden overflow-y-auto z-10"
       :class="optionContainerClasses"
     >
       <div
@@ -94,7 +94,6 @@ export default {
 <style scoped>
 .dropdown {
   max-height: 15rem;
-  top: 54px;
 }
 .rotate-180 {
   transform: rotate(180deg);

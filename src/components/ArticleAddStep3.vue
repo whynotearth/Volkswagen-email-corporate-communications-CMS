@@ -2,9 +2,10 @@
   <div class="flex flex-col">
     <div class="container px-4 md:px-6 select-none">
       <BaseDropdown
-        class="relative bg-surface text-left border-t"
+        class="relative bg-surface text-left"
         placeholder="Schedule time"
         :options="dates"
+        :icon="'https://res.cloudinary.com/whynotearth/image/upload/v1591633121/Volkswagen/cms/calendar_v7nvia.png'"
         v-model="$v.date.$model"
       >
         <template #title="{ selectedOption }">
