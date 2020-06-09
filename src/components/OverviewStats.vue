@@ -63,7 +63,12 @@ export default {
 .tabs .shadow-4dp {
   box-shadow: none !important;
 }
-
+.tabs li {
+  border-left: 1px solid rgba(255, 255, 255, 0.12);
+}
+.tabs li:not(.border-secondary) {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
 .tabs li a {
   text-align: left !important;
   text-transform: none;
