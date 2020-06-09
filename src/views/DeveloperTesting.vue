@@ -13,14 +13,18 @@
     >
       <button>upload widget</button>
     </CloudinaryWidget>
+    <OverviewStats>
+      <template #title>Memo Overview</template>
+    </OverviewStats>
   </div>
 </template>
 
 <script>
+import OverviewStats from '@/components/OverviewStats';
 import CloudinaryWidget from '@/components/ImageUpload/CloudinaryWidget';
 export default {
   name: 'DeveloperTesting',
-  components: { CloudinaryWidget },
+  components: { CloudinaryWidget, OverviewStats },
   methods: {
     onUpload(result) {
       console.log(result);
