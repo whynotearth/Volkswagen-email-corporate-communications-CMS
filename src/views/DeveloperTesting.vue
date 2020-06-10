@@ -14,23 +14,23 @@
       <button>upload widget</button>
     </CloudinaryWidget>
 
-    <BaseBigButton class="" @selectButton="onUpload">
+    <BaseButtonPro class="" @selectButton="onUpload">
       <template #icon>
         <Calendar class="inline-block align-baseline mr-4 h-5 w-5 -mb-0.5 pointer-events-none" />
       </template>
       View Reports
-    </BaseBigButton>
+    </BaseButtonPro>
   </div>
 </template>
 
 <script>
 import CloudinaryWidget from '@/components/ImageUpload/CloudinaryWidget';
-import BaseBigButton from '@/components/BaseBigButton';
+import BaseButtonPro from '@/components/BaseButtonPro';
 import Calendar from '@/assets/calendar.svg';
 
 export default {
   name: 'DeveloperTesting',
-  components: { CloudinaryWidget, BaseBigButton, Calendar },
+  components: { CloudinaryWidget, BaseButtonPro, Calendar },
   methods: {
     onUpload(result) {
       console.log(result);
