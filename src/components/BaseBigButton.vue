@@ -4,12 +4,7 @@
     @click="select()"
     class="flex flex-grow w-full items-strech p-5 cursor-pointer rounded-lg shadow"
   >
-    <img
-      :src="icon"
-      v-if="icon"
-      alt="icon"
-      class="inline-block align-baseline mr-4 h-5 w-5 -mb-0.5 pointer-events-none"
-    />
+    <slot name="icon"></slot>
     <span class="truncate">
       <slot></slot>
     </span>
@@ -31,10 +26,6 @@ export default {
     }
   },
   props: {
-    icon: {
-      type: String,
-      default: null
-    },
     type: {
       type: String,
       default: 'button'
@@ -49,6 +40,9 @@ button {
 }
 button:focus {
   outline: 0;
+}
+button:hover {
+  background: rgba(3, 179, 249, 0.4);
 }
 .rotate-270 {
   transform: rotate(270deg);
