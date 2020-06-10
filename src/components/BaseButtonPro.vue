@@ -9,7 +9,7 @@
       <slot></slot>
     </span>
     <div class="flex-auto items-center text-right">
-      <Down class="transform inline-block pointer-events-none scale-x-1 text-gray rotate-270" />
+      <Down class="transform inline-block pointer-events-none scale-x-1 text-gray -rotate-90" />
     </div>
   </button>
 </template>
@@ -43,8 +43,5 @@ button:focus {
 }
 button:hover {
   background: rgba(3, 179, 249, 0.4);
-}
-.rotate-270 {
-  transform: rotate(270deg);
 }
 </style>
