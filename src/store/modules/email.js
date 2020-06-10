@@ -47,6 +47,9 @@ export default {
     async create_jumpstart({ commit }, payload) {
       await JumpStartService.jumpstart(payload.params);
     },
+    delete_article_by_id({ state }, id) {
+      state.available_articles = state.available_articles.filter(item => item.id !== id);
+    },
     update_selected_articles({ state }, payload) {
       if (!payload) {
         state.selected_articles.splice(0, state.selected_articles.length);
