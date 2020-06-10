@@ -5,12 +5,7 @@
       class="flex flex-grow items-strech p-5 cursor-pointer rounded-lg shadow"
       :class="dropdownContainerClasses"
     >
-      <img
-        :src="icon"
-        v-if="icon"
-        alt="icon"
-        class="inline-block align-baseline mr-4 h-5 w-5 -mb-0.5 pointer-events-none"
-      />
+      <slot name="icon"></slot>
       <span class="truncate" :class="selectedOption ? '' : 'text-gray-500'">
         <slot name="title" :selectedOption="selectedOption">
           {{ selectedOption || placeholder }}
@@ -51,10 +46,6 @@ export default {
     event: 'updateSelectedOption'
   },
   props: {
-    icon: {
-      type: String,
-      default: null
-    },
     selectedOption: {
       type: [String, Date, Number, Object]
     },
