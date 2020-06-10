@@ -43,6 +43,7 @@ export default {
   components: {
     BaseTabs,
     BaseTab,
+    BaseChart,
     ArrowDown,
     ArrowUp
   },

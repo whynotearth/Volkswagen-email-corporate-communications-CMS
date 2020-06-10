@@ -30,7 +30,13 @@
           <OverviewStats>
             <template #title>Memo Overview</template>
           </OverviewStats>
-          <BaseChart :config="getChartConfig({ label: 'Users', data: usersData })" />
+          <BaseBigButton
+            class="m-4"
+            :icon="'https://res.cloudinary.com/whynotearth/image/upload/v1591633121/Volkswagen/cms/calendar_v7nvia.png'"
+            @selectButton="test"
+          >
+            View Reports
+          </BaseBigButton>
         </div>
       </div>
     </template>
@@ -47,12 +53,21 @@ import BaseAppBarHeader from '@/components/BaseAppBarHeader.vue';
 import BaseDropdown from '@/components/BaseDropdown';
 import OverviewStats from '@/components/OverviewStats';
 import BaseChart from '@/components/BaseChart.vue';
+import BaseBigButton from '@/components/BaseBigButton';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
 import { colors } from '@/constants/theme.js';
 
 export default {
   name: 'StatsOverviewMemos',
-  components: { BaseAppBarHeader, NavigationBottom, LayoutFixedFooter, BaseChart, BaseDropdown, OverviewStats },
+  components: {
+    BaseAppBarHeader,
+    NavigationBottom,
+    LayoutFixedFooter,
+    BaseChart,
+    BaseDropdown,
+    OverviewStats,
+    BaseBigButton
+  },
   computed: {
     ...mapGetters('memo', ['get_date']),
     date: {
@@ -140,6 +155,9 @@ export default {
         }
       };
       return config;
+    },
+    test() {
+      console.log('test');
     }
   }
 };
