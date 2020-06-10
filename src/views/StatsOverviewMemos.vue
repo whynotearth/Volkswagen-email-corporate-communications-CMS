@@ -5,10 +5,10 @@
     </template>
     <template #content>
       <div>
-        <div class="container px-4 md:px-6 text-left pt-4">
+        <div class="container px-4 md:px-6 text-left pt-6">
           <!-- time -->
           <BaseDropdown
-            class="relative bg-surface text-left mb-4"
+            class="relative bg-surface text-left mb-6"
             placeholder="Schedule time"
             :options="dates"
             v-model="date"
@@ -32,15 +32,15 @@
           </BaseDropdown>
         </div>
 
-        <div class="container px-0 md:px-6 text-left mb-4">
+        <div class="container px-0 md:px-6 text-left mb-6">
           <!-- chart -->
           <StatsOverview>
-            <template #title>Memo Overview</template>
+            <template #title><span class="block text-center">Memo Overview</span></template>
           </StatsOverview>
         </div>
 
-        <div class="container px-4 md:px-6 text-left">
-          <div class="mb-4">
+        <div class="container px-4 md:px-6 text-left pb-6">
+          <div class="mb-6">
             <!-- link button -->
             <BaseButtonPro :toLink="{ name: 'MemoListActivity' }">
               <template #icon>
@@ -51,7 +51,7 @@
           </div>
 
           <a
-            class="bg-secondary block w-full hover:bg-blue-700 text-white text-center font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline transition duration-100 ease-in-out transition-all label-mobile shadow-2dp"
+            class="bg-secondary block w-full mx-auto hover:bg-blue-700 text-white text-center font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline transition duration-100 ease-in-out transition-all label-mobile shadow-2dp max-w-sm"
             >Export Report</a
           >
         </div>

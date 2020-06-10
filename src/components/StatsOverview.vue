@@ -1,8 +1,8 @@
 <template>
   <div class="stats-overview flex flex-wrap bg-brand-gradient text-white py-4">
-    <span class="tg-caption-bold-desktop em-high text-white w-full m-4">
+    <h2 class="tg-caption-bold-desktop em-high text-white w-full m-4">
       <slot name="title"></slot>
-    </span>
+    </h2>
     <slot name="description"></slot>
     <BaseTabs class="w-full" :tabClasses="'text-right'">
       <template #Users class="text-left">
@@ -141,7 +141,7 @@ export default {
   }
 
   .tabs li:not(:first-child) {
-    @apply border-white border-l-1 border-opacity-12;
+    border-left: 1px solid rgba(255, 255, 255, 0.12);
   }
 
   .tabs li:not(.border-secondary) {
