@@ -4,11 +4,11 @@
       <BaseAppBarHeader :title="'Memo Overview'" :toLink="{ name: 'Stats' }" />
     </template>
     <template #content>
-      <div class="flex flex-col">
-        <div class="container px-0 py-4 md:px-6 select-none">
+      <div>
+        <div class="container px-4 md:px-6 text-left pt-4">
           <!-- time -->
           <BaseDropdown
-            class="relative bg-surface text-left m-4"
+            class="relative bg-surface text-left mb-4"
             placeholder="Schedule time"
             :options="dates"
             v-model="date"
@@ -30,13 +30,17 @@
               </span>
             </template>
           </BaseDropdown>
+        </div>
 
+        <div class="container px-0 md:px-6 text-left mb-4">
           <!-- chart -->
           <StatsOverview>
             <template #title>Memo Overview</template>
           </StatsOverview>
+        </div>
 
-          <div class="m-4">
+        <div class="container px-4 md:px-6 text-left">
+          <div class="mb-4">
             <!-- link button -->
             <BaseButtonPro :toLink="{ name: 'MemoListActivity' }">
               <template #icon>
@@ -45,6 +49,11 @@
               View Reports
             </BaseButtonPro>
           </div>
+
+          <a
+            class="bg-secondary block w-full hover:bg-blue-700 text-white text-center font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline transition duration-100 ease-in-out transition-all label-mobile shadow-2dp"
+            >Export Report</a
+          >
         </div>
       </div>
     </template>
