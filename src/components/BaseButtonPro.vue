@@ -4,17 +4,12 @@
     @click="select()"
     class="flex flex-grow w-full items-strech p-5 cursor-pointer rounded-lg shadow"
   >
-    <img
-      :src="icon"
-      v-if="icon"
-      alt="icon"
-      class="inline-block align-baseline mr-4 h-5 w-5 -mb-0.5 pointer-events-none"
-    />
+    <slot name="icon"></slot>
     <span class="truncate">
       <slot></slot>
     </span>
     <div class="flex-auto items-center text-right">
-      <Down class="transform inline-block pointer-events-none scale-x-1 text-gray rotate-270" />
+      <Down class="transform inline-block pointer-events-none scale-x-1 text-gray -rotate-90" />
     </div>
   </button>
 </template>
@@ -31,10 +26,6 @@ export default {
     }
   },
   props: {
-    icon: {
-      type: String,
-      default: null
-    },
     type: {
       type: String,
       default: 'button'
@@ -50,7 +41,7 @@ button {
 button:focus {
   outline: 0;
 }
-.rotate-270 {
-  transform: rotate(270deg);
+button:hover {
+  background: rgba(3, 179, 249, 0.4);
 }
 </style>

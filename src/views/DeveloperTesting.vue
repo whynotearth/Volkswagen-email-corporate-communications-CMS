@@ -17,24 +17,24 @@
       <template #title>Memo Overview</template>
     </OverviewStats>
 
-    <BaseBigButton
-      class=""
-      :icon="'https://res.cloudinary.com/whynotearth/image/upload/v1591633121/Volkswagen/cms/calendar_v7nvia.png'"
-      @selectButton="onUpload"
-    >
+    <BaseButtonPro class="" @selectButton="onUpload">
+      <template #icon>
+        <Calendar class="inline-block align-baseline mr-4 h-5 w-5 -mb-0.5 pointer-events-none" />
+      </template>
       View Reports
-    </BaseBigButton>
+    </BaseButtonPro>
   </div>
 </template>
 
 <script>
 import OverviewStats from '@/components/OverviewStats';
 import CloudinaryWidget from '@/components/ImageUpload/CloudinaryWidget';
-import BaseBigButton from '@/components/BaseBigButton';
+import BaseButtonPro from '@/components/BaseButtonPro';
+import Calendar from '@/assets/calendar.svg';
 
 export default {
   name: 'DeveloperTesting',
-  components: { CloudinaryWidget, OverviewStats, BaseBigButton },
+  components: { CloudinaryWidget, OverviewStats, BaseButtonPro, Calendar },
   methods: {
     onUpload(result) {
       console.log(result);
