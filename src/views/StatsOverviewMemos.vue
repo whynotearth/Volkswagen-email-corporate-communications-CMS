@@ -32,13 +32,13 @@
           </BaseDropdown>
 
           <!-- chart -->
-          <OverviewStats>
+          <StatsOverview>
             <template #title>Memo Overview</template>
-          </OverviewStats>
+          </StatsOverview>
 
           <div class="m-4">
             <!-- link button -->
-            <BaseButtonPro @selectButton="test">
+            <BaseButtonPro :toLink="{ name: 'MemoListActivity' }">
               <template #icon>
                 <Stat class="inline-block align-baseline mr-4 h-5 w-5 -mb-0.5 pointer-events-none" />
               </template>
@@ -59,7 +59,7 @@ import LayoutFixedFooter from '@/components/LayoutFixedFooter';
 import NavigationBottom from '@/components/BaseNavigationBottom';
 import BaseAppBarHeader from '@/components/BaseAppBarHeader.vue';
 import BaseDropdown from '@/components/BaseDropdown';
-import OverviewStats from '@/components/OverviewStats';
+import StatsOverview from '@/components/StatsOverview';
 import BaseChart from '@/components/BaseChart.vue';
 import BaseButtonPro from '@/components/BaseButtonPro';
 import Calendar from '@/assets/calendar.svg';
@@ -74,7 +74,7 @@ export default {
     NavigationBottom,
     LayoutFixedFooter,
     BaseDropdown,
-    OverviewStats,
+    StatsOverview,
     BaseButtonPro,
     Calendar,
     Stat
@@ -166,9 +166,6 @@ export default {
         }
       };
       return config;
-    },
-    test() {
-      console.log('test');
     }
   }
 };

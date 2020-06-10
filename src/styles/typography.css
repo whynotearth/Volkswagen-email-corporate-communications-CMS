@@ -199,7 +199,8 @@
 }
 
 @responsive {
-  .bg-primary {
+  .bg-primary,
+  .bg-brand-gradient {
     &.em-high,
     .em-high {
       opacity: 0.84;

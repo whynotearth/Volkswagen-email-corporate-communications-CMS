@@ -13,9 +13,9 @@
     >
       <button>upload widget</button>
     </CloudinaryWidget>
-    <OverviewStats>
+    <StatsOverview>
       <template #title>Memo Overview</template>
-    </OverviewStats>
+    </StatsOverview>
 
     <BaseButtonPro class="" @selectButton="onUpload">
       <template #icon>
@@ -27,14 +27,14 @@
 </template>
 
 <script>
-import OverviewStats from '@/components/OverviewStats';
+import StatsOverview from '@/components/StatsOverview';
 import CloudinaryWidget from '@/components/ImageUpload/CloudinaryWidget';
 import BaseButtonPro from '@/components/BaseButtonPro';
 import Calendar from '@/assets/calendar.svg';
 
 export default {
   name: 'DeveloperTesting',
-  components: { CloudinaryWidget, OverviewStats, BaseButtonPro, Calendar },
+  components: { CloudinaryWidget, StatsOverview, BaseButtonPro, Calendar },
   methods: {
     onUpload(result) {
       console.log(result);

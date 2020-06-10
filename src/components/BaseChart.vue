@@ -1,11 +1,10 @@
 <template>
   <div>
-    <canvas id="myChart" width="800" height="400"></canvas>
+    <canvas ref="canvas" width="800" height="400"></canvas>
   </div>
 </template>
 
 <script>
-// // const Chartjs = () => import('chart.js'); TODO: use helpers/addScriptTag
 import Chart from 'chart.js';
 
 export default {
@@ -17,7 +16,7 @@ export default {
     }
   },
   mounted() {
-    var ctx = document.getElementById('myChart');
+    var ctx = this.$refs.canvas;
     var myChart = new Chart(ctx, this.config);
   }
 };
