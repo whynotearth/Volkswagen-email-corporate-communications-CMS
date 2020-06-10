@@ -59,15 +59,7 @@ import { colors } from '@/constants/theme.js';
 
 export default {
   name: 'StatsOverviewMemos',
-  components: {
-    BaseAppBarHeader,
-    NavigationBottom,
-    LayoutFixedFooter,
-    BaseChart,
-    BaseDropdown,
-    OverviewStats,
-    BaseBigButton
-  },
+  components: { BaseAppBarHeader, NavigationBottom, LayoutFixedFooter, BaseDropdown, OverviewStats, BaseBigButton },
   computed: {
     ...mapGetters('memo', ['get_date']),
     date: {
