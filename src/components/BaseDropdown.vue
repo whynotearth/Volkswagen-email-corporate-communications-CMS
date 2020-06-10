@@ -2,21 +2,16 @@
   <div>
     <div
       @click="showDropdown = !showDropdown"
-      class="flex flex-grow justify-between items-strech p-5 cursor-pointer border-b-1 border-divider"
+      class="flex flex-grow items-strech p-5 cursor-pointer rounded-lg shadow"
       :class="dropdownContainerClasses"
     >
-      <img
-        :src="icon"
-        v-if="icon"
-        alt="icon"
-        class="inline-block align-baseline mr-4 h-5 w-5 -mb-0.5 pointer-events-none"
-      />
+      <slot name="icon"></slot>
       <span class="truncate" :class="selectedOption ? '' : 'text-gray-500'">
         <slot name="title" :selectedOption="selectedOption">
           {{ selectedOption || placeholder }}
         </slot>
       </span>
-      <div class="h-full">
+      <div class="flex flex-grow items-center justify-end">
         <Down
           class="transform inline-block pointer-events-none scale-x-1 text-gray"
           :class="{ 'rotate-180': showDropdown }"
@@ -25,7 +20,7 @@
     </div>
     <div
       v-if="showDropdown"
-      class="dropdown absolute right-0 left-0 bg-white mt-1 mx-2 md:mx-4 py-2 rounded shadow-8dp overflow-x-hidden overflow-y-auto z-10"
+      class="dropdown absolute right-0 left-0 bg-white mt-1 mx-2 md:mx-4 py-2 rounded-lg shadow-8dp overflow-x-hidden overflow-y-auto z-10"
       :class="optionContainerClasses"
     >
       <div
@@ -51,10 +46,6 @@ export default {
     event: 'updateSelectedOption'
   },
   props: {
-    icon: {
-      type: String,
-      default: null
-    },
     selectedOption: {
       type: [String, Date, Number, Object]
     },
@@ -94,7 +85,6 @@ export default {
 <style scoped>
 .dropdown {
   max-height: 15rem;
-  top: 54px;
 }
 .rotate-180 {
   transform: rotate(180deg);
