@@ -2,7 +2,7 @@
   <div>
     <div
       @click="showDropdown = !showDropdown"
-      class="flex flex-grow items-strech p-5 cursor-pointer rounded-lg shadow"
+      class="flex flex-grow items-strech p-5 cursor-pointer rounded-lg shadow-1dp"
       :class="dropdownContainerClasses"
     >
       <slot name="icon"></slot>

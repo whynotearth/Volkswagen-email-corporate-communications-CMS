@@ -6,3 +6,4 @@ const config = resolveConfig(tailwindConfig);
 
 export const theme = config.theme;
 export const colors = theme.colors;
+export const opacity = theme.opacity;
