@@ -6,13 +6,16 @@
     <template #content>
       <div class="flex flex-col">
         <div class="container px-0 py-4 md:px-6 select-none">
+          <!-- time -->
           <BaseDropdown
             class="relative bg-surface text-left m-4"
             placeholder="Schedule time"
             :options="dates"
-            :icon="'https://res.cloudinary.com/whynotearth/image/upload/v1591633121/Volkswagen/cms/calendar_v7nvia.png'"
             v-model="date"
           >
+            <template #icon>
+              <Calendar class="inline-block align-baseline mr-4 h-5 w-5 -mb-0.5 pointer-events-none" />
+            </template>
             <template #title="{ selectedOption }">
               <span v-if="dates.length === 0" class="text-gray-500">
                 No Option!
@@ -27,16 +30,21 @@
               </span>
             </template>
           </BaseDropdown>
+
+          <!-- chart -->
           <OverviewStats>
             <template #title>Memo Overview</template>
           </OverviewStats>
-          <BaseBigButton
-            class="m-4"
-            :icon="'https://res.cloudinary.com/whynotearth/image/upload/v1591633121/Volkswagen/cms/calendar_v7nvia.png'"
-            @selectButton="test"
-          >
-            View Reports
-          </BaseBigButton>
+
+          <div class="m-4">
+            <!-- link button -->
+            <BaseButtonPro @selectButton="test">
+              <template #icon>
+                <Stat class="inline-block align-baseline mr-4 h-5 w-5 -mb-0.5 pointer-events-none" />
+              </template>
+              View Reports
+            </BaseButtonPro>
+          </div>
         </div>
       </div>
     </template>
@@ -53,13 +61,24 @@ import BaseAppBarHeader from '@/components/BaseAppBarHeader.vue';
 import BaseDropdown from '@/components/BaseDropdown';
 import OverviewStats from '@/components/OverviewStats';
 import BaseChart from '@/components/BaseChart.vue';
-import BaseBigButton from '@/components/BaseBigButton';
+import BaseButtonPro from '@/components/BaseButtonPro';
+import Calendar from '@/assets/calendar.svg';
+import Stat from '@/assets/stat.svg';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
 import { colors } from '@/constants/theme.js';
 
 export default {
   name: 'StatsOverviewMemos',
-  components: { BaseAppBarHeader, NavigationBottom, LayoutFixedFooter, BaseDropdown, OverviewStats, BaseBigButton },
+  components: {
+    BaseAppBarHeader,
+    NavigationBottom,
+    LayoutFixedFooter,
+    BaseDropdown,
+    OverviewStats,
+    BaseButtonPro,
+    Calendar,
+    Stat
+  },
   computed: {
     ...mapGetters('memo', ['get_date']),
     date: {
