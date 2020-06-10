@@ -3,7 +3,7 @@
     <template #header>
       <BaseAppBarHeader
         title="Add Email"
-        :to-link="`/settings/email-lists/${$route.params.groupName}`"
+        :to-link="`/settings/user-lists/${$route.params.groupName}`"
         :action="{ label: 'Finish', link: '', method: 'addEmail', disabled: $v.email.$invalid }"
         @addEmail="addEmail"
       ></BaseAppBarHeader>

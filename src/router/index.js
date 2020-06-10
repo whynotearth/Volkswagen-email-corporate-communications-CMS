@@ -245,7 +245,7 @@ const routes = [
     component: EmailListItem
   },
   {
-    path: '/settings/user-list',
+    path: '/settings/user-lists/:groupName',
     name: 'UserList',
     component: UserList
   }

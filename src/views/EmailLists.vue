@@ -67,7 +67,7 @@ export default {
     },
     choiceEmailList(payload) {
       this.selectEmailList(payload);
-      this.$router.push({ name: 'EmailList', params: { groupName: payload.distributionGroup } });
+      this.$router.push({ name: 'UserList', params: { groupName: payload.distributionGroup } });
     }
   }
 };
