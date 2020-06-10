@@ -5,7 +5,6 @@
         class="relative bg-surface text-left"
         placeholder="Schedule time"
         :options="dates"
-        :icon="'https://res.cloudinary.com/whynotearth/image/upload/v1591633121/Volkswagen/cms/calendar_v7nvia.png'"
         v-model="$v.date.$model"
       >
         <template #icon>
