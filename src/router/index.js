@@ -30,7 +30,7 @@ import ArticleLists from '../views/ArticleLists';
 import ArticleListsItem from '../views/ArticleListsItem';
 import EditBlueDelta from '../views/EditBlueDelta';
 import BlueDeltaRearrange from '../views/BlueDeltaRearrange';
-// import DeveloperTesting from '../views/DeveloperTesting.vue';
+import DeveloperTesting from '../views/DeveloperTesting.vue';
 import AuthForgotPassword from '../views/AuthForgotPassword';
 import AuthNewPassword from '../views/AuthNewPassword';
 import JumpStartActivityList from '../views/JumpStartActivityList.vue';
@@ -41,11 +41,11 @@ import store from '../store';
 Vue.use(VueRouter);
 
 const routes = [
-  // {
-  //   path: '/test',
-  //   name: 'DeveloperTesting',
-  //   component: DeveloperTesting
-  // },
+  {
+    path: '/test',
+    name: 'DeveloperTesting',
+    component: DeveloperTesting
+  },
   {
     path: '/',
     name: 'Dashboard',

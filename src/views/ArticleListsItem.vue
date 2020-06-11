@@ -316,11 +316,9 @@ export default {
     selected_category: {
       /* eslint-disable indent */
       get() {
-        return this.get_selected_category.slug
-          ? this.get_selected_category
-          : this.selectedArticle
-          ? this.selectedArticle.category
-          : '';
+        if (this.get_selected_category.slug) return this.get_selected_category;
+        else if (this.selectedArticle) return this.selectedArticle.category;
+        return '';
       },
       /* eslint-enable indent */
       set(value) {
