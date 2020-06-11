@@ -34,9 +34,15 @@
 
         <div class="container px-0 md:px-6 text-left mb-6">
           <!-- chart -->
-          <StatsOverview>
-            <template #title><span class="block text-center">Memo Overview</span></template>
-          </StatsOverview>
+          <div class="bg-brand-gradient">
+            <StatsOverview
+              :usersChartConfig="usersChartConfig"
+              :opensChartConfig="opensChartConfig"
+              :clicksChartConfig="clicksChartConfig"
+            >
+              <template #title><span class="block text-center">Memo Overview</span></template>
+            </StatsOverview>
+          </div>
         </div>
 
         <div class="container px-4 md:px-6 text-left pb-6">
@@ -74,7 +80,12 @@ import BaseButtonPro from '@/components/BaseButtonPro';
 import Calendar from '@/assets/calendar.svg';
 import Stat from '@/assets/stat.svg';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
-import { colors } from '@/constants/theme.js';
+import { colors, opacity } from '@/constants/theme.js';
+
+// temporary data
+const usersData = [100, 500, 100, 200, 300, 800, 900];
+const opensData = [100, 500, 100, 200, 300, 800, 900];
+const clicksData = [100, 500, 100, 200, 300, 800, 900];
 
 export default {
   name: 'StatsOverviewMemos',
@@ -100,6 +111,15 @@ export default {
     },
     dates() {
       return ['Last 7', 'Last 30', 'all time'];
+    },
+    usersChartConfig() {
+      return this.getChartConfig({ label: 'Users', data: usersData });
+    },
+    opensChartConfig() {
+      return this.getChartConfig({ label: 'Opens', data: opensData });
+    },
+    clicksChartConfig() {
+      return this.getChartConfig({ label: 'Clicks', data: clicksData });
     }
   },
   data: () => ({
@@ -118,7 +138,7 @@ export default {
               label,
               data,
               borderWidth: 2,
-              backgroundColor: colors.secondary,
+              backgroundColor: 'transparent',
               borderColor: colors.secondary,
               fill: false
             }
@@ -165,6 +185,8 @@ export default {
                   display: false
                 },
                 ticks: {
+                  fontColor: `rgba(255,255,255,${opacity['54']})`,
+                  fontSize: 12,
                   callback: function(value, index, values) {
                     return data[index];
                   }

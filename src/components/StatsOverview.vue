@@ -1,5 +1,5 @@
 <template>
-  <div class="stats-overview flex flex-wrap bg-brand-gradient text-white py-4">
+  <div class="stats-overview flex flex-wrap text-white py-4">
     <h2 class="tg-caption-bold-desktop em-high text-white w-full m-4">
       <slot name="title"></slot>
     </h2>
@@ -10,7 +10,7 @@
         <span class="flex items-center text-community"> <ArrowUp class="mr-2" /><span>90%</span></span>
       </template>
       <BaseTab name="Users" selected="true">
-        <BaseChart :config="getChartConfig({ label: 'Users', data: usersData })" />
+        <BaseChart :config="usersChartConfig" />
       </BaseTab>
 
       <template #Opens>
@@ -18,7 +18,7 @@
         <span class="flex items-center text-error"> <ArrowDown class="mr-2" /><span>12%</span></span>
       </template>
       <BaseTab name="Opens">
-        <BaseChart :config="getChartConfig({ label: 'Users', data: usersData })" />
+        <BaseChart :config="opensChartConfig" />
       </BaseTab>
 
       <template #Clicks>
@@ -26,7 +26,7 @@
         <span class="flex items-center text-community"> <ArrowUp class="mr-2" /><span>12%</span></span>
       </template>
       <BaseTab name="Clicks">
-        <BaseChart :config="getChartConfig({ label: 'Users', data: usersData })" />
+        <BaseChart :config="clicksChartConfig" />
       </BaseTab>
     </BaseTabs>
   </div>
@@ -38,7 +38,6 @@ import BaseTab from '@/components/BaseTab.vue';
 import BaseChart from '@/components/BaseChart.vue';
 import ArrowDown from '@/assets/arrow-down-red.svg';
 import ArrowUp from '@/assets/arrow-up.svg';
-import { colors, opacity } from '@/constants/theme.js';
 
 export default {
   name: 'StatsOverview',
@@ -49,80 +48,15 @@ export default {
     ArrowDown,
     ArrowUp
   },
-  data: () => ({
-    // TODO: read from store
-    usersData: [100, 500, 100, 200, 300, 800, 900]
-  }),
-  methods: {
-    getChartConfig({ label, data }) {
-      const config = {
-        type: 'line',
-        data: {
-          labels: ['M', 'T', 'W', 'Th', 'F', 'S', 'Su'],
-          datasets: [
-            {
-              label,
-              data,
-              borderWidth: 2,
-              backgroundColor: 'transparent',
-              borderColor: colors.secondary,
-              fill: false
-            }
-          ]
-        },
-        options: {
-          elements: {
-            point: {
-              radius: 0
-            }
-          },
-          legend: {
-            display: false
-          },
-          tooltips: false,
-          responsive: true,
-          hover: {
-            mode: 'nearest',
-            intersect: true
-          },
-          scales: {
-            yAxes: [
-              {
-                ticks: { min: 0, display: false },
-                gridLines: {
-                  drawBorder: false,
-                  display: false
-                }
-              }
-            ],
-            xAxes: [
-              {
-                position: 'bottom',
-                gridLines: {
-                  drawBorder: false,
-                  lineWidth: 1,
-                  color: colors.divider
-                }
-              },
-              {
-                position: 'top',
-                gridLines: {
-                  drawBorder: false,
-                  display: false
-                },
-                ticks: {
-                  fontColor: `rgba(255,255,255,${opacity['54']})`,
-                  fontSize: 12,
-                  callback: function(value, index, values) {
-                    return data[index];
-                  }
-                }
-              }
-            ]
-          }
-        }
-      };
-      return config;
+  props: {
+    usersChartConfig: {
+      type: Object
+    },
+    opensChartConfig: {
+      type: Object
+    },
+    clicksChartConfig: {
+      type: Object
     }
   }
 };
