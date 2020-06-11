@@ -1,5 +1,8 @@
 <template>
-  <router-link :to="toLink" class="base-button flex flex-grow w-full items-strech p-5 cursor-pointer rounded-lg shadow">
+  <router-link
+    :to="toLink"
+    class="base-button flex flex-grow w-full items-strech p-5 cursor-pointer rounded-lg shadow-1dp"
+  >
     <slot name="icon"></slot>
     <span class="truncate">
       <slot></slot>
