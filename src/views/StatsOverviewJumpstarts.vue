@@ -11,7 +11,7 @@
           <BaseDropdown
             class="relative bg-surface text-left mb-6"
             placeholder="Schedule time"
-            :options="stats_overview_date_ranges_available"
+            :options="dateRangesAvailable"
             v-model="stats_overview_date_range"
           >
             <template #icon>
@@ -34,6 +34,9 @@
           <!-- chart -->
           <div class="bg-brand-gradient">
             <StatsOverview
+              :usersStats="usersStats"
+              :opensStats="opensStats"
+              :clicksStats="clicksStats"
               :usersChartConfig="usersChartConfig"
               :opensChartConfig="opensChartConfig"
               :clicksChartConfig="clicksChartConfig"
@@ -119,12 +122,12 @@ export default {
     this.fetch_stats_overview();
   },
   computed: {
-    ...mapGetters('email', ['get_stats_overview_date_range']),
+    ...mapGetters('email', ['get_stats_overview_date_range', 'get_stats_overview']),
     stats_overview_date_range: {
       get() {
         const current = this.get_stats_overview_date_range;
         if (!current.value.length > 0) {
-          const last7days = this.generateDateRangesAvailable()[0];
+          const last7days = this.dateRangesAvailable[0];
           return last7days;
         }
         return current;
@@ -133,14 +136,27 @@ export default {
         this.update_stats_overview_date_range(value);
       }
     },
-    stats_overview_date_ranges_available() {
+    usersStats() {
+      const { userCount, userGrowthPercent, users } = this.get_stats_overview;
+      return { userCount, userGrowthPercent, users };
+    },
+    opensStats() {
+      const { openCount, openGrowthPercent, opens } = this.get_stats_overview;
+      return { openCount, openGrowthPercent, opens };
+    },
+    clicksStats() {
+      const { clickCount, clickGrowthPercent, clicks } = this.get_stats_overview;
+      return { clickCount, clickGrowthPercent, clicks };
+    },
+    dateRangesAvailable() {
       return this.generateDateRangesAvailable();
     },
     usersChartConfig() {
+      const data = this.adaptOverviewChartDataset(this.usersStats.users);
       const datasets = [
         {
           label: 'Users',
-          data: usersData,
+          data,
           borderWidth: 2,
           backgroundColor: 'transparent',
           borderColor: colors.secondary,
@@ -151,16 +167,17 @@ export default {
         fontColor: `rgba(255,255,255,${opacity['54']})`,
         fontSize: 12,
         callback: (value, index, values) => {
-          return datasets[0][index];
+          return data[index];
         }
       };
       return this.getChartConfig({ datasets, ticks });
     },
     opensChartConfig() {
+      const data = this.adaptOverviewChartDataset(this.opensStats.opens);
       const datasets = [
         {
           label: 'Opens',
-          data: opensData,
+          data,
           borderWidth: 2,
           backgroundColor: 'transparent',
           borderColor: colors.secondary,
@@ -171,16 +188,17 @@ export default {
         fontColor: `rgba(255,255,255,${opacity['54']})`,
         fontSize: 12,
         callback: (value, index, values) => {
-          return datasets[0][index];
+          return data[index];
         }
       };
       return this.getChartConfig({ datasets, ticks });
     },
     clicksChartConfig() {
+      const data = this.adaptOverviewChartDataset(this.clicksStats.clicks);
       const datasets = [
         {
           label: 'Clicks',
-          data: clicksData,
+          data,
           borderWidth: 2,
           backgroundColor: 'transparent',
           borderColor: colors.secondary,
@@ -191,7 +209,7 @@ export default {
         fontColor: `rgba(255,255,255,${opacity['54']})`,
         fontSize: 12,
         callback: (value, index, values) => {
-          return datasets[0][index];
+          return data[index];
         }
       };
       return this.getChartConfig({ datasets, ticks });
@@ -254,6 +272,9 @@ export default {
     ...mapMutations('email', ['update_stats_overview_date_range']),
     ...mapActions('email', ['fetch_stats_overview']),
 
+    adaptOverviewChartDataset(inputData) {
+      return inputData.map(item => item.count);
+    },
     generateDateRangesAvailable() {
       const format = 'yyyy-MM-dd';
       const now = new Date();

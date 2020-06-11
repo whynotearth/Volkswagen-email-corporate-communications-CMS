@@ -120,11 +120,35 @@ export default {
         openCount: 400,
         openGrowthPercent: 20,
         clickCount: 50,
-        clickGrowthPercent: 10,
+        clickGrowthPercent: 15,
         users: [
           {
             date: '2020-06-11',
             count: 100
+          },
+          {
+            date: '2020-06-12',
+            count: 50
+          },
+          {
+            date: '2020-06-13',
+            count: 20
+          },
+          {
+            date: '2020-06-14',
+            count: 80
+          },
+          {
+            date: '2020-06-15',
+            count: 120
+          },
+          {
+            date: '2020-06-16',
+            count: 150
+          },
+          {
+            date: '2020-06-17',
+            count: 200
           }
         ],
         opens: [

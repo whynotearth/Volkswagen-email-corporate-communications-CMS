@@ -6,24 +6,30 @@
     <slot name="description"></slot>
     <BaseTabs class="w-full" :tabClasses="'text-right'">
       <template #Users class="text-left">
-        <span class="text-brand-light-blue-gradient tg-h1-mobile">2634</span>
-        <span class="flex items-center text-community"> <ArrowUp class="mr-2" /><span>90%</span></span>
+        <span class="text-brand-light-blue-gradient tg-h1-mobile">{{ usersStats.userCount }}</span>
+        <span class="flex items-center text-community">
+          <ArrowUp class="mr-2" /><span>{{ usersStats.userGrowthPercent }}%</span></span
+        >
       </template>
       <BaseTab name="Users" selected="true">
         <BaseChart :config="usersChartConfig" />
       </BaseTab>
 
       <template #Opens>
-        <span class="text-brand-light-blue-gradient tg-h1-mobile">1634</span>
-        <span class="flex items-center text-error"> <ArrowDown class="mr-2" /><span>12%</span></span>
+        <span class="text-brand-light-blue-gradient tg-h1-mobile">{{ opensStats.openCount }}</span>
+        <span class="flex items-center text-error">
+          <ArrowDown class="mr-2" /><span>{{ opensStats.openGrowthPercent }}%</span></span
+        >
       </template>
       <BaseTab name="Opens">
         <BaseChart :config="opensChartConfig" />
       </BaseTab>
 
       <template #Clicks>
-        <span class="text-brand-light-blue-gradient tg-h1-mobile">1256</span>
-        <span class="flex items-center text-community"> <ArrowUp class="mr-2" /><span>12%</span></span>
+        <span class="text-brand-light-blue-gradient tg-h1-mobile">{{ clicksStats.clickCount }}</span>
+        <span class="flex items-center text-community">
+          <ArrowUp class="mr-2" /><span>{{ clicksStats.clickGrowthPercent }}%</span></span
+        >
       </template>
       <BaseTab name="Clicks">
         <BaseChart :config="clicksChartConfig" />
@@ -56,6 +62,15 @@ export default {
       type: Object
     },
     clicksChartConfig: {
+      type: Object
+    },
+    usersStats: {
+      type: Object
+    },
+    opensStats: {
+      type: Object
+    },
+    clicksStats: {
       type: Object
     }
   }
