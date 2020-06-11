@@ -21,7 +21,9 @@ export default {
     },
     default_distribution_groups: [],
     default_schedule_time: null,
-    selected_plan: {},
+    selected_plan: {
+      articles: []
+    },
     daily_plan: [],
     available_articles: [],
     stats: [],
