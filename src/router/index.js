@@ -22,6 +22,7 @@ import EmailListItem from '../views/EmailListItem';
 import EmailListImport from '../views/EmailListImport';
 import EmailListImportHelp from '../views/EmailListImportHelp';
 import Email from '@/views/Email';
+import UserListProfile from '../views/UserListProfile';
 import Dashboard from '../views/Dashboard';
 import BlueDeltaMain from '@/views/BlueDeltaMain';
 import JumpStartLists from '../views/JumpStartLists';
@@ -102,7 +103,6 @@ const routes = [
     component: MemoAdd,
     props: true
   },
-
   {
     path: '/blue-delta',
     name: 'BlueDeltaMain',
@@ -242,6 +242,11 @@ const routes = [
     path: '/settings/email-lists/:groupName/:id',
     name: 'EmailListItem',
     component: EmailListItem
+  },
+  {
+    path: '/settings/user-lists/:groupName/user/:id',
+    name: 'UserListProfile',
+    component: UserListProfile
   }
 ];
 
