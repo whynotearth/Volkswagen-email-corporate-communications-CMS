@@ -27,6 +27,11 @@ export default {
     daily_plan: [],
     available_articles: [],
     stats: [],
+    stats_overview: {},
+    stats_overview_date_range: {
+      text: '',
+      value: [] // ['2020-06-06', '2020-06-13']
+    },
     stat: {}
   },
   getters: {
@@ -43,6 +48,8 @@ export default {
     get_daily_plan: state => state.daily_plan,
     get_available_articles: state => state.available_articles,
     get_stats: state => state.stats,
+    get_stats_overview: state => state.stats_overview,
+    get_stats_overview_date_range: state => state.stats_overview_date_range,
     get_stat: state => state.stat
   },
   actions: {
@@ -104,6 +111,55 @@ export default {
     async fetch_stat({ commit }, params) {
       const data = await JumpStartService.stats1(params);
       commit('update_stat', data);
+    },
+    fetch_stats_overview({ commit }) {
+      // const data = await JumpStartService.stats2????????();
+      const data = {
+        userCount: 500,
+        userGrowthPercent: 12,
+        openCount: 400,
+        openGrowthPercent: 20,
+        clickCount: 50,
+        clickGrowthPercent: 10,
+        users: [
+          {
+            date: '2020-06-11',
+            count: 100
+          }
+        ],
+        opens: [
+          {
+            date: '2020-06-11',
+            count: 30
+          }
+        ],
+        clicks: [
+          {
+            date: '2020-06-11',
+            count: 50
+          }
+        ],
+        tags: ['One Team', 'Priority', 'People', 'Plant'],
+        tagStats: [
+          {
+            tag: 'People',
+            date: '2020-06-11',
+            count: 3
+          }
+        ],
+        heatMap: [
+          {
+            date: '2020-06-11',
+            hours: [
+              {
+                hour: 0,
+                activity: 0
+              }
+            ]
+          }
+        ]
+      };
+      commit('update_stats_overview', data);
     }
   },
   mutations: {
@@ -142,6 +198,12 @@ export default {
     },
     update_stat(state, payload) {
       state.stat = payload;
+    },
+    update_stats_overview(state, payload) {
+      state.stats_overview = payload;
+    },
+    update_stats_overview_date_range(state, payload) {
+      state.stats_overview_date_range = payload;
     }
   }
 };

@@ -1,4 +1,5 @@
 <template>
+  <!-- TODO: rename file to StatsOverviewJumpStarts.vue -->
   <LayoutFixedFooter>
     <template #header>
       <BaseAppBarHeader :title="'JumpStart Overview'" :toLink="{ name: 'Stats' }" />
@@ -10,23 +11,20 @@
           <BaseDropdown
             class="relative bg-surface text-left mb-6"
             placeholder="Schedule time"
-            :options="dates"
-            v-model="date"
+            :options="stats_overview_date_ranges_available"
+            v-model="stats_overview_date_range"
           >
             <template #icon>
               <Calendar class="inline-block align-baseline mr-4 h-5 w-5 -mb-0.5 pointer-events-none" />
             </template>
             <template #title="{ selectedOption }">
-              <span v-if="dates.length === 0" class="text-gray-500">
-                No Option!
-              </span>
-              <span v-else-if="selectedOption" class="text-black">
-                {{ selectedOption }}
+              <span class="text-black">
+                {{ selectedOption.text }}
               </span>
             </template>
             <template #option="{ option }">
               <span>
-                {{ option }}
+                {{ option.text }}
               </span>
             </template>
           </BaseDropdown>
@@ -92,6 +90,8 @@ import Calendar from '@/assets/calendar.svg';
 import Stat from '@/assets/stat.svg';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
 import { colors, opacity } from '@/constants/theme.js';
+import { formatDate } from '@/helpers';
+import { addDays, addYears } from 'date-fns';
 
 // temporary data
 const usersData = [200, 400, 600, 300, 500, 800, 1000];
@@ -103,7 +103,7 @@ const tagUsageData3 = [2, 3, 3, 2, 3, 1, 1];
 const tagUsageData4 = [3, 1, 2, 3, 1, 2, 2];
 
 export default {
-  name: 'StatsOverviewMemos',
+  name: 'StatsOverviewJumpStarts',
   components: {
     BaseAppBarHeader,
     NavigationBottom,
@@ -115,18 +115,26 @@ export default {
     Calendar,
     Stat
   },
+  created() {
+    this.fetch_stats_overview();
+  },
   computed: {
-    ...mapGetters('memo', ['get_date']),
-    date: {
+    ...mapGetters('email', ['get_stats_overview_date_range']),
+    stats_overview_date_range: {
       get() {
-        return this.get_date;
+        const current = this.get_stats_overview_date_range;
+        if (!current.value.length > 0) {
+          const last7days = this.generateDateRangesAvailable()[0];
+          return last7days;
+        }
+        return current;
       },
       set(value) {
-        this.update_date(value);
+        this.update_stats_overview_date_range(value);
       }
     },
-    dates() {
-      return ['Last 7', 'Last 30', 'all time'];
+    stats_overview_date_ranges_available() {
+      return this.generateDateRangesAvailable();
     },
     usersChartConfig() {
       const datasets = [
@@ -243,8 +251,23 @@ export default {
   },
 
   methods: {
-    ...mapMutations('memo', ['update_date']),
+    ...mapMutations('email', ['update_stats_overview_date_range']),
+    ...mapActions('email', ['fetch_stats_overview']),
 
+    generateDateRangesAvailable() {
+      const format = 'yyyy-MM-dd';
+      const now = new Date();
+      const today = formatDate(now, format);
+      const last7days = formatDate(addDays(now, -7), format);
+      const last30days = formatDate(addDays(now, -30), format);
+      const allTime = formatDate(addYears(now, -50), format);
+
+      return [
+        { id: 1, value: [last7days, today], text: 'Last 7 Days' },
+        { id: 2, value: [last30days, today], text: 'Last 30 Days' },
+        { id: 3, value: [allTime, today], text: 'All Time' }
+      ];
+    },
     getChartConfig({ label, datasets, ticks, showLegend = false }) {
       const config = {
         type: 'line',
