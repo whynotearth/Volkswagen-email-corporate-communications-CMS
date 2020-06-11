@@ -45,12 +45,14 @@
           </div>
         </div>
 
-        <div class="container px-0 md:px-6 text-left mb-6">
+        <div class="container px-4 md:px-6 text-left mb-6">
+          <h2 class="tg-body-emphasis-mobile lg:tg-body-emphasis-desktop mb-4" title="">
+            Tag Usage
+          </h2>
+
           <div>
             <!-- chart -->
-            <!-- <StatsOverview>
-              <template #title><span class="block text-center">Tag Usage</span></template>
-            </StatsOverview> -->
+            <BaseChart :config="tagUsageChartConfig" />
           </div>
         </div>
 
@@ -92,9 +94,13 @@ import { mapGetters, mapMutations, mapActions } from 'vuex';
 import { colors, opacity } from '@/constants/theme.js';
 
 // temporary data
-const usersData = [100, 500, 100, 200, 300, 800, 900];
+const usersData = [200, 400, 600, 300, 500, 800, 1000];
 const opensData = [100, 500, 100, 200, 300, 800, 900];
-const clicksData = [100, 500, 100, 200, 300, 800, 900];
+const clicksData = [500, 400, 200, 800, 600, 900, 1100];
+const tagUsageData1 = [1, 2, 3, 1, 2, 3, 1];
+const tagUsageData2 = [2, 3, 1, 2, 3, 1, 4];
+const tagUsageData3 = [2, 3, 3, 2, 3, 1, 1];
+const tagUsageData4 = [3, 1, 2, 3, 1, 2, 2];
 
 export default {
   name: 'StatsOverviewMemos',
@@ -104,6 +110,7 @@ export default {
     LayoutFixedFooter,
     BaseDropdown,
     StatsOverview,
+    BaseChart,
     BaseButtonPro,
     Calendar,
     Stat
@@ -122,32 +129,128 @@ export default {
       return ['Last 7', 'Last 30', 'all time'];
     },
     usersChartConfig() {
-      return this.getChartConfig({ label: 'Users', data: usersData });
+      const datasets = [
+        {
+          label: 'Users',
+          data: usersData,
+          borderWidth: 2,
+          backgroundColor: 'transparent',
+          borderColor: colors.secondary,
+          fill: false
+        }
+      ];
+      const ticks = {
+        fontColor: `rgba(255,255,255,${opacity['54']})`,
+        fontSize: 12,
+        callback: (value, index, values) => {
+          return datasets[0][index];
+        }
+      };
+      return this.getChartConfig({ datasets, ticks });
     },
     opensChartConfig() {
-      return this.getChartConfig({ label: 'Opens', data: opensData });
+      const datasets = [
+        {
+          label: 'Opens',
+          data: opensData,
+          borderWidth: 2,
+          backgroundColor: 'transparent',
+          borderColor: colors.secondary,
+          fill: false
+        }
+      ];
+      const ticks = {
+        fontColor: `rgba(255,255,255,${opacity['54']})`,
+        fontSize: 12,
+        callback: (value, index, values) => {
+          return datasets[0][index];
+        }
+      };
+      return this.getChartConfig({ datasets, ticks });
     },
     clicksChartConfig() {
-      return this.getChartConfig({ label: 'Clicks', data: clicksData });
+      const datasets = [
+        {
+          label: 'Clicks',
+          data: clicksData,
+          borderWidth: 2,
+          backgroundColor: 'transparent',
+          borderColor: colors.secondary,
+          fill: false
+        }
+      ];
+      const ticks = {
+        fontColor: `rgba(255,255,255,${opacity['54']})`,
+        fontSize: 12,
+        callback: (value, index, values) => {
+          return datasets[0][index];
+        }
+      };
+      return this.getChartConfig({ datasets, ticks });
+    },
+    tagUsageChartConfig() {
+      const datasets = [
+        {
+          label: 'Priority',
+          data: tagUsageData1,
+          borderWidth: 2,
+          backgroundColor: colors.priority,
+          borderColor: colors.priority,
+          fill: false
+        },
+        {
+          label: 'One Team',
+          data: tagUsageData2,
+          borderWidth: 2,
+          backgroundColor: colors.oneteam,
+          borderColor: colors.oneteam,
+          fill: false
+        },
+        {
+          label: 'People',
+          data: tagUsageData3,
+          borderWidth: 2,
+          backgroundColor: colors.people,
+          borderColor: colors.people,
+          fill: false
+        },
+        {
+          label: 'Plant',
+          data: tagUsageData4,
+          borderWidth: 2,
+          backgroundColor: colors.plant,
+          borderColor: colors.plant,
+          fill: false
+        }
+      ];
+      const ticks = {
+        fontColor: `rgba(0,0,0,${opacity['54']})`,
+        fontSize: 12,
+        callback: (value, index, values) => {
+          let result = 0;
+          datasets.forEach(item => {
+            result += item.data[index];
+          });
+          return result;
+        }
+      };
+      return this.getChartConfig({
+        datasets,
+        ticks,
+        showLegend: true
+      });
     }
   },
+
   methods: {
     ...mapMutations('memo', ['update_date']),
-    getChartConfig({ label, data }) {
+
+    getChartConfig({ label, datasets, ticks, showLegend = false }) {
       const config = {
         type: 'line',
         data: {
           labels: ['M', 'T', 'W', 'Th', 'F', 'S', 'Su'],
-          datasets: [
-            {
-              label,
-              data,
-              borderWidth: 2,
-              backgroundColor: 'transparent',
-              borderColor: colors.secondary,
-              fill: false
-            }
-          ]
+          datasets
         },
         options: {
           elements: {
@@ -156,7 +259,8 @@ export default {
             }
           },
           legend: {
-            display: false
+            display: showLegend,
+            align: 'start'
           },
           tooltips: false,
           responsive: true,
@@ -189,13 +293,7 @@ export default {
                   drawBorder: false,
                   display: false
                 },
-                ticks: {
-                  fontColor: `rgba(255,255,255,${opacity['54']})`,
-                  fontSize: 12,
-                  callback: function(value, index, values) {
-                    return data[index];
-                  }
-                }
+                ticks
               }
             ]
           }
