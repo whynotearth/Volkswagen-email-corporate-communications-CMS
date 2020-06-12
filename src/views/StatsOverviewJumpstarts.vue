@@ -13,6 +13,7 @@
             placeholder="Schedule time"
             :options="dateRangesAvailable"
             v-model="stats_overview_date_range"
+            @updateSelectedOption="onUpdateDateRange"
           >
             <template #icon>
               <Calendar class="inline-block align-baseline mr-4 h-5 w-5 -mb-0.5 pointer-events-none" />
@@ -153,6 +154,7 @@ export default {
     },
     usersChartConfig() {
       const data = this.adaptOverviewChartDataset(this.usersStats.users);
+      // const labels = this.adaptChartLabels(this.usersStats.users, this.stats_overview_date_range);
       const datasets = [
         {
           label: 'Users',
@@ -272,9 +274,27 @@ export default {
     ...mapMutations('email', ['update_stats_overview_date_range']),
     ...mapActions('email', ['fetch_stats_overview']),
 
+    onUpdateDateRange(newvalue) {
+      console.log('newvalue', newvalue);
+    },
     adaptOverviewChartDataset(inputData) {
       return inputData.map(item => item.count);
     },
+    // adaptChartLabels(inputData, range) {
+    //   console.log('adaptChartLabels');
+
+    //   let format = 'd';
+    //   if (range.id === '7d_ago') {
+    //     format = 'EEEEEE';
+    //   }
+    //   if (range.id === '30d_ago') {
+    //     format = 'd';
+    //   }
+    //   return inputData.map(item => {
+    //     const date = new Date(item.date);
+    //     return formatDate(date, format);
+    //   });
+    // },
     generateDateRangesAvailable() {
       const format = 'yyyy-MM-dd';
       const now = new Date();
@@ -284,16 +304,16 @@ export default {
       const allTime = formatDate(addYears(now, -50), format);
 
       return [
-        { id: 1, value: [last7days, today], text: 'Last 7 Days' },
-        { id: 2, value: [last30days, today], text: 'Last 30 Days' },
-        { id: 3, value: [allTime, today], text: 'All Time' }
+        { id: '7d_ago', value: [last7days, today], text: 'Last 7 Days' },
+        { id: '30d_ago', value: [last30days, today], text: 'Last 30 Days' },
+        { id: 'all_time', value: [allTime, today], text: 'All Time' }
       ];
     },
-    getChartConfig({ label, datasets, ticks, showLegend = false }) {
+    getChartConfig({ labels, datasets, ticks, showLegend = false }) {
       const config = {
         type: 'line',
         data: {
-          labels: ['M', 'T', 'W', 'Th', 'F', 'S', 'Su'],
+          labels,
           datasets
         },
         options: {

@@ -6,9 +6,13 @@
 
 <script>
 import Chart from 'chart.js';
+import 'chartjs-adapter-date-fns';
 
 export default {
   name: 'BaseChart',
+  data: () => ({
+    instance: {}
+  }),
   props: {
     config: {
       type: Object,
@@ -16,8 +20,15 @@ export default {
     }
   },
   mounted() {
-    var ctx = this.$refs.canvas;
-    var myChart = new Chart(ctx, this.config);
+    const ctx = this.$refs.canvas;
+    this.instance = new Chart(ctx, this.config);
+  },
+  watch: {
+    config(value) {
+      this.instance.data = value.data;
+      this.instance.options = value.options;
+      this.instance.update();
+    }
   }
 };
 </script>
