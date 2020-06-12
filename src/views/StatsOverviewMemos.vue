@@ -35,13 +35,13 @@
         <div class="container px-0 md:px-6 text-left mb-6">
           <!-- chart -->
           <div class="bg-brand-gradient">
-            <StatsOverview
+            <ChartsStatsOverview
               :usersChartConfig="usersChartConfig"
               :opensChartConfig="opensChartConfig"
               :clicksChartConfig="clicksChartConfig"
             >
               <template #title><span class="block text-center">Memo Overview</span></template>
-            </StatsOverview>
+            </ChartsStatsOverview>
           </div>
         </div>
 
@@ -74,7 +74,7 @@ import LayoutFixedFooter from '@/components/LayoutFixedFooter';
 import NavigationBottom from '@/components/BaseNavigationBottom';
 import BaseAppBarHeader from '@/components/BaseAppBarHeader.vue';
 import BaseDropdown from '@/components/BaseDropdown';
-import StatsOverview from '@/components/StatsOverview';
+import ChartsStatsOverview from '@/components/ChartsStatsOverview';
 import BaseChart from '@/components/BaseChart.vue';
 import BaseButtonPro from '@/components/BaseButtonPro';
 import Calendar from '@/assets/calendar.svg';
@@ -94,7 +94,7 @@ export default {
     NavigationBottom,
     LayoutFixedFooter,
     BaseDropdown,
-    StatsOverview,
+    ChartsStatsOverview,
     BaseButtonPro,
     Calendar,
     Stat

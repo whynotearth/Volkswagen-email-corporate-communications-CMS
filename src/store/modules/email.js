@@ -219,21 +219,30 @@ export default {
             count: 50
           }
         ],
-        tags: ['One Team', 'Priority', 'People', 'Plant'],
-        tagStats: [
+        tags: [
           {
             tag: 'People',
-            date: '2020-06-11',
-            count: 3
-          }
-        ],
-        heatMap: [
-          {
-            date: '2020-06-11',
-            hours: [
+            stats: [
               {
-                hour: 0,
-                activity: 0
+                date: '2020-06-12',
+                count: 2
+              },
+              {
+                date: '2020-06-13',
+                count: 3
+              }
+            ]
+          },
+          {
+            tag: 'Priority',
+            stats: [
+              {
+                date: '2020-06-12',
+                count: 2
+              },
+              {
+                date: '2020-06-13',
+                count: 4
               }
             ]
           }

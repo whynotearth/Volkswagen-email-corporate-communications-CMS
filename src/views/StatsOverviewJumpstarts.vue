@@ -13,7 +13,6 @@
             placeholder="Schedule time"
             :options="dateRangesAvailable"
             v-model="stats_overview_date_range"
-            @updateSelectedOption="onUpdateDateRange"
           >
             <template #icon>
               <Calendar class="inline-block align-baseline mr-4 h-5 w-5 -mb-0.5 pointer-events-none" />
@@ -33,16 +32,12 @@
 
         <div class="container px-0 md:px-6 text-left mb-6">
           <div class="bg-brand-gradient">
-            <StatsOverview
-              :usersStats="usersStats"
-              :usersChartConfig="usersChartConfig"
-              :opensStats="opensStats"
-              :opensChartConfig="opensChartConfig"
-              :clicksStats="clicksStats"
-              :clicksChartConfig="clicksChartConfig"
+            <ChartsStatsOverview
+              :stats_overview="get_stats_overview"
+              :stats_overview_date_range="stats_overview_date_range"
             >
               <template #title><span class="block text-center">JumpStart Overview</span></template>
-            </StatsOverview>
+            </ChartsStatsOverview>
           </div>
         </div>
 
@@ -52,7 +47,7 @@
           </h2>
 
           <div>
-            <BaseChart :config="tagUsageChartConfig" />
+            <!-- <ChartTagUsage :config="tagUsageChartConfig" /> -->
           </div>
         </div>
 
@@ -85,8 +80,8 @@ import LayoutFixedFooter from '@/components/LayoutFixedFooter';
 import NavigationBottom from '@/components/BaseNavigationBottom';
 import BaseAppBarHeader from '@/components/BaseAppBarHeader.vue';
 import BaseDropdown from '@/components/BaseDropdown';
-import StatsOverview from '@/components/StatsOverview';
-import BaseChart from '@/components/BaseChart.vue';
+import ChartsStatsOverview from '@/components/ChartsStatsOverview';
+import ChartTagUsage from '@/components/ChartTagUsage.vue';
 import BaseButtonPro from '@/components/BaseButtonPro';
 import Calendar from '@/assets/calendar.svg';
 import Stat from '@/assets/stat.svg';
@@ -95,12 +90,6 @@ import { colors, opacity } from '@/constants/theme.js';
 import { formatDate } from '@/helpers';
 import { addDays, addYears } from 'date-fns';
 
-// temporary data
-const tagUsageData1 = [1, 2, 3, 1, 2, 3, 1];
-const tagUsageData2 = [2, 3, 1, 2, 3, 1, 4];
-const tagUsageData3 = [2, 3, 3, 2, 3, 1, 1];
-const tagUsageData4 = [3, 1, 2, 3, 1, 2, 2];
-
 export default {
   name: 'StatsOverviewJumpStarts',
   components: {
@@ -108,8 +97,8 @@ export default {
     NavigationBottom,
     LayoutFixedFooter,
     BaseDropdown,
-    StatsOverview,
-    BaseChart,
+    ChartsStatsOverview,
+    ChartTagUsage,
     BaseButtonPro,
     Calendar,
     Stat
@@ -133,138 +122,9 @@ export default {
         this.update_stats_overview_date_range(value);
       }
     },
-    usersStats() {
-      const { userCount, userGrowthPercent, users } = this.get_stats_overview;
-      return { userCount, userGrowthPercent, users };
-    },
-    opensStats() {
-      const { openCount, openGrowthPercent, opens } = this.get_stats_overview;
-      return { openCount, openGrowthPercent, opens };
-    },
-    clicksStats() {
-      const { clickCount, clickGrowthPercent, clicks } = this.get_stats_overview;
-      return { clickCount, clickGrowthPercent, clicks };
-    },
+
     dateRangesAvailable() {
       return this.generateDateRangesAvailable();
-    },
-    usersChartConfig() {
-      const data = this.adaptOverviewChartDataset(this.usersStats.users);
-      const datasets = [
-        {
-          data,
-          label: 'Users',
-          borderWidth: 2,
-          backgroundColor: 'transparent',
-          borderColor: colors.secondary,
-          fill: false
-        }
-      ];
-      const ticks = {
-        source: 'data',
-        fontColor: `rgba(255,255,255,${opacity['54']})`,
-        fontSize: 12,
-        callback: (value, index, values) => {
-          return data[index].y;
-        }
-      };
-      return this.getChartConfig({ datasets, ticks });
-    },
-    opensChartConfig() {
-      const data = this.adaptOverviewChartDataset(this.opensStats.opens);
-      const datasets = [
-        {
-          data,
-          label: 'Opens',
-          borderWidth: 2,
-          backgroundColor: 'transparent',
-          borderColor: colors.secondary,
-          fill: false
-        }
-      ];
-      const ticks = {
-        source: 'data',
-        fontColor: `rgba(255,255,255,${opacity['54']})`,
-        fontSize: 12,
-        callback: (value, index, values) => {
-          return data[index].y;
-        }
-      };
-      return this.getChartConfig({ datasets, ticks });
-    },
-    clicksChartConfig() {
-      const data = this.adaptOverviewChartDataset(this.clicksStats.clicks);
-      const datasets = [
-        {
-          data,
-          label: 'Clicks',
-          borderWidth: 2,
-          backgroundColor: 'transparent',
-          borderColor: colors.secondary,
-          fill: false
-        }
-      ];
-      const ticks = {
-        source: 'data',
-        fontColor: `rgba(255,255,255,${opacity['54']})`,
-        fontSize: 12,
-        callback: (value, index, values) => {
-          return data[index].y;
-        }
-      };
-      return this.getChartConfig({ datasets, ticks });
-    },
-    tagUsageChartConfig() {
-      const datasets = [
-        {
-          label: 'Priority',
-          data: tagUsageData1,
-          borderWidth: 2,
-          backgroundColor: colors.priority,
-          borderColor: colors.priority,
-          fill: false
-        },
-        {
-          label: 'One Team',
-          data: tagUsageData2,
-          borderWidth: 2,
-          backgroundColor: colors.oneteam,
-          borderColor: colors.oneteam,
-          fill: false
-        },
-        {
-          label: 'People',
-          data: tagUsageData3,
-          borderWidth: 2,
-          backgroundColor: colors.people,
-          borderColor: colors.people,
-          fill: false
-        },
-        {
-          label: 'Plant',
-          data: tagUsageData4,
-          borderWidth: 2,
-          backgroundColor: colors.plant,
-          borderColor: colors.plant,
-          fill: false
-        }
-      ];
-      const ticks = {
-        fontColor: `rgba(0,0,0,${opacity['54']})`,
-        fontSize: 12,
-        callback: (value, index, values) => {
-          let result = 0;
-          datasets.forEach(item => {
-            result += item.data[index];
-          });
-          return result;
-        }
-      };
-      return this.getChartConfig({
-        datasets,
-        ticks,
-        showLegend: true
-      });
     }
   },
 
@@ -272,12 +132,6 @@ export default {
     ...mapMutations('email', ['update_stats_overview_date_range']),
     ...mapActions('email', ['fetch_stats_overview']),
 
-    onUpdateDateRange(newvalue) {
-      console.log('newvalue', newvalue);
-    },
-    adaptOverviewChartDataset(inputData) {
-      return inputData.map(item => ({ t: item.date, y: item.count }));
-    },
     generateDateRangesAvailable() {
       const format = 'yyyy-MM-dd';
       const now = new Date();
@@ -291,75 +145,6 @@ export default {
         { id: '30d_ago', value: [last30days, today], text: 'Last 30 Days' },
         { id: 'all_time', value: [allTime, today], text: 'All Time' }
       ];
-    },
-    getChartConfig({ datasets, ticks, showLegend = false, range = this.stats_overview_date_range }) {
-      const config = {
-        type: 'line',
-        data: {
-          // labels,
-          datasets
-        },
-        options: {
-          elements: {
-            point: {
-              radius: 0
-            }
-          },
-          legend: {
-            display: showLegend,
-            align: 'start'
-          },
-          tooltips: false,
-          responsive: true,
-          hover: {
-            mode: 'nearest',
-            intersect: true
-          },
-          scales: {
-            yAxes: [
-              {
-                ticks: { min: 0, display: false },
-                gridLines: {
-                  drawBorder: false,
-                  display: false
-                }
-              }
-            ],
-            xAxes: [
-              {
-                type: 'time',
-                position: 'top',
-                gridLines: {
-                  drawBorder: false,
-                  display: false
-                },
-                ticks
-              },
-              {
-                position: 'bottom',
-                ticks: {
-                  source: 'data'
-                },
-                bounds: 'ticks',
-                type: 'time',
-                time: {
-                  unit: 'day',
-                  parser: 'yyyy-MM-dd',
-                  displayFormats: {
-                    day: range.id === '7d_ago' ? 'EEEEEE' : 'MMM d'
-                  }
-                },
-                gridLines: {
-                  drawBorder: false,
-                  lineWidth: 1,
-                  color: colors.divider
-                }
-              }
-            ]
-          }
-        }
-      };
-      return config;
     }
   }
 };
