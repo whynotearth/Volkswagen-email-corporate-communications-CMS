@@ -15,7 +15,7 @@
         <BaseChart :config="usersChartConfig" />
       </BaseTab>
 
-      <!-- <template #Opens>
+      <template #Opens>
         <span class="text-brand-light-blue-gradient tg-h1-mobile">{{ opensStats.openCount }}</span>
         <span class="flex items-center text-error">
           <ArrowDown class="mr-2" /><span>{{ opensStats.openGrowthPercent }}%</span></span
@@ -23,9 +23,9 @@
       </template>
       <BaseTab name="Opens">
         <BaseChart :config="opensChartConfig" />
-      </BaseTab> -->
+      </BaseTab>
 
-      <!-- <template #Clicks>
+      <template #Clicks>
         <span class="text-brand-light-blue-gradient tg-h1-mobile">{{ clicksStats.clickCount }}</span>
         <span class="flex items-center text-community">
           <ArrowUp class="mr-2" /><span>{{ clicksStats.clickGrowthPercent }}%</span></span
@@ -33,7 +33,7 @@
       </template>
       <BaseTab name="Clicks">
         <BaseChart :config="clicksChartConfig" />
-      </BaseTab> -->
+      </BaseTab>
     </BaseTabs>
   </div>
 </template>
@@ -58,12 +58,12 @@ export default {
     usersChartConfig: {
       type: Object
     },
-    // opensChartConfig: {
-    //   type: Object
-    // },
-    // clicksChartConfig: {
-    //   type: Object
-    // },
+    opensChartConfig: {
+      type: Object
+    },
+    clicksChartConfig: {
+      type: Object
+    },
     usersStats: {
       type: Object
     },

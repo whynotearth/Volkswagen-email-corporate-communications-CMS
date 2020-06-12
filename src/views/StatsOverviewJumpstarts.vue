@@ -33,17 +33,20 @@
 
         <div class="container px-0 md:px-6 text-left mb-6">
           <div class="bg-brand-gradient">
-            <!-- :opensChartConfig="opensChartConfig"
-              :clicksChartConfig="clicksChartConfig"
+            <StatsOverview
+              :usersStats="usersStats"
+              :usersChartConfig="usersChartConfig"
               :opensStats="opensStats"
-              :clicksStats="clicksStats" -->
-            <StatsOverview :usersStats="usersStats" :usersChartConfig="usersChartConfig">
+              :opensChartConfig="opensChartConfig"
+              :clicksStats="clicksStats"
+              :clicksChartConfig="clicksChartConfig"
+            >
               <template #title><span class="block text-center">JumpStart Overview</span></template>
             </StatsOverview>
           </div>
         </div>
 
-        <!-- <div class="container px-4 md:px-6 text-left mb-6">
+        <div class="container px-4 md:px-6 text-left mb-6">
           <h2 class="tg-body-emphasis-mobile lg:tg-body-emphasis-desktop mb-4" title="">
             Tag Usage
           </h2>
@@ -51,7 +54,7 @@
           <div>
             <BaseChart :config="tagUsageChartConfig" />
           </div>
-        </div> -->
+        </div>
 
         <div class="container px-4 md:px-6 text-left pb-6">
           <div class="mb-6">
@@ -92,6 +95,12 @@ import { colors, opacity } from '@/constants/theme.js';
 import { formatDate } from '@/helpers';
 import { addDays, addYears } from 'date-fns';
 
+// temporary data
+const tagUsageData1 = [1, 2, 3, 1, 2, 3, 1];
+const tagUsageData2 = [2, 3, 1, 2, 3, 1, 4];
+const tagUsageData3 = [2, 3, 3, 2, 3, 1, 1];
+const tagUsageData4 = [3, 1, 2, 3, 1, 2, 2];
+
 export default {
   name: 'StatsOverviewJumpStarts',
   components: {
@@ -128,6 +137,14 @@ export default {
       const { userCount, userGrowthPercent, users } = this.get_stats_overview;
       return { userCount, userGrowthPercent, users };
     },
+    opensStats() {
+      const { openCount, openGrowthPercent, opens } = this.get_stats_overview;
+      return { openCount, openGrowthPercent, opens };
+    },
+    clicksStats() {
+      const { clickCount, clickGrowthPercent, clicks } = this.get_stats_overview;
+      return { clickCount, clickGrowthPercent, clicks };
+    },
     dateRangesAvailable() {
       return this.generateDateRangesAvailable();
     },
@@ -152,6 +169,102 @@ export default {
         }
       };
       return this.getChartConfig({ datasets, ticks });
+    },
+    opensChartConfig() {
+      const data = this.adaptOverviewChartDataset(this.opensStats.opens);
+      const datasets = [
+        {
+          data,
+          label: 'Opens',
+          borderWidth: 2,
+          backgroundColor: 'transparent',
+          borderColor: colors.secondary,
+          fill: false
+        }
+      ];
+      const ticks = {
+        source: 'data',
+        fontColor: `rgba(255,255,255,${opacity['54']})`,
+        fontSize: 12,
+        callback: (value, index, values) => {
+          return data[index].y;
+        }
+      };
+      return this.getChartConfig({ datasets, ticks });
+    },
+    clicksChartConfig() {
+      const data = this.adaptOverviewChartDataset(this.clicksStats.clicks);
+      const datasets = [
+        {
+          data,
+          label: 'Clicks',
+          borderWidth: 2,
+          backgroundColor: 'transparent',
+          borderColor: colors.secondary,
+          fill: false
+        }
+      ];
+      const ticks = {
+        source: 'data',
+        fontColor: `rgba(255,255,255,${opacity['54']})`,
+        fontSize: 12,
+        callback: (value, index, values) => {
+          return data[index].y;
+        }
+      };
+      return this.getChartConfig({ datasets, ticks });
+    },
+    tagUsageChartConfig() {
+      const datasets = [
+        {
+          label: 'Priority',
+          data: tagUsageData1,
+          borderWidth: 2,
+          backgroundColor: colors.priority,
+          borderColor: colors.priority,
+          fill: false
+        },
+        {
+          label: 'One Team',
+          data: tagUsageData2,
+          borderWidth: 2,
+          backgroundColor: colors.oneteam,
+          borderColor: colors.oneteam,
+          fill: false
+        },
+        {
+          label: 'People',
+          data: tagUsageData3,
+          borderWidth: 2,
+          backgroundColor: colors.people,
+          borderColor: colors.people,
+          fill: false
+        },
+        {
+          label: 'Plant',
+          data: tagUsageData4,
+          borderWidth: 2,
+          backgroundColor: colors.plant,
+          borderColor: colors.plant,
+          fill: false
+        }
+      ];
+      const ticks = {
+        fontColor: `rgba(0,0,0,${opacity['54']})`,
+        fontSize: 12,
+        callback: (value, index, values) => {
+          let result = 0;
+          datasets.forEach(item => {
+            result += item.data[index];
+          });
+          return result;
+        }
+      };
+      return this.getChartConfig({
+        datasets,
+        ticks,
+        showLegend: true
+      });
     }
   },
 
