@@ -154,7 +154,7 @@ export default {
     },
     usersChartConfig() {
       const data = this.adaptOverviewChartDataset(this.usersStats.users);
-      // const labels = this.adaptChartLabels(this.usersStats.users, this.stats_overview_date_range);
+      const labels = this.adaptChartLabels(this.usersStats.users, this.stats_overview_date_range);
       const datasets = [
         {
           label: 'Users',
@@ -169,10 +169,10 @@ export default {
         fontColor: `rgba(255,255,255,${opacity['54']})`,
         fontSize: 12,
         callback: (value, index, values) => {
-          return data[index];
+          return data[index].y;
         }
       };
-      return this.getChartConfig({ datasets, ticks });
+      return this.getChartConfig({ labels, datasets, ticks });
     },
     opensChartConfig() {
       const data = this.adaptOverviewChartDataset(this.opensStats.opens);
@@ -278,23 +278,23 @@ export default {
       console.log('newvalue', newvalue);
     },
     adaptOverviewChartDataset(inputData) {
-      return inputData.map(item => item.count);
+      return inputData.map(item => ({ t: item.date, y: item.count }));
     },
-    // adaptChartLabels(inputData, range) {
-    //   console.log('adaptChartLabels');
+    adaptChartLabels(inputData, range) {
+      console.log('adaptChartLabels', inputData, range);
 
-    //   let format = 'd';
-    //   if (range.id === '7d_ago') {
-    //     format = 'EEEEEE';
-    //   }
-    //   if (range.id === '30d_ago') {
-    //     format = 'd';
-    //   }
-    //   return inputData.map(item => {
-    //     const date = new Date(item.date);
-    //     return formatDate(date, format);
-    //   });
-    // },
+      let format = 'd';
+      if (range.id === '7d_ago') {
+        format = 'EEEEEE';
+      }
+      if (range.id === '30d_ago') {
+        format = 'd';
+      }
+      return inputData.map(item => {
+        const date = new Date(item.date);
+        return formatDate(date, format);
+      });
+    },
     generateDateRangesAvailable() {
       const format = 'yyyy-MM-dd';
       const now = new Date();
@@ -344,6 +344,28 @@ export default {
             ],
             xAxes: [
               {
+                ticks: {
+                  source: 'data'
+                },
+                bounds: 'ticks',
+                type: 'time',
+                time: {
+                  // min: new Date('2020-6-1'),
+                  // max: new Date('2020-7-1'),
+                  unit: 'week',
+                  parser: 'yyyy-MM-dd',
+                  displayFormats: {
+                    millisecond: 'MMM d',
+                    second: 'MMM d',
+                    minute: 'MMM d',
+                    hour: 'MMM d',
+                    day: 'MMM d',
+                    week: 'MMM d yyyy',
+                    month: 'MMM d',
+                    quarter: 'MMM d',
+                    year: 'MMM d'
+                  }
+                },
                 position: 'bottom',
                 gridLines: {
                   drawBorder: false,
