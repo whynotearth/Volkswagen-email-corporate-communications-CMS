@@ -47,7 +47,10 @@
           </h2>
 
           <div>
-            <!-- <ChartTagUsage :config="tagUsageChartConfig" /> -->
+            <ChartTagUsage
+              :stats_overview="get_stats_overview"
+              :stats_overview_date_range="stats_overview_date_range"
+            />
           </div>
         </div>
 

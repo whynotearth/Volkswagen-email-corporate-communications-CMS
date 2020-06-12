@@ -79,7 +79,7 @@ export default {
     },
 
     usersChartConfig() {
-      const data = this.adaptOverviewChartDataset(this.usersStats.users);
+      const data = this.adaptDataset(this.usersStats.users);
       const datasets = [
         {
           data,
@@ -101,7 +101,7 @@ export default {
       return this.getChartConfig({ datasets, ticks });
     },
     opensChartConfig() {
-      const data = this.adaptOverviewChartDataset(this.opensStats.opens);
+      const data = this.adaptDataset(this.opensStats.opens);
       const datasets = [
         {
           data,
@@ -123,7 +123,7 @@ export default {
       return this.getChartConfig({ datasets, ticks });
     },
     clicksChartConfig() {
-      const data = this.adaptOverviewChartDataset(this.clicksStats.clicks);
+      const data = this.adaptDataset(this.clicksStats.clicks);
       const datasets = [
         {
           data,
@@ -147,14 +147,13 @@ export default {
   },
 
   methods: {
-    adaptOverviewChartDataset(inputData) {
+    adaptDataset(inputData) {
       return inputData.map(item => ({ t: item.date, y: item.count }));
     },
     getChartConfig({ datasets, ticks, showLegend = false, range = this.stats_overview_date_range }) {
       const config = {
         type: 'line',
         data: {
-          // labels,
           datasets
         },
         options: {
@@ -185,6 +184,7 @@ export default {
             ],
             xAxes: [
               {
+                // https://www.chartjs.org/docs/latest/axes/cartesian/time.html
                 type: 'time',
                 position: 'top',
                 gridLines: {
@@ -196,7 +196,8 @@ export default {
               {
                 position: 'bottom',
                 ticks: {
-                  source: 'data'
+                  source: 'data',
+                  padding: 8
                 },
                 bounds: 'ticks',
                 type: 'time',

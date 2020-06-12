@@ -245,6 +245,19 @@ export default {
                 count: 4
               }
             ]
+          },
+          {
+            tag: 'Community',
+            stats: [
+              {
+                date: '2020-06-12',
+                count: 1
+              },
+              {
+                date: '2020-06-13',
+                count: 5
+              }
+            ]
           }
         ]
       };

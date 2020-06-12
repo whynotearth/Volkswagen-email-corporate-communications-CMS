@@ -1,70 +1,69 @@
 <template>
-  <BaseChart :config="tagUsageChartConfig" />
+  <BaseChart :config="chartConfig" />
 </template>
 
 <script>
 import { colors, opacity } from '@/constants/theme.js';
+import BaseChart from '@/components/BaseChart';
 
 export default {
   name: 'ChartTagUsage',
-  methods: {
-    tagUsageChartConfig() {
-      const datasets = [
-        {
-          label: 'Priority',
-          // data: tagUsageData1,
+  components: { BaseChart },
+  props: {
+    stats_overview: {
+      type: Object
+    },
+    stats_overview_date_range: {
+      type: Object
+    }
+  },
+  computed: {
+    tags() {
+      return this.stats_overview.tags;
+    },
+    stats() {
+      let result = [];
+      this.stats_overview.tags.forEach(item => {
+        result = [...result, ...item.stats];
+      });
+      return result;
+    },
+    chartConfig() {
+      const datasets = this.tags.map(tagData => {
+        const data = this.adaptDataset(tagData.stats);
+        const tagName = tagData.tag;
+        const tagColor = colors[tagName.toLowerCase()] || 'gray';
+        return {
+          label: tagName,
+          data,
           borderWidth: 2,
-          backgroundColor: colors.priority,
-          borderColor: colors.priority,
+          backgroundColor: tagColor,
+          borderColor: tagColor,
           fill: false
-        },
-        {
-          label: 'One Team',
-          // data: tagUsageData2,
-          borderWidth: 2,
-          backgroundColor: colors.oneteam,
-          borderColor: colors.oneteam,
-          fill: false
-        },
-        {
-          label: 'People',
-          // data: tagUsageData3,
-          borderWidth: 2,
-          backgroundColor: colors.people,
-          borderColor: colors.people,
-          fill: false
-        },
-        {
-          label: 'Plant',
-          // data: tagUsageData4,
-          borderWidth: 2,
-          backgroundColor: colors.plant,
-          borderColor: colors.plant,
-          fill: false
-        }
-      ];
+        };
+      });
       const ticks = {
+        source: 'data',
         fontColor: `rgba(0,0,0,${opacity['54']})`,
         fontSize: 12,
         callback: (value, index, values) => {
-          let result = 0;
-          datasets.forEach(item => {
-            result += item.data[index];
-          });
-          return result;
+          return this.stats
+            .filter(item => item.date === value)
+            .map(item => item.count)
+            .reduce((acc, current) => acc + current, 0);
         }
       };
-      return this.getChartConfig({
-        datasets,
-        ticks,
-        showLegend: true
-      });
+      return this.getChartConfig({ datasets, ticks });
+    }
+  },
+  methods: {
+    adaptDataset(inputData) {
+      return inputData.map(item => ({ t: item.date, y: item.count }));
     },
-    getChartConfig({ datasets, ticks, showLegend = false, range = this.stats_overview_date_range }) {
+    getChartConfig({ datasets, ticks, range = this.stats_overview_date_range }) {
       const config = {
         type: 'line',
         data: {
-          // labels,
           datasets
         },
         options: {
@@ -73,9 +72,14 @@ export default {
               radius: 0
             }
           },
+          // https://www.chartjs.org/docs/latest/configuration/legend.html
           legend: {
-            display: showLegend,
-            align: 'start'
+            display: true,
+            align: 'start',
+            labels: {
+              boxWidth: 16,
+              fontSize: 12
+            }
           },
           tooltips: false,
           responsive: true,
@@ -95,18 +99,27 @@ export default {
             ],
             xAxes: [
               {
+                // https://www.chartjs.org/docs/latest/axes/cartesian/time.html
                 type: 'time',
                 position: 'top',
                 gridLines: {
                   drawBorder: false,
                   display: false
                 },
+                time: {
+                  unit: 'day',
+                  parser: 'yyyy-MM-dd',
+                  displayFormats: {
+                    day: 'yyyy-MM-dd'
+                  }
+                },
                 ticks
               },
               {
                 position: 'bottom',
                 ticks: {
-                  source: 'data'
+                  source: 'data',
+                  padding: 8
                 },
                 bounds: 'ticks',
                 type: 'time',
