@@ -33,6 +33,7 @@
         <div class="container px-0 md:px-6 text-left mb-6">
           <div class="bg-brand-gradient">
             <ChartsStatsOverview
+              v-if="get_stats_overview"
               :stats_overview="get_stats_overview"
               :stats_overview_date_range="stats_overview_date_range"
             >

@@ -7,8 +7,14 @@
     <BaseTabs class="w-full" :tabClasses="'text-right'">
       <template #Users class="text-left">
         <span class="text-brand-light-blue-gradient tg-h1-mobile">{{ usersStats.userCount }}</span>
-        <span class="flex items-center text-community">
-          <ArrowUp class="mr-2" /><span>{{ usersStats.userGrowthPercent }}%</span></span
+        <span
+          class="flex items-center"
+          :class="isGrowthPositive(usersStats.userGrowthPercent) ? 'text-success' : 'text-error'"
+        >
+          <ArrowUp v-if="isGrowthPositive(usersStats.userGrowthPercent)" class="mr-2" /><ArrowDown
+            v-else=""
+            class="mr-2"
+          /><span>{{ usersStats.userGrowthPercent }}%</span></span
         >
       </template>
       <BaseTab name="Users" selected="true">
@@ -17,8 +23,14 @@
 
       <template #Opens>
         <span class="text-brand-light-blue-gradient tg-h1-mobile">{{ opensStats.openCount }}</span>
-        <span class="flex items-center text-error">
-          <ArrowDown class="mr-2" /><span>{{ opensStats.openGrowthPercent }}%</span></span
+        <span
+          class="flex items-center"
+          :class="isGrowthPositive(usersStats.userGrowthPercent) ? 'text-success' : 'text-error'"
+        >
+          <ArrowUp v-if="isGrowthPositive(usersStats.userGrowthPercent)" class="mr-2" /><ArrowDown
+            v-else=""
+            class="mr-2"
+          /><span>{{ opensStats.openGrowthPercent }}%</span></span
         >
       </template>
       <BaseTab name="Opens">
@@ -27,8 +39,14 @@
 
       <template #Clicks>
         <span class="text-brand-light-blue-gradient tg-h1-mobile">{{ clicksStats.clickCount }}</span>
-        <span class="flex items-center text-community">
-          <ArrowUp class="mr-2" /><span>{{ clicksStats.clickGrowthPercent }}%</span></span
+        <span
+          class="flex items-center"
+          :class="isGrowthPositive(usersStats.userGrowthPercent) ? 'text-success' : 'text-error'"
+        >
+          <ArrowUp v-if="isGrowthPositive(usersStats.userGrowthPercent)" class="mr-2" /><ArrowDown
+            v-else=""
+            class="mr-2"
+          /><span>{{ clicksStats.clickGrowthPercent }}%</span></span
         >
       </template>
       <BaseTab name="Clicks">
@@ -151,6 +169,9 @@ export default {
   },
 
   methods: {
+    isGrowthPositive(growthPercent) {
+      return growthPercent >= 0;
+    },
     adaptDataset(inputData) {
       return inputData.map(item => ({ t: item.date, y: item.count }));
     },
