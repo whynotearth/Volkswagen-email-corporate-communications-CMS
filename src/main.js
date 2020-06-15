@@ -7,8 +7,10 @@ import store from './store';
 import './styles/tailwind.css';
 import configureModerator from './store/store-moderator';
 import Vuelidate from 'vuelidate';
+import vClickOutside from 'v-click-outside';
 
 Vue.use(Vuelidate);
+Vue.use(vClickOutside);
 
 Vue.config.productionTip = false;
 

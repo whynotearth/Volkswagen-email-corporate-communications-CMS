@@ -22,6 +22,7 @@
     "qs": "^6.9.4",
     "register-service-worker": "1.6.2",
     "tailwindcss": "1.4.0",
+    "v-click-outside": "3.0.1",
     "validator": "13.0.0",
     "vue": "2.6.11",
     "vue-multiselect": "2.1.6",

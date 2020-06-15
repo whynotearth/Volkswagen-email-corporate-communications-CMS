@@ -7,7 +7,7 @@
           <slot v-if="isVisible" name="content" />
         </transition>
       </div>
-      <div class="fixed bottom-0 w-full"><slot name="footer" /></div>
+      <div class="fixed bottom-0 w-full z-30"><slot name="footer" /></div>
     </div>
   </div>
 </template>
