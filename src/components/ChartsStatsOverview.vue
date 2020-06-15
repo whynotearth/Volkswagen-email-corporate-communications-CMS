@@ -46,6 +46,10 @@ import ArrowDown from '@/assets/arrow-down-red.svg';
 import ArrowUp from '@/assets/arrow-up.svg';
 import { colors, opacity } from '@/constants/theme.js';
 import { formatDate } from '@/helpers';
+import { get } from 'lodash-es';
+
+// eslint-disable-next-line
+const PARSER_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
 
 export default {
   name: 'ChartsStatsOverview',
@@ -95,7 +99,7 @@ export default {
         fontColor: `rgba(255,255,255,${opacity['54']})`,
         fontSize: 12,
         callback: (value, index, values) => {
-          return data[index].y;
+          return get(data, `[${index}].y`, '');
         }
       };
       return this.getChartConfig({ datasets, ticks });
@@ -117,7 +121,7 @@ export default {
         fontColor: `rgba(255,255,255,${opacity['54']})`,
         fontSize: 12,
         callback: (value, index, values) => {
-          return data[index].y;
+          return get(data, `[${index}].y`, '');
         }
       };
       return this.getChartConfig({ datasets, ticks });
@@ -139,7 +143,7 @@ export default {
         fontColor: `rgba(255,255,255,${opacity['54']})`,
         fontSize: 12,
         callback: (value, index, values) => {
-          return data[index].y;
+          return get(data, `[${index}].y`, '');
         }
       };
       return this.getChartConfig({ datasets, ticks });
@@ -203,7 +207,7 @@ export default {
                 type: 'time',
                 time: {
                   unit: 'day',
-                  parser: 'yyyy-MM-dd',
+                  parser: PARSER_FORMAT,
                   displayFormats: {
                     day: range.id === '7d_ago' ? 'EEEEEE' : 'MMM d'
                   }

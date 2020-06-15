@@ -6,6 +6,9 @@
 import { colors, opacity } from '@/constants/theme.js';
 import BaseChart from '@/components/BaseChart';
 
+// eslint-disable-next-line
+const PARSER_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
+
 export default {
   name: 'ChartTagUsage',
   components: { BaseChart },
@@ -108,9 +111,9 @@ export default {
                 },
                 time: {
                   unit: 'day',
-                  parser: 'yyyy-MM-dd',
+                  parser: PARSER_FORMAT,
                   displayFormats: {
-                    day: 'yyyy-MM-dd'
+                    day: PARSER_FORMAT
                   }
                 },
                 ticks
@@ -125,7 +128,7 @@ export default {
                 type: 'time',
                 time: {
                   unit: 'day',
-                  parser: 'yyyy-MM-dd',
+                  parser: PARSER_FORMAT,
                   displayFormats: {
                     day: range.id === '7d_ago' ? 'EEEEEE' : 'MMM d'
                   }

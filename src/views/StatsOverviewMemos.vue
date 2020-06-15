@@ -79,6 +79,9 @@ import { colors, opacity } from '@/constants/theme.js';
 import { formatDate } from '@/helpers';
 import { addDays, addYears } from 'date-fns';
 
+// eslint-disable-next-line
+const PARSER_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
+
 export default {
   name: 'StatsOverviewMemos',
   components: {
@@ -121,7 +124,7 @@ export default {
     ...mapActions('memo', ['fetch_stats_overview']),
 
     generateDateRangesAvailable() {
-      const format = 'yyyy-MM-dd';
+      const format = PARSER_FORMAT;
       const now = new Date();
       const today = formatDate(now, format);
       const last7days = formatDate(addDays(now, -7), format);

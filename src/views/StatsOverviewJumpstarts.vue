@@ -34,6 +34,7 @@
         <div class="container px-0 md:px-6 text-left mb-6">
           <div class="bg-brand-gradient">
             <ChartsStatsOverview
+              v-if="get_stats_overview"
               :stats_overview="get_stats_overview"
               :stats_overview_date_range="stats_overview_date_range"
             >
@@ -49,6 +50,7 @@
 
           <div>
             <ChartTagUsage
+              v-if="get_stats_overview"
               :stats_overview="get_stats_overview"
               :stats_overview_date_range="stats_overview_date_range"
             />
@@ -94,6 +96,9 @@ import { colors, opacity } from '@/constants/theme.js';
 import { formatDate } from '@/helpers';
 import { addDays, addYears } from 'date-fns';
 
+// eslint-disable-next-line
+const PARSER_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
+
 export default {
   name: 'StatsOverviewJumpStarts',
   components: {
@@ -137,7 +142,7 @@ export default {
     ...mapActions('email', ['fetch_stats_overview']),
 
     generateDateRangesAvailable() {
-      const format = 'yyyy-MM-dd';
+      const format = PARSER_FORMAT;
       const now = new Date();
       const today = formatDate(now, format);
       const last7days = formatDate(addDays(now, -7), format);
