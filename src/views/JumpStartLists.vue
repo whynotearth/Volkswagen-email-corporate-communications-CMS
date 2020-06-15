@@ -90,9 +90,9 @@ export default {
       }
       this.update_email_date(plan.dateTime);
       if (plan.jumpStartId) {
-        this.$router.push({ name: 'EditBlueDelta', params: { id: plan.jumpStartId } });
+        this.$router.push({ name: 'JumpStartEdit', params: { id: plan.jumpStartId } });
       } else {
-        this.$router.push({ name: 'AddBlueDelta', params: { date: plan.dateTime } });
+        this.$router.push({ name: 'JumpStartAdd', params: { date: plan.dateTime } });
       }
     }
   }
