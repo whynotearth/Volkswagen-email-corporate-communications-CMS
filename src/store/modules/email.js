@@ -30,6 +30,11 @@ export default {
     daily_plan: [],
     available_articles: [],
     stats: [],
+    stats_overview: null,
+    stats_overview_date_range: {
+      text: '',
+      value: [] // ['2020-06-06', '2020-06-13']
+    },
     stat: {}
   },
   getters: {
@@ -49,6 +54,8 @@ export default {
     get_daily_plan: state => state.daily_plan,
     get_available_articles: state => state.available_articles,
     get_stats: state => state.stats,
+    get_stats_overview: state => state.stats_overview,
+    get_stats_overview_date_range: state => state.stats_overview_date_range,
     get_stat: state => state.stat
   },
   actions: {
@@ -114,6 +121,10 @@ export default {
     async fetch_stat({ commit }, params) {
       const data = await JumpStartService.stats1(params);
       commit('update_stat', data);
+    },
+    async fetch_stats_overview({ commit }) {
+      const data = await NewJumpStartService.stats();
+      commit('update_stats_overview', data);
     }
   },
   mutations: {
@@ -161,6 +172,12 @@ export default {
     },
     update_stat(state, payload) {
       state.stat = payload;
+    },
+    update_stats_overview(state, payload) {
+      state.stats_overview = payload;
+    },
+    update_stats_overview_date_range(state, payload) {
+      state.stats_overview_date_range = payload;
     }
   }
 };
