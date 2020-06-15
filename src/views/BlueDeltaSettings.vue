@@ -4,104 +4,102 @@
       <BaseAppBarHeader title="Blue Delta Settings" :to-link="{ name: 'Settings' }"></BaseAppBarHeader>
     </template>
     <template #content>
-      <div class="relative">
-        <div class="container px-0 md:px-6">
-          <div class="flex justify-between text-left py-6 px-4 mt-2">
-            <div class="">Send email automatically</div>
-            <BaseToggleSwitch :value="enableAutoSend" @toggleSwitch="toggleSwitch" />
-          </div>
-          <hr />
-          <template v-if="enableAutoSend">
-            <div class="text-left py-6 px-4 pb-0">
-              <p class="mb-6">
-                By default, Blue Delta will automatically send each day according to the below details. You can change
-                these manually for each individual Blue Delta
-                <router-link class="text-secondary underline" :to="{ name: 'JumpStartLists' }">here</router-link>.
-              </p>
-            </div>
-
-            <div
-              class="px-4 bg-white pb-0 text-left"
-              :class="[
-                {
-                  'is-query-empty': to_query === '',
-                  'is-filled': !$v.distributionGroups.$invalid,
-                  error: $v.distributionGroups.$error
-                },
-                $v.distributionGroups.$error
-                  ? 'text-red-600 border-red-600 pl-error-message'
-                  : 'text-gray-500 border-gray-600'
-              ]"
-            >
-              <label
-                class="multiselect--material-label absolute"
-                v-if="!$v.distributionGroups.$invalid"
-                for="distributionGroups"
-              >
-                Default Distribution List:
-              </label>
-              <Multiselect
-                id="distributionGroups"
-                v-model="$v.distributionGroups.$model"
-                :placeholder="$v.distributionGroups.$invalid ? 'Distribution List' : ''"
-                :options="get_recipients_available"
-                :multiple="true"
-                :hide-selected="true"
-                :show-labels="false"
-                @search-change="onToSearchChange"
-              >
-                <template v-slot:noResult>Nothing found</template>
-                <template v-slot:noOptions>No options available</template>
-              </Multiselect>
-              <span v-if="$v.distributionGroups.$error" class="text-xs text-error text-left pl-error-message">
-                Distribution Groups is required
-              </span>
-            </div>
-
-            <div class="flex relative my-4">
-              <div class="flex-auto">
-                <BaseDropdown
-                  class="text-left border-t"
-                  placeholder="Schedule time"
-                  :options="time_slots"
-                  v-model="$v.sendTime.$model"
-                >
-                  <template #title="{ selectedOption }">
-                    <span v-if="time_slots.length === 0" class="text-gray-500">
-                      No time slots!
-                    </span>
-                    <span v-else-if="selectedOption">
-                      Schedule
-                      <span class="ml-2 em-medium">
-                        {{ millisecondToTime(selectedOption) }}
-                      </span>
-                    </span>
-                  </template>
-                  <template #option="{ option }">
-                    <span>
-                      {{ millisecondToTime(option) }}
-                    </span>
-                  </template>
-                </BaseDropdown>
-              </div>
-              <p v-if="$v.sendTime.$error" class="text-xs text-error pl-error-message">
-                Please select time.
-              </p>
-            </div>
-            <p v-if="get_response_message.message" class="font-bold px-4 mb-4" :class="get_response_message.class">
-              {{ get_response_message.message }}
-            </p>
-
-            <div class="px-12 max-w-sm mx-auto pt-8">
-              <BaseButton
-                @selectButton="updateSettings"
-                class="block bg-secondary w-full hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline transition duration-100 ease-in-out transition-all label-mobile mb-6"
-              >
-                SAVE
-              </BaseButton>
-            </div>
-          </template>
+      <div class="container px-4 md:px-6 text-left pt-6">
+        <div class="flex justify-between text-left py-6 mt-2">
+          <div class="">Send email automatically</div>
+          <BaseToggleSwitch :value="enableAutoSend" @toggleSwitch="toggleSwitch" />
         </div>
+        <hr />
+        <template v-if="enableAutoSend">
+          <div class="text-left py-6 pb-0">
+            <p class="mb-6">
+              By default, Blue Delta will automatically send each day according to the below details. You can change
+              these manually for each individual Blue Delta
+              <router-link class="text-secondary underline" :to="{ name: 'JumpStartLists' }">here</router-link>.
+            </p>
+          </div>
+
+          <div
+            class="bg-white pb-0 text-left"
+            :class="[
+              {
+                'is-query-empty': to_query === '',
+                'is-filled': !$v.distributionGroups.$invalid,
+                error: $v.distributionGroups.$error
+              },
+              $v.distributionGroups.$error
+                ? 'text-red-600 border-red-600 pl-error-message'
+                : 'text-gray-500 border-gray-600'
+            ]"
+          >
+            <label
+              class="multiselect--material-label absolute"
+              v-if="!$v.distributionGroups.$invalid"
+              for="distributionGroups"
+            >
+              Default Distribution List:
+            </label>
+            <Multiselect
+              id="distributionGroups"
+              v-model="$v.distributionGroups.$model"
+              :placeholder="$v.distributionGroups.$invalid ? 'Distribution List' : ''"
+              :options="get_recipients_available"
+              :multiple="true"
+              :hide-selected="true"
+              :show-labels="false"
+              @search-change="onToSearchChange"
+            >
+              <template v-slot:noResult>Nothing found</template>
+              <template v-slot:noOptions>No options available</template>
+            </Multiselect>
+            <span v-if="$v.distributionGroups.$error" class="text-xs text-error text-left pl-error-message">
+              Distribution Groups is required
+            </span>
+          </div>
+
+          <div class="flex relative my-4">
+            <div class="flex-auto">
+              <BaseDropdown
+                class="text-left border-t"
+                placeholder="Schedule time"
+                :options="time_slots"
+                v-model="$v.sendTime.$model"
+              >
+                <template #title="{ selectedOption }">
+                  <span v-if="time_slots.length === 0" class="text-gray-500">
+                    No time slots!
+                  </span>
+                  <span v-else-if="selectedOption">
+                    Schedule
+                    <span class="ml-2 em-medium">
+                      {{ millisecondToTime(selectedOption) }}
+                    </span>
+                  </span>
+                </template>
+                <template #option="{ option }">
+                  <span>
+                    {{ millisecondToTime(option) }}
+                  </span>
+                </template>
+              </BaseDropdown>
+            </div>
+            <p v-if="$v.sendTime.$error" class="text-xs text-error pl-error-message">
+              Please select time.
+            </p>
+          </div>
+          <p v-if="get_response_message.message" class="font-bold mb-4" :class="get_response_message.class">
+            {{ get_response_message.message }}
+          </p>
+
+          <div class="px-12 max-w-sm mx-auto pt-8">
+            <BaseButton
+              @selectButton="updateSettings"
+              class="block bg-secondary w-full hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline transition duration-100 ease-in-out transition-all label-mobile mb-6"
+            >
+              SAVE
+            </BaseButton>
+          </div>
+        </template>
       </div>
     </template>
 

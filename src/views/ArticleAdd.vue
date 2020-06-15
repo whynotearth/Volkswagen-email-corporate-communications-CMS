@@ -7,47 +7,49 @@
       />
     </template>
     <template #content>
-      <div class="min-h-full relative bg-background">
-        <BaseDropdown
-          class="relative bg-surface text-left container px-0 md:px-6"
-          :optionContainerClasses="'dropdown-top-auto'"
-          :dropdownContainerClasses="'dropdown-border-0'"
-          placeholder="Choose Type"
-          :options="get_categories.filter(category => category.slug !== 'community')"
-          v-model="$v.selected_category.$model"
-        >
-          <template #title="{ selectedOption }">
-            <div v-if="!get_categories.filter(category => category.slug !== 'community')">No option found</div>
-            <div v-if="selectedOption && selectedOption.name" class="flex items-center">
-              <div class="w-12 h-12">
-                <img class="p-2" :src="selectedOption.image" alt="" />
+      <div class="container px-4 md:px-6 text-left pt-6 mb-40">
+        <div class="mb-6">
+          <BaseDropdown
+            class="bg-surface"
+            :optionContainerClasses="'dropdown-top-auto'"
+            :dropdownContainerClasses="'dropdown-border-0'"
+            placeholder="Choose Type"
+            :options="get_categories.filter(category => category.slug !== 'community')"
+            v-model="$v.selected_category.$model"
+          >
+            <template #title="{ selectedOption }">
+              <div v-if="!get_categories.filter(category => category.slug !== 'community')">No option found</div>
+              <div v-if="selectedOption && selectedOption.name" class="flex items-center">
+                <div class="w-12 h-12">
+                  <img class="p-2" :src="selectedOption.image" alt="" />
+                </div>
+                <div class="flex-auto">
+                  <div class="w-full body-1-mobile text-black text-opacity-84">{{ selectedOption.name }}</div>
+                  <div class="w-full text-xs text-black em-disabled">{{ selectedOption.description }}</div>
+                </div>
               </div>
-              <div class="flex-auto">
-                <div class="w-full body-1-mobile">{{ selectedOption.name }}</div>
-                <div class="w-full text-xs text-black em-disabled">{{ selectedOption.description }}</div>
+              <div v-else>
+                No category selected
               </div>
-            </div>
-            <div v-else>
-              No category selected
-            </div>
-          </template>
-          <template #option="{ option }">
-            <a @click.prevent="selected_category = option" href="#" class="flex items-center">
-              <div class="w-12 h-12">
-                <img class="p-2" :src="option.image" alt="" />
-              </div>
-              <div class="flex-auto">
-                <div class="w-full body-1-mobile">{{ option.name }}</div>
-                <div class="w-full text-xs text-black em-disabled">{{ option.description }}</div>
-              </div>
-            </a>
-          </template>
-        </BaseDropdown>
+            </template>
+            <template #option="{ option }">
+              <a @click.prevent="selected_category = option" href="#" class="flex items-center">
+                <div class="w-12 h-12">
+                  <img class="p-2" :src="option.image" alt="" />
+                </div>
+                <div class="flex-auto">
+                  <div class="w-full body-1-mobile text-black text-opacity-84">{{ option.name }}</div>
+                  <div class="w-full text-xs text-black em-disabled">{{ option.description }}</div>
+                </div>
+              </a>
+            </template>
+          </BaseDropdown>
+        </div>
         <div v-if="$v.selected_category.$model && $v.selected_category.$model.name">
           <ArticleAddStep2 ref="articleAdd" :error="validationError" />
           <ArticleAddStep3 ref="articleAdd2" :error="validationError" />
-          <div class="my-6">
-            <BaseButton @selectButton="submit" class="w-64" bgType="secondary"> Save </BaseButton>
+          <div class="my-6 justify-center flex">
+            <BaseButton @selectButton="submit" class="w-64 mx-auto" bgType="secondary"> Save </BaseButton>
           </div>
         </div>
         <div class="mt-4" v-else>Please select category to continue</div>

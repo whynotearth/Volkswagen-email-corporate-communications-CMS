@@ -14,7 +14,7 @@
             v-model="date"
           >
             <template #icon>
-              <Calendar class="inline-block align-baseline mr-4 h-5 w-5 -mb-0.5 pointer-events-none" />
+              <Calendar />
             </template>
             <template #title="{ selectedOption }">
               <span v-if="dates.length === 0" class="text-gray-500">
