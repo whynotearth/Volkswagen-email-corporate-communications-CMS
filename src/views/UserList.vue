@@ -1,7 +1,7 @@
 <template>
   <LayoutFixedFooter>
     <template #header>
-      <BaseAppBarHeader title="Users" :to-link="{ name: 'Settings' }"></BaseAppBarHeader>
+      <BaseAppBarHeader :title="titleHeader" :to-link="{ name: 'Settings' }"></BaseAppBarHeader>
     </template>
     <template #content>
       <div class="container px-0 md:px-6">
@@ -24,7 +24,7 @@
           </BaseButton>
         </div>
 
-        <BaseUserListSort class="mb-6" />
+        <BaseUserList v-if="getEmails.length" class="mb-6" :list="getEmails" />
       </div>
     </template>
     <template #footer>
@@ -38,18 +38,35 @@ import BaseAppBarHeader from '@/components/BaseAppBarHeader.vue';
 import LayoutFixedFooter from '@/components/LayoutFixedFooter';
 import NavigationBottom from '@/components/BaseNavigationBottom';
 import BaseButton from '@/components/BaseButton';
-import BaseUserListSort from '@/components/BaseUserListSort';
+import BaseUserList from '@/components/BaseUserListSort';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
 
 export default {
   name: 'UserList',
-  components: { BaseAppBarHeader, NavigationBottom, LayoutFixedFooter, BaseButton, BaseUserListSort },
+  components: { BaseAppBarHeader, NavigationBottom, LayoutFixedFooter, BaseButton, BaseUserList },
+  computed: {
+    ...mapGetters('distributionGroup', ['selectedEmailList', 'getEmails']),
+    titleHeader() {
+      return (this.selectedEmailList && this.selectedEmailList.distributionGroup) || this.$route.params.groupName || '';
+    }
+  },
+  mounted() {
+    this.getEmailList();
+  },
+  destroyed() {
+    this.updateEmails([]);
+  },
   methods: {
+    ...mapMutations('distributionGroup', ['updateEmails']),
+    getEmailList() {
+      // TODO rename getEmails in store, it's same with getter
+      this.$store.dispatch('distributionGroup/getEmails', this.$route.params.groupName);
+    },
     goToAddUser() {
       this.$router.push({ name: 'EmailListAdd' });
     },
     select() {
-      //
+      // TODO link to edit user, that is other branch
     }
   }
 };
