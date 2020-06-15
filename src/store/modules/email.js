@@ -24,7 +24,9 @@ export default {
     },
     default_distribution_groups: [],
     default_schedule_time: null,
-    selected_plan: {},
+    selected_plan: {
+      articles: []
+    },
     daily_plan: [],
     available_articles: [],
     stats: [],
@@ -56,6 +58,9 @@ export default {
     attach_file({ commit }, payload) {
       console.log('payload', payload);
       return NewJumpStartService.attachment(payload);
+    },
+    delete_article_by_id({ state }, id) {
+      state.available_articles = state.available_articles.filter(item => item.id !== id);
     },
     update_selected_articles({ state }, payload) {
       if (!payload) {

@@ -5,10 +5,11 @@
 </template>
 
 <script>
-import Provider from '../providers/JumpStartDetailProvider.vue';
-import Consumer from '../providers/ActivityFeedDetail.vue';
+import Provider from '../providers/JumpStartDetail.vue';
+import Consumer from '../providers/ActivityDetail.vue';
 
 export default {
+  name: 'JumpStartActivityDetail',
   components: {
     Provider,
     Consumer

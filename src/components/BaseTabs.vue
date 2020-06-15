@@ -9,7 +9,10 @@
             :class="{ 'is-active border-b-2 border-secondary': tab.isActive }"
             :key="index"
           >
-            <a class="block p-4 text-center" :href="tab.href" @click.prevent="selectTab(tab)">{{ tab.name }}</a>
+            <a class="block p-4 text-center" :href="tab.href" @click.prevent="selectTab(tab)">
+              {{ tab.name }}
+              <slot :name="tab.name"></slot>
+            </a>
           </li>
         </ul>
       </div>

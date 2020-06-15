@@ -22,6 +22,7 @@
 </template>
 
 <script>
+import StatsOverview from '@/components/StatsOverview';
 import CloudinaryWidget from '@/components/ImageUpload/CloudinaryWidget';
 import { VueAgile } from 'vue-agile';
 

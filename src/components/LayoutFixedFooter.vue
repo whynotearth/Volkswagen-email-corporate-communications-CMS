@@ -7,7 +7,7 @@
           <slot v-if="isVisible" name="content" />
         </transition>
       </div>
-      <div class="fixed bottom-0 w-full"><slot name="footer" /></div>
+      <div class="fixed bottom-0 w-full z-30"><slot name="footer" /></div>
     </div>
   </div>
 </template>
@@ -27,6 +27,9 @@ export default {
 
 <style scoped>
 .content-section {
-  max-height: calc(100% - 72px);
+  max-height: calc(100% - 60px);
+  @screen md {
+    max-height: calc(100% - 80px);
+  }
 }
 </style>

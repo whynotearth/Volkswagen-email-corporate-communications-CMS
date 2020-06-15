@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import Provider from '../providers/JumpStartProvider.vue';
+import Provider from '../providers/JumpStartList.vue';
 import Consumer from '../providers/ActivityList.vue';
 
 export default {

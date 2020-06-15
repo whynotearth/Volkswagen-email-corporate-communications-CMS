@@ -6,12 +6,12 @@
         <div v-if="toLink" class="flex-shrink-0">
           <router-link class="inline-block align-middle" :to="toLink">
             <img
-              class="lg:w-6 lg:h-6"
+              class="md:w-6 md:h-6"
               src="https://res.cloudinary.com/whynotearth/image/upload/v1587102533/Volkswagen/cms/back_oay5wt.png"
             />
           </router-link>
         </div>
-        <div v-if="title" class="text-primary tg-h2-mobile lg:tg-h2-desktop truncate pl-8">{{ title }}</div>
+        <div v-if="title" class="text-primary tg-h2-mobile md:tg-h2-desktop truncate pl-8 md:pb-2">{{ title }}</div>
       </div>
 
       <!-- end side -->
