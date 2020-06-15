@@ -27,6 +27,9 @@ export default {
 
 <style scoped>
 .content-section {
-  max-height: calc(100% - 72px);
+  max-height: calc(100% - 60px);
+  @screen md {
+    max-height: calc(100% - 80px);
+  }
 }
 </style>
