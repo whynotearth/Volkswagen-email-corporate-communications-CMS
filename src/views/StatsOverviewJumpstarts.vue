@@ -16,7 +16,7 @@
             @updateSelectedOption="fetch_stats_overview"
           >
             <template #icon>
-              <Calendar class="inline-block align-baseline mr-4 h-5 w-5 -mb-0.5 pointer-events-none" />
+              <Calendar />
             </template>
             <template #title="{ selectedOption }">
               <span class="text-black">

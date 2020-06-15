@@ -1,17 +1,27 @@
 <template>
-  <div>
-    test
-  </div>
+  <agile :options="settings">
+    <div class="slide" v-for="(item, index) in items" :key="index">
+      <img class="m-auto" :src="item" />
+    </div>
+  </agile>
 </template>
 
 <script>
-// import BaseButtonPro from '@/components/BaseButtonPro';
-// import Calendar from '@/assets/calendar.svg';
+import { VueAgile } from 'vue-agile';
 
 export default {
-  name: 'DeveloperTesting',
-  // components: { BaseButtonPro },
-  methods: {}
+  name: 'BaseCarouselIndicator',
+  components: { agile: VueAgile },
+  props: {
+    items: {
+      type: Array,
+      required: true
+    },
+    settings: {
+      type: Object,
+      default: () => {}
+    }
+  }
 };
 </script>
 
