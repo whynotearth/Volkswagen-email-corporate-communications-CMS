@@ -18,26 +18,30 @@
       {{ article.headline | truncate }}
     </div>
     <!-- Disabled for MVP -->
-    <!-- <div class="my-auto text-right relative outline-none">
-        <More class="cursor-pointer" @click.stop.prevent="toggleMenu" />
-        <div v-show="menu" class="absolute top-0 right-0 text-left bg-white shadow-8dp rounded-md mr-5 py-2 text-base">
-          <router-link to="/edit" class="block py-2 px-4 leading-5 hover:text-secondary cursor-pointer">
-            Edit
-          </router-link>
-          <router-link to="/delete" class="block py-2 px-4 leading-5 hover:text-error cursor-pointer">
-            Delete
-          </router-link>
+    <div class="my-auto text-right relative outline-none">
+      <More class="cursor-pointer" @click.stop.prevent="toggleMenu" />
+      <div v-show="menu" class="absolute top-0 right-0 text-left bg-white shadow-8dp rounded-md mr-5 py-2 text-base">
+        <router-link
+          :to="{ name: 'ArticleListsItem', params: { id: article.id } }"
+          class="block py-2 px-4 leading-5 hover:text-secondary cursor-pointer"
+        >
+          Edit
+        </router-link>
+        <div class="block py-2 px-4 leading-5 hover:text-secondary cursor-pointer" @click="deleteItem()">
+          Delete
         </div>
-      </div> -->
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-// import More from '@/assets/more.svg';
+import More from '@/assets/more.svg';
+import { mapGetters, mapMutations, mapActions } from 'vuex';
 
 export default {
   name: 'Article',
-  // components: { More },
+  components: { More },
   props: {
     article: {
       type: Object
@@ -53,17 +57,46 @@ export default {
     };
   },
   methods: {
+    ...mapActions('article', ['delete_article']),
     hideMenu() {
       this.menu = false;
     },
     showMenu() {
       this.menu = true;
     },
+
     toggleMenu() {
       if (this.menu) {
         this.hideMenu();
       } else {
         this.showMenu();
+      }
+    },
+    deleteItem() {
+      if (confirm('Are you sure?')) {
+        const data = {
+          articleId: this.article.id
+        };
+
+        this.delete_article(data)
+          .then(() => {
+            this.$emit('removeArticleById', data.articleId);
+            this.hideMenu();
+          })
+          .catch(error => {
+            let message = 'An error occured!';
+            try {
+              message = error.response.data.message;
+            } catch (error) {
+              message = 'Unknown error!';
+            }
+
+            this.update_response_message({
+              message: message,
+              type: 'error',
+              class: 'text-error'
+            });
+          });
       }
     }
   },

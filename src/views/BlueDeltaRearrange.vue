@@ -1,4 +1,7 @@
 <template>
+  <!-- ========================================================================== -->
+  <!-- NOTE: this is old jumpstart! -->
+  <!-- ========================================================================== -->
   <LayoutFixedFooter>
     <template #header>
       <BaseAppBarHeader
@@ -30,6 +33,7 @@
                 :key="index"
                 :article="article"
                 @clicked="selectArticle(article)"
+                @removeArticleById="removeItemFromArticleList"
                 :active="isActive(article)"
               />
             </div>
@@ -90,7 +94,8 @@ export default {
       'create_jumpstart',
       'update_selected_articles',
       'update_available_articles',
-      'clear_email_data'
+      'clear_email_data',
+      'delete_article_by_id'
     ]),
     formatDate,
     formatISODate,
@@ -103,6 +108,9 @@ export default {
     },
     isActive(article) {
       return this.get_selected_articles.indexOf(article);
+    },
+    removeItemFromArticleList(id) {
+      this.delete_article_by_id(id);
     },
     updateBlueDelta() {
       this.$v.$touch();

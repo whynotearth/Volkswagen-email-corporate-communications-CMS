@@ -6,6 +6,7 @@ export default function configureModerator(store, router) {
       case 'auth/logout':
         // return store.commit('booking/resetState');
         store.dispatch('memo/clear_form_data');
+        store.dispatch('article/clear_form_data');
         store.dispatch('authKeep/clear');
     }
     /* eslint-enable */

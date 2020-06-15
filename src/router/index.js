@@ -26,13 +26,15 @@ import UserList from '@/views/UserList';
 import UserListProfile from '../views/UserListProfile';
 import Dashboard from '../views/Dashboard';
 import BlueDeltaMain from '@/views/BlueDeltaMain';
+import JumpStartAdd from '../views/JumpStartAdd';
+import JumpStartEdit from '../views/JumpStartEdit';
 import JumpStartLists from '../views/JumpStartLists';
 import ArticleMain from '../views/ArticleMain';
 import ArticleLists from '../views/ArticleLists';
 import ArticleListsItem from '../views/ArticleListsItem';
 import EditBlueDelta from '../views/EditBlueDelta';
 import BlueDeltaRearrange from '../views/BlueDeltaRearrange';
-// import DeveloperTesting from '../views/DeveloperTesting.vue';
+import DeveloperTesting from '../views/DeveloperTesting.vue';
 import AuthForgotPassword from '../views/AuthForgotPassword';
 import AuthNewPassword from '../views/AuthNewPassword';
 import JumpStartActivityList from '../views/JumpStartActivityList.vue';
@@ -43,11 +45,11 @@ import store from '../store';
 Vue.use(VueRouter);
 
 const routes = [
-  // {
-  //   path: '/test',
-  //   name: 'DeveloperTesting',
-  //   component: DeveloperTesting
-  // },
+  {
+    path: '/test',
+    name: 'DeveloperTesting',
+    component: DeveloperTesting
+  },
   {
     path: '/',
     name: 'Dashboard',
@@ -103,6 +105,16 @@ const routes = [
     name: 'MemoAdd',
     component: MemoAdd,
     props: true
+  },
+  {
+    path: '/jumpstart/add',
+    name: 'JumpStartAdd',
+    component: JumpStartAdd
+  },
+  {
+    path: '/jumpstart/edit',
+    name: 'JumpStartEdit',
+    component: JumpStartEdit
   },
   {
     path: '/blue-delta',

@@ -102,7 +102,9 @@ export default {
   bottom: 8px;
   height: 18px;
 }
-
+.markdown-grey /deep/ .CodeMirror {
+  z-index: 0;
+}
 .markdown-error,
 .markdown-error /deep/ .CodeMirror,
 .markdown-error /deep/ .editor-toolbar {

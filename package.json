@@ -13,7 +13,8 @@
     }
   },
   "dependencies": {
-    "@whynotearth/meredith-axios": "^1.0.26",
+    "@whynotearth/meredith-axios": "^1.0.32",
+    "chart.js": "^2.9.3",
     "core-js": "3.6.4",
     "date-fns": "^2.12.0",
     "lodash-es": "4.17.15",
@@ -21,8 +22,10 @@
     "qs": "^6.9.4",
     "register-service-worker": "1.6.2",
     "tailwindcss": "1.4.0",
+    "v-click-outside": "3.0.1",
     "validator": "13.0.0",
     "vue": "2.6.11",
+    "vue-agile": "1.1.3",
     "vue-multiselect": "2.1.6",
     "vue-router": "3.1.6",
     "vue-simplemde": "^1.0.4",
