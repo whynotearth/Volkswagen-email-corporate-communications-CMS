@@ -7,8 +7,8 @@
       <div class="flex-grow text-left">
         <div class="container px-0 md:px-6 pt-4 px-4 bg-background">
           <BaseDropdown
-            class="relative bg-surface text-left border rounded mb-4 border-gray-600"
-            :dropdownContainerClasses="'dropdown-border-0 py-3 px-3'"
+            class="relative bg-surface text-left rounded mb-4 border-gray-600"
+            :dropdownContainerClasses="'py-3 px-3'"
             :optionContainerClasses="'mt-0 pt-0'"
             placeholder="Schedule time"
             :options="dates"
@@ -31,9 +31,9 @@
           </BaseDropdown>
           <template v-if="get_email_date">
             <BaseDropdown
-              class="relative bg-surface text-left border rounded mb-4 border-gray-600"
+              class="relative bg-surface text-left rounded mb-4 border-gray-600"
               :options="time_slots"
-              :dropdownContainerClasses="'dropdown-border-0 py-3 px-3'"
+              :dropdownContainerClasses="'py-3 px-3'"
               :optionContainerClasses="'mt-0 pt-0'"
               v-model="$v.time.$model"
             >
