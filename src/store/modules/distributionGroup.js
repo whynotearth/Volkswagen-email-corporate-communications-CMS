@@ -8,7 +8,13 @@ export default {
     selectedEmailList: {},
     emails: [],
     selectedEmail: {},
-    email: ''
+    email: '',
+    user_form_data: {
+      first_name: '',
+      last_name: '',
+      email: '',
+      segments: ''
+    }
   },
   mutations: {
     updateEmailLists(state, payload) {
@@ -25,6 +31,18 @@ export default {
     },
     updateEmail(state, payload) {
       state.email = payload;
+    },
+    updateFormFirstName(state, payload) {
+      Vue.set(state.user_form_data, 'first_name', payload);
+    },
+    updateFormLastName(state, payload) {
+      Vue.set(state.user_form_data, 'last_name', payload);
+    },
+    updateFormEmail(state, payload) {
+      Vue.set(state.user_form_data, 'email', payload);
+    },
+    updateFormSegments(state, payload) {
+      Vue.set(state.user_form_data, 'segments', payload);
     }
   },
   actions: {
@@ -132,6 +150,10 @@ export default {
     },
     email: state => {
       return state.email;
-    }
+    },
+    get_form_first_name: state => state.user_form_data.first_name,
+    get_form_last_name: state => state.user_form_data.last_name,
+    get_form_email: state => state.user_form_data.email,
+    get_form_segments: state => state.user_form_data.segments
   }
 };
