@@ -1,34 +1,34 @@
 <template>
-  <div>
+  <div class="mb-4 relative text-black text-opacity-84" v-click-outside="hideDropdown">
     <div
-      @click="showDropdown = !showDropdown"
-      class="flex flex-grow items-strech p-5 cursor-pointer rounded-lg shadow-1dp select-none"
-      :class="dropdownContainerClasses"
+      @click="toggleDropdown"
+      class="w-full mb-2 rounded shadow-1dp cursor-pointer flex items-center"
+      :class="[background, tight ? 'py-3 px-4 rounded' : 'p-5 rounded-lg']"
     >
-      <slot name="icon"></slot>
-      <span class="truncate" :class="selectedOption ? '' : 'text-gray-500'">
+      <div class="mr-4 h-5 w-5 pointer-events-none" v-if="$slots.icon">
+        <slot name="icon" />
+      </div>
+      <span class="inline-block flex-grow truncate text-black text-opacity-84">
         <slot name="title" :selectedOption="selectedOption">
           {{ selectedOption || placeholder }}
         </slot>
       </span>
-      <div class="flex flex-grow items-center justify-end">
-        <Down
-          class="transform inline-block pointer-events-none scale-x-1 text-gray"
-          :class="{ 'rotate-180': showDropdown }"
-        />
-      </div>
+      <IconDown
+        class="float-right pointer-events-none text-black flex-shrink-0 w-4 ml-4"
+        :class="{ 'transform rotate-180': dropdown }"
+      />
     </div>
     <div
-      v-if="showDropdown"
-      class="dropdown absolute right-0 left-0 bg-white mt-1 mx-2 md:mx-4 py-2 rounded-lg shadow-8dp overflow-x-hidden overflow-y-auto z-10"
-      :class="optionContainerClasses"
+      v-if="dropdown"
+      class="dropdown absolute right-0 left-0 z-20 narrow-scrollbars w-48 w-full shadow-8dp overflow-x-hidden overflow-y-auto"
+      :class="[background, tight ? 'rounded' : 'rounded-lg']"
     >
       <div
-        class="option p-4 first:rounded-t-lg last:rounded-b-lg cursor-pointer"
-        :class="{ active: selectedOption === option }"
         v-for="(option, index) in options"
         :key="index"
-        @click="updateDay(option)"
+        @click="updateValue(option)"
+        class="hover:bg-footer cursor-pointer"
+        :class="tight ? 'p-4 first:rounded-t last:rounded-b' : 'p-5 first:rounded-t-lg last:rounded-b-lg'"
       >
         <slot name="option" :option="option">{{ option }}</slot>
       </div>
@@ -37,15 +37,20 @@
 </template>
 
 <script>
-import Down from '@/assets/down.svg';
+import IconDown from '@/assets/down.svg';
+
 export default {
-  name: 'BaseDropdown',
-  components: { Down },
+  name: 'Dropdown',
+  components: { IconDown },
   model: {
     prop: 'selectedOption',
     event: 'updateSelectedOption'
   },
   props: {
+    icon: {
+      type: String,
+      default: null
+    },
     selectedOption: {
       type: [String, Date, Number, Object]
     },
@@ -59,24 +64,37 @@ export default {
       type: String,
       default: 'Select an option'
     },
-    optionContainerClasses: {
+    background: {
       type: String,
-      default: ''
+      default: 'bg-surface'
     },
-    dropdownContainerClasses: {
-      type: String,
-      default: ''
+    tight: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
     return {
-      showDropdown: false
+      dropdown: false
     };
   },
   methods: {
-    updateDay(option) {
+    hideDropdown() {
+      this.dropdown = false;
+    },
+    showDropdown() {
+      this.dropdown = true;
+    },
+    toggleDropdown() {
+      if (this.dropdown) {
+        this.hideDropdown();
+      } else {
+        this.showDropdown();
+      }
+    },
+    updateValue(option) {
       this.$emit('updateSelectedOption', option);
-      this.showDropdown = false;
+      this.hideDropdown();
     }
   }
 };
@@ -84,33 +102,6 @@ export default {
 
 <style scoped>
 .dropdown {
-  max-height: 15rem;
-}
-.rotate-180 {
-  transform: rotate(180deg);
-}
-.dropdown::-webkit-scrollbar {
-  width: 3px;
-  padding: 2px 0;
-}
-.dropdown::-webkit-scrollbar-track {
-  background: #ddd;
-  box-shadow: none;
-}
-.dropdown::-webkit-scrollbar-thumb {
-  background: #666;
-  outline: transparent;
-}
-.option:hover,
-.active {
-  background: rgba(3, 179, 249, 0.12);
-}
-
-.dropdown-top-auto {
-  @apply top-auto !important;
-}
-
-.dropdown-border-0 {
-  @apply border-b-0 !important;
+  max-height: 13rem;
 }
 </style>

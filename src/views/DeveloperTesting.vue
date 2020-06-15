@@ -4,11 +4,10 @@
 
     <br />
     <CloudinaryWidget
-      @uploaded="onUpload"
+      @uploaded="onUploaded"
       :uploaderOptions="{
         maxFiles: 1,
-        maxImageWidth: 256,
-        maxImageHeight: 256
+        clientAllowedFormats: ['pdf']
       }"
     >
       <button>upload widget</button>
@@ -311,16 +310,6 @@ export default {
     };
   },
   methods: {
-    generateData(count) {
-      var i = 0;
-      var series = [];
-      while (i < count) {
-        series.push([i * 1000 * 60 * 60, Math.floor(Math.random() * 50)]);
-        i++;
-      }
-      console.log(series);
-      return series;
-    },
     onUpload(result) {
       console.log(result);
     }
