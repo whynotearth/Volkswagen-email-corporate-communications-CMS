@@ -41,15 +41,7 @@ export default {
           },
           selection: {
             enabled: false
-          },
-          locales: [
-            {
-              name: 'en',
-              options: {
-                shortDays: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-              }
-            }
-          ]
+          }
         },
         dataLabels: {
           enabled: false
@@ -64,8 +56,6 @@ export default {
         },
         xaxis: {
           type: 'datetime',
-          // min: 1591574400000,
-          // max: 1592092800000,
           crosshairs: {
             show: false
           },
@@ -73,8 +63,8 @@ export default {
             rotate: 0,
             format: 'ddd',
             hideOverlappingLabels: false,
-            showDuplicates: true,
-            trim: true,
+            offsetX: -16,
+            offsetY: 0,
             style: {
               color: '#757575',
               fontFamily: 'VWText-Regular'
@@ -88,7 +78,13 @@ export default {
           }
         },
         yaxis: {
-          opposite: true
+          opposite: true,
+          labels: {
+            style: {
+              color: '#757575',
+              fontFamily: 'VWText-Regular'
+            }
+          }
         },
         tooltip: {
           enabled: false
@@ -162,41 +158,32 @@ export default {
             radius: 0
           },
           formatter: function(label, opts) {
-            console.log(label);
-            console.log(opts);
-            //return seriesName;
             return opts.w.config.plotOptions.heatmap.colorScale.ranges[opts.seriesIndex].to;
           }
-          //          markers:{
-          //            customHTML: function() {
-          //              console.log('<span class="custom-marker"><i class="fas fa-chart-pie"></i></span>');
-          //              return '<span class="custom-marker"><i class="fas fa-chart-pie"></i></span>'
-          //            }
-          //          }
         }
       },
       series: [
         {
           name: '10pm',
           data: [
-            [1591660800000, 10],
-            [1591660800000, 10],
-            [1591747200000, 50],
-            [1591833600000, 0],
-            [1591920000000, 0],
-            [1592006400000, 50],
-            [1592092800000, 75]
+            [1591488000000, 10], // new Date('2020-06-07').getTime()
+            [1591574400000, 0], // new Date('2020-06-08').getTime()
+            [1591660800000, 50], // new Date('2020-06-09').getTime()
+            [1591833600000, 10], // new Date('2020-06-10').getTime()
+            [1591920000000, 0], // new Date('2020-06-11').getTime()
+            [1592006400000, 50], // new Date('2020-06-12').getTime()
+            [1592092800000, 75] // new Date('2020-06-13').getTime()
           ]
         },
         {
           name: '8pm',
           data: [
-            [1591574000000, 0],
+            [1591488000000, 10],
             [1591660800000, 10],
             [1591747200000, 50],
-            [1591833600000, 0],
-            [1591920000000, 0],
-            [1592006400000, 50],
+            [1591833600000, 70],
+            [1591920000000, 10],
+            [1592006400000, 0],
             [1592092800000, 75]
           ]
         },
@@ -346,15 +333,17 @@ export default {
   position: relative;
   margin: 6px 0px !important;
 }
-
 .apexcharts-legend-text {
-  position: absolute;
+  position: absolute !important;
   top: 14px;
   right: 3px;
 }
-
+.apexcharts-legend-marker {
+  margin-right: 4px;
+}
 .apexcharts-legend {
-  padding: 10px;
-  flex-wrap: unset;
+  overflow: hidden !important;
+  padding: 10px !important;
+  flex-wrap: unset !important;
 }
 </style>
