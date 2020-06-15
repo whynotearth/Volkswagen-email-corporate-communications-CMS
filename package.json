@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@whynotearth/meredith-axios": "^1.0.26",
+    "apexcharts": "^3.19.2",
     "chart.js": "2.9.3",
     "core-js": "3.6.4",
     "date-fns": "^2.12.0",
@@ -24,6 +25,7 @@
     "tailwindcss": "1.4.0",
     "validator": "13.0.0",
     "vue": "2.6.11",
+    "vue-apexcharts": "^1.5.3",
     "vue-multiselect": "2.1.6",
     "vue-router": "3.1.6",
     "vue-simplemde": "^1.0.4",
