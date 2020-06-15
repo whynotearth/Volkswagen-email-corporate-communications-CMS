@@ -5,6 +5,7 @@
     </template>
     <template #content>
       <div class="flex-grow text-left">
+        {{ get_email_date }}
         <div class="container px-0 md:px-6 pt-4 px-4 bg-background">
           <BaseDropdown
             class="relative bg-surface text-left border rounded mb-4 border-gray-600"
@@ -374,16 +375,18 @@ export default {
       this.pdfFileInfo = result;
     },
     submit() {
-      if (!this.pdfFileInfo.url) {
-        alert('No pdf attached.');
-        return;
-      }
+      // if (!this.pdfFileInfo.url) {
+      //   alert('No pdf attached.');
+      //   return;
+      // }
       const emailDateTimestamp = new Date(this.get_email_date).getTime();
-      const total_time = new Date(emailDateTimestamp + this.get_schedule_time).toISOString();
+      const finalTime = new Date(emailDateTimestamp + this.get_schedule_time).toISOString();
+      console.log('finalTime', finalTime);
       const params = {
         body: {
           pdfUrl: this.pdfFileInfo.url,
-          dateTime: total_time,
+          // FIXME:
+          dateTime: new Date(1592239843269).toISOString(),
           distributionGroups: this.get_email_recipients,
           subject: this.get_subject,
           body: this.get_description,
