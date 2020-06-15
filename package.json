@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@whynotearth/meredith-axios": "^1.0.32",
+    "chart.js": "^2.9.3",
     "core-js": "3.6.4",
     "date-fns": "^2.12.0",
     "lodash-es": "4.17.15",
