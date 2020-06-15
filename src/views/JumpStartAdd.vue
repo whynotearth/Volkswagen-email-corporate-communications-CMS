@@ -347,7 +347,7 @@ export default {
       'update_tags'
     ]),
     ...mapActions('recipient', ['fetch_recipients']),
-    ...mapActions('email', ['create_jumpstart', 'update_preview_link', 'clear_email_data']),
+    ...mapActions('email', ['create_jumpstart', 'update_preview_link', 'clear_email_data', 'attach_file']),
     formatDate,
     onToSearchChange(query) {
       this.to_query = query;
@@ -374,7 +374,8 @@ export default {
       this.pdfFileInfo = result;
     },
     submit() {
-      const total_time = new Date(this.get_email_date + this.get_schedule_time).toISOString();
+      const emailDateTimestamp = new Date(this.get_email_date).getTime();
+      const total_time = new Date(emailDateTimestamp + this.get_schedule_time).toISOString();
       const params = {
         body: {
           dateTime: total_time,
@@ -386,13 +387,13 @@ export default {
       };
       const attachmentData = {
         body: {
-          files: this.pdfFileInfo.url
+          file: this.pdfFileInfo.url
         },
         date: total_time
       };
       this.create_jumpstart(params)
         .then(() => {
-          this.attachment(attachmentData)
+          this.attach_file(attachmentData)
             .then(() => {
               this.clear_email_data();
               this.onSuccessSubmit();
@@ -407,7 +408,7 @@ export default {
         })
         .catch(error => {
           this.update_response_message({
-            message: error.response.data.message,
+            message: error.response && error.response.data && error.response.data.message,
             type: 'error',
             class: 'text-error'
           });

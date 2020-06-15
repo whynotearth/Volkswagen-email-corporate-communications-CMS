@@ -1,4 +1,4 @@
-import { JumpStartService } from '@whynotearth/meredith-axios';
+import { JumpStartService, NewJumpStartService } from '@whynotearth/meredith-axios';
 import qs from 'qs';
 import { debounce } from 'lodash-es';
 import store from '@/store';
@@ -50,11 +50,12 @@ export default {
     get_stat: state => state.stat
   },
   actions: {
-    async create_jumpstart({ commit }, payload) {
-      await JumpStartService.jumpstart(payload);
+    create_jumpstart({ commit }, payload) {
+      return NewJumpStartService.newjumpstart(payload);
     },
-    async attachment({ commit }, payload) {
-      await JumpStartService.attachment(payload);
+    attach_file({ commit }, payload) {
+      console.log('payload', payload);
+      return NewJumpStartService.attachment(payload);
     },
     update_selected_articles({ state }, payload) {
       if (!payload) {

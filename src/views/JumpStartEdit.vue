@@ -1,4 +1,7 @@
 <template>
+  <!-- ========================================================================== -->
+  <!-- NOTE: this is old jumpstart! -->
+  <!-- ========================================================================== -->
   <LayoutFixedFooter>
     <template #header>
       <BaseAppBarHeader title="Edit Jumpstart" :to-link="{ name: 'JumpStartLists' }" />
