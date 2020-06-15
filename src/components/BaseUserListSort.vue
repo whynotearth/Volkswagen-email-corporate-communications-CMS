@@ -4,9 +4,12 @@
       <span class="tg-caption-mobile pl-6 text-black em-medium">{{ user.group }}</span>
       <BaseUserItem v-for="(item, index2) in user.children" :key="index2" :item="item">
         <template #more>
-          <a class="relative" href="#">
+          <router-link
+            class="relative"
+            :to="{ name: 'UserListProfile', params: { groupName: $route.params.groupName, id: item.id } }"
+          >
             <More class="cursor-pointer" />
-          </a>
+          </router-link>
         </template>
       </BaseUserItem>
     </div>
@@ -36,12 +39,14 @@ export default {
   },
   methods: {
     sortingByGroupLetter() {
-      this.list.sort((a, b) =>
-        a.firstName.trim() > b.firstName.trim() ? 1 : b.firstName.trim() > a.firstName.trim() ? -1 : 0
-      );
+      this.list.sort((a, b) => {
+        const x = a.firstName === null ? '' : '' + a.firstName;
+        const y = b.firstName === null ? '' : '' + b.firstName;
+        return x > y ? 1 : x === y ? 0 : -1;
+      });
       let data = this.list.reduce((stash, current) => {
         // get first letter of name of current element
-        let group = current.firstName[0];
+        let group = current.firstName ? current.firstName[0] : 'No Name';
         if (!stash[group]) {
           stash[group] = { group, children: [current] };
         } else {

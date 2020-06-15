@@ -28,7 +28,7 @@ export default {
   },
   computed: {
     fullName() {
-      return `${this.item.firstName} ${this.item.lastName}`;
+      return `${this.item.firstName || '-'} ${this.item.lastName || ''}`;
     }
   }
 };
