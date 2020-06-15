@@ -13,6 +13,7 @@
             placeholder="Schedule time"
             :options="dateRangesAvailable"
             v-model="stats_overview_date_range"
+            @updateSelectedOption="fetch_stats_overview"
           >
             <template #icon>
               <Calendar class="inline-block align-baseline mr-4 h-5 w-5 -mb-0.5 pointer-events-none" />

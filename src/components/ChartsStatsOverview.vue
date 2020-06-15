@@ -211,7 +211,7 @@ export default {
                 gridLines: {
                   drawBorder: false,
                   lineWidth: 1,
-                  color: colors.divider
+                  color: `rgba(255,255,255,${opacity['12']})`
                 }
               }
             ]
