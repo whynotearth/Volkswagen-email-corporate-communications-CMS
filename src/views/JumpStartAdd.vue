@@ -347,7 +347,7 @@ export default {
       'update_tags'
     ]),
     ...mapActions('recipient', ['fetch_recipients']),
-    ...mapActions('email', ['create_jumpstart', 'update_preview_link', 'clear_email_data', 'attach_file']),
+    ...mapActions('email', ['create_jumpstart', 'update_preview_link', 'clear_email_data']),
     formatDate,
     onToSearchChange(query) {
       this.to_query = query;
@@ -374,10 +374,15 @@ export default {
       this.pdfFileInfo = result;
     },
     submit() {
+      if (!this.pdfFileInfo.url) {
+        alert('No pdf attached.');
+        return;
+      }
       const emailDateTimestamp = new Date(this.get_email_date).getTime();
       const total_time = new Date(emailDateTimestamp + this.get_schedule_time).toISOString();
       const params = {
         body: {
+          pdfUrl: this.pdfFileInfo.url,
           dateTime: total_time,
           distributionGroups: this.get_email_recipients,
           subject: this.get_subject,
@@ -385,26 +390,9 @@ export default {
           tags: this.get_tags
         }
       };
-      const attachmentData = {
-        body: {
-          file: this.pdfFileInfo.url
-        },
-        date: total_time
-      };
       this.create_jumpstart(params)
         .then(() => {
-          this.attach_file(attachmentData)
-            .then(() => {
-              this.clear_email_data();
-              this.onSuccessSubmit();
-            })
-            .catch(error => {
-              this.update_response_message({
-                message: error.response.data.message,
-                type: 'error',
-                class: 'text-error'
-              });
-            });
+          this.onSuccessSubmit();
         })
         .catch(error => {
           this.update_response_message({
