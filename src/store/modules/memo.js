@@ -27,6 +27,11 @@ export default {
       class: '' // text-error text-success
     },
     stats: [],
+    stats_overview: {},
+    stats_overview_date_range: {
+      text: '',
+      value: [] // ['2020-06-06', '2020-06-13']
+    },
     stat: {}
   },
   mutations: {
@@ -56,6 +61,12 @@ export default {
     },
     update_stat(state, { key, data }) {
       Vue.set(state.stat, key, data);
+    },
+    update_stats_overview(state, payload) {
+      state.stats_overview = payload;
+    },
+    update_stats_overview_date_range(state, payload) {
+      state.stats_overview_date_range = payload;
     }
   },
   actions: {
@@ -72,6 +83,157 @@ export default {
     async fetch_stat(context, payload) {
       const data = await MemoService.stats1(payload);
       context.commit('update_stat', { key: data.memoStat.id, data });
+    },
+    fetch_stats_overview({ commit }) {
+      // const data = await JumpStartService.stats2????????();
+      const data = {
+        userCount: 500,
+        userGrowthPercent: 12,
+        openCount: 400,
+        openGrowthPercent: 20,
+        clickCount: 50,
+        clickGrowthPercent: 15,
+        users: [
+          {
+            date: '2020-06-11',
+            count: 100
+          },
+          {
+            date: '2020-06-12',
+            count: 50
+          },
+          {
+            date: '2020-06-13',
+            count: 20
+          },
+          {
+            date: '2020-06-14',
+            count: 80
+          },
+          {
+            date: '2020-06-15',
+            count: 120
+          },
+          {
+            date: '2020-06-16',
+            count: 150
+          },
+          {
+            date: '2020-06-17',
+            count: 200
+          },
+          {
+            date: '2020-06-18',
+            count: 100
+          },
+          {
+            date: '2020-06-19',
+            count: 50
+          },
+          {
+            date: '2020-06-20',
+            count: 20
+          },
+          {
+            date: '2020-06-21',
+            count: 81
+          },
+          {
+            date: '2020-06-22',
+            count: 120
+          },
+          {
+            date: '2020-06-23',
+            count: 150
+          },
+          {
+            date: '2020-06-24',
+            count: 200
+          },
+          {
+            date: '2020-06-25',
+            count: 100
+          },
+          {
+            date: '2020-06-26',
+            count: 50
+          },
+          {
+            date: '2020-06-27',
+            count: 20
+          },
+          {
+            date: '2020-06-28',
+            count: 80
+          },
+          {
+            date: '2020-06-29',
+            count: 120
+          },
+          {
+            date: '2020-06-30',
+            count: 150
+          },
+          {
+            date: '2020-07-01',
+            count: 201
+          }
+        ],
+        opens: [
+          {
+            date: '2020-06-11',
+            count: 30
+          }
+        ],
+        clicks: [
+          {
+            date: '2020-06-11',
+            count: 50
+          }
+        ],
+        tags: [
+          {
+            tag: 'People',
+            stats: [
+              {
+                date: '2020-06-12',
+                count: 2
+              },
+              {
+                date: '2020-06-13',
+                count: 3
+              }
+            ]
+          },
+          {
+            tag: 'Priority',
+            stats: [
+              {
+                date: '2020-06-12',
+                count: 2
+              },
+              {
+                date: '2020-06-13',
+                count: 4
+              }
+            ]
+          },
+          {
+            tag: 'Community',
+            stats: [
+              {
+                date: '2020-06-12',
+                count: 1
+              },
+              {
+                date: '2020-06-13',
+                count: 5
+              }
+            ]
+          }
+        ]
+      };
+      commit('update_stats_overview', data);
     }
   },
   getters: {
@@ -82,6 +244,8 @@ export default {
     get_recipients: state => state.form_data.recipients,
     get_response_message: state => state.response_message,
     get_stats: state => state.stats,
-    get_stat: state => state.stat
+    get_stat: state => state.stat,
+    get_stats_overview: state => state.stats_overview,
+    get_stats_overview_date_range: state => state.stats_overview_date_range
   }
 };
