@@ -195,7 +195,7 @@ import { mapGetters, mapActions, mapMutations } from 'vuex';
 import { required } from 'vuelidate/lib/validators';
 import { sleep, formatDate } from '@/helpers.js';
 import { mustBeDate } from '@/validations.js';
-import { isToday, parseISO } from 'date-fns';
+import { isToday, parseISO, startOfDay } from 'date-fns';
 
 export default {
   name: 'JumpStartForm',
@@ -378,7 +378,9 @@ export default {
         alert('No pdf attached.');
         return;
       }
-      const finalTime = new Date(this.get_email_date + this.get_schedule_time).toISOString();
+      const _startOfDay = startOfDay(new Date(this.get_email_date));
+      const finalTime = new Date(_startOfDay.getTime() + this.get_schedule_time).toISOString();
+
       const params = {
         body: {
           pdfUrl: this.pdfFileInfo.url,
