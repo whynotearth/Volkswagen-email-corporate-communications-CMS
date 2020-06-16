@@ -27,6 +27,11 @@ export default {
       class: '' // text-error text-success
     },
     stats: [],
+    stats_overview: null,
+    stats_overview_date_range: {
+      text: '',
+      value: [] // ['2020-06-06', '2020-06-13']
+    },
     stat: {}
   },
   mutations: {
@@ -56,6 +61,12 @@ export default {
     },
     update_stat(state, { key, data }) {
       Vue.set(state.stat, key, data);
+    },
+    update_stats_overview(state, payload) {
+      state.stats_overview = payload;
+    },
+    update_stats_overview_date_range(state, payload) {
+      state.stats_overview_date_range = payload;
     }
   },
   actions: {
@@ -72,6 +83,10 @@ export default {
     async fetch_stat(context, payload) {
       const data = await MemoService.stats1(payload);
       context.commit('update_stat', { key: data.memoStat.id, data });
+    },
+    async fetch_stats_overview({ commit }, payload) {
+      const data = await MemoService.overallstats(payload.params);
+      commit('update_stats_overview', data);
     }
   },
   getters: {
@@ -82,6 +97,8 @@ export default {
     get_recipients: state => state.form_data.recipients,
     get_response_message: state => state.response_message,
     get_stats: state => state.stats,
-    get_stat: state => state.stat
+    get_stat: state => state.stat,
+    get_stats_overview: state => state.stats_overview,
+    get_stats_overview_date_range: state => state.stats_overview_date_range
   }
 };

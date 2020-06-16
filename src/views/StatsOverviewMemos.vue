@@ -10,38 +10,35 @@
           <BaseDropdown
             class="relative bg-surface text-left mb-6"
             placeholder="Schedule time"
-            :options="dates"
-            v-model="date"
+            :options="dateRangesAvailable"
+            v-model="stats_overview_date_range"
+            @updateSelectedOption="fetchStatsOverview"
           >
             <template #icon>
               <Calendar class="inline-block align-baseline mr-4 h-5 w-5 -mb-0.5 pointer-events-none" />
             </template>
             <template #title="{ selectedOption }">
-              <span v-if="dates.length === 0" class="text-gray-500">
-                No Option!
-              </span>
-              <span v-else-if="selectedOption" class="text-black">
-                {{ selectedOption }}
+              <span class="text-black">
+                {{ selectedOption.text }}
               </span>
             </template>
             <template #option="{ option }">
               <span>
-                {{ option }}
+                {{ option.text }}
               </span>
             </template>
           </BaseDropdown>
         </div>
 
         <div class="container px-0 md:px-6 text-left mb-6">
-          <!-- chart -->
           <div class="bg-brand-gradient">
-            <StatsOverview
-              :usersChartConfig="usersChartConfig"
-              :opensChartConfig="opensChartConfig"
-              :clicksChartConfig="clicksChartConfig"
+            <ChartsStatsOverview
+              v-if="get_stats_overview"
+              :stats_overview="get_stats_overview"
+              :stats_overview_date_range="stats_overview_date_range"
             >
               <template #title><span class="block text-center">Memo Overview</span></template>
-            </StatsOverview>
+            </ChartsStatsOverview>
           </div>
         </div>
 
@@ -74,18 +71,17 @@ import LayoutFixedFooter from '@/components/LayoutFixedFooter';
 import NavigationBottom from '@/components/BaseNavigationBottom';
 import BaseAppBarHeader from '@/components/BaseAppBarHeader.vue';
 import BaseDropdown from '@/components/BaseDropdown';
-import StatsOverview from '@/components/StatsOverview';
-import BaseChart from '@/components/BaseChart.vue';
+import ChartsStatsOverview from '@/components/ChartsStatsOverview';
 import BaseButtonPro from '@/components/BaseButtonPro';
 import Calendar from '@/assets/calendar.svg';
 import Stat from '@/assets/stat.svg';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
 import { colors, opacity } from '@/constants/theme.js';
+import { formatDate } from '@/helpers';
+import { addDays, addYears, formatISO } from 'date-fns';
 
-// temporary data
-const usersData = [100, 500, 100, 200, 300, 800, 900];
-const opensData = [100, 500, 100, 200, 300, 800, 900];
-const clicksData = [100, 500, 100, 200, 300, 800, 900];
+// eslint-disable-next-line
+const PARSER_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
 
 export default {
   name: 'StatsOverviewMemos',
@@ -94,109 +90,65 @@ export default {
     NavigationBottom,
     LayoutFixedFooter,
     BaseDropdown,
-    StatsOverview,
+    ChartsStatsOverview,
     BaseButtonPro,
     Calendar,
     Stat
   },
+  created() {
+    this.fetchStatsOverview();
+  },
   computed: {
-    ...mapGetters('memo', ['get_date']),
-    date: {
+    ...mapGetters('memo', ['get_stats_overview_date_range', 'get_stats_overview']),
+    stats_overview_date_range: {
       get() {
-        return this.get_date;
+        const current = this.get_stats_overview_date_range;
+        // default value
+        if (!current.value.length > 0) {
+          const last7days = this.dateRangesAvailable[0];
+          return last7days;
+        }
+        return current;
       },
       set(value) {
-        this.update_date(value);
+        this.update_stats_overview_date_range(value);
       }
     },
-    dates() {
-      return ['Last 7', 'Last 30', 'all time'];
-    },
-    usersChartConfig() {
-      return this.getChartConfig({ label: 'Users', data: usersData });
-    },
-    opensChartConfig() {
-      return this.getChartConfig({ label: 'Opens', data: opensData });
-    },
-    clicksChartConfig() {
-      return this.getChartConfig({ label: 'Clicks', data: clicksData });
+
+    dateRangesAvailable() {
+      return this.generateDateRangesAvailable();
     }
   },
-  data: () => ({
-    // TODO: read from store
-    usersData: [100, 500, 100, 200, 300, 800, 900]
-  }),
+
   methods: {
-    ...mapMutations('memo', ['update_date']),
-    getChartConfig({ label, data }) {
-      const config = {
-        type: 'line',
-        data: {
-          labels: ['M', 'T', 'W', 'Th', 'F', 'S', 'Su'],
-          datasets: [
-            {
-              label,
-              data,
-              borderWidth: 2,
-              backgroundColor: 'transparent',
-              borderColor: colors.secondary,
-              fill: false
-            }
-          ]
-        },
-        options: {
-          elements: {
-            point: {
-              radius: 0
-            }
-          },
-          legend: {
-            display: false
-          },
-          tooltips: false,
-          responsive: true,
-          hover: {
-            mode: 'nearest',
-            intersect: true
-          },
-          scales: {
-            yAxes: [
-              {
-                ticks: { min: 0, display: false },
-                gridLines: {
-                  drawBorder: false,
-                  display: false
-                }
-              }
-            ],
-            xAxes: [
-              {
-                position: 'bottom',
-                gridLines: {
-                  drawBorder: false,
-                  lineWidth: 1,
-                  color: colors.divider
-                }
-              },
-              {
-                position: 'top',
-                gridLines: {
-                  drawBorder: false,
-                  display: false
-                },
-                ticks: {
-                  fontColor: `rgba(255,255,255,${opacity['54']})`,
-                  fontSize: 12,
-                  callback: function(value, index, values) {
-                    return data[index];
-                  }
-                }
-              }
-            ]
-          }
+    ...mapMutations('memo', ['update_stats_overview_date_range']),
+    ...mapActions('memo', ['fetch_stats_overview']),
+
+    fetchStatsOverview() {
+      const range = this.stats_overview_date_range.value;
+
+      this.fetch_stats_overview({
+        params: {
+          fromDate: formatISO(new Date(range[0]), { representation: 'date' }),
+          toDate: formatISO(new Date(range[1]), { representation: 'date' })
         }
-      };
-      return config;
+      });
+    },
+
+    generateDateRangesAvailable() {
+      const format = PARSER_FORMAT;
+      const allTimeStartDate = new Date('2020-05-27');
+      const now = new Date();
+      const today = formatDate(now, format);
+      const last7days = formatDate(addDays(now, -7), format);
+      const last30days = formatDate(addDays(now, -30), format);
+      const allTime = formatDate(allTimeStartDate, format);
+
+      return [
+        { id: '7d_ago', value: [last7days, today], text: 'Last 7 Days' },
+        { id: '30d_ago', value: [last30days, today], text: 'Last 30 Days' },
+        { id: 'all_time', value: [allTime, today], text: 'All Time' }
+      ];
     }
   }
 };

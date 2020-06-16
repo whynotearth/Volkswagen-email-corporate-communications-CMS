@@ -6,7 +6,7 @@
     <template #header>
       <BaseAppBarHeader
         class="sticky top-0 bg-white"
-        title="Rearrange Blue Delta "
+        title="Rearrange JumpStart "
         :to-link="id ? { name: 'EditBlueDelta', params: { id: id } } : { name: 'AddBlueDelta', params: { date: date } }"
       ></BaseAppBarHeader>
     </template>
