@@ -189,7 +189,7 @@ import BaseButton from '@/components/BaseButton.vue';
 import BaseDropdown from '@/components/BaseDropdown';
 import PDFUpload from '@/components/PDFUpload';
 import Multiselect from 'vue-multiselect';
-import showdown from 'showdown';
+import marked from 'marked';
 import { mapGetters, mapActions, mapMutations } from 'vuex';
 import { required } from 'vuelidate/lib/validators';
 import { sleep, formatDate } from '@/helpers.js';
@@ -289,8 +289,17 @@ export default {
       }
     },
     descriptionStyling() {
-      const converter = new showdown.Converter();
-      return converter.makeHtml(this.description);
+      marked.setOptions({
+        renderer: new marked.Renderer(),
+        pedantic: false,
+        gfm: true,
+        breaks: false,
+        sanitize: false,
+        smartLists: true,
+        smartypants: false,
+        xhtml: false
+      });
+      return marked(this.description);
     },
     dates() {
       let d = new Date();
@@ -378,6 +387,11 @@ export default {
       this.pdfFileInfo = result;
     },
     submit() {
+      this.$v.$touch();
+      if (this.$v.$invalid) {
+        return false;
+      }
+
       if (!this.pdfFileInfo.url) {
         alert('No pdf attached.');
         return;
