@@ -29,7 +29,7 @@
                 :to="{ name: 'BlueDeltaMain' }"
               >
                 <MemoStatslIcon class="m-auto" />
-                Blue Delta
+                JumpStart
               </router-link>
             </li>
             <li class="text-white inline-block m-2 mb-1 text-xs flex-shrink-0">

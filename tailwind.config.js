@@ -27,6 +27,7 @@ module.exports = {
         background: '#FFFFFF',
         surface: '#FFFFFF',
         error: '#FF5959',
+        success: '#52AE31',
         priority: '#D84E4E',
         events: '#FFBA03',
         plant: '#8894A0',

@@ -117,7 +117,7 @@ const routes = [
     component: JumpStartEdit
   },
   {
-    path: '/blue-delta',
+    path: '/jumpstart',
     name: 'BlueDeltaMain',
     component: BlueDeltaMain
   },
@@ -144,31 +144,31 @@ const routes = [
     props: true
   },
   {
-    path: '/blue-delta/edit/:id',
+    path: '/jumpstart/edit/:id',
     name: 'EditBlueDelta',
     component: EditBlueDelta,
     props: true
   },
   {
-    path: '/blue-delta/add/:date',
+    path: '/jumpstart/add/:date',
     name: 'AddBlueDelta',
     component: EditBlueDelta,
     props: true
   },
   {
-    path: '/blue-delta/rearrange/:id',
+    path: '/jumpstart/rearrange/:id',
     name: 'BlueDeltaRearrange',
     component: BlueDeltaRearrange,
     props: true
   },
   {
-    path: '/blue-delta/rearrange/add/:date',
+    path: '/jumpstart/rearrange/add/:date',
     name: 'AddBlueDeltaRearrange',
     component: BlueDeltaRearrange,
     props: true
   },
   {
-    path: '/blue-delta/list',
+    path: '/jumpstart/list',
     name: 'JumpStartLists',
     component: JumpStartLists
   },
@@ -207,7 +207,7 @@ const routes = [
     component: Settings
   },
   {
-    path: '/settings/blue-delta',
+    path: '/settings/jumpstart',
     name: 'BlueDeltaSettings',
     component: BlueDeltaSettings
   },
