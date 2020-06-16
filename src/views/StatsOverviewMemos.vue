@@ -12,7 +12,7 @@
             placeholder="Schedule time"
             :options="dateRangesAvailable"
             v-model="stats_overview_date_range"
-            @updateSelectedOption="fetch_stats_overview"
+            @updateSelectedOption="fetchStatsOverview"
           >
             <template #icon>
               <Calendar class="inline-block align-baseline mr-4 h-5 w-5 -mb-0.5 pointer-events-none" />
@@ -78,7 +78,7 @@ import Stat from '@/assets/stat.svg';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
 import { colors, opacity } from '@/constants/theme.js';
 import { formatDate } from '@/helpers';
-import { addDays, addYears } from 'date-fns';
+import { addDays, addYears, formatISO } from 'date-fns';
 
 // eslint-disable-next-line
 const PARSER_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
@@ -96,7 +96,7 @@ export default {
     Stat
   },
   created() {
-    this.fetch_stats_overview();
+    this.fetchStatsOverview();
   },
   computed: {
     ...mapGetters('memo', ['get_stats_overview_date_range', 'get_stats_overview']),
@@ -123,6 +123,17 @@ export default {
   methods: {
     ...mapMutations('memo', ['update_stats_overview_date_range']),
     ...mapActions('memo', ['fetch_stats_overview']),
+
+    fetchStatsOverview() {
+      const range = this.stats_overview_date_range.value;
+
+      this.fetch_stats_overview({
+        params: {
+          fromDate: formatISO(new Date(range[0]), { representation: 'date' }),
+          toDate: formatISO(new Date(range[1]), { representation: 'date' })
+        }
+      });
+    },
 
     generateDateRangesAvailable() {
       const format = PARSER_FORMAT;

@@ -113,8 +113,6 @@ export default {
     Stat
   },
   created() {
-    console.log('on created: stats_overview_date_range', this.stats_overview_date_range);
-
     this.fetchStatsOverview();
   },
   computed: {
@@ -124,8 +122,6 @@ export default {
         const current = this.get_stats_overview_date_range;
         // default value
         if (!current.value.length > 0) {
-          console.log('current?');
-
           const last7days = this.dateRangesAvailable[0];
           return last7days;
         }
