@@ -166,9 +166,16 @@
                   break-words flex-grow order-2 md:w-1/3 m-auto"
                 >
                   <PDFUpload class="text-center" @change="updatePdfFiles" :settings-carousel="optionsCarousel" />
+                  <span v-if="error.enabled" class="text-error pl-error-message">
+                    {{ error.message }}
+                  </span>
                 </div>
               </div>
             </div>
+
+            <p v-if="get_response_message.message" class="font-bold py-6 text-left" :class="get_response_message.class">
+              {{ get_response_message.message }}
+            </p>
 
             <div class="my-6 text-center">
               <BaseButton @selectButton="submit" class="w-64" bgType="secondary"> Save </BaseButton>
@@ -337,6 +344,10 @@ export default {
   data() {
     return {
       to_query: '',
+      error: {
+        enabled: false,
+        message: ''
+      },
       pdfFileInfo: {},
       optionsCarousel: {
         dots: true,
@@ -393,7 +404,10 @@ export default {
       }
 
       if (!this.pdfFileInfo.url) {
-        alert('No pdf attached.');
+        this.error = {
+          enabled: true,
+          message: 'PDF file is required'
+        };
         return;
       }
       const _startOfDay = startOfDay(new Date(this.get_email_date));
@@ -477,6 +491,8 @@ export default {
   font-size: 16px;
   font-weight: 400;
   line-height: 20px;
+  white-space: pre-line;
+  word-break: break-word;
 }
 .preview-description p,
 .preview-description blockquote {
@@ -489,6 +505,8 @@ export default {
   margin-bottom: 0;
   padding: 0;
   text-align: left;
+  white-space: pre-line;
+  word-break: break-word;
 }
 .preview-description h1 {
   color: inherit;
