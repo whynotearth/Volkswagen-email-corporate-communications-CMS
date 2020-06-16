@@ -123,8 +123,6 @@ export default {
       commit('update_stat', data);
     },
     async fetch_stats_overview({ commit }, payload) {
-      console.log('payload', payload);
-
       const data = await NewJumpStartService.stats(payload.params);
       commit('update_stats_overview', data);
     }

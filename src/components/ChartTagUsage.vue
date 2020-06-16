@@ -5,7 +5,7 @@
 <script>
 import { colors, opacity } from '@/constants/theme.js';
 import BaseChart from '@/components/BaseChart';
-import { cloneDeep, sortBy } from 'lodash-es';
+import { cloneDeep, sortBy, random } from 'lodash-es';
 const MAX_TAGS_TO_SHOW = 4;
 
 // eslint-disable-next-line
@@ -48,7 +48,7 @@ export default {
       const datasets = this.tags.map(tagData => {
         const data = this.adaptDataset(tagData.stats);
         const tagName = tagData.tag;
-        const tagColor = colors[tagName.toLowerCase()] || 'gray';
+        const tagColor = colors[tagName.toLowerCase()] || this.getRandomColor();
         return {
           label: tagName,
           data,
@@ -73,6 +73,18 @@ export default {
     }
   },
   methods: {
+    getRandomColor() {
+      const colorsList = [
+        colors.priority,
+        colors.community,
+        colors.people,
+        colors.oneteam,
+        colors.answers,
+        colors.plant,
+        colors.events
+      ];
+      return colorsList[random(0, colorsList.length - 1)];
+    },
     adaptDataset(inputData) {
       return inputData.map(item => ({ t: item.date, y: item.count }));
     },
