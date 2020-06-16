@@ -122,8 +122,8 @@ export default {
       const data = await JumpStartService.stats1(params);
       commit('update_stat', data);
     },
-    async fetch_stats_overview({ commit }) {
-      const data = await NewJumpStartService.stats();
+    async fetch_stats_overview({ commit }, payload) {
+      const data = await NewJumpStartService.stats(payload.params);
       commit('update_stats_overview', data);
     }
   },
