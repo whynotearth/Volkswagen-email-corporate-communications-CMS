@@ -8,7 +8,7 @@
     </div>
     <div class="flex-1">
       <div class="w-full tg-body-mobile">{{ fullName }}</div>
-      <div class="w-full text-black em-medium text-xs pt-1 tg-caption-mobile">(510) 123-1234 - {{ item.email }}</div>
+      <div class="w-full text-black em-medium text-xs pt-1 tg-caption-mobile">{{ item.email }}</div>
     </div>
     <slot name="more"></slot>
   </div>
