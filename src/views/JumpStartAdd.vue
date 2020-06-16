@@ -1,5 +1,5 @@
 <template>
-  <LayoutFixedFooter>
+  <LayoutFixedScrollable>
     <template #header>
       <BaseAppBarHeader title="New Jumpstart" :to-link="{ name: 'Dashboard' }" />
     </template>
@@ -184,11 +184,11 @@
         </div>
       </div>
     </template>
-  </LayoutFixedFooter>
+  </LayoutFixedScrollable>
 </template>
 
 <script>
-import LayoutFixedFooter from '@/components/LayoutFixedFooter.vue';
+import LayoutFixedScrollable from '@/components/LayoutFixedScrollable.vue';
 import BaseAppBarHeader from '@/components/BaseAppBarHeader.vue';
 import BaseEditor from '@/components/Editor/BaseEditor.vue';
 import BaseInputText from '@/components/BaseInputText.vue';
@@ -206,7 +206,7 @@ import { isToday, parseISO, startOfDay } from 'date-fns';
 export default {
   name: 'JumpStartForm',
   components: {
-    LayoutFixedFooter,
+    LayoutFixedScrollable,
     BaseAppBarHeader,
     BaseInputText,
     BaseDropdown,
