@@ -5,6 +5,8 @@
 <script>
 import { colors, opacity } from '@/constants/theme.js';
 import BaseChart from '@/components/BaseChart';
+import { cloneDeep, sortBy } from 'lodash-es';
+const MAX_TAGS_TO_SHOW = 4;
 
 // eslint-disable-next-line
 const PARSER_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
@@ -22,7 +24,18 @@ export default {
   },
   computed: {
     tags() {
-      return this.stats_overview.tags;
+      const tags = cloneDeep(this.stats_overview.tags);
+      tags.map(item => {
+        item.totalCount = item.stats.reduce((acc, current) => {
+          return acc + parseInt(current.count);
+        }, 0);
+        return item;
+      });
+
+      const slicedSortedTags = sortBy(tags, 'totalCount')
+        .reverse()
+        .slice(0, MAX_TAGS_TO_SHOW);
+      return slicedSortedTags;
     },
     stats() {
       let result = [];
