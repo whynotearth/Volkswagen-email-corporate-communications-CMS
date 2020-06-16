@@ -137,11 +137,12 @@ export default {
 
     generateDateRangesAvailable() {
       const format = PARSER_FORMAT;
+      const allTimeStartDate = new Date('2020-05-27');
       const now = new Date();
       const today = formatDate(now, format);
       const last7days = formatDate(addDays(now, -7), format);
       const last30days = formatDate(addDays(now, -30), format);
-      const allTime = formatDate(addYears(now, -50), format);
+      const allTime = formatDate(allTimeStartDate, format);
 
       return [
         { id: '7d_ago', value: [last7days, today], text: 'Last 7 Days' },
