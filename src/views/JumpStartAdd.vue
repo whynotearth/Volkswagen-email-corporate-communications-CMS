@@ -80,7 +80,7 @@
                 $v.audience.$error ? 'text-red-600 border-red-600' : 'text-gray-500 border-gray-600'
               ]"
             >
-              <label class="multiselect--material-label absolute z-50" v-if="!$v.audience.$invalid" for="audience"
+              <label class="multiselect--material-label absolute z-30" v-if="!$v.audience.$invalid" for="audience"
                 >Audience:</label
               >
               <Multiselect
@@ -112,7 +112,7 @@
                 $v.tags.$error ? 'text-red-600 border-red-600' : 'text-gray-500 border-gray-600'
               ]"
             >
-              <label class="multiselect--material-label absolute z-50" v-if="!$v.tags.$invalid" for="tags">Tags:</label>
+              <label class="multiselect--material-label absolute z-30" v-if="!$v.tags.$invalid" for="tags">Tags:</label>
               <Multiselect
                 id="tags"
                 v-model="$v.tags.$model"
