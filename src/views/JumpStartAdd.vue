@@ -7,8 +7,8 @@
       <div class="flex-grow text-left">
         <div class="container px-0 md:px-6 pt-4 px-4 bg-background">
           <BaseDropdown
-            class="relative bg-surface text-left border rounded mb-4 border-gray-600"
-            :dropdownContainerClasses="'dropdown-border-0 py-3 px-3'"
+            class="relative bg-surface text-left rounded mb-4 border-gray-600"
+            :dropdownContainerClasses="'py-3 px-3'"
             :optionContainerClasses="'mt-0 pt-0'"
             placeholder="Schedule time"
             :options="dates"
@@ -31,9 +31,9 @@
           </BaseDropdown>
           <template v-if="get_email_date">
             <BaseDropdown
-              class="relative bg-surface text-left border rounded mb-4 border-gray-600"
+              class="relative bg-surface text-left rounded mb-4 border-gray-600"
               :options="time_slots"
-              :dropdownContainerClasses="'dropdown-border-0 py-3 px-3'"
+              :dropdownContainerClasses="'py-3 px-3'"
               :optionContainerClasses="'mt-0 pt-0'"
               v-model="$v.time.$model"
             >
@@ -189,12 +189,12 @@ import BaseButton from '@/components/BaseButton.vue';
 import BaseDropdown from '@/components/BaseDropdown';
 import PDFUpload from '@/components/PDFUpload';
 import Multiselect from 'vue-multiselect';
+import showdown from 'showdown';
 import { mapGetters, mapActions, mapMutations } from 'vuex';
 import { required } from 'vuelidate/lib/validators';
 import { sleep, formatDate } from '@/helpers.js';
 import { mustBeDate } from '@/validations.js';
-import { isToday, parseISO } from 'date-fns';
-import showdown from 'showdown';
+import { isToday, parseISO, startOfDay } from 'date-fns';
 
 export default {
   name: 'JumpStartForm',
@@ -378,40 +378,30 @@ export default {
       this.pdfFileInfo = result;
     },
     submit() {
-      const total_time = new Date(this.get_email_date + this.get_schedule_time).toISOString();
+      if (!this.pdfFileInfo.url) {
+        alert('No pdf attached.');
+        return;
+      }
+      const _startOfDay = startOfDay(new Date(this.get_email_date));
+      const finalTime = new Date(_startOfDay.getTime() + this.get_schedule_time).toISOString();
+
       const params = {
         body: {
-          dateTime: total_time,
+          pdfUrl: this.pdfFileInfo.url,
+          dateTime: finalTime,
           distributionGroups: this.get_email_recipients,
           subject: this.get_subject,
           body: this.get_description,
           tags: this.get_tags
         }
       };
-      const attachmentData = {
-        body: {
-          files: this.pdfFileInfo.url
-        },
-        date: total_time
-      };
       this.create_jumpstart(params)
         .then(() => {
-          this.attachment(attachmentData)
-            .then(() => {
-              this.clear_email_data();
-              this.onSuccessSubmit();
-            })
-            .catch(error => {
-              this.update_response_message({
-                message: error.response.data.message,
-                type: 'error',
-                class: 'text-error'
-              });
-            });
+          this.onSuccessSubmit();
         })
         .catch(error => {
           this.update_response_message({
-            message: error.response.data.message,
+            message: error.response && error.response.data && error.response.data.message,
             type: 'error',
             class: 'text-error'
           });

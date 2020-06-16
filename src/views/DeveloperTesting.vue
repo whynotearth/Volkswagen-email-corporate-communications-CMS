@@ -1,53 +1,17 @@
 <template>
   <div>
     test
-
-    <br />
-    <CloudinaryWidget
-      @uploaded="onUploaded"
-      :uploaderOptions="{
-        maxFiles: 1,
-        clientAllowedFormats: ['pdf']
-      }"
-    >
-      <button>upload widget</button>
-    </CloudinaryWidget>
-
-    <agile v-if="pages.length" class="container" :options="options">
-      <div class="slide" v-for="item in pages" :key="item.page">
-        <img :src="item.url" />
-      </div>
-    </agile>
   </div>
 </template>
 
 <script>
-import CloudinaryWidget from '@/components/ImageUpload/CloudinaryWidget';
-import { VueAgile } from 'vue-agile';
+// import BaseButtonPro from '@/components/BaseButtonPro';
+// import Calendar from '@/assets/calendar.svg';
 
 export default {
   name: 'DeveloperTesting',
-  components: { CloudinaryWidget, agile: VueAgile },
-  data() {
-    return {
-      pages: [],
-      options: {
-        dots: true,
-        navButtons: false
-      }
-    };
-  },
-  methods: {
-    onUploaded(result) {
-      this.file = result.info;
-      for (let i = 1; i <= this.file.pages; i++) {
-        this.pages.push({
-          url: `https://res.cloudinary.com/whynotearth/image/upload/pg_${i}/${this.file.public_id}.jpg`,
-          page: i
-        });
-      }
-    }
-  }
+  // components: { BaseButtonPro },
+  methods: {}
 };
 </script>
 

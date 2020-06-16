@@ -2,15 +2,18 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 // import DeveloperTesting from '../views/DeveloperTesting.vue';
 import ArticleAdd from '../views/ArticleAdd.vue';
-import Stats from '../views/Stats.vue';
 import AuthLogin from '../views/AuthLogin.vue';
 import MemoAdd from '../views/MemoAdd.vue';
 import Settings from '../views/Settings';
 import BlueDeltaSettings from '../views/BlueDeltaSettings';
 import MyAccount from '../views/MyAccount';
 import ChangePassword from '../views/MyAccountChangePassword';
-import ActivityFeedMemoList from '../views/ActivityFeedMemoList.vue';
-import ActivityFeedMemoItem from '../views/ActivityFeedMemoItem.vue';
+import Stats from '../views/Stats.vue';
+import StatsOverviewMemos from '../views/StatsOverviewMemos.vue';
+import StatsOverviewJumpstarts from '../views/StatsOverviewJumpstarts.vue';
+// import StatsOverviewJumpstart from '../views/StatsOverviewJumpstart.vue';
+import MemoListActivity from '../views/MemoListActivity.vue';
+import MemoActivityDetail from '../views/MemoActivityDetail.vue';
 import EmailLists from '../views/EmailLists';
 import EmailList from '../views/EmailList';
 import EmailListAdd from '../views/EmailListAdd';
@@ -32,8 +35,8 @@ import BlueDeltaRearrange from '../views/BlueDeltaRearrange';
 import DeveloperTesting from '../views/DeveloperTesting.vue';
 import AuthForgotPassword from '../views/AuthForgotPassword';
 import AuthNewPassword from '../views/AuthNewPassword';
-import ActivityFeedJumpStartList from '../views/ActivityFeedJumpStartList.vue';
-import ActivityFeedJumpStartItem from '../views/ActivityFeedJumpStartItem.vue';
+import JumpStartActivityList from '../views/JumpStartActivityList.vue';
+import JumpStartActivityDetail from '../views/JumpStartActivityDetail.vue';
 import ArticleCategorySelection from '../views/ArticleCategorySelection.vue';
 import store from '../store';
 
@@ -112,19 +115,24 @@ const routes = [
     component: JumpStartEdit
   },
   {
-    path: '/blue-delta',
+    path: '/jumpstart',
     name: 'BlueDeltaMain',
     component: BlueDeltaMain
   },
   {
-    path: '/activity-feed/memos',
-    name: 'ActivityFeedMemoList',
-    component: ActivityFeedMemoList
+    path: '/stats/memos',
+    name: 'StatsOverviewMemos',
+    component: StatsOverviewMemos
   },
   {
-    path: '/activity-feed/memos/:id',
-    name: 'ActivityFeedMemoItem',
-    component: ActivityFeedMemoItem,
+    path: '/stats/memos/activity',
+    name: 'MemoListActivity',
+    component: MemoListActivity
+  },
+  {
+    path: '/stats/memos/activity/:id',
+    name: 'MemoActivityDetail',
+    component: MemoActivityDetail,
     props: true
   },
   {
@@ -134,31 +142,31 @@ const routes = [
     props: true
   },
   {
-    path: '/blue-delta/edit/:id',
+    path: '/jumpstart/edit/:id',
     name: 'EditBlueDelta',
     component: EditBlueDelta,
     props: true
   },
   {
-    path: '/blue-delta/add/:date',
+    path: '/jumpstart/add/:date',
     name: 'AddBlueDelta',
     component: EditBlueDelta,
     props: true
   },
   {
-    path: '/blue-delta/rearrange/:id',
+    path: '/jumpstart/rearrange/:id',
     name: 'BlueDeltaRearrange',
     component: BlueDeltaRearrange,
     props: true
   },
   {
-    path: '/blue-delta/rearrange/add/:date',
+    path: '/jumpstart/rearrange/add/:date',
     name: 'AddBlueDeltaRearrange',
     component: BlueDeltaRearrange,
     props: true
   },
   {
-    path: '/blue-delta/list',
+    path: '/jumpstart/list',
     name: 'JumpStartLists',
     component: JumpStartLists
   },
@@ -173,14 +181,19 @@ const routes = [
     component: ArticleListsItem
   },
   {
-    path: '/activity-feed/jump-starts',
-    name: 'ActivityFeedJumpStartList',
-    component: ActivityFeedJumpStartList
+    path: '/stats/jumpstarts',
+    name: 'StatsOverviewJumpstarts',
+    component: StatsOverviewJumpstarts
   },
   {
-    path: '/activity-feed/jump-starts/:id',
-    name: 'ActivityFeedJumpStartItem',
-    component: ActivityFeedJumpStartItem,
+    path: '/stats/jumpstarts/activity',
+    name: 'JumpStartActivityList',
+    component: JumpStartActivityList
+  },
+  {
+    path: '/stats/jumpstarts/activity/:id',
+    name: 'JumpStartActivityDetail',
+    component: JumpStartActivityDetail,
     props: true
   },
 
@@ -192,7 +205,7 @@ const routes = [
     component: Settings
   },
   {
-    path: '/settings/blue-delta',
+    path: '/settings/jumpstart',
     name: 'BlueDeltaSettings',
     component: BlueDeltaSettings
   },

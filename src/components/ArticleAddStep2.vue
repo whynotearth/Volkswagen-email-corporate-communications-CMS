@@ -1,78 +1,76 @@
 <template>
   <div class="py-2 flex-grow">
-    <div class="container px-4 md:px-6 text-left">
-      <BaseInputText
-        v-if="isFieldVisible('headline')"
-        class="bg-surface mb-4"
-        v-model="$v.headline.$model"
-        :label="stringHeadlineByCategoryName"
-        :placeholder="stringHeadlineByCategoryName"
-        :error="$v.headline.$dirty && $v.headline.$invalid"
-        :model="$v.headline"
-      >
-        <span v-if="$v.headline.$dirty && !$v.headline.required" class="text-xs text-error pl-error-message">
-          {{ stringHeadlineByCategoryName }} is required
-        </span>
-        <span v-if="$v.headline.$dirty && !$v.headline.maxLength" class="text-xs text-error pl-error-message">
-          Max {{ $v.headline.$params.maxLength.max }} characters
-        </span>
-      </BaseInputText>
+    <BaseInputText
+      v-if="isFieldVisible('headline')"
+      class="bg-surface mb-4"
+      v-model="$v.headline.$model"
+      :label="stringHeadlineByCategoryName"
+      :placeholder="stringHeadlineByCategoryName"
+      :error="$v.headline.$dirty && $v.headline.$invalid"
+      :model="$v.headline"
+    >
+      <span v-if="$v.headline.$dirty && !$v.headline.required" class="text-xs text-error pl-error-message">
+        {{ stringHeadlineByCategoryName }} is required
+      </span>
+      <span v-if="$v.headline.$dirty && !$v.headline.maxLength" class="text-xs text-error pl-error-message">
+        Max {{ $v.headline.$params.maxLength.max }} characters
+      </span>
+    </BaseInputText>
 
-      <hr v-if="isFieldVisible('image')" class="my-4 bg-background border-black em-low -mx-4 sm:mx-0 mb-4" />
-      <ImageUpload v-if="isFieldVisible('image')" v-model="images" :defaultImages="images" />
+    <hr v-if="isFieldVisible('image')" class="my-4 bg-background border-black em-low -mx-4 sm:mx-0 mb-4" />
+    <ImageUpload v-if="isFieldVisible('image')" v-model="images" :defaultImages="images" />
 
-      <BaseEditor
-        v-if="isFieldVisible('excerpt') && !isImagesEmpty"
-        class="my-4 body-1-mobile bg-surface"
-        :error="$v.excerpt.$dirty && ($v.excerpt.$invalid || !$v.excerpt.required || !$v.excerpt.maxLength)"
-        placeholder="Excerpt"
-        v-model="$v.excerpt.$model"
-        :model="$v.excerpt"
-      >
-        <span v-if="$v.excerpt.$dirty && !$v.excerpt.required" class="text-xs text-error pl-error-message">
-          Excerpt is required
-        </span>
-        <span v-if="$v.excerpt.$dirty && !$v.excerpt.maxLength" class="text-xs text-error pl-error-message">
-          Max {{ $v.excerpt.$params.maxLength.max }} characters
-        </span>
-      </BaseEditor>
+    <BaseEditor
+      v-if="isFieldVisible('excerpt') && !isImagesEmpty"
+      class="my-4 body-1-mobile bg-surface"
+      :error="$v.excerpt.$dirty && ($v.excerpt.$invalid || !$v.excerpt.required || !$v.excerpt.maxLength)"
+      placeholder="Excerpt"
+      v-model="$v.excerpt.$model"
+      :model="$v.excerpt"
+    >
+      <span v-if="$v.excerpt.$dirty && !$v.excerpt.required" class="text-xs text-error pl-error-message">
+        Excerpt is required
+      </span>
+      <span v-if="$v.excerpt.$dirty && !$v.excerpt.maxLength" class="text-xs text-error pl-error-message">
+        Max {{ $v.excerpt.$params.maxLength.max }} characters
+      </span>
+    </BaseEditor>
 
-      <hr class="my-4 bg-background border-black em-low -mx-4 sm:mx-0 mb-4" />
+    <hr class="my-4 bg-background border-black em-low -mx-4 sm:mx-0 mb-4" />
 
-      <BaseEditor
-        class="mt-6 mb-4 body-1-mobile bg-surface"
-        :error="
-          $v.description.$dirty && ($v.description.$invalid || !$v.description.required || !$v.description.maxLength)
-        "
-        :placeholder="isAnswersCategory ? stringDescriptionByCategoryName : 'Put the content of your article here.'"
-        v-if="isFieldVisible('description')"
-        v-model="$v.description.$model"
-        :model="$v.description"
-      >
-        <span v-if="$v.description.$dirty && !$v.description.required" class="text-xs text-error pl-error-message">
-          {{ stringDescriptionByCategoryName }} is required
-        </span>
-        <span v-if="$v.description.$dirty && !$v.description.maxLength" class="text-xs text-error pl-error-message">
-          Max {{ $v.description.$params.maxLength.max }} characters
-        </span>
-      </BaseEditor>
+    <BaseEditor
+      class="mt-6 mb-4 body-1-mobile bg-surface"
+      :error="
+        $v.description.$dirty && ($v.description.$invalid || !$v.description.required || !$v.description.maxLength)
+      "
+      :placeholder="isAnswersCategory ? stringDescriptionByCategoryName : 'Put the content of your article here.'"
+      v-if="isFieldVisible('description')"
+      v-model="$v.description.$model"
+      :model="$v.description"
+    >
+      <span v-if="$v.description.$dirty && !$v.description.required" class="text-xs text-error pl-error-message">
+        {{ stringDescriptionByCategoryName }} is required
+      </span>
+      <span v-if="$v.description.$dirty && !$v.description.maxLength" class="text-xs text-error pl-error-message">
+        Max {{ $v.description.$params.maxLength.max }} characters
+      </span>
+    </BaseEditor>
 
-      <BaseInputText
-        v-if="isFieldVisible('eventDate')"
-        class="bg-surface mb-4"
-        v-model="$v.eventDate.$model"
-        label="Date/Time"
-        placeholder="20 March, 2020, 7:00 PM"
-        :error="$v.eventDate.$dirty && $v.eventDate.$invalid"
-      >
-        <span v-if="$v.eventDate.$dirty && !$v.eventDate.required" class="text-xs text-error pl-error-message">
-          Date/Time is required
-        </span>
-        <span v-if="$v.eventDate.$dirty && !$v.eventDate.mustBeDate" class="text-xs text-error pl-error-message">
-          Date/Time is invalid. Example: 2020-12-24 7:30 pm
-        </span>
-      </BaseInputText>
-    </div>
+    <BaseInputText
+      v-if="isFieldVisible('eventDate')"
+      class="bg-surface mb-4"
+      v-model="$v.eventDate.$model"
+      label="Date/Time"
+      placeholder="20 March, 2020, 7:00 PM"
+      :error="$v.eventDate.$dirty && $v.eventDate.$invalid"
+    >
+      <span v-if="$v.eventDate.$dirty && !$v.eventDate.required" class="text-xs text-error pl-error-message">
+        Date/Time is required
+      </span>
+      <span v-if="$v.eventDate.$dirty && !$v.eventDate.mustBeDate" class="text-xs text-error pl-error-message">
+        Date/Time is invalid. Example: 2020-12-24 7:30 pm
+      </span>
+    </BaseInputText>
   </div>
 </template>
 

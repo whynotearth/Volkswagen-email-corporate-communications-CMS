@@ -27,6 +27,7 @@ module.exports = {
         background: '#FFFFFF',
         surface: '#FFFFFF',
         error: '#FF5959',
+        success: '#52AE31',
         priority: '#D84E4E',
         events: '#FFBA03',
         plant: '#8894A0',
@@ -112,6 +113,14 @@ module.exports = {
       },
       minHeight: {
         '104': '26rem'
+      },
+      opacity: {
+        '12': '0.12',
+        '18': '0.18',
+        '38': '0.38',
+        '54': '0.54',
+        '84': '0.84',
+        '90': '0.90'
       }
     }
   },

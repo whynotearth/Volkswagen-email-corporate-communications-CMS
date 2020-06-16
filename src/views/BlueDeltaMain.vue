@@ -1,7 +1,7 @@
 <template>
   <LayoutFixedFooter>
     <template #header>
-      <BaseAppBarHeader :title="'Blue Delta'" :to-link="{ name: 'Dashboard' }" />
+      <BaseAppBarHeader :title="'JumpStart'" :to-link="{ name: 'Dashboard' }" />
     </template>
     <template #content>
       <div class="bg-white flex items-center justify-center min-h-full relative flex-shrink-0 py-6">
@@ -15,7 +15,7 @@
               />
             </div>
             <h1 class="text-primary h1-mobile md:h1 mb-h1-mobile mb-14">
-              Manage the Blue Delta
+              Manage the JumpStart
             </h1>
 
             <div>
@@ -26,10 +26,10 @@
                 Scheduled Newsletters
               </router-link>
               <router-link
-                :to="{ name: 'ActivityFeedJumpStartList' }"
+                :to="{ name: 'JumpStartActivityList' }"
                 class="block bg-secondary w-full hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline transition duration-100 ease-in-out transition-all label-mobile"
               >
-                Blue Delta Stats
+                JumpStart Stats
               </router-link>
             </div>
           </div>
