@@ -25,7 +25,8 @@
     </div>
     <div
       v-if="showDropdown"
-      class="dropdown absolute right-0 left-0 bg-white mt-1 mx-2 md:mx-4 py-2 rounded shadow-8dp overflow-x-hidden overflow-y-auto z-10"
+      class="dropdown absolute right-0 left-0 bg-white mt-1 mx-2 md:mx-4 py-2 rounded shadow-8dp
+      overflow-x-hidden overflow-y-auto z-60"
       :class="optionContainerClasses"
     >
       <div

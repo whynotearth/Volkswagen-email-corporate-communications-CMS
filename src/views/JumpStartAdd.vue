@@ -80,7 +80,7 @@
                 $v.audience.$error ? 'text-red-600 border-red-600' : 'text-gray-500 border-gray-600'
               ]"
             >
-              <label class="multiselect--material-label absolute" v-if="!$v.audience.$invalid" for="audience"
+              <label class="multiselect--material-label absolute z-50" v-if="!$v.audience.$invalid" for="audience"
                 >Audience:</label
               >
               <Multiselect
@@ -112,7 +112,7 @@
                 $v.tags.$error ? 'text-red-600 border-red-600' : 'text-gray-500 border-gray-600'
               ]"
             >
-              <label class="multiselect--material-label absolute" v-if="!$v.tags.$invalid" for="tags">Tags:</label>
+              <label class="multiselect--material-label absolute z-50" v-if="!$v.tags.$invalid" for="tags">Tags:</label>
               <Multiselect
                 id="tags"
                 v-model="$v.tags.$model"
@@ -160,8 +160,10 @@
               <div class="p-4 body-1-mobile">
                 <p class="mb-2"><b>Date:</b> {{ formatDate(date) }}</p>
                 <p class="mb-2">{{ audience[0] }}</p>
+                <p class="mb-2 preview-description" v-html="descriptionStyling"></p>
                 <div
-                  class="w-full tg-body-mobile text-center text-black em-high whitespace-pre-line break-words flex-grow order-2"
+                  class="w-full tg-body-mobile text-center text-black em-high whitespace-pre-line
+                  break-words flex-grow order-2 md:w-1/3 m-auto"
                 >
                   <PDFUpload class="text-center" @change="updatePdfFiles" :settings-carousel="optionsCarousel" />
                 </div>
@@ -175,16 +177,12 @@
         </div>
       </div>
     </template>
-    <template #footer>
-      <NavigationBottom />
-    </template>
   </LayoutFixedFooter>
 </template>
 
 <script>
 import LayoutFixedFooter from '@/components/LayoutFixedFooter.vue';
 import BaseAppBarHeader from '@/components/BaseAppBarHeader.vue';
-import NavigationBottom from '@/components/BaseNavigationBottom';
 import BaseEditor from '@/components/Editor/BaseEditor.vue';
 import BaseInputText from '@/components/BaseInputText.vue';
 import BaseButton from '@/components/BaseButton.vue';
@@ -196,13 +194,13 @@ import { required } from 'vuelidate/lib/validators';
 import { sleep, formatDate } from '@/helpers.js';
 import { mustBeDate } from '@/validations.js';
 import { isToday, parseISO } from 'date-fns';
+import showdown from 'showdown';
 
 export default {
   name: 'JumpStartForm',
   components: {
     LayoutFixedFooter,
     BaseAppBarHeader,
-    NavigationBottom,
     BaseInputText,
     BaseDropdown,
     BaseButton,
@@ -290,6 +288,10 @@ export default {
         this.update_tags(value);
       }
     },
+    descriptionStyling() {
+      const converter = new showdown.Converter();
+      return converter.makeHtml(this.description);
+    },
     dates() {
       let d = new Date();
       let dtzOffset = d.getTimezoneOffset() * 60000;
@@ -329,7 +331,9 @@ export default {
       pdfFileInfo: {},
       optionsCarousel: {
         dots: true,
-        navButtons: false
+        navButtons: false,
+        infinite: false,
+        initialSlide: 0
       }
     };
   },
@@ -433,3 +437,71 @@ export default {
   }
 };
 </script>
+
+<style>
+.preview-description a {
+  color: #1972b3;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+  margin: 0;
+  margin-bottom: 0;
+  padding: 0;
+  text-align: left;
+  text-decoration: none;
+}
+.preview-description ol {
+  list-style: decimal;
+}
+.preview-description ul {
+  list-style: disc;
+}
+.preview-description ol,
+.preview-description ul {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+  list-style-position: inside;
+  margin: 0 !important;
+  margin-bottom: 8px !important;
+  padding: 0 !important;
+}
+.preview-description ol li,
+.preview-description ul li {
+  color: #000;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+}
+.preview-description p,
+.preview-description blockquote {
+  color: #000;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+  margin: 0;
+  margin-bottom: 0;
+  padding: 0;
+  text-align: left;
+}
+.preview-description h1 {
+  color: inherit;
+  font-family: Arial, sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 27px;
+  margin: 0 !important;
+  margin-bottom: 26px !important;
+  padding: 0;
+  text-align: left;
+  word-wrap: normal;
+}
+.preview-description strong {
+  color: #1972b3;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 20px;
+}
+</style>
