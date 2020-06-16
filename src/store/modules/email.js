@@ -1,3 +1,5 @@
+// TODO: rename store module to jumpstart
+
 import { JumpStartService, NewJumpStartService } from '@whynotearth/meredith-axios';
 import qs from 'qs';
 import { debounce } from 'lodash-es';
