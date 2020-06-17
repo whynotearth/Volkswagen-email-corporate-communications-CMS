@@ -1,3 +1,5 @@
+// NOTE: this module is currently not in use
+
 const defaultSettings = {
   text: '',
   visible: false,

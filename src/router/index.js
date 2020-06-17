@@ -9,15 +9,16 @@ import BlueDeltaSettings from '../views/BlueDeltaSettings';
 import MyAccount from '../views/MyAccount';
 import ChangePassword from '../views/MyAccountChangePassword';
 import Stats from '../views/Stats.vue';
+import StatsOverviewDistributionGroup from '../views/StatsOverviewDistributionGroup.vue';
 import StatsOverviewMemos from '../views/StatsOverviewMemos.vue';
 import StatsOverviewJumpstarts from '../views/StatsOverviewJumpstarts.vue';
-// import StatsOverviewJumpstart from '../views/StatsOverviewJumpstart.vue';
 import MemoListActivity from '../views/MemoListActivity.vue';
 import MemoActivityDetail from '../views/MemoActivityDetail.vue';
 import EmailLists from '../views/EmailLists';
 import EmailList from '../views/EmailList';
 import EmailListAdd from '../views/EmailListAdd';
 import EmailListEdit from '../views/EmailListEdit';
+import EmailListItemEdit from '../views/EmailListItemEdit';
 import EmailListItem from '../views/EmailListItem';
 import EmailListImport from '../views/EmailListImport';
 import EmailListImportHelp from '../views/EmailListImportHelp';
@@ -118,6 +119,13 @@ const routes = [
     path: '/jumpstart',
     name: 'BlueDeltaMain',
     component: BlueDeltaMain
+  },
+
+  // Stats Overview
+  {
+    path: '/stats/distribution-groups/:groupName',
+    name: 'StatsOverviewDistributionGroup',
+    component: StatsOverviewDistributionGroup
   },
   {
     path: '/stats/memos',
@@ -220,6 +228,7 @@ const routes = [
     component: ChangePassword
   },
   {
+    // TODO: change to /settings/distribution-groups
     path: '/settings/email-lists',
     name: 'EmailLists',
     component: EmailLists
@@ -240,14 +249,19 @@ const routes = [
     component: EmailList
   },
   {
+    path: '/settings/email-lists/:groupName/edit',
+    name: 'EmailListEdit',
+    component: EmailListEdit
+  },
+  {
     path: '/settings/email-lists/:groupName/add',
     name: 'EmailListAdd',
     component: EmailListAdd
   },
   {
     path: '/settings/email-lists/:groupName/:id/edit',
-    name: 'EmailListEdit',
-    component: EmailListEdit
+    name: 'EmailListItemEdit',
+    component: EmailListItemEdit
   },
   {
     path: '/settings/email-lists/:groupName/:id',
