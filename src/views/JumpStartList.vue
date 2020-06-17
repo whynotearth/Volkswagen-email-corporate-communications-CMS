@@ -6,27 +6,37 @@
     <template #content>
       <BaseTabs>
         <BaseTab name="Today" selected="true">
-          <div v-for="(plan, index) in todayPlan" :key="index" class="cursor-pointer" @click="selectPlan(plan)">
-            <JumpStartItem :model="plan" />
+          <div
+            v-for="(item, index) in todayJumpStarts"
+            :key="index"
+            class="cursor-pointer"
+            @click="selectJumpStart(item)"
+          >
+            <JumpStartItem :model="item" />
           </div>
-          <div v-if="!todayPlan.length" class="py-8">
+          <div v-if="!todayJumpStarts.length" class="py-8">
             <p>
               There is nothing scheduled today.
-              <router-link class="text-secondary" :to="{ name: 'ArticleCategorySelection' }"
-                >Write some articles to start creating your JumpStart</router-link
+              <router-link class="text-secondary" :to="{ name: 'JumpStartAdd' }"
+                >Create some JumpStarts here</router-link
               >.
             </p>
           </div>
         </BaseTab>
         <BaseTab name="Upcoming">
-          <div v-for="(plan, index) in upcomingPlan" :key="index" class="cursor-pointer" @click="selectPlan(plan)">
-            <JumpStartItem :model="plan" />
+          <div
+            v-for="(item, index) in upcomimgJumpStarts"
+            :key="index"
+            class="cursor-pointer"
+            @click="selectJumpStart(item)"
+          >
+            <JumpStartItem :model="item" />
           </div>
-          <div v-if="!upcomingPlan.length" class="py-8">
+          <div v-if="!upcomimgJumpStarts.length" class="py-8">
             <p>
               There is nothing scheduled.
-              <router-link class="text-secondary" :to="{ name: 'ArticleCategorySelection' }"
-                >Write some articles to start creating your JumpStart</router-link
+              <router-link class="text-secondary" :to="{ name: 'JumpStartAdd' }"
+                >Create some JumpStarts here</router-link
               >.
             </p>
           </div>
@@ -54,7 +64,7 @@ export default {
   components: { BaseAppBarHeader, BaseTabs, BaseTab, JumpStartItem, LayoutFixedFooter, NavigationBottom },
   computed: {
     ...mapGetters('email', ['get_daily_plan']),
-    todayPlan() {
+    todayJumpStarts() {
       let data = [];
       for (let i = 0; i < this.get_daily_plan.length; i++) {
         if (isToday(parseISO(this.get_daily_plan[i].dateTime))) {
@@ -63,7 +73,7 @@ export default {
       }
       return data;
     },
-    upcomingPlan() {
+    upcomimgJumpStarts() {
       let data = [];
       for (let i = 0; i < this.get_daily_plan.length; i++) {
         if (!isToday(parseISO(this.get_daily_plan[i].dateTime))) {
@@ -79,7 +89,7 @@ export default {
   methods: {
     ...mapActions('email', ['fetch_daily_plan', 'update_selected_articles']),
     ...mapMutations('email', ['update_selected_plan', 'update_email_date', 'update_available_articles']),
-    selectPlan(plan) {
+    selectJumpStart(plan) {
       this.update_selected_plan(plan);
       this.update_available_articles(plan.articles);
       this.update_selected_articles();

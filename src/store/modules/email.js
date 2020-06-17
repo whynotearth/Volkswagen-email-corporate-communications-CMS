@@ -1,9 +1,8 @@
-// TODO: rename store module to jumpstart
+// TODO: rename store module to jumpStart
 
 import { JumpStartService, NewJumpStartService } from '@whynotearth/meredith-axios';
 import qs from 'qs';
 import { debounce } from 'lodash-es';
-import store from '@/store';
 
 export default {
   namespaced: true,
@@ -99,7 +98,9 @@ export default {
       });
     },
     async fetch_daily_plan({ commit }) {
-      const data = await JumpStartService.dailyplan();
+      console.log('fetch_daily_plan...');
+
+      const data = await NewJumpStartService.newjumpstart1();
       commit('update_daily_plan', data);
     },
     clear_email_data({ commit, dispatch }) {
