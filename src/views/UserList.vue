@@ -24,7 +24,7 @@
           </BaseButton>
         </div>
 
-        <BaseUserList v-if="getEmails.length" class="mb-6" :list="getEmails" />
+        <BaseUserList v-if="getEmails && getEmails.length" class="mb-6" :list="getEmails" />
       </div>
     </template>
     <template #footer>
@@ -56,9 +56,6 @@ export default {
     this.selectEmailList({
       distributionGroup: this.$route.params.groupName
     });
-  },
-  destroyed() {
-    this.updateEmails([]);
   },
   methods: {
     ...mapMutations('distributionGroup', ['updateEmails', 'selectEmailList']),

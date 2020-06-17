@@ -3,14 +3,14 @@
     <template #header>
       <BaseAppBarHeader
         title="User Profile"
-        :to-link="{ name: 'UserList', params: { groupName: '' } }"
+        :to-link="{ name: 'UserList', params: { groupName: $route.params.groupName } }"
       ></BaseAppBarHeader>
     </template>
     <template #content>
       <div class="container px-0 md:px-6">
         <div class="bg-brand-gradient container px-0 pt-8 pb-12 bg-surface">
-          <div class="tg-h1-mobile em-high text-white my-2">John Smith</div>
-          <div class="tg-caption-mobile text-white em-medium">jouhn.amith@gmail.com</div>
+          <div class="tg-h1-mobile em-high text-white my-2">{{ item.firstName }} {{ item.lastName }}</div>
+          <div class="tg-caption-mobile text-white em-medium">{{ item.email }}</div>
         </div>
         <div class="relative">
           <div class="bg-primary h-10 w-full absolute top-0 right-0 -z-1"></div>
@@ -147,7 +147,12 @@ export default {
   },
   components: { BaseAppBarHeader, NavigationBottom, LayoutFixedFooter, BaseButton, BaseInputText, Multiselect },
   data: () => ({
-    to_query: ''
+    to_query: '',
+    item: {
+      firstName: '',
+      lastName: '',
+      email: ''
+    }
   }),
   computed: {
     ...mapGetters('recipient', ['get_recipients_available']),
@@ -155,7 +160,8 @@ export default {
       'get_form_first_name',
       'get_form_last_name',
       'get_form_email',
-      'get_form_segments'
+      'get_form_segments',
+      'getEmails'
     ]),
     firstName: {
       get() {
@@ -192,6 +198,7 @@ export default {
   },
   mounted() {
     this.fetch_recipients();
+    this.initForm();
   },
   methods: {
     ...mapMutations('distributionGroup', [
@@ -201,12 +208,25 @@ export default {
       'updateFormSegments'
     ]),
     ...mapActions('recipient', ['fetch_recipients']),
+    initForm() {
+      const id = this.$route.params.id;
+      const groupName = this.$route.params.groupName;
+      this.item = this.getEmails.find(p => p.id === parseInt(id));
+      if (this.item) {
+        this.updateFormFirstName(this.item.firstName);
+        this.updateFormLastName(this.item.lastName);
+        this.updateFormEmail(this.item.email);
+        this.updateFormSegments([groupName]);
+      }
+    },
     onToSearchChange(query) {
       this.to_query = query;
     },
-    saveUser() {},
+    saveUser() {
+      // TODO Update user
+    },
     deleteUser() {
-      //
+      // TODO delete user
     }
   }
 };
