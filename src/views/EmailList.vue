@@ -62,7 +62,7 @@ export default {
     choiceEmail(payload) {
       this.selectEmail(payload);
       this.$router.push({
-        name: 'EmailListItem',
+        name: 'UserListProfile',
         params: {
           groupName: this.$route.params.groupName,
           id: payload.id

@@ -3,14 +3,14 @@
     <template #header>
       <BaseAppBarHeader
         title="User Profile"
-        :to-link="{ name: 'UserList', params: { groupName: '' } }"
+        :to-link="{ name: 'UserList', params: { groupName: $route.params.groupName } }"
       ></BaseAppBarHeader>
     </template>
     <template #content>
       <div class="container px-0 md:px-6">
         <div class="bg-brand-gradient container px-0 pt-8 pb-12 bg-surface">
-          <div class="tg-h1-mobile em-high text-white my-2">John Smith</div>
-          <div class="tg-caption-mobile text-white em-medium">jouhn.amith@gmail.com</div>
+          <div class="tg-h1-mobile em-high text-white my-2">{{ item.firstName }} {{ item.lastName }}</div>
+          <div class="tg-caption-mobile text-white em-medium">{{ item.email }}</div>
         </div>
         <div class="relative">
           <div class="bg-primary h-10 w-full absolute top-0 right-0 -z-1"></div>
@@ -127,7 +127,6 @@ import BaseInputText from '@/components/BaseInputText.vue';
 import Multiselect from 'vue-multiselect';
 import { required, email } from 'vuelidate/lib/validators';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
-
 export default {
   name: 'UserListProfile',
   validations: {
@@ -147,7 +146,12 @@ export default {
   },
   components: { BaseAppBarHeader, NavigationBottom, LayoutFixedFooter, BaseButton, BaseInputText, Multiselect },
   data: () => ({
-    to_query: ''
+    to_query: '',
+    item: {
+      firstName: '',
+      lastName: '',
+      email: ''
+    }
   }),
   computed: {
     ...mapGetters('recipient', ['get_recipients_available']),
@@ -155,14 +159,15 @@ export default {
       'get_form_first_name',
       'get_form_last_name',
       'get_form_email',
-      'get_form_segments'
+      'get_form_segments',
+      'getEmails'
     ]),
     firstName: {
       get() {
         return this.get_form_first_name;
       },
       set(value) {
-        this.updateFormFirstName(value);
+        this.update_form_firstname(value);
       }
     },
     lastName: {
@@ -170,7 +175,7 @@ export default {
         return this.get_form_last_name;
       },
       set(value) {
-        this.updateFormLastName(value);
+        this.update_form_lastname(value);
       }
     },
     email: {
@@ -178,7 +183,7 @@ export default {
         return this.get_form_email;
       },
       set(value) {
-        this.updateFormEmail(value);
+        this.update_form_email(value);
       }
     },
     segments: {
@@ -186,27 +191,67 @@ export default {
         return this.get_form_segments;
       },
       set(value) {
-        this.updateFormSegments(value);
+        this.update_form_segments(value);
       }
+    },
+    groupName() {
+      return this.$route.params.groupName;
+    },
+    groupId() {
+      return this.$route.params.id;
     }
   },
   mounted() {
     this.fetch_recipients();
+    this.initForm();
   },
   methods: {
     ...mapMutations('distributionGroup', [
-      'updateFormFirstName',
-      'updateFormLastName',
-      'updateFormEmail',
-      'updateFormSegments'
+      'update_form_firstname',
+      'update_form_lastname',
+      'update_form_email',
+      'update_form_segments'
     ]),
+    ...mapActions('distributionGroup', ['editEmail', 'deleteEmail']),
     ...mapActions('recipient', ['fetch_recipients']),
+    initForm() {
+      this.item = this.getEmails.find(p => p.id === parseInt(this.groupId));
+      if (this.item) {
+        this.update_form_firstname(this.item.firstName);
+        this.update_form_lastname(this.item.lastName);
+        this.update_form_email(this.item.email);
+        this.update_form_segments([this.groupName]);
+      }
+    },
     onToSearchChange(query) {
       this.to_query = query;
     },
-    saveUser() {},
+    saveUser() {
+      this.$v.$touch();
+      if (this.$v.$invalid) {
+        return false;
+      }
+      const data = {
+        distributionGroupName: this.groupName,
+        recipientId: this.groupId,
+        body: {
+          email: this.email,
+          firstName: this.firstName,
+          lastName: this.lastName
+        }
+      };
+
+      this.editEmail(data).then(() => {
+        this.$router.push({ name: 'EmailLists' });
+      });
+    },
     deleteUser() {
-      //
+      this.deleteEmail({
+        distributionGroupName: this.groupName,
+        recipientId: this.groupId
+      }).then(() => {
+        this.$router.push({ name: 'EmailLists' });
+      });
     }
   }
 };
