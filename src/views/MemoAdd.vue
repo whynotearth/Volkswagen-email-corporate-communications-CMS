@@ -90,7 +90,7 @@
               <img
                 src="https://res.cloudinary.com/whynotearth/image/upload/v1586844643/Volkswagen/cms/logo_tjf9ej.svg"
                 alt=""
-                class="h-8 mr-2"
+                class="h-8 md:h-16 mr-2"
               />
               <span class="font-semibold text-2xs text-blue-900">Chattanooga</span>
             </div>
