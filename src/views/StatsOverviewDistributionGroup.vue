@@ -47,7 +47,7 @@
         <div class="container px-4 md:px-6 text-left pb-6">
           <div class="mb-6">
             <!-- link button -->
-            <BaseButtonPro :toLink="{ name: 'EmailList', params: { groupName: distributionGroupName } }">
+            <BaseButtonPro :toLink="{ name: 'UserList', params: { groupName: distributionGroupName } }">
               <template #icon>
                 <Stat class="inline-block align-baseline mr-4 h-5 w-5 -mb-0.5 pointer-events-none" />
               </template>

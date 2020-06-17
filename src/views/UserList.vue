@@ -40,6 +40,7 @@ import NavigationBottom from '@/components/BaseNavigationBottom';
 import BaseButton from '@/components/BaseButton';
 import BaseUserList from '@/components/BaseUserListSort';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
+import { downloadBase64AsFile } from '@/helpers.js';
 
 export default {
   name: 'UserList',
@@ -47,17 +48,17 @@ export default {
   computed: {
     ...mapGetters('distributionGroup', ['selectedEmailList', 'getEmails']),
     titleHeader() {
-      return (this.selectedEmailList && this.selectedEmailList.distributionGroup) || this.$route.params.groupName || '';
+      return this.selectedEmailList.distributionGroup;
     }
   },
   mounted() {
     this.getEmailList();
-  },
-  destroyed() {
-    this.updateEmails([]);
     this.selectEmailList({
       distributionGroup: this.$route.params.groupName
     });
+  },
+  destroyed() {
+    this.updateEmails([]);
   },
   methods: {
     ...mapMutations('distributionGroup', ['updateEmails', 'selectEmailList']),
@@ -69,8 +70,15 @@ export default {
     goToAddUser() {
       this.$router.push({ name: 'EmailListAdd' });
     },
+    downloadBase64AsFile,
     exportUsers() {
-      this.exportList();
+      this.exportList().then(data => {
+        this.downloadBase64AsFile({
+          content: data,
+          fileName: 'distribution-groups-user-list.csv',
+          mimeType: 'text/csv'
+        });
+      });
     }
   }
 };
