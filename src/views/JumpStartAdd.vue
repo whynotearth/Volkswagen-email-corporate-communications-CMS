@@ -12,7 +12,6 @@
             :optionContainerClasses="'mt-0 pt-0'"
             placeholder="Schedule time"
             :options="dates"
-            @updateSelectedOption="updateSubjectInput()"
             v-model="$v.date.$model"
           >
             <template #title="{ selectedOption }">
@@ -98,39 +97,32 @@
                 <template v-slot:noOptions>No options available</template>
               </Multiselect>
               <span v-if="$v.audience.$error" class="text-xs text-error pl-error-message">
-                To is required
+                Audience is required
               </span>
             </div>
 
             <div
-              class="mb-4 bg-white relative"
-              :class="[
-                {
-                  'is-filled': !$v.tags.$invalid,
-                  error: $v.tags.$error
-                },
-                $v.tags.$error ? 'text-red-600 border-red-600' : 'text-gray-500 border-gray-600'
-              ]"
+              class="mb-4 bg-white relative text-gray-500 border-gray-600"
+              :class="{
+                'is-filled': tags.length
+              }"
             >
-              <label class="multiselect--material-label absolute z-30" v-if="!$v.tags.$invalid" for="tags">Tags:</label>
+              <label class="multiselect--material-label absolute z-30" v-if="tags.length" for="tags">Tags:</label>
               <Multiselect
                 id="tags"
-                v-model="$v.tags.$model"
-                :placeholder="$v.tags.$invalid ? 'Tags:' : ''"
+                v-model="tags"
+                :placeholder="!tags.length ? 'Tags:' : ''"
                 :multiple="true"
                 :hide-selected="true"
                 :options="[]"
                 :show-labels="false"
                 :taggable="true"
                 @tag="addTag"
-                @blur="$v.tags.$touch()"
+                @blur="tags.$touch()"
               >
                 <template v-slot:noResult>Nothing found</template>
                 <template v-slot:noOptions>No options available</template>
               </Multiselect>
-              <span v-if="$v.tags.$error" class="text-xs text-error pl-error-message">
-                To is required
-              </span>
             </div>
 
             <BaseEditor
@@ -152,7 +144,7 @@
                 <img
                   src="https://res.cloudinary.com/whynotearth/image/upload/v1586844643/Volkswagen/cms/logo_tjf9ej.svg"
                   alt=""
-                  class="h-8 mr-2"
+                  class="h-8 md:h-16 mr-2"
                 />
                 <span class="font-semibold text-2xs text-blue-900">Chattanooga</span>
               </div>
@@ -226,9 +218,6 @@ export default {
       required
     },
     time: {
-      required
-    },
-    tags: {
       required
     },
     description: {
@@ -380,10 +369,6 @@ export default {
       let tags = this.get_tags;
       tags.push(tag);
       this.update_tags(tags);
-    },
-    updateSubjectInput(value) {
-      const date = this.formatDate(this.get_email_date);
-      this.update_subject(date);
     },
     millisecondToTime(duration) {
       let minutes = parseInt((duration / (1000 * 60)) % 60),
