@@ -1,5 +1,9 @@
+// TODO: refactor function and state names to be snake_case
+// refactor: remove new Promise() and just return ajax
+
 import { DistributionGroupService } from '@whynotearth/meredith-axios';
 import Vue from 'vue';
+import { downloadBase64AsFile } from '@/helpers';
 
 export default {
   namespaced: true,
@@ -14,6 +18,11 @@ export default {
       last_name: '',
       email: '',
       segments: ''
+    },
+    stats_overview: null,
+    stats_overview_date_range: {
+      text: '',
+      value: [] // ['2020-06-06', '2020-06-13']
     }
   },
   mutations: {
@@ -32,17 +41,23 @@ export default {
     updateEmail(state, payload) {
       state.email = payload;
     },
-    updateFormFirstName(state, payload) {
+    update_form_firstname(state, payload) {
       Vue.set(state.user_form_data, 'first_name', payload);
     },
-    updateFormLastName(state, payload) {
+    update_form_lastname(state, payload) {
       Vue.set(state.user_form_data, 'last_name', payload);
     },
-    updateFormEmail(state, payload) {
+    update_form_email(state, payload) {
       Vue.set(state.user_form_data, 'email', payload);
     },
-    updateFormSegments(state, payload) {
+    update_form_segments(state, payload) {
       Vue.set(state.user_form_data, 'segments', payload);
+    },
+    update_stats_overview(state, payload) {
+      state.stats_overview = payload;
+    },
+    update_stats_overview_date_range(state, payload) {
+      state.stats_overview_date_range = payload;
     }
   },
   actions: {
@@ -78,6 +93,7 @@ export default {
     getEmails(context, groupName) {
       return new Promise((resolve, reject) => {
         DistributionGroupService.recipients({
+          // TODO: we should get groupName only from one source, param is better.
           distributionGroupName: context.state.selectedEmailList.distributionGroup || groupName
         })
           .then(data => {
@@ -92,6 +108,7 @@ export default {
     addEmail(context) {
       return new Promise((resolve, reject) => {
         DistributionGroupService.recipients1({
+          // TODO: get groupName from param
           distributionGroupName: context.state.selectedEmailList.distributionGroup,
           body: { email: context.state.email }
         })
@@ -104,13 +121,9 @@ export default {
           });
       });
     },
-    editEmail(context) {
+    editEmail(context, payload) {
       return new Promise((resolve, reject) => {
-        DistributionGroupService.recipients2({
-          distributionGroupName: context.state.selectedEmailList.distributionGroup,
-          recipientId: context.state.selectedEmail.id,
-          body: { email: context.state.selectedEmail.email }
-        })
+        DistributionGroupService.recipients2(payload)
           .then(data => {
             context.commit('updateEmail', '');
             resolve();
@@ -120,18 +133,31 @@ export default {
           });
       });
     },
-    deleteEmail(context) {
+    deleteEmail(context, payload) {
       return new Promise((resolve, reject) => {
-        DistributionGroupService.recipients3({
-          distributionGroupName: context.state.selectedEmailList.distributionGroup,
-          recipientId: context.state.selectedEmail.id
-        })
+        DistributionGroupService.recipients3(payload)
           .then(data => {
             resolve();
           })
           .catch(error => {
             reject(error);
           });
+      });
+    },
+    async fetch_stats_overview({ commit }, payload) {
+      const data = await DistributionGroupService.stats1(payload.params);
+      commit('update_stats_overview', data);
+    },
+    async export_stats_overview({ commit }, payload) {
+      const data = await DistributionGroupService.export1(payload.params);
+      downloadBase64AsFile({ content: data, fileName: 'distribution-groups-stats.csv', mimeType: 'text/csv' });
+    },
+    delete_group(context, payload) {
+      console.log('TODO: connect delete group to api', payload);
+      return new Promise(resolve => {
+        setTimeout(() => {
+          resolve();
+        }, 1000);
       });
     }
   },
@@ -154,6 +180,8 @@ export default {
     get_form_first_name: state => state.user_form_data.first_name,
     get_form_last_name: state => state.user_form_data.last_name,
     get_form_email: state => state.user_form_data.email,
-    get_form_segments: state => state.user_form_data.segments
+    get_form_segments: state => state.user_form_data.segments,
+    get_stats_overview: state => state.stats_overview,
+    get_stats_overview_date_range: state => state.stats_overview_date_range
   }
 };

@@ -1,4 +1,6 @@
-import { JumpStartService } from '@whynotearth/meredith-axios';
+// TODO: rename store module to jumpstart
+
+import { JumpStartService, NewJumpStartService } from '@whynotearth/meredith-axios';
 import qs from 'qs';
 import { debounce } from 'lodash-es';
 import store from '@/store';
@@ -13,6 +15,9 @@ export default {
     articles: [],
     selected_articles: [],
     email_recipients: [],
+    description: '',
+    subject: '',
+    tags: [],
     jumpstarts: [],
     response_message: {
       type: '', // error, success
@@ -21,10 +26,17 @@ export default {
     },
     default_distribution_groups: [],
     default_schedule_time: null,
-    selected_plan: {},
+    selected_plan: {
+      articles: []
+    },
     daily_plan: [],
     available_articles: [],
     stats: [],
+    stats_overview: null,
+    stats_overview_date_range: {
+      text: '',
+      value: [] // ['2020-06-06', '2020-06-13']
+    },
     stat: {}
   },
   getters: {
@@ -33,6 +45,9 @@ export default {
     get_selected_articles: state => state.selected_articles,
     get_preview_link: state => state.preview_link,
     get_email_recipients: state => state.email_recipients,
+    get_description: state => state.description,
+    get_subject: state => state.subject,
+    get_tags: state => state.tags,
     get_response_message: state => state.response_message,
     get_articles: state => state.articles,
     get_default_distribution_groups: state => state.default_distribution_groups,
@@ -41,11 +56,20 @@ export default {
     get_daily_plan: state => state.daily_plan,
     get_available_articles: state => state.available_articles,
     get_stats: state => state.stats,
+    get_stats_overview: state => state.stats_overview,
+    get_stats_overview_date_range: state => state.stats_overview_date_range,
     get_stat: state => state.stat
   },
   actions: {
-    async create_jumpstart({ commit }, payload) {
-      await JumpStartService.jumpstart(payload.params);
+    create_jumpstart({ commit }, payload) {
+      return NewJumpStartService.newjumpstart(payload);
+    },
+    attach_file({ commit }, payload) {
+      console.log('payload', payload);
+      return NewJumpStartService.attachment(payload);
+    },
+    delete_article_by_id({ state }, id) {
+      state.available_articles = state.available_articles.filter(item => item.id !== id);
     },
     update_selected_articles({ state }, payload) {
       if (!payload) {
@@ -99,6 +123,10 @@ export default {
     async fetch_stat({ commit }, params) {
       const data = await JumpStartService.stats1(params);
       commit('update_stat', data);
+    },
+    async fetch_stats_overview({ commit }, payload) {
+      const data = await NewJumpStartService.stats(payload.params);
+      commit('update_stats_overview', data);
     }
   },
   mutations: {
@@ -110,6 +138,15 @@ export default {
     },
     update_email_recipients(state, payload) {
       state.email_recipients = payload;
+    },
+    update_description(state, payload) {
+      state.description = payload;
+    },
+    update_subject(state, payload) {
+      state.subject = payload;
+    },
+    update_tags(state, payload) {
+      state.tags = payload;
     },
     update_response_message(state, payload) {
       state.response_message = payload;
@@ -137,6 +174,12 @@ export default {
     },
     update_stat(state, payload) {
       state.stat = payload;
+    },
+    update_stats_overview(state, payload) {
+      state.stats_overview = payload;
+    },
+    update_stats_overview_date_range(state, payload) {
+      state.stats_overview_date_range = payload;
     }
   }
 };

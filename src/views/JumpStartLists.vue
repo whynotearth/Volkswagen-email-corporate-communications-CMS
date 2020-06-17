@@ -1,7 +1,7 @@
 <template>
   <LayoutFixedFooter>
     <template #header>
-      <BaseAppBarHeader title="Blue Delta" :to-link="{ name: 'BlueDeltaMain' }" />
+      <BaseAppBarHeader title="JumpStart" :to-link="{ name: 'BlueDeltaMain' }" />
     </template>
     <template #content>
       <BaseTabs>
@@ -13,7 +13,7 @@
             <p>
               There is nothing scheduled today.
               <router-link class="text-secondary" :to="{ name: 'ArticleCategorySelection' }"
-                >Write some articles to start creating your Blue Delta</router-link
+                >Write some articles to start creating your JumpStart</router-link
               >.
             </p>
           </div>
@@ -26,7 +26,7 @@
             <p>
               There is nothing scheduled.
               <router-link class="text-secondary" :to="{ name: 'ArticleCategorySelection' }"
-                >Write some articles to start creating your Blue Delta</router-link
+                >Write some articles to start creating your JumpStart</router-link
               >.
             </p>
           </div>
@@ -90,9 +90,9 @@ export default {
       }
       this.update_email_date(plan.dateTime);
       if (plan.jumpStartId) {
-        this.$router.push({ name: 'EditBlueDelta', params: { id: plan.jumpStartId } });
+        this.$router.push({ name: 'JumpStartEdit', params: { id: plan.jumpStartId } });
       } else {
-        this.$router.push({ name: 'AddBlueDelta', params: { date: plan.dateTime } });
+        this.$router.push({ name: 'JumpStartAdd', params: { date: plan.dateTime } });
       }
     }
   }

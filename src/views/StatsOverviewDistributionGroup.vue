@@ -1,7 +1,7 @@
 <template>
   <LayoutFixedFooter>
     <template #header>
-      <BaseAppBarHeader :title="'Memo Overview'" :toLink="{ name: 'Stats' }" />
+      <BaseAppBarHeader :title="distributionGroupName" :toLink="{ name: 'Stats' }" />
     </template>
     <template #content>
       <div>
@@ -37,7 +37,9 @@
               :stats_overview="get_stats_overview"
               :stats_overview_date_range="stats_overview_date_range"
             >
-              <template #title><span class="block text-center">Memo Overview</span></template>
+              <template #title
+                ><span class="block text-center">{{ distributionGroupName }}</span></template
+              >
             </ChartsStatsOverview>
           </div>
         </div>
@@ -45,17 +47,30 @@
         <div class="container px-4 md:px-6 text-left pb-6">
           <div class="mb-6">
             <!-- link button -->
-            <BaseButtonPro :toLink="{ name: 'MemoListActivity' }">
+            <BaseButtonPro :toLink="{ name: 'EmailList', params: { groupName: distributionGroupName } }">
               <template #icon>
                 <Stat class="inline-block align-baseline mr-4 h-5 w-5 -mb-0.5 pointer-events-none" />
               </template>
-              View Reports
+              View Users
             </BaseButtonPro>
           </div>
 
           <a
-            class="bg-secondary block w-full mx-auto hover:bg-blue-700 text-white text-center font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline transition duration-100 ease-in-out transition-all label-mobile shadow-2dp max-w-sm"
+            @click="exportStatsOverview"
+            class="mb-6 bg-secondary block w-full mx-auto hover:bg-blue-700 text-white text-center font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline transition duration-100 ease-in-out transition-all label-mobile shadow-2dp max-w-sm cursor-pointer"
             >Export Report</a
+          >
+
+          <router-link
+            :to="{ name: 'EmailListEdit', params: { groupName: distributionGroupName } }"
+            class="mb-6 bg-secondary block w-full mx-auto hover:bg-blue-700 text-white text-center font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline transition duration-100 ease-in-out transition-all label-mobile shadow-2dp max-w-sm cursor-pointer"
+            >Edit List Name</router-link
+          >
+
+          <a
+            @click="deleteList()"
+            class="block w-full mx-auto text-error text-center font-bold py-2 px-4 focus:outline-none focus:shadow-outline transition duration-100 ease-in-out transition-all label-mobile max-w-sm cursor-pointer"
+            >Delete List</a
           >
         </div>
       </div>
@@ -77,14 +92,14 @@ import Calendar from '@/assets/calendar.svg';
 import Stat from '@/assets/stat.svg';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
 import { colors, opacity } from '@/constants/theme.js';
-import { formatDate } from '@/helpers';
+import { formatDate, showOverlayAndRedirect } from '@/helpers';
 import { addDays, addYears, formatISO } from 'date-fns';
 
 // eslint-disable-next-line
 const PARSER_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
 
 export default {
-  name: 'StatsOverviewMemos',
+  name: 'StatsOverviewDistributionGroup',
   components: {
     BaseAppBarHeader,
     NavigationBottom,
@@ -99,7 +114,10 @@ export default {
     this.fetchStatsOverview();
   },
   computed: {
-    ...mapGetters('memo', ['get_stats_overview_date_range', 'get_stats_overview']),
+    ...mapGetters('distributionGroup', ['get_stats_overview_date_range', 'get_stats_overview']),
+    distributionGroupName() {
+      return this.$route.params.groupName;
+    },
     stats_overview_date_range: {
       get() {
         const current = this.get_stats_overview_date_range;
@@ -117,28 +135,39 @@ export default {
 
     dateRangesAvailable() {
       return this.generateDateRangesAvailable();
+    },
+
+    dateRangeParamsGenerator() {
+      const range = this.stats_overview_date_range.value;
+      return {
+        fromDate: formatISO(new Date(range[0]), { representation: 'date' }),
+        toDate: formatISO(new Date(range[1]), { representation: 'date' })
+      };
     }
   },
 
   methods: {
-    ...mapMutations('memo', ['update_stats_overview_date_range']),
-    ...mapActions('memo', ['fetch_stats_overview']),
+    ...mapMutations('distributionGroup', ['update_stats_overview_date_range']),
+    ...mapActions('distributionGroup', ['fetch_stats_overview', 'export_stats_overview', 'delete_group']),
+
+    exportStatsOverview() {
+      this.export_stats_overview({ params: this.dateRangeParamsGenerator });
+    },
+
+    async deleteList() {
+      if (confirm('Are you sure?')) {
+        await this.delete_group(this.distributionGroupName);
+        showOverlayAndRedirect({ title: 'Success!', route: { name: 'EmailLists' } });
+      }
+    },
 
     fetchStatsOverview() {
-      const range = this.stats_overview_date_range.value;
-
-      this.fetch_stats_overview({
-        params: {
-          fromDate: formatISO(new Date(range[0]), { representation: 'date' }),
-          toDate: formatISO(new Date(range[1]), { representation: 'date' })
-        }
-      });
+      this.fetch_stats_overview({ params: this.dateRangeParamsGenerator });
     },
 
     generateDateRangesAvailable() {
       const format = PARSER_FORMAT;
-      // TODO: this should be set on backend and be automatic
-      const allTimeStartDate = new Date('2020-06-13');
+      const allTimeStartDate = new Date('2020-05-27');
       const now = new Date();
       const today = formatDate(now, format);
       const last7days = formatDate(addDays(now, -7), format);

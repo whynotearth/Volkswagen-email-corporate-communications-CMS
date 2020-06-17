@@ -9,15 +9,16 @@ import BlueDeltaSettings from '../views/BlueDeltaSettings';
 import MyAccount from '../views/MyAccount';
 import ChangePassword from '../views/MyAccountChangePassword';
 import Stats from '../views/Stats.vue';
+import StatsOverviewDistributionGroup from '../views/StatsOverviewDistributionGroup.vue';
 import StatsOverviewMemos from '../views/StatsOverviewMemos.vue';
 import StatsOverviewJumpstarts from '../views/StatsOverviewJumpstarts.vue';
-// import StatsOverviewJumpstart from '../views/StatsOverviewJumpstart.vue';
 import MemoListActivity from '../views/MemoListActivity.vue';
 import MemoActivityDetail from '../views/MemoActivityDetail.vue';
 import EmailLists from '../views/EmailLists';
 import EmailList from '../views/EmailList';
 import EmailListAdd from '../views/EmailListAdd';
 import EmailListEdit from '../views/EmailListEdit';
+import EmailListItemEdit from '../views/EmailListItemEdit';
 import EmailListItem from '../views/EmailListItem';
 import EmailListImport from '../views/EmailListImport';
 import EmailListImportHelp from '../views/EmailListImportHelp';
@@ -25,13 +26,15 @@ import Email from '@/views/Email';
 import UserListProfile from '../views/UserListProfile';
 import Dashboard from '../views/Dashboard';
 import BlueDeltaMain from '@/views/BlueDeltaMain';
+import JumpStartAdd from '../views/JumpStartAdd';
+import JumpStartEdit from '../views/JumpStartEdit';
 import JumpStartLists from '../views/JumpStartLists';
 import ArticleMain from '../views/ArticleMain';
 import ArticleLists from '../views/ArticleLists';
 import ArticleListsItem from '../views/ArticleListsItem';
 import EditBlueDelta from '../views/EditBlueDelta';
 import BlueDeltaRearrange from '../views/BlueDeltaRearrange';
-// import DeveloperTesting from '../views/DeveloperTesting.vue';
+import DeveloperTesting from '../views/DeveloperTesting.vue';
 import AuthForgotPassword from '../views/AuthForgotPassword';
 import AuthNewPassword from '../views/AuthNewPassword';
 import JumpStartActivityList from '../views/JumpStartActivityList.vue';
@@ -42,11 +45,11 @@ import store from '../store';
 Vue.use(VueRouter);
 
 const routes = [
-  // {
-  //   path: '/test',
-  //   name: 'DeveloperTesting',
-  //   component: DeveloperTesting
-  // },
+  {
+    path: '/test',
+    name: 'DeveloperTesting',
+    component: DeveloperTesting
+  },
   {
     path: '/',
     name: 'Dashboard',
@@ -104,9 +107,26 @@ const routes = [
     props: true
   },
   {
-    path: '/blue-delta',
+    path: '/jumpstart/add',
+    name: 'JumpStartAdd',
+    component: JumpStartAdd
+  },
+  {
+    path: '/jumpstart/edit',
+    name: 'JumpStartEdit',
+    component: JumpStartEdit
+  },
+  {
+    path: '/jumpstart',
     name: 'BlueDeltaMain',
     component: BlueDeltaMain
+  },
+
+  // Stats Overview
+  {
+    path: '/stats/distribution-groups/:groupName',
+    name: 'StatsOverviewDistributionGroup',
+    component: StatsOverviewDistributionGroup
   },
   {
     path: '/stats/memos',
@@ -131,31 +151,31 @@ const routes = [
     props: true
   },
   {
-    path: '/blue-delta/edit/:id',
+    path: '/jumpstart/edit/:id',
     name: 'EditBlueDelta',
     component: EditBlueDelta,
     props: true
   },
   {
-    path: '/blue-delta/add/:date',
+    path: '/jumpstart/add/:date',
     name: 'AddBlueDelta',
     component: EditBlueDelta,
     props: true
   },
   {
-    path: '/blue-delta/rearrange/:id',
+    path: '/jumpstart/rearrange/:id',
     name: 'BlueDeltaRearrange',
     component: BlueDeltaRearrange,
     props: true
   },
   {
-    path: '/blue-delta/rearrange/add/:date',
+    path: '/jumpstart/rearrange/add/:date',
     name: 'AddBlueDeltaRearrange',
     component: BlueDeltaRearrange,
     props: true
   },
   {
-    path: '/blue-delta/list',
+    path: '/jumpstart/list',
     name: 'JumpStartLists',
     component: JumpStartLists
   },
@@ -194,7 +214,7 @@ const routes = [
     component: Settings
   },
   {
-    path: '/settings/blue-delta',
+    path: '/settings/jumpstart',
     name: 'BlueDeltaSettings',
     component: BlueDeltaSettings
   },
@@ -209,6 +229,7 @@ const routes = [
     component: ChangePassword
   },
   {
+    // TODO: change to /settings/distribution-groups
     path: '/settings/email-lists',
     name: 'EmailLists',
     component: EmailLists
@@ -229,14 +250,19 @@ const routes = [
     component: EmailList
   },
   {
+    path: '/settings/email-lists/:groupName/edit',
+    name: 'EmailListEdit',
+    component: EmailListEdit
+  },
+  {
     path: '/settings/email-lists/:groupName/add',
     name: 'EmailListAdd',
     component: EmailListAdd
   },
   {
     path: '/settings/email-lists/:groupName/:id/edit',
-    name: 'EmailListEdit',
-    component: EmailListEdit
+    name: 'EmailListItemEdit',
+    component: EmailListItemEdit
   },
   {
     path: '/settings/email-lists/:groupName/:id',

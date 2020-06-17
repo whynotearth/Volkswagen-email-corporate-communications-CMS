@@ -29,7 +29,7 @@
                 :to="{ name: 'BlueDeltaMain' }"
               >
                 <MemoStatslIcon class="m-auto" />
-                Blue Delta
+                JumpStart
               </router-link>
             </li>
             <li class="text-white inline-block m-2 mb-1 text-xs flex-shrink-0">
@@ -46,8 +46,8 @@
           <IconBottomNavFabOutcircle class="h-14 text-primary flex-shrink-0" />
           <ul :class="{ opened: isOpen }" class="absolute toggle-menu list-none">
             <li class="absolute top-0 right-0 flex whitespace-no-wrap text-white text-xs justify-end my-3">
-              <router-link :to="{ name: 'ArticleCategorySelection' }" class="flex items-center">
-                Article
+              <router-link :to="{ name: 'JumpStartAdd' }" class="flex items-center">
+                Jumpstart
                 <div
                   class="rounded-full h-10 w-10 flex items-center justify-center bg-secondary ml-2
                 shadow-6dp"

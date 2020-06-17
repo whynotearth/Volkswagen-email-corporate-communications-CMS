@@ -13,7 +13,7 @@ export default {
   data() {
     return {
       pageInfo: {
-        title: 'Blue Delta Stats',
+        title: 'JumpStart Stats',
         backRoute: { name: 'StatsOverviewJumpstarts' },
         listItemDetailPath: 'JumpStartActivityDetail'
       }

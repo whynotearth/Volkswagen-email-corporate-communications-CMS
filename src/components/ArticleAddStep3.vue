@@ -1,46 +1,48 @@
 <template>
   <div class="flex flex-col">
-    <div class="container px-4 md:px-6 select-none">
-      <BaseDropdown
-        class="relative bg-surface text-left border-t"
-        placeholder="Schedule time"
-        :options="dates"
-        v-model="$v.date.$model"
-      >
-        <template #title="{ selectedOption }">
-          Schedule
-          <span v-if="dates.length === 0" class="text-gray-500">
-            No time slots!
-          </span>
-          <span v-else-if="selectedOption" class="ml-2 em-medium text-black">
-            {{ formatDate(selectedOption) }}
-          </span>
-        </template>
-        <template #option="{ option }">
-          <span>
-            {{ formatDate(option) }}
-          </span>
-        </template>
-      </BaseDropdown>
+    <BaseDropdown
+      class="relative bg-surface text-left"
+      placeholder="Schedule time"
+      :options="dates"
+      v-model="$v.date.$model"
+    >
+      <template #icon>
+        <Calendar class="inline-block align-baseline mr-4 h-5 w-5 -mb-0.5 pointer-events-none" />
+      </template>
+      <template #title="{ selectedOption }">
+        Schedule
+        <span v-if="dates.length === 0" class="text-gray-500">
+          No time slots!
+        </span>
+        <span v-else-if="selectedOption" class="ml-2 em-medium text-black">
+          {{ formatDate(selectedOption) }}
+        </span>
+      </template>
+      <template #option="{ option }">
+        <span>
+          {{ formatDate(option) }}
+        </span>
+      </template>
+    </BaseDropdown>
 
-      <div class="mt-8">
-        <p v-if="get_response_message.message" class="font-bold px-4 mb-4" :class="get_response_message.class">
-          {{ get_response_message.message }}
-        </p>
-      </div>
+    <div class="mt-8">
+      <p v-if="get_response_message.message" class="font-bold px-4 mb-4" :class="get_response_message.class">
+        {{ get_response_message.message }}
+      </p>
     </div>
   </div>
 </template>
 
 <script>
 import BaseDropdown from '@/components/BaseDropdown';
+import Calendar from '@/assets/calendar.svg';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
 import { mustBeDate } from '@/validations.js';
 import { formatDate } from '@/helpers.js';
 
 export default {
   name: 'ArticleAddStep3',
-  components: { BaseDropdown },
+  components: { BaseDropdown, Calendar },
   props: {
     error: {
       type: Boolean,
