@@ -45,6 +45,9 @@ export default {
 .agile__actions {
   margin-top: 20px;
 }
+.agile__dots {
+  height: 12px;
+}
 .agile__dot {
   margin: 0 4px;
 }
