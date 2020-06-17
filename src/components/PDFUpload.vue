@@ -35,6 +35,7 @@ export default {
   methods: {
     onUploaded(result) {
       this.file = result.info;
+      this.pages = [];
       for (let i = 1; i <= this.file.pages; i++) {
         this.pages.push(`https://res.cloudinary.com/whynotearth/image/upload/pg_${i}/${this.file.public_id}.jpg`);
       }
