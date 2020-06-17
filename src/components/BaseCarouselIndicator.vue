@@ -48,6 +48,9 @@ export default {
 .agile__dot {
   margin: 0 4px;
 }
+.agile__dots {
+  height: 12px;
+}
 .agile__dot button {
   background-color: #011d51;
   transition-duration: 0.3s;

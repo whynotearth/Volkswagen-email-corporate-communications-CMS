@@ -12,7 +12,6 @@
             :optionContainerClasses="'mt-0 pt-0'"
             placeholder="Schedule time"
             :options="dates"
-            @updateSelectedOption="updateSubjectInput()"
             v-model="$v.date.$model"
           >
             <template #title="{ selectedOption }">
@@ -129,7 +128,7 @@
                 <template v-slot:noOptions>No options available</template>
               </Multiselect>
               <span v-if="$v.tags.$error" class="text-xs text-error pl-error-message">
-                To is required
+                Tags is required
               </span>
             </div>
 
@@ -380,10 +379,6 @@ export default {
       let tags = this.get_tags;
       tags.push(tag);
       this.update_tags(tags);
-    },
-    updateSubjectInput(value) {
-      const date = this.formatDate(this.get_email_date);
-      this.update_subject(date);
     },
     millisecondToTime(duration) {
       let minutes = parseInt((duration / (1000 * 60)) % 60),
