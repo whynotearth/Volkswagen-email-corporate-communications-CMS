@@ -69,7 +69,8 @@
           </div>
 
           <a
-            class="bg-secondary block w-full mx-auto hover:bg-blue-700 text-white text-center font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline transition duration-100 ease-in-out transition-all label-mobile shadow-2dp max-w-sm"
+            @click="exportStatsOverview"
+            class="mb-6 bg-secondary block w-full mx-auto hover:bg-blue-700 text-white text-center font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline transition duration-100 ease-in-out transition-all label-mobile shadow-2dp max-w-sm cursor-pointer"
             >Export Report</a
           >
         </div>
@@ -93,11 +94,8 @@ import Calendar from '@/assets/calendar.svg';
 import Stat from '@/assets/stat.svg';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
 import { colors, opacity } from '@/constants/theme.js';
-import { formatDate } from '@/helpers';
+import { formatDate, statsOverviewGenerateDateRangesAvailable, statsOverviewDateRangeParamsGenerator } from '@/helpers';
 import { addDays, addYears, formatISO } from 'date-fns';
-
-// eslint-disable-next-line
-const PARSER_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
 
 export default {
   name: 'StatsOverviewJumpStarts',
@@ -133,40 +131,29 @@ export default {
     },
 
     dateRangesAvailable() {
-      return this.generateDateRangesAvailable();
+      return this.statsOverviewGenerateDateRangesAvailable();
+    },
+
+    dateRangeParamsGenerator() {
+      return statsOverviewDateRangeParamsGenerator({
+        range: this.stats_overview_date_range.value,
+        isAllTime: this.get_stats_overview_date_range.id === 'all_time'
+      });
     }
   },
 
   methods: {
     ...mapMutations('email', ['update_stats_overview_date_range']),
-    ...mapActions('email', ['fetch_stats_overview']),
+    ...mapActions('email', ['fetch_stats_overview', 'export_stats_overview']),
 
-    fetchStatsOverview() {
-      const range = this.stats_overview_date_range.value;
+    statsOverviewGenerateDateRangesAvailable,
 
-      this.fetch_stats_overview({
-        params: {
-          fromDate: formatISO(new Date(range[0]), { representation: 'date' }),
-          toDate: formatISO(new Date(range[1]), { representation: 'date' })
-        }
-      });
+    exportStatsOverview() {
+      this.export_stats_overview(this.dateRangeParamsGenerator);
     },
 
-    generateDateRangesAvailable() {
-      const format = PARSER_FORMAT;
-      // TODO: process all time better
-      const allTimeStartDate = new Date('2020-05-27');
-      const now = new Date();
-      const today = formatDate(now, format);
-      const last7days = formatDate(addDays(now, -7), format);
-      const last30days = formatDate(addDays(now, -30), format);
-      const allTime = formatDate(allTimeStartDate, format);
-
-      return [
-        { id: '7d_ago', value: [last7days, today], text: 'Last 7 Days' },
-        { id: '30d_ago', value: [last30days, today], text: 'Last 30 Days' },
-        { id: 'all_time', value: [allTime, today], text: 'All Time' }
-      ];
+    fetchStatsOverview() {
+      this.fetch_stats_overview(this.dateRangeParamsGenerator);
     }
   }
 };
