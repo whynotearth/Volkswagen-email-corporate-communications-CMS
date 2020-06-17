@@ -7,7 +7,7 @@
       <div class="container px-0 md:px-6">
         <div class="p-4 max-w-sm mx-auto">
           <BaseButton
-            @selectButton="select"
+            @selectButton="exportUsers"
             class="block tg-color-label-mobile bg-secondary w-full hover:bg-blue-700 text-white
             font-bold rounded-full focus:outline-none focus:shadow-outline transition duration-100
             ease-in-out transition-all label-mobile mb-4 shadow-2dp"
@@ -55,9 +55,13 @@ export default {
   },
   destroyed() {
     this.updateEmails([]);
+    this.selectEmailList({
+      distributionGroup: this.$route.params.groupName
+    });
   },
   methods: {
-    ...mapMutations('distributionGroup', ['updateEmails']),
+    ...mapMutations('distributionGroup', ['updateEmails', 'selectEmailList']),
+    ...mapActions('distributionGroup', ['exportList']),
     getEmailList() {
       // TODO rename getEmails in store, it's same with getter
       this.$store.dispatch('distributionGroup/getEmails', this.$route.params.groupName);
@@ -65,8 +69,8 @@ export default {
     goToAddUser() {
       this.$router.push({ name: 'EmailListAdd' });
     },
-    select() {
-      // TODO link to edit user, that is other branch
+    exportUsers() {
+      this.exportList();
     }
   }
 };

@@ -133,6 +133,19 @@ export default {
             reject(error);
           });
       });
+    },
+    async exportList(context) {
+      return new Promise((resolve, reject) => {
+        DistributionGroupService.export({
+          distributionGroupName: context.state.selectedEmailList.distributionGroup
+        })
+          .then(data => {
+            resolve();
+          })
+          .catch(error => {
+            reject(error);
+          });
+      });
     }
   },
   getters: {

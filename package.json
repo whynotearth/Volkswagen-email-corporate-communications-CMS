@@ -13,7 +13,7 @@
     }
   },
   "dependencies": {
-    "@whynotearth/meredith-axios": "^1.0.32",
+    "@whynotearth/meredith-axios": "1.0.33",
     "chart.js": "2.9.3",
     "chartjs-adapter-date-fns": "^1.0.0",
     "core-js": "3.6.4",
