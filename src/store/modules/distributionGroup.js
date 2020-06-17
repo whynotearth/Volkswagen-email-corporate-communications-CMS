@@ -3,6 +3,7 @@
 
 import { DistributionGroupService } from '@whynotearth/meredith-axios';
 import Vue from 'vue';
+import { downloadBase64AsFile } from '@/helpers';
 
 export default {
   namespaced: true,
@@ -166,35 +167,12 @@ export default {
       });
     },
     async fetch_stats_overview({ commit }, payload) {
-      // TODO:
-      // const data = await MemoService.overallstats(payload.params);
-      const data = {
-        userCount: 5,
-        userGrowthPercent: 100,
-        openCount: 657,
-        openGrowthPercent: 100,
-        clickCount: 0,
-        clickGrowthPercent: 100,
-        users: [
-          { date: '2020-06-13T00:00:00', count: 0 },
-          { date: '2020-06-14T00:00:00', count: 0 },
-          { date: '2020-06-15T00:00:00', count: 5 },
-          { date: '2020-06-16T00:00:00', count: 5 }
-        ],
-        opens: [
-          { date: '2020-06-13T00:00:00', count: 0 },
-          { date: '2020-06-14T00:00:00', count: 1 },
-          { date: '2020-06-15T00:00:00', count: 6 },
-          { date: '2020-06-16T00:00:00', count: 657 }
-        ],
-        clicks: [
-          { date: '2020-06-13T00:00:00', count: 0 },
-          { date: '2020-06-14T00:00:00', count: 0 },
-          { date: '2020-06-15T00:00:00', count: 0 },
-          { date: '2020-06-16T00:00:00', count: 0 }
-        ]
-      };
+      const data = await DistributionGroupService.stats1(payload.params);
       commit('update_stats_overview', data);
+    },
+    async export_stats_overview({ commit }, payload) {
+      const data = await DistributionGroupService.export1(payload.params);
+      downloadBase64AsFile({ content: data, fileName: 'distribution-groups-stats.csv', mimeType: 'text/csv' });
     },
     delete_group(context, payload) {
       console.log('TODO: connect delete group to api', payload);
