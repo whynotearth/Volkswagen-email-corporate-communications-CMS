@@ -1,5 +1,5 @@
 <template>
-  <LayoutFixedFooter>
+  <LayoutFixedScrollable>
     <template #header>
       <BaseAppBarHeader title="New Jumpstart" :to-link="{ name: 'Dashboard' }" />
     </template>
@@ -80,7 +80,7 @@
                 $v.audience.$error ? 'text-red-600 border-red-600' : 'text-gray-500 border-gray-600'
               ]"
             >
-              <label class="multiselect--material-label absolute" v-if="!$v.audience.$invalid" for="audience"
+              <label class="multiselect--material-label absolute z-30" v-if="!$v.audience.$invalid" for="audience"
                 >Audience:</label
               >
               <Multiselect
@@ -112,7 +112,7 @@
                 $v.tags.$error ? 'text-red-600 border-red-600' : 'text-gray-500 border-gray-600'
               ]"
             >
-              <label class="multiselect--material-label absolute" v-if="!$v.tags.$invalid" for="tags">Tags:</label>
+              <label class="multiselect--material-label absolute z-30" v-if="!$v.tags.$invalid" for="tags">Tags:</label>
               <Multiselect
                 id="tags"
                 v-model="$v.tags.$model"
@@ -160,13 +160,22 @@
               <div class="p-4 body-1-mobile">
                 <p class="mb-2"><b>Date:</b> {{ formatDate(date) }}</p>
                 <p class="mb-2">{{ audience[0] }}</p>
+                <p class="mb-2 preview-description" v-html="descriptionStyling"></p>
                 <div
-                  class="w-full tg-body-mobile text-center text-black em-high whitespace-pre-line break-words flex-grow order-2"
+                  class="w-full tg-body-mobile text-center text-black em-high whitespace-pre-line
+                  break-words flex-grow order-2 md:w-1/3 m-auto"
                 >
                   <PDFUpload class="text-center" @change="updatePdfFiles" :settings-carousel="optionsCarousel" />
+                  <span v-if="error.enabled" class="text-error pl-error-message">
+                    {{ error.message }}
+                  </span>
                 </div>
               </div>
             </div>
+
+            <p v-if="get_response_message.message" class="font-bold py-6 text-left" :class="get_response_message.class">
+              {{ get_response_message.message }}
+            </p>
 
             <div class="my-6 text-center">
               <BaseButton @selectButton="submit" class="w-64" bgType="secondary"> Save </BaseButton>
@@ -175,22 +184,19 @@
         </div>
       </div>
     </template>
-    <template #footer>
-      <NavigationBottom />
-    </template>
-  </LayoutFixedFooter>
+  </LayoutFixedScrollable>
 </template>
 
 <script>
-import LayoutFixedFooter from '@/components/LayoutFixedFooter.vue';
+import LayoutFixedScrollable from '@/components/LayoutFixedScrollable.vue';
 import BaseAppBarHeader from '@/components/BaseAppBarHeader.vue';
-import NavigationBottom from '@/components/BaseNavigationBottom';
 import BaseEditor from '@/components/Editor/BaseEditor.vue';
 import BaseInputText from '@/components/BaseInputText.vue';
 import BaseButton from '@/components/BaseButton.vue';
 import BaseDropdown from '@/components/BaseDropdown';
 import PDFUpload from '@/components/PDFUpload';
 import Multiselect from 'vue-multiselect';
+import marked from 'marked';
 import { mapGetters, mapActions, mapMutations } from 'vuex';
 import { required } from 'vuelidate/lib/validators';
 import { sleep, formatDate } from '@/helpers.js';
@@ -200,9 +206,8 @@ import { isToday, parseISO, startOfDay } from 'date-fns';
 export default {
   name: 'JumpStartForm',
   components: {
-    LayoutFixedFooter,
+    LayoutFixedScrollable,
     BaseAppBarHeader,
-    NavigationBottom,
     BaseInputText,
     BaseDropdown,
     BaseButton,
@@ -290,6 +295,19 @@ export default {
         this.update_tags(value);
       }
     },
+    descriptionStyling() {
+      marked.setOptions({
+        renderer: new marked.Renderer(),
+        pedantic: false,
+        gfm: true,
+        breaks: false,
+        sanitize: false,
+        smartLists: true,
+        smartypants: false,
+        xhtml: false
+      });
+      return marked(this.description);
+    },
     dates() {
       let d = new Date();
       let dtzOffset = d.getTimezoneOffset() * 60000;
@@ -326,10 +344,16 @@ export default {
   data() {
     return {
       to_query: '',
+      error: {
+        enabled: false,
+        message: ''
+      },
       pdfFileInfo: {},
       optionsCarousel: {
         dots: true,
-        navButtons: false
+        navButtons: false,
+        infinite: false,
+        initialSlide: 0
       }
     };
   },
@@ -374,8 +398,16 @@ export default {
       this.pdfFileInfo = result;
     },
     submit() {
+      this.$v.$touch();
+      if (this.$v.$invalid) {
+        return false;
+      }
+
       if (!this.pdfFileInfo.url) {
-        alert('No pdf attached.');
+        this.error = {
+          enabled: true,
+          message: 'PDF file is required'
+        };
         return;
       }
       const _startOfDay = startOfDay(new Date(this.get_email_date));
@@ -423,3 +455,75 @@ export default {
   }
 };
 </script>
+
+<style>
+.preview-description a {
+  color: #1972b3;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+  margin: 0;
+  margin-bottom: 0;
+  padding: 0;
+  text-align: left;
+  text-decoration: none;
+}
+.preview-description ol {
+  list-style: decimal;
+}
+.preview-description ul {
+  list-style: disc;
+}
+.preview-description ol,
+.preview-description ul {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+  list-style-position: inside;
+  margin: 0 !important;
+  margin-bottom: 8px !important;
+  padding: 0 !important;
+}
+.preview-description ol li,
+.preview-description ul li {
+  color: #000;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+  white-space: pre-line;
+  word-break: break-word;
+}
+.preview-description p,
+.preview-description blockquote {
+  color: #000;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+  margin: 0;
+  margin-bottom: 0;
+  padding: 0;
+  text-align: left;
+  white-space: pre-line;
+  word-break: break-word;
+}
+.preview-description h1 {
+  color: inherit;
+  font-family: Arial, sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 27px;
+  margin: 0 !important;
+  margin-bottom: 26px !important;
+  padding: 0;
+  text-align: left;
+  word-wrap: normal;
+}
+.preview-description strong {
+  color: #1972b3;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 20px;
+}
+</style>

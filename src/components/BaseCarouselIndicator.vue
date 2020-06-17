@@ -1,5 +1,5 @@
 <template>
-  <agile :options="settings">
+  <agile ref="carousel" :options="settings">
     <div class="slide" v-for="(item, index) in items" :key="index">
       <img class="m-auto" :src="item" />
     </div>
@@ -21,11 +21,27 @@ export default {
       type: Object,
       default: () => {}
     }
+  },
+  watch: {
+    items: {
+      deep: true,
+      handler() {
+        // https://github.com/lukaszflorczak/vue-agile/issues/99
+        this.$nextTick(() => {
+          setTimeout(() => {
+            this.$refs.carousel.reload();
+          }, 500);
+        });
+      }
+    }
   }
 };
 </script>
 
 <style>
+.slide {
+  width: 283px !important;
+}
 .agile__actions {
   margin-top: 20px;
 }
