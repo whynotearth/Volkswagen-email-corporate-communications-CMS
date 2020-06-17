@@ -98,13 +98,21 @@
             <div class="p-4 body-1-mobile">
               <p class="mb-2"><b>Date:</b> {{ date }}</p>
               <p class="mb-2">{{ to }}</p>
+              <p class="mb-2 preview-description" v-html="descriptionStyling"></p>
               <div
-                class="w-full tg-body-mobile text-center text-black em-high whitespace-pre-line break-words flex-grow order-2"
+                class="w-full tg-body-mobile text-center text-black em-high whitespace-pre-line break-words flex-grow order-2 md:w-1/3 m-auto"
               >
                 <PDFUpload class="text-center" @change="updatePdfFiles" :settings-carousel="optionsCarousel" />
+                <span v-if="error.enabled" class="text-error pl-error-message">
+                  {{ error.message }}
+                </span>
               </div>
             </div>
           </div>
+
+          <p v-if="get_response_message.message" class="font-bold py-6 text-left" :class="get_response_message.class">
+            {{ get_response_message.message }}
+          </p>
 
           <div class="my-6 text-center">
             <BaseButton @selectButton="submit" class="w-64" bgType="secondary"> Save </BaseButton>
@@ -123,6 +131,7 @@ import BaseEditor from '@/components/Editor/BaseEditor.vue';
 import BaseButton from '@/components/BaseButton.vue';
 import PDFUpload from '@/components/PDFUpload';
 import Multiselect from 'vue-multiselect';
+import marked from 'marked';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
 import { required } from 'vuelidate/lib/validators';
 import { sleep } from '@/helpers.js';
@@ -159,13 +168,26 @@ export default {
     to_query: '',
     showResult: false,
     pdfFileInfo: {},
+    error: {
+      enabled: false,
+      message: ''
+    },
     optionsCarousel: {
+      infinite: false,
+      initialSlide: 0,
       dots: true,
       navButtons: false
     }
   }),
   computed: {
-    ...mapGetters('memo', ['get_to', 'get_subject', 'get_date', 'get_description', 'get_recipients']),
+    ...mapGetters('memo', [
+      'get_to',
+      'get_subject',
+      'get_date',
+      'get_description',
+      'get_recipients',
+      'get_response_message'
+    ]),
     ...mapGetters('recipient', ['get_recipients_available']),
     to: {
       get() {
@@ -206,10 +228,35 @@ export default {
       set(value) {
         this.update_recipients(value);
       }
+    },
+    descriptionStyling() {
+      marked.setOptions({
+        renderer: new marked.Renderer(),
+        pedantic: false,
+        gfm: true,
+        breaks: false,
+        sanitize: false,
+        smartLists: true,
+        smartypants: false,
+        xhtml: false
+      });
+      return marked(this.description);
     }
   },
   mounted() {
     this.fetch_recipients();
+  },
+  destroyed() {
+    this.update_to('');
+    this.update_subject('');
+    this.update_description('');
+    this.update_date('');
+    this.update_recipients([]);
+    this.update_response_message({
+      message: '',
+      type: '',
+      class: ''
+    });
   },
   methods: {
     ...mapActions('memo', ['add_memo']),
@@ -229,8 +276,16 @@ export default {
       this.pdfFileInfo = result;
     },
     submit() {
+      this.$v.$touch();
+      if (this.$v.$invalid) {
+        return false;
+      }
+
       if (!this.pdfFileInfo.url) {
-        alert('No pdf attached.');
+        this.error = {
+          enabled: true,
+          message: 'PDF file is required'
+        };
         return;
       }
 
@@ -278,3 +333,75 @@ export default {
   }
 };
 </script>
+
+<style>
+.preview-description a {
+  color: #1972b3;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+  margin: 0;
+  margin-bottom: 0;
+  padding: 0;
+  text-align: left;
+  text-decoration: none;
+}
+.preview-description ol {
+  list-style: decimal;
+}
+.preview-description ul {
+  list-style: disc;
+}
+.preview-description ol,
+.preview-description ul {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+  list-style-position: inside;
+  margin: 0 !important;
+  margin-bottom: 8px !important;
+  padding: 0 !important;
+}
+.preview-description ol li,
+.preview-description ul li {
+  color: #000;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+  white-space: pre-line;
+  word-break: break-word;
+}
+.preview-description p,
+.preview-description blockquote {
+  color: #000;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+  margin: 0;
+  margin-bottom: 0;
+  padding: 0;
+  text-align: left;
+  white-space: pre-line;
+  word-break: break-word;
+}
+.preview-description h1 {
+  color: inherit;
+  font-family: Arial, sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 27px;
+  margin: 0 !important;
+  margin-bottom: 26px !important;
+  padding: 0;
+  text-align: left;
+  word-wrap: normal;
+}
+.preview-description strong {
+  color: #1972b3;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 20px;
+}
+</style>
