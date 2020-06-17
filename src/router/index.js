@@ -24,10 +24,11 @@ import EmailListImport from '../views/EmailListImport';
 import EmailListImportHelp from '../views/EmailListImportHelp';
 import Email from '@/views/Email';
 import Dashboard from '../views/Dashboard';
-import BlueDeltaMain from '@/views/BlueDeltaMain';
+import JumpStart from '@/views/JumpStart';
+import JumpStartList from '../views/JumpStartList';
+// import JumpStartList from '../views/JumpStartListOld';
 import JumpStartAdd from '../views/JumpStartAdd';
 import JumpStartEdit from '../views/JumpStartEdit';
-import JumpStartLists from '../views/JumpStartLists';
 import ArticleMain from '../views/ArticleMain';
 import ArticleLists from '../views/ArticleLists';
 import ArticleListsItem from '../views/ArticleListsItem';
@@ -117,8 +118,8 @@ const routes = [
   },
   {
     path: '/jumpstart',
-    name: 'BlueDeltaMain',
-    component: BlueDeltaMain
+    name: 'JumpStart',
+    component: JumpStart
   },
 
   // Stats Overview
@@ -175,8 +176,8 @@ const routes = [
   },
   {
     path: '/jumpstart/list',
-    name: 'JumpStartLists',
-    component: JumpStartLists
+    name: 'JumpStartList',
+    component: JumpStartList
   },
   {
     path: '/article-lists',

@@ -76,7 +76,7 @@ export default {
   },
   mounted() {
     if (!(this.id || this.date) || this.get_selected_articles.length === 0)
-      this.$router.push({ name: 'JumpStartLists' });
+      this.$router.push({ name: 'JumpStartList' });
     this.update_preview_link();
   },
   destroyed() {
@@ -148,7 +148,7 @@ export default {
       await sleep(1000);
 
       await this.$router.push({
-        name: 'JumpStartLists'
+        name: 'JumpStartList'
       });
 
       this.$store.commit('overlay/updateModel', {

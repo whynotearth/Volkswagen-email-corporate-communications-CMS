@@ -4,7 +4,7 @@
   <!-- ========================================================================== -->
   <LayoutFixedFooter>
     <template #header>
-      <BaseAppBarHeader title="Edit Jumpstart" :to-link="{ name: 'JumpStartLists' }" />
+      <BaseAppBarHeader title="Edit Jumpstart" :to-link="{ name: 'JumpStartList' }" />
     </template>
     <template #content>
       <div class="flex-grow text-left">

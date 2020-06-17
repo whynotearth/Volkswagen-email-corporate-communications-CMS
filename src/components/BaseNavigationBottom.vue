@@ -23,11 +23,7 @@
               </router-link>
             </li>
             <li class="text-white inline-block m-2 mb-1 text-xs flex-shrink-0">
-              <router-link
-                :active-class="'router-active-link'"
-                class="router-normal-link"
-                :to="{ name: 'BlueDeltaMain' }"
-              >
+              <router-link :active-class="'router-active-link'" class="router-normal-link" :to="{ name: 'JumpStart' }">
                 <MemoStatslIcon class="m-auto" />
                 JumpStart
               </router-link>

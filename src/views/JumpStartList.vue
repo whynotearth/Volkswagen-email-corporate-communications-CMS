@@ -1,7 +1,7 @@
 <template>
   <LayoutFixedFooter>
     <template #header>
-      <BaseAppBarHeader title="JumpStart" :to-link="{ name: 'BlueDeltaMain' }" />
+      <BaseAppBarHeader title="JumpStart" :to-link="{ name: 'JumpStart' }" />
     </template>
     <template #content>
       <BaseTabs>
@@ -50,7 +50,7 @@ import { mapGetters, mapActions, mapMutations } from 'vuex';
 import { isToday, parseISO } from 'date-fns';
 
 export default {
-  name: 'JumpStartLists',
+  name: 'JumpStartList',
   components: { BaseAppBarHeader, BaseTabs, BaseTab, JumpStartItem, LayoutFixedFooter, NavigationBottom },
   computed: {
     ...mapGetters('email', ['get_daily_plan']),

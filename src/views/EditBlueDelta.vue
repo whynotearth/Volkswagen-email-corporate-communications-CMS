@@ -7,7 +7,7 @@
       <BaseAppBarHeader
         class="sticky top-0 bg-white"
         :title="formatDate(get_email_date, 'EEEE, d MMM, yyyy')"
-        :to-link="{ name: 'JumpStartLists' }"
+        :to-link="{ name: 'JumpStartList' }"
       ></BaseAppBarHeader>
     </template>
     <template #content>
@@ -140,7 +140,7 @@ export default {
     };
   },
   mounted() {
-    if (!(this.id || this.date) || this.get_email_date === null) this.$router.push({ name: 'JumpStartLists' });
+    if (!(this.id || this.date) || this.get_email_date === null) this.$router.push({ name: 'JumpStartList' });
     this.fetch_recipients();
     this.update_preview_link();
     this.update_email_recipients(this.get_selected_plan.distributionGroups);
@@ -234,7 +234,7 @@ export default {
       await sleep(1000);
 
       await this.$router.push({
-        name: 'JumpStartLists'
+        name: 'JumpStartList'
       });
 
       this.$store.commit('overlay/updateModel', {

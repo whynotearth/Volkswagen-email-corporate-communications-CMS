@@ -15,7 +15,7 @@
             <p class="mb-6">
               By default, JumpStart will automatically send each day according to the below details. You can change
               these manually for each individual JumpStart
-              <router-link class="text-secondary underline" :to="{ name: 'JumpStartLists' }">here</router-link>.
+              <router-link class="text-secondary underline" :to="{ name: 'JumpStartList' }">here</router-link>.
             </p>
           </div>
 
