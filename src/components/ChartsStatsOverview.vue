@@ -25,9 +25,9 @@
         <span class="text-brand-light-blue-gradient tg-h1-mobile">{{ opensStats.openCount }}</span>
         <span
           class="flex items-center"
-          :class="isGrowthPositive(usersStats.userGrowthPercent) ? 'text-success' : 'text-error'"
+          :class="isGrowthPositive(opensStats.userGrowthPercent) ? 'text-success' : 'text-error'"
         >
-          <ArrowUp v-if="isGrowthPositive(usersStats.userGrowthPercent)" class="mr-2" /><ArrowDown
+          <ArrowUp v-if="isGrowthPositive(opensStats.userGrowthPercent)" class="mr-2" /><ArrowDown
             v-else=""
             class="mr-2"
           /><span>{{ opensStats.openGrowthPercent }}%</span></span
@@ -41,9 +41,9 @@
         <span class="text-brand-light-blue-gradient tg-h1-mobile">{{ clicksStats.clickCount }}</span>
         <span
           class="flex items-center"
-          :class="isGrowthPositive(usersStats.userGrowthPercent) ? 'text-success' : 'text-error'"
+          :class="isGrowthPositive(clicksStats.userGrowthPercent) ? 'text-success' : 'text-error'"
         >
-          <ArrowUp v-if="isGrowthPositive(usersStats.userGrowthPercent)" class="mr-2" /><ArrowDown
+          <ArrowUp v-if="isGrowthPositive(clicksStats.userGrowthPercent)" class="mr-2" /><ArrowDown
             v-else=""
             class="mr-2"
           /><span>{{ clicksStats.clickGrowthPercent }}%</span></span

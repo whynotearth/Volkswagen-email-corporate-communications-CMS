@@ -22,12 +22,16 @@
               v-for="item in emailList"
               v-bind:key="item.distributionGroup"
               class="flex flex-wrap text-left px-4 py-4 cursor-pointer"
-              @click="choiceEmailList(item)"
             >
-              <div class="w-full">{{ item.distributionGroup }}</div>
-              <div class="w-full item-details text-xs pt-1">
-                {{ item.subscriberCount }} subscribers | {{ item.openPercent }}% opens | {{ item.clickPercent }}% clicks
-              </div>
+              <router-link
+                :to="{ name: 'StatsOverviewDistributionGroup', params: { groupName: item.distributionGroup } }"
+              >
+                <div class="w-full">{{ item.distributionGroup }}</div>
+                <div class="w-full item-details text-xs pt-1">
+                  {{ item.subscriberCount }} subscribers | {{ item.openPercent }}% opens | {{ item.clickPercent }}%
+                  clicks
+                </div>
+              </router-link>
             </li>
           </ul>
         </div>
