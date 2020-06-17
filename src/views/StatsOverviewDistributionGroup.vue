@@ -92,11 +92,13 @@ import Calendar from '@/assets/calendar.svg';
 import Stat from '@/assets/stat.svg';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
 import { colors, opacity } from '@/constants/theme.js';
-import { formatDate, showOverlayAndRedirect } from '@/helpers';
+import {
+  formatDate,
+  showOverlayAndRedirect,
+  statsOverviewGenerateDateRangesAvailable,
+  statsOverviewDateRangeParamsGenerator
+} from '@/helpers';
 import { addDays, addYears, formatISO } from 'date-fns';
-
-// eslint-disable-next-line
-const PARSER_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
 
 export default {
   name: 'StatsOverviewDistributionGroup',
@@ -134,15 +136,14 @@ export default {
     },
 
     dateRangesAvailable() {
-      return this.generateDateRangesAvailable();
+      return this.statsOverviewGenerateDateRangesAvailable();
     },
 
     dateRangeParamsGenerator() {
-      const range = this.stats_overview_date_range.value;
-      return {
-        fromDate: formatISO(new Date(range[0]), { representation: 'date' }),
-        toDate: formatISO(new Date(range[1]), { representation: 'date' })
-      };
+      return statsOverviewDateRangeParamsGenerator({
+        range: this.stats_overview_date_range.value,
+        isAllTime: this.get_stats_overview_date_range.id === 'all_time'
+      });
     }
   },
 
@@ -150,8 +151,10 @@ export default {
     ...mapMutations('distributionGroup', ['update_stats_overview_date_range']),
     ...mapActions('distributionGroup', ['fetch_stats_overview', 'export_stats_overview', 'delete_group']),
 
+    statsOverviewGenerateDateRangesAvailable,
+
     exportStatsOverview() {
-      this.export_stats_overview({ params: this.dateRangeParamsGenerator });
+      this.export_stats_overview(this.dateRangeParamsGenerator);
     },
 
     async deleteList() {
@@ -162,23 +165,7 @@ export default {
     },
 
     fetchStatsOverview() {
-      this.fetch_stats_overview({ params: this.dateRangeParamsGenerator });
-    },
-
-    generateDateRangesAvailable() {
-      const format = PARSER_FORMAT;
-      const allTimeStartDate = new Date('2020-05-27');
-      const now = new Date();
-      const today = formatDate(now, format);
-      const last7days = formatDate(addDays(now, -7), format);
-      const last30days = formatDate(addDays(now, -30), format);
-      const allTime = formatDate(allTimeStartDate, format);
-
-      return [
-        { id: '7d_ago', value: [last7days, today], text: 'Last 7 Days' },
-        { id: '30d_ago', value: [last30days, today], text: 'Last 30 Days' },
-        { id: 'all_time', value: [allTime, today], text: 'All Time' }
-      ];
+      this.fetch_stats_overview(this.dateRangeParamsGenerator);
     }
   }
 };

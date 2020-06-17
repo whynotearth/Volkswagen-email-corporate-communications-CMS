@@ -3,7 +3,7 @@
 import { JumpStartService, NewJumpStartService } from '@whynotearth/meredith-axios';
 import qs from 'qs';
 import { debounce } from 'lodash-es';
-import store from '@/store';
+import { downloadBase64AsFile } from '@/helpers';
 
 export default {
   namespaced: true,
@@ -127,6 +127,10 @@ export default {
     async fetch_stats_overview({ commit }, payload) {
       const data = await NewJumpStartService.stats(payload.params);
       commit('update_stats_overview', data);
+    },
+    async export_stats_overview({ commit }, { params, filenameDate }) {
+      const data = await NewJumpStartService.export(params);
+      downloadBase64AsFile({ content: data, fileName: `jumpstarts-stats-${filenameDate}.csv`, mimeType: 'text/csv' });
     }
   },
   mutations: {

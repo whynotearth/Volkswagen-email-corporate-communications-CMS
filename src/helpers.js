@@ -1,5 +1,5 @@
 import { BASE_API } from '@/connection/api';
-import { format, formatISO } from 'date-fns';
+import { format, formatISO, addDays, addYears } from 'date-fns';
 import { startCase, toLower } from 'lodash-es';
 import store from './store';
 import router from './router';
@@ -192,4 +192,36 @@ export function downloadBase64AsFile({ content, mimeType, fileName }) {
   link.download = fileName;
   link.click();
   document.body.removeChild(link);
+}
+
+export function statsOverviewGenerateDateRangesAvailable() {
+  // eslint-disable-next-line
+  const PARSER_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
+
+  const format = PARSER_FORMAT;
+  const allTimeStartDate = new Date('2020-05-27');
+  const now = new Date();
+  const today = formatDate(now, format);
+  const last7days = formatDate(addDays(now, -7), format);
+  const last30days = formatDate(addDays(now, -30), format);
+  const allTime = formatDate(allTimeStartDate, format);
+
+  return [
+    { id: '7d_ago', value: [last7days, today], text: 'Last 7 Days' },
+    { id: '30d_ago', value: [last30days, today], text: 'Last 30 Days' },
+    { id: 'all_time', value: [allTime, today], text: 'All Time' }
+  ];
+}
+
+export function statsOverviewDateRangeParamsGenerator({ range, isAllTime }) {
+  const fromDate = formatISO(new Date(range[0]), { representation: 'date' });
+  const toDate = formatISO(new Date(range[1]), { representation: 'date' });
+  const toDateMinusOneDay = formatISO(addDays(new Date(range[1]), -1), { representation: 'date' });
+  return {
+    filenameDate: isAllTime ? 'all-time' : `${fromDate}--${toDateMinusOneDay}`,
+    params: {
+      fromDate,
+      toDate
+    }
+  };
 }
