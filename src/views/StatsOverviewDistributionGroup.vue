@@ -56,6 +56,7 @@
           </div>
 
           <a
+            @click="exportStatsOverview"
             class="mb-6 bg-secondary block w-full mx-auto hover:bg-blue-700 text-white text-center font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline transition duration-100 ease-in-out transition-all label-mobile shadow-2dp max-w-sm cursor-pointer"
             >Export Report</a
           >
@@ -134,12 +135,24 @@ export default {
 
     dateRangesAvailable() {
       return this.generateDateRangesAvailable();
+    },
+
+    dateRangeParamsGenerator() {
+      const range = this.stats_overview_date_range.value;
+      return {
+        fromDate: formatISO(new Date(range[0]), { representation: 'date' }),
+        toDate: formatISO(new Date(range[1]), { representation: 'date' })
+      };
     }
   },
 
   methods: {
     ...mapMutations('distributionGroup', ['update_stats_overview_date_range']),
-    ...mapActions('distributionGroup', ['fetch_stats_overview', 'delete_group']),
+    ...mapActions('distributionGroup', ['fetch_stats_overview', 'export_stats_overview', 'delete_group']),
+
+    exportStatsOverview() {
+      this.export_stats_overview({ params: this.dateRangeParamsGenerator });
+    },
 
     async deleteList() {
       if (confirm('Are you sure?')) {
@@ -149,14 +162,7 @@ export default {
     },
 
     fetchStatsOverview() {
-      const range = this.stats_overview_date_range.value;
-
-      this.fetch_stats_overview({
-        params: {
-          fromDate: formatISO(new Date(range[0]), { representation: 'date' }),
-          toDate: formatISO(new Date(range[1]), { representation: 'date' })
-        }
-      });
+      this.fetch_stats_overview({ params: this.dateRangeParamsGenerator });
     },
 
     generateDateRangesAvailable() {

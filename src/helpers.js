@@ -183,3 +183,13 @@ export async function showOverlayAndRedirect({ title = '', message = '', route, 
     message: ''
   });
 }
+
+export function downloadBase64AsFile({ content, mimeType, fileName }) {
+  var link = document.createElement('a');
+  document.body.appendChild(link);
+  link.setAttribute('type', 'hidden');
+  link.href = `data:${mimeType};base64,` + content;
+  link.download = fileName;
+  link.click();
+  document.body.removeChild(link);
+}
