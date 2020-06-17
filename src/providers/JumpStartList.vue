@@ -15,7 +15,7 @@ export default {
       pageInfo: {
         title: 'JumpStart Stats',
         backRoute: { name: 'StatsOverviewJumpstarts' },
-        listItemDetailPath: 'JumpStartActivityDetail'
+        listItemDetailPath: 'StatsOverviewJumpstart'
       }
     };
   },
