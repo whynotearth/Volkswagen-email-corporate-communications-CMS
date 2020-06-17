@@ -41,16 +41,16 @@ export default {
     updateEmail(state, payload) {
       state.email = payload;
     },
-    updateFormFirstName(state, payload) {
+    update_form_firstname(state, payload) {
       Vue.set(state.user_form_data, 'first_name', payload);
     },
-    updateFormLastName(state, payload) {
+    update_form_lastname(state, payload) {
       Vue.set(state.user_form_data, 'last_name', payload);
     },
-    updateFormEmail(state, payload) {
+    update_form_email(state, payload) {
       Vue.set(state.user_form_data, 'email', payload);
     },
-    updateFormSegments(state, payload) {
+    update_form_segments(state, payload) {
       Vue.set(state.user_form_data, 'segments', payload);
     },
     update_stats_overview(state, payload) {

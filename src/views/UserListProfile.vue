@@ -168,7 +168,7 @@ export default {
         return this.get_form_first_name;
       },
       set(value) {
-        this.updateFormFirstName(value);
+        this.update_form_firstname(value);
       }
     },
     lastName: {
@@ -176,7 +176,7 @@ export default {
         return this.get_form_last_name;
       },
       set(value) {
-        this.updateFormLastName(value);
+        this.update_form_lastname(value);
       }
     },
     email: {
@@ -184,7 +184,7 @@ export default {
         return this.get_form_email;
       },
       set(value) {
-        this.updateFormEmail(value);
+        this.update_form_email(value);
       }
     },
     segments: {
@@ -192,7 +192,7 @@ export default {
         return this.get_form_segments;
       },
       set(value) {
-        this.updateFormSegments(value);
+        this.update_form_segments(value);
       }
     }
   },
@@ -202,10 +202,10 @@ export default {
   },
   methods: {
     ...mapMutations('distributionGroup', [
-      'updateFormFirstName',
-      'updateFormLastName',
-      'updateFormEmail',
-      'updateFormSegments'
+      'update_form_firstname',
+      'update_form_lastname',
+      'update_form_email',
+      'update_form_segments'
     ]),
     ...mapActions('recipient', ['fetch_recipients']),
     initForm() {
@@ -213,10 +213,10 @@ export default {
       const groupName = this.$route.params.groupName;
       this.item = this.getEmails.find(p => p.id === parseInt(id));
       if (this.item) {
-        this.updateFormFirstName(this.item.firstName);
-        this.updateFormLastName(this.item.lastName);
-        this.updateFormEmail(this.item.email);
-        this.updateFormSegments([groupName]);
+        this.update_form_firstname(this.item.firstName);
+        this.update_form_lastname(this.item.lastName);
+        this.update_form_email(this.item.email);
+        this.update_form_segments([groupName]);
       }
     },
     onToSearchChange(query) {

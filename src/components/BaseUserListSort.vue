@@ -29,22 +29,15 @@ export default {
     }
   },
   components: { BaseUserItem, More },
-  data() {
-    return {
-      sortedUserList: null
-    };
-  },
-  mounted() {
-    this.sortingByGroupLetter();
-  },
-  methods: {
-    sortingByGroupLetter() {
-      this.list.sort((a, b) => {
+  computed: {
+    sortedUserList() {
+      let list = this.list;
+      list.sort((a, b) => {
         const x = a.firstName === null ? '' : '' + a.firstName;
         const y = b.firstName === null ? '' : '' + b.firstName;
         return x > y ? 1 : x === y ? 0 : -1;
       });
-      let data = this.list.reduce((stash, current) => {
+      let data = list.reduce((stash, current) => {
         // get first letter of name of current element
         let group = current.firstName ? current.firstName[0] : 'No Name';
         if (!stash[group]) {
@@ -54,7 +47,7 @@ export default {
         }
         return stash;
       }, {});
-      this.sortedUserList = Object.values(data);
+      return Object.values(data);
     }
   }
 };
