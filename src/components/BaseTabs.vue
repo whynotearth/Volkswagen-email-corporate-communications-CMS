@@ -4,9 +4,9 @@
       <div :class="tabsContainerClasses">
         <ul class="flex tg-color-label-mobile">
           <li
-            class="block flex-grow"
+            class="block flex-shrink-0"
             v-for="(tab, index) in tabs"
-            :class="{ 'is-active border-b-2 border-secondary': tab.isActive }"
+            :class="[{ 'is-active border-b-2 border-secondary': tab.isActive }, `w-1/${tabs.length}`]"
             :key="index"
           >
             <a class="block" :class="tabLinkClasses" href="#" @click.prevent="selectTab(tab)">

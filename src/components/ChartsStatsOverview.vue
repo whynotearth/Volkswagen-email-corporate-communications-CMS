@@ -6,8 +6,8 @@
     <slot name="description"></slot>
     <BaseTabs class="w-full" tabsContainerClasses="container px-0" tabLinkClasses="px-6 text-left">
       <template #Users="{isActive}" class="text-left">
-        <span class="block tg-body-mobile mb-1 pt-4 normal-case">Users</span>
-        <span class="text-brand-light-blue-gradient tg-h1-mobile" :class="{ 'font-normal': !isActive }">{{
+        <span class="block tg-body-emphasis-mobile mb-1 pt-4 normal-case">Users</span>
+        <span class="text-brand-light-blue-gradient" :class="[isActive ? 'tg-h1-mobile' : 'inactive-number-font']">{{
           usersStats.userCount
         }}</span>
         <span
@@ -26,15 +26,15 @@
       </BaseTab>
 
       <template #Opens="{isActive}">
-        <span class="block tg-body-mobile mb-1 pt-4 normal-case">Opens</span>
-        <span class="text-brand-light-blue-gradient tg-h1-mobile" :class="{ 'font-normal': !isActive }">{{
+        <span class="block tg-body-emphasis-mobile mb-1 pt-4 normal-case">Opens</span>
+        <span class="text-brand-light-blue-gradient" :class="[isActive ? 'tg-h1-mobile' : 'inactive-number-font']">{{
           opensStats.openCount
         }}</span>
         <span
           class="flex items-center tg-caption-mobile pb-4"
-          :class="isGrowthPositive(opensStats.userGrowthPercent) ? 'text-success' : 'text-error'"
+          :class="isGrowthPositive(opensStats.openGrowthPercent) ? 'text-success' : 'text-error'"
         >
-          <ArrowUp v-if="isGrowthPositive(opensStats.userGrowthPercent)" class="mr-2" /><ArrowDown
+          <ArrowUp v-if="isGrowthPositive(opensStats.openGrowthPercent)" class="mr-2" /><ArrowDown
             v-else=""
             class="mr-2"
           /><span>{{ opensStats.openGrowthPercent }}%</span></span
@@ -46,15 +46,15 @@
       </BaseTab>
 
       <template #Clicks="{isActive}">
-        <span class="block tg-body-mobile mb-1 pt-4 normal-case">Clicks</span>
-        <span class="text-brand-light-blue-gradient tg-h1-mobile" :class="{ 'font-normal': !isActive }">{{
+        <span class="block tg-body-emphasis-mobile mb-1 pt-4 normal-case">Clicks</span>
+        <span class="text-brand-light-blue-gradient" :class="[isActive ? 'tg-h1-mobile' : 'inactive-number-font']">{{
           clicksStats.clickCount
         }}</span>
         <span
           class="flex items-center tg-caption-mobile pb-4"
-          :class="isGrowthPositive(clicksStats.userGrowthPercent) ? 'text-success' : 'text-error'"
+          :class="isGrowthPositive(clicksStats.clickGrowthPercent) ? 'text-success' : 'text-error'"
         >
-          <ArrowUp v-if="isGrowthPositive(clicksStats.userGrowthPercent)" class="mr-2" /><ArrowDown
+          <ArrowUp v-if="isGrowthPositive(clicksStats.clickGrowthPercent)" class="mr-2" /><ArrowDown
             v-else=""
             class="mr-2"
           /><span>{{ clicksStats.clickGrowthPercent }}%</span></span
@@ -280,5 +280,13 @@ export default {
   .tabs li:not(.border-secondary) {
     @apply border-white border-b-1 border-opacity-12;
   }
+}
+
+.inactive-number-font {
+  font-family: 'VWHead-Regular', sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 32px;
+  line-height: 39px;
 }
 </style>
