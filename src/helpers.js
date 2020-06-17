@@ -2,6 +2,7 @@ import { BASE_API } from '@/connection/api';
 import { format, formatISO } from 'date-fns';
 import { startCase, toLower } from 'lodash-es';
 import store from './store';
+import router from './router';
 
 // https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener#Safely_detecting_option_support
 export function getPassiveEventConfig() {
@@ -165,4 +166,20 @@ export function randomId() {
   return Math.random()
     .toString()
     .substr(2);
+}
+
+export async function showOverlayAndRedirect({ title = '', message = '', route, timeout = 1000 }) {
+  store.commit('overlay/updateModel', {
+    title,
+    message
+  });
+
+  await sleep(1000);
+
+  await router.push(route);
+
+  store.commit('overlay/updateModel', {
+    title: '',
+    message: ''
+  });
 }

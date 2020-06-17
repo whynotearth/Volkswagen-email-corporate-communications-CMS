@@ -1,3 +1,5 @@
+// TODO: rename store module to jumpstart
+
 import { JumpStartService, NewJumpStartService } from '@whynotearth/meredith-axios';
 import qs from 'qs';
 import { debounce } from 'lodash-es';
@@ -122,8 +124,8 @@ export default {
       const data = await JumpStartService.stats1(params);
       commit('update_stat', data);
     },
-    async fetch_stats_overview({ commit }) {
-      const data = await NewJumpStartService.stats();
+    async fetch_stats_overview({ commit }, payload) {
+      const data = await NewJumpStartService.stats(payload.params);
       commit('update_stats_overview', data);
     }
   },

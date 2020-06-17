@@ -13,7 +13,6 @@
 </template>
 
 <script>
-import { sleep } from '@/helpers.js';
 export default {
   name: 'LayoutFixedScrollable',
   data: () => ({

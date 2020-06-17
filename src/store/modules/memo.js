@@ -84,8 +84,8 @@ export default {
       const data = await MemoService.stats1(payload);
       context.commit('update_stat', { key: data.memoStat.id, data });
     },
-    async fetch_stats_overview({ commit }) {
-      const data = await MemoService.overallstats();
+    async fetch_stats_overview({ commit }, payload) {
+      const data = await MemoService.overallstats(payload.params);
       commit('update_stats_overview', data);
     }
   },
