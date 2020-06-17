@@ -1,14 +1,17 @@
 <template>
   <div class="stats-overview flex flex-wrap text-white py-4">
-    <h2 class="tg-caption-bold-desktop em-high text-white w-full m-4">
+    <h2 class="tg-h2-mobile em-high text-white text-opacity-84 w-full m-4">
       <slot name="title"></slot>
     </h2>
     <slot name="description"></slot>
-    <BaseTabs class="w-full" :tabClasses="'text-right'">
-      <template #Users class="text-left">
-        <span class="text-brand-light-blue-gradient tg-h1-mobile">{{ usersStats.userCount }}</span>
+    <BaseTabs class="w-full" tabsContainerClasses="container px-0" tabLinkClasses="px-6 text-left">
+      <template #Users="{isActive}" class="text-left">
+        <span class="block tg-body-mobile mb-1 pt-4 normal-case">Users</span>
+        <span class="text-brand-light-blue-gradient tg-h1-mobile" :class="{ 'font-normal': !isActive }">{{
+          usersStats.userCount
+        }}</span>
         <span
-          class="flex items-center"
+          class="flex items-center tg-caption-mobile pb-4"
           :class="isGrowthPositive(usersStats.userGrowthPercent) ? 'text-success' : 'text-error'"
         >
           <ArrowUp v-if="isGrowthPositive(usersStats.userGrowthPercent)" class="mr-2" /><ArrowDown
@@ -17,14 +20,18 @@
           /><span>{{ usersStats.userGrowthPercent }}%</span></span
         >
       </template>
+      <!-- Child users: -->
       <BaseTab name="Users" selected="true">
         <BaseChart :config="usersChartConfig" />
       </BaseTab>
 
-      <template #Opens>
-        <span class="text-brand-light-blue-gradient tg-h1-mobile">{{ opensStats.openCount }}</span>
+      <template #Opens="{isActive}">
+        <span class="block tg-body-mobile mb-1 pt-4 normal-case">Opens</span>
+        <span class="text-brand-light-blue-gradient tg-h1-mobile" :class="{ 'font-normal': !isActive }">{{
+          opensStats.openCount
+        }}</span>
         <span
-          class="flex items-center"
+          class="flex items-center tg-caption-mobile pb-4"
           :class="isGrowthPositive(opensStats.userGrowthPercent) ? 'text-success' : 'text-error'"
         >
           <ArrowUp v-if="isGrowthPositive(opensStats.userGrowthPercent)" class="mr-2" /><ArrowDown
@@ -33,14 +40,18 @@
           /><span>{{ opensStats.openGrowthPercent }}%</span></span
         >
       </template>
+      <!-- Child opens -->
       <BaseTab name="Opens">
         <BaseChart :config="opensChartConfig" />
       </BaseTab>
 
-      <template #Clicks>
-        <span class="text-brand-light-blue-gradient tg-h1-mobile">{{ clicksStats.clickCount }}</span>
+      <template #Clicks="{isActive}">
+        <span class="block tg-body-mobile mb-1 pt-4 normal-case">Clicks</span>
+        <span class="text-brand-light-blue-gradient tg-h1-mobile" :class="{ 'font-normal': !isActive }">{{
+          clicksStats.clickCount
+        }}</span>
         <span
-          class="flex items-center"
+          class="flex items-center tg-caption-mobile pb-4"
           :class="isGrowthPositive(clicksStats.userGrowthPercent) ? 'text-success' : 'text-error'"
         >
           <ArrowUp v-if="isGrowthPositive(clicksStats.userGrowthPercent)" class="mr-2" /><ArrowDown
@@ -49,6 +60,7 @@
           /><span>{{ clicksStats.clickGrowthPercent }}%</span></span
         >
       </template>
+      <!-- Child clicks -->
       <BaseTab name="Clicks">
         <BaseChart :config="clicksChartConfig" />
       </BaseTab>
@@ -251,7 +263,7 @@ export default {
 
 <style scoped>
 .text-brand-light-blue-gradient {
-  background: -webkit-linear-gradient(#0374f9, #03b3f9);
+  background: -webkit-linear-gradient(90deg, #0374f9 0%, #03b3f9 100%);
   background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -267,11 +279,6 @@ export default {
 
   .tabs li:not(.border-secondary) {
     @apply border-white border-b-1 border-opacity-12;
-  }
-
-  .tabs li a {
-    @apply text-left !important;
-    @apply normal-case;
   }
 }
 </style>

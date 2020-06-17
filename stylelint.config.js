@@ -9,6 +9,6 @@ module.exports = {
       }
     ],
     'max-empty-lines': 2,
-    'unit-whitelist': ['em', 'rem', '%', 'ms', 's', 'px']
+    'unit-whitelist': ['em', 'rem', '%', 'ms', 's', 'px', 'deg']
   }
 };
