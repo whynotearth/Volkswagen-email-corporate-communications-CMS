@@ -196,7 +196,7 @@ import { mustBeDate } from '@/validations.js';
 import { isToday, parseISO, startOfDay } from 'date-fns';
 
 export default {
-  name: 'JumpStartForm',
+  name: 'JumpStartAdd',
   components: {
     LayoutFixedScrollable,
     BaseAppBarHeader,
@@ -367,8 +367,12 @@ export default {
     },
     addTag(tag) {
       let tags = this.get_tags;
-      tags.push(tag);
+      const adaptedTagName = this.adaptTagName(tag);
+      tags.push(adaptedTagName);
       this.update_tags(tags);
+    },
+    adaptTagName(tag) {
+      return tag.trim().toLowerCase();
     },
     millisecondToTime(duration) {
       let minutes = parseInt((duration / (1000 * 60)) % 60),

@@ -195,7 +195,7 @@ import { mustBeDate } from '@/validations.js';
 import { isToday, parseISO } from 'date-fns';
 
 export default {
-  name: 'JumpStartFormEdit',
+  name: 'JumpStartEdit',
   components: {
     LayoutFixedFooter,
     BaseAppBarHeader,
