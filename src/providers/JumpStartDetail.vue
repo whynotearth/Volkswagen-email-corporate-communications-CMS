@@ -20,8 +20,9 @@ export default {
   },
   props: ['id'],
   computed: {
+    ...mapGetters('email', ['get_stat']),
     activity() {
-      const stat = this.$store.getters['email/get_stat'];
+      let stat = this.get_stat[this.id] || {};
       return JumpStartStatDetailToActivityDetail(stat);
     }
   },

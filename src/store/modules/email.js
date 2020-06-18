@@ -4,6 +4,7 @@ import { JumpStartService, NewJumpStartService } from '@whynotearth/meredith-axi
 import qs from 'qs';
 import { debounce } from 'lodash-es';
 import { downloadBase64AsFile } from '@/helpers';
+import Vue from 'vue';
 
 export default {
   namespaced: true,
@@ -122,7 +123,7 @@ export default {
     },
     async fetch_stat({ commit }, params) {
       const data = await JumpStartService.stats1(params);
-      commit('update_stat', data);
+      commit('update_stat', { key: data.jumpStartStat.id, data });
     },
     async fetch_stats_overview({ commit }, payload) {
       const data = await NewJumpStartService.stats(payload.params);
@@ -176,8 +177,8 @@ export default {
     update_stats(state, payload) {
       state.stats = payload;
     },
-    update_stat(state, payload) {
-      state.stat = payload;
+    update_stat(state, { key, data }) {
+      Vue.set(state.stat, key, data);
     },
     update_stats_overview(state, payload) {
       state.stats_overview = payload;
