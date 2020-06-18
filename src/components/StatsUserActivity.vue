@@ -13,12 +13,12 @@ export default {
   name: 'StatsUserActivity',
   props: {
     list: {
-      type: Object,
+      type: Array,
       default: () => {}
     },
     title: {
-      type: Object,
-      default: () => {}
+      type: String,
+      default: ''
     }
   }
 };

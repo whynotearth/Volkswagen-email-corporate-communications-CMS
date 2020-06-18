@@ -1,6 +1,7 @@
 // TODO: rename store module to jumpstart
 
 import { JumpStartService, NewJumpStartService } from '@whynotearth/meredith-axios';
+import { downloadBase64AsFile } from '@/helpers';
 import qs from 'qs';
 import { debounce } from 'lodash-es';
 import store from '@/store';
@@ -37,6 +38,11 @@ export default {
       text: '',
       value: [] // ['2020-06-06', '2020-06-13']
     },
+    stats_overview_jumpstart: null,
+    stats_overview_jumpstart_date_range: {
+      text: '',
+      value: [] // ['2020-06-06', '2020-06-13']
+    },
     stat: {}
   },
   getters: {
@@ -58,6 +64,8 @@ export default {
     get_stats: state => state.stats,
     get_stats_overview: state => state.stats_overview,
     get_stats_overview_date_range: state => state.stats_overview_date_range,
+    get_stats_overview_jumpstart: state => state.stats_overview_jumpstart,
+    get_stats_overview_jumpstart_date_range: state => state.stats_overview_jumpstart_date_range,
     get_stat: state => state.stat
   },
   actions: {
@@ -124,9 +132,17 @@ export default {
       const data = await JumpStartService.stats1(params);
       commit('update_stat', data);
     },
+    async fetch_stats_overview_jumpstart({ commit }, payload) {
+      const data = await NewJumpStartService.stats1(payload.params);
+      commit('update_stats_overview_jumpstart', data);
+    },
     async fetch_stats_overview({ commit }, payload) {
       const data = await NewJumpStartService.stats(payload.params);
       commit('update_stats_overview', data);
+    },
+    async export_stats_overview_jumpstart({ commit }, payload) {
+      const data = await NewJumpStartService.export1(payload);
+      downloadBase64AsFile({ content: data, fileName: 'stats_overview_jumpstart.csv', mimeType: 'text/csv' });
     }
   },
   mutations: {
@@ -180,6 +196,12 @@ export default {
     },
     update_stats_overview_date_range(state, payload) {
       state.stats_overview_date_range = payload;
+    },
+    update_stats_overview_jumpstart(state, payload) {
+      state.stats_overview_jumpstart = payload;
+    },
+    update_stats_overview_jumpstart_date_range(state, payload) {
+      state.stats_overview_jumpstart_date_range = payload;
     }
   }
 };

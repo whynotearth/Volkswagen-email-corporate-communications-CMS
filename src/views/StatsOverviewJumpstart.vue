@@ -1,8 +1,7 @@
 <template>
-  <!-- TODO: rename file to StatsOverviewJumpStarts.vue -->
   <LayoutFixedFooter>
     <template #header>
-      <BaseAppBarHeader :title="'Wednesday, 6 May, 2020'" :toLink="{ name: 'JumpStartActivityList' }" />
+      <BaseAppBarHeader :title="titleHeader" :toLink="{ name: 'JumpStartActivityList' }" />
     </template>
     <template #content>
       <div>
@@ -12,7 +11,7 @@
             class="relative bg-surface text-left mb-6"
             placeholder="Schedule time"
             :options="dateRangesAvailable"
-            v-model="stats_overview_date_range"
+            v-model="stats_overview_jumpstart_date_range"
             @updateSelectedOption="fetchStatsOverview"
           >
             <template #icon>
@@ -34,9 +33,9 @@
         <div class="container px-0 md:px-6 text-left mb-6">
           <div class="bg-brand-gradient">
             <ChartsStatsOverview
-              v-if="get_stats_overview"
-              :stats_overview="get_stats_overview"
-              :stats_overview_date_range="stats_overview_date_range"
+              v-if="get_stats_overview_jumpstart"
+              :stats_overview="get_stats_overview_jumpstart"
+              :stats_overview_date_range="stats_overview_jumpstart_date_range"
             >
               <template #title>
                 <span class="block text-center tg-h2-mobile">
@@ -72,9 +71,9 @@
 
           <div>
             <ChartTagUsage
-              v-if="get_stats_overview"
-              :stats_overview="get_stats_overview"
-              :stats_overview_date_range="stats_overview_date_range"
+              v-if="get_stats_overview_jumpstart"
+              :stats_overview="get_stats_overview_jumpstart"
+              :stats_overview_date_range="stats_overview_jumpstart_date_range"
             />
           </div>
         </div>
@@ -91,6 +90,7 @@
           </div>
 
           <a
+            @click="exportReport()"
             class="bg-secondary block w-full mx-auto hover:bg-blue-700 text-white text-center font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline transition duration-100 ease-in-out transition-all label-mobile shadow-2dp max-w-sm"
             >Export Report</a
           >
@@ -140,12 +140,15 @@ export default {
   },
   created() {
     this.fetchStatsOverview();
+    if (!this.get_stats.length) {
+      this.fetch_stats();
+    }
   },
   computed: {
-    ...mapGetters('email', ['get_stats_overview_date_range', 'get_stats_overview']),
-    stats_overview_date_range: {
+    ...mapGetters('email', ['get_stats', 'get_stats_overview_jumpstart_date_range', 'get_stats_overview_jumpstart']),
+    stats_overview_jumpstart_date_range: {
       get() {
-        const current = this.get_stats_overview_date_range;
+        const current = this.get_stats_overview_jumpstart_date_range;
         // default value
         if (!current.value.length > 0) {
           const last7days = this.dateRangesAvailable[0];
@@ -154,7 +157,7 @@ export default {
         return current;
       },
       set(value) {
-        this.update_stats_overview_date_range(value);
+        this.update_stats_overview_jumpstart_date_range(value);
       }
     },
 
@@ -162,7 +165,13 @@ export default {
       return this.generateDateRangesAvailable();
     },
     jumpStartId() {
-      return this.$route.params.id;
+      return parseInt(this.$route.params.id);
+    },
+    stat() {
+      return this.get_stats.find(p => p.id === this.jumpStartId);
+    },
+    titleHeader() {
+      return this.stat ? formatDate(this.stat.dateTime) : '';
     }
   },
   data() {
@@ -196,14 +205,15 @@ export default {
     };
   },
   methods: {
-    ...mapMutations('email', ['update_stats_overview_date_range']),
-    ...mapActions('email', ['fetch_stats_overview']),
+    ...mapMutations('email', ['update_stats_overview_jumpstart_date_range']),
+    ...mapActions('email', ['fetch_stats_overview_jumpstart', 'fetch_stats', 'export_stats_overview_jumpstart']),
 
     fetchStatsOverview() {
-      const range = this.stats_overview_date_range.value;
+      const range = this.stats_overview_jumpstart_date_range.value;
 
-      this.fetch_stats_overview({
+      this.fetch_stats_overview_jumpstart({
         params: {
+          id: this.jumpStartId,
           fromDate: formatISO(new Date(range[0]), { representation: 'date' }),
           toDate: formatISO(new Date(range[1]), { representation: 'date' })
         }
@@ -214,7 +224,7 @@ export default {
       const format = PARSER_FORMAT;
       // TODO: process all time better
       const allTimeStartDate = new Date('2020-05-27');
-      const now = new Date();
+      const now = this.stat ? new Date(this.stat.dateTime) : new Date();
       const today = formatDate(now, format);
       const last7days = formatDate(addDays(now, -7), format);
       const last30days = formatDate(addDays(now, -30), format);
@@ -225,6 +235,10 @@ export default {
         { id: '30d_ago', value: [last30days, today], text: 'Last 30 Days' },
         { id: 'all_time', value: [allTime, today], text: 'All Time' }
       ];
+    },
+
+    exportReport() {
+      this.export_stats_overview_jumpstart({ id: this.jumpStartId });
     }
   }
 };
