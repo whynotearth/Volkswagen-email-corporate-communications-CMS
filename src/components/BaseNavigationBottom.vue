@@ -100,7 +100,7 @@ export default {
     MemoIcon,
     MemoStatslIcon,
     ArticleIcon,
-    BookingIcon,
+    // BookingIcon,
     StatsIcon,
     IconBottomNavFabOutcircle
   },
