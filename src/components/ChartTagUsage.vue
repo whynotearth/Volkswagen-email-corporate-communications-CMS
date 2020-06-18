@@ -35,11 +35,12 @@ export default {
       const slicedSortedTags = sortBy(tags, 'totalCount')
         .reverse()
         .slice(0, MAX_TAGS_TO_SHOW);
+
       return slicedSortedTags;
     },
     stats() {
       let result = [];
-      this.stats_overview.tags.forEach(item => {
+      this.tags.forEach(item => {
         result = [...result, ...item.stats];
       });
       return result;
@@ -63,10 +64,12 @@ export default {
         fontColor: `rgba(0,0,0,${opacity['54']})`,
         fontSize: 12,
         callback: (value, index, values) => {
-          return this.stats
+          const result = this.stats
             .filter(item => item.date === value)
             .map(item => item.count)
             .reduce((acc, current) => acc + current, 0);
+
+          return result;
         }
       };
       return this.getChartConfig({ datasets, ticks });
