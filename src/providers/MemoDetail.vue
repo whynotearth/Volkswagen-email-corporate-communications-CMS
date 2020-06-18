@@ -20,8 +20,10 @@ export default {
   },
   props: ['id'],
   computed: {
+    ...mapGetters('memo', ['get_stat']),
     activity() {
-      const stat = this.$store.getters['memo/get_stat'][this.id];
+      // TODO sometimes udefined stats, provided it is exists, it hase a problem with forEach(), filter(), paseInt() ... too
+      let stat = this.get_stat[this.id] || {};
       return MemoStatDetailToActivityDetail(stat);
     }
   },
