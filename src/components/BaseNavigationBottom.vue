@@ -32,7 +32,7 @@
                 JumpStart
               </router-link>
             </li>
-            <li class="text-white inline-block m-2 mb-1 text-xs flex-shrink-0">
+            <!--<li class="text-white inline-block m-2 mb-1 text-xs flex-shrink-0">
               <router-link
                 :active-class="'router-active-link'"
                 class="router-normal-link"
@@ -41,7 +41,7 @@
                 <BookingIcon class="m-auto" />
                 Article
               </router-link>
-            </li>
+            </li>-->
           </ul>
           <IconBottomNavFabOutcircle class="h-14 text-primary flex-shrink-0" />
           <ul :class="{ opened: isOpen }" class="absolute toggle-menu list-none">
