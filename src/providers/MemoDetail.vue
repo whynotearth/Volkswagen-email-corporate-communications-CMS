@@ -22,7 +22,7 @@ export default {
   computed: {
     ...mapGetters('memo', ['get_stat']),
     activity() {
-      // TODO sometimes udefined stats, provided it is exists, it hase a problem with forEach(), filter(), paseInt() ... too
+      // TODO sometimes udefined stat, provided it is exists, it hase a problem with forEach(), filter(), paseInt() ... too
       let stat = this.get_stat[this.id] || {};
       return MemoStatDetailToActivityDetail(stat);
     }
