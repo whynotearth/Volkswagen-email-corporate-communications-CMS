@@ -92,7 +92,7 @@ export default {
       if (plan.jumpStartId) {
         this.$router.push({ name: 'JumpStartEdit', params: { id: plan.jumpStartId } });
       } else {
-        this.$router.push({ name: 'JumpStartAdd', params: { date: plan.dateTime } });
+        this.$router.push({ name: 'JumpStartAdd' });
       }
     }
   }

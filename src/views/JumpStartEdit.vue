@@ -1,17 +1,14 @@
 <template>
-  <!-- ========================================================================== -->
-  <!-- NOTE: this is old jumpstart! -->
-  <!-- ========================================================================== -->
-  <LayoutFixedFooter>
+  <LayoutFixedScrollable>
     <template #header>
-      <BaseAppBarHeader title="Edit Jumpstart" :to-link="{ name: 'JumpStartLists' }" />
+      <BaseAppBarHeader title="New Jumpstart" :to-link="{ name: 'Dashboard' }" />
     </template>
     <template #content>
       <div class="flex-grow text-left">
         <div class="container px-0 md:px-6 pt-4 px-4 bg-background">
           <BaseDropdown
-            class="relative bg-surface text-left border rounded mb-4 border-gray-600"
-            :dropdownContainerClasses="'dropdown-border-0 py-3 px-3'"
+            class="relative bg-surface text-left rounded mb-4 border-gray-600"
+            :dropdownContainerClasses="'py-3 px-3'"
             :optionContainerClasses="'mt-0 pt-0'"
             placeholder="Schedule time"
             :options="dates"
@@ -32,9 +29,9 @@
             </template>
           </BaseDropdown>
           <BaseDropdown
-            class="relative bg-surface text-left border rounded mb-4 border-gray-600"
+            class="relative bg-surface text-left rounded mb-4 border-gray-600"
             :options="time_slots"
-            :dropdownContainerClasses="'dropdown-border-0 py-3 px-3'"
+            :dropdownContainerClasses="'py-3 px-3'"
             :optionContainerClasses="'mt-0 pt-0'"
             v-model="$v.time.$model"
           >
@@ -81,7 +78,7 @@
               $v.audience.$error ? 'text-red-600 border-red-600' : 'text-gray-500 border-gray-600'
             ]"
           >
-            <label class="multiselect--material-label absolute" v-if="!$v.audience.$invalid" for="audience"
+            <label class="multiselect--material-label absolute z-30" v-if="!$v.audience.$invalid" for="audience"
               >Audience:</label
             >
             <Multiselect
@@ -99,39 +96,32 @@
               <template v-slot:noOptions>No options available</template>
             </Multiselect>
             <span v-if="$v.audience.$error" class="text-xs text-error pl-error-message">
-              To is required
+              Audience is required
             </span>
           </div>
 
           <div
-            class="mb-4 bg-white relative"
-            :class="[
-              {
-                'is-filled': !$v.tags.$invalid,
-                error: $v.tags.$error
-              },
-              $v.tags.$error ? 'text-red-600 border-red-600' : 'text-gray-500 border-gray-600'
-            ]"
+            class="mb-4 bg-white relative text-gray-500 border-gray-600"
+            :class="{
+              'is-filled': tags.length
+            }"
           >
-            <label class="multiselect--material-label absolute" v-if="!$v.tags.$invalid" for="tags">Tags:</label>
+            <label class="multiselect--material-label absolute z-30" v-if="tags.length" for="tags">Tags:</label>
             <Multiselect
               id="tags"
-              v-model="$v.tags.$model"
-              :placeholder="$v.tags.$invalid ? 'Tags:' : ''"
+              v-model="tags"
+              :placeholder="!tags.length ? 'Tags:' : ''"
               :multiple="true"
               :hide-selected="true"
               :options="[]"
               :show-labels="false"
               :taggable="true"
               @tag="addTag"
-              @blur="$v.tags.$touch()"
+              @blur="tags.$touch()"
             >
               <template v-slot:noResult>Nothing found</template>
               <template v-slot:noOptions>No options available</template>
             </Multiselect>
-            <span v-if="$v.tags.$error" class="text-xs text-error pl-error-message">
-              To is required
-            </span>
           </div>
 
           <BaseEditor
@@ -150,7 +140,7 @@
               <img
                 src="https://res.cloudinary.com/whynotearth/image/upload/v1586844643/Volkswagen/cms/logo_tjf9ej.svg"
                 alt=""
-                class="h-8 mr-2"
+                class="h-8 md:h-16 mr-2"
               />
               <span class="font-semibold text-2xs text-blue-900">Chattanooga</span>
             </div>
@@ -158,13 +148,22 @@
             <div class="p-4 body-1-mobile">
               <p class="mb-2"><b>Date:</b> {{ formatDate(date) }}</p>
               <p class="mb-2">{{ audience[0] }}</p>
+              <p class="mb-2 preview-description" v-html="descriptionStyling"></p>
               <div
-                class="w-full tg-body-mobile text-center text-black em-high whitespace-pre-line break-words flex-grow order-2"
+                class="w-full tg-body-mobile text-center text-black em-high whitespace-pre-line
+                  break-words flex-grow order-2 md:w-1/3 m-auto"
               >
                 <PDFUpload class="text-center" @change="updatePdfFiles" :settings-carousel="optionsCarousel" />
+                <span v-if="error.enabled" class="text-error pl-error-message">
+                  {{ error.message }}
+                </span>
               </div>
             </div>
           </div>
+
+          <p v-if="get_response_message.message" class="font-bold py-6 text-left" :class="get_response_message.class">
+            {{ get_response_message.message }}
+          </p>
 
           <div class="my-6 text-center">
             <BaseButton @selectButton="submit" class="w-64" bgType="secondary"> Save </BaseButton>
@@ -172,34 +171,30 @@
         </div>
       </div>
     </template>
-    <template #footer>
-      <NavigationBottom />
-    </template>
-  </LayoutFixedFooter>
+  </LayoutFixedScrollable>
 </template>
 
 <script>
-import LayoutFixedFooter from '@/components/LayoutFixedFooter.vue';
+import LayoutFixedScrollable from '@/components/LayoutFixedScrollable.vue';
 import BaseAppBarHeader from '@/components/BaseAppBarHeader.vue';
-import NavigationBottom from '@/components/BaseNavigationBottom';
 import BaseEditor from '@/components/Editor/BaseEditor.vue';
 import BaseInputText from '@/components/BaseInputText.vue';
 import BaseButton from '@/components/BaseButton.vue';
 import BaseDropdown from '@/components/BaseDropdown';
 import PDFUpload from '@/components/PDFUpload';
 import Multiselect from 'vue-multiselect';
+import marked from 'marked';
 import { mapGetters, mapActions, mapMutations } from 'vuex';
 import { required } from 'vuelidate/lib/validators';
 import { sleep, formatDate } from '@/helpers.js';
 import { mustBeDate } from '@/validations.js';
-import { isToday, parseISO } from 'date-fns';
+import { isToday, parseISO, startOfDay } from 'date-fns';
 
 export default {
-  name: 'JumpStartFormEdit',
+  name: 'JumpStartForm',
   components: {
-    LayoutFixedFooter,
+    LayoutFixedScrollable,
     BaseAppBarHeader,
-    NavigationBottom,
     BaseInputText,
     BaseDropdown,
     BaseButton,
@@ -220,9 +215,6 @@ export default {
     time: {
       required
     },
-    tags: {
-      required
-    },
     description: {
       required
     }
@@ -231,7 +223,6 @@ export default {
     ...mapGetters('email', [
       'get_email_recipients',
       'get_schedule_time',
-      'get_selected_articles',
       'get_email_date',
       'get_response_message',
       'get_subject',
@@ -288,6 +279,19 @@ export default {
         this.update_tags(value);
       }
     },
+    descriptionStyling() {
+      marked.setOptions({
+        renderer: new marked.Renderer(),
+        pedantic: false,
+        gfm: true,
+        breaks: false,
+        sanitize: false,
+        smartLists: true,
+        smartypants: false,
+        xhtml: false
+      });
+      return marked(this.description);
+    },
     dates() {
       let d = new Date();
       let dtzOffset = d.getTimezoneOffset() * 60000;
@@ -324,10 +328,16 @@ export default {
   data() {
     return {
       to_query: '',
+      error: {
+        enabled: false,
+        message: ''
+      },
       pdfFileInfo: {},
       optionsCarousel: {
         dots: true,
-        navButtons: false
+        navButtons: false,
+        infinite: false,
+        initialSlide: 0
       }
     };
   },
@@ -343,11 +353,22 @@ export default {
       'update_response_message',
       'update_description',
       'update_subject',
-      'update_tags'
+      'update_tags',
+      'update_selected_plan'
     ]),
     ...mapActions('recipient', ['fetch_recipients']),
     ...mapActions('email', ['create_jumpstart', 'update_preview_link', 'clear_email_data']),
     initForm() {
+      const data = {
+        dateTime: '2020-06-17T17:42:16.914Z',
+        subject: 'string',
+        distributionGroups: ['string'],
+        tags: ['string'],
+        body: 'string',
+        pdfUrl: 'string'
+      };
+      this.update_selected_plan(data);
+      debugger;
       const plan = this.get_selected_plan;
       this.update_email_recipients(plan.distributionGroups);
       let time = parseISO(plan.dateTime);
@@ -377,16 +398,133 @@ export default {
       this.pdfFileInfo = result;
     },
     submit() {
-      const data = {
-        date: this.get_email_date,
-        time: this.get_schedule_time,
-        distributionGroups: this.get_email_recipients,
-        subject: this.get_subject,
-        audience: this.get_audience,
-        description: this.get_description,
-        files: this.pdfFileInfo
+      this.$v.$touch();
+      if (this.$v.$invalid) {
+        return false;
+      }
+
+      if (!this.pdfFileInfo.url) {
+        this.error = {
+          enabled: true,
+          message: 'PDF file is required'
+        };
+        return;
+      }
+      const _startOfDay = startOfDay(new Date(this.get_email_date));
+      const finalTime = new Date(_startOfDay.getTime() + this.get_schedule_time).toISOString();
+
+      const params = {
+        body: {
+          id: this.get_selected_plan.jumpStartId,
+          pdfUrl: this.pdfFileInfo.url,
+          dateTime: finalTime,
+          distributionGroups: this.get_email_recipients,
+          subject: this.get_subject,
+          body: this.get_description,
+          tags: this.get_tags
+        }
       };
+      this.create_jumpstart(params)
+        .then(() => {
+          this.onSuccessSubmit();
+        })
+        .catch(error => {
+          this.update_response_message({
+            message: error.response && error.response.data && error.response.data.message,
+            type: 'error',
+            class: 'text-error'
+          });
+        });
+    },
+    async onSuccessSubmit() {
+      this.$store.commit('overlay/updateModel', {
+        title: 'Success!',
+        message: ''
+      });
+
+      await sleep(1000);
+
+      await this.$router.push({
+        name: 'Dashboard'
+      });
+
+      this.$store.commit('overlay/updateModel', {
+        title: '',
+        message: ''
+      });
     }
   }
 };
 </script>
+
+<style>
+.preview-description a {
+  color: #1972b3;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+  margin: 0;
+  margin-bottom: 0;
+  padding: 0;
+  text-align: left;
+  text-decoration: none;
+}
+.preview-description ol {
+  list-style: decimal;
+}
+.preview-description ul {
+  list-style: disc;
+}
+.preview-description ol,
+.preview-description ul {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+  list-style-position: inside;
+  margin: 0 !important;
+  margin-bottom: 8px !important;
+  padding: 0 !important;
+}
+.preview-description ol li,
+.preview-description ul li {
+  color: #000;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+  white-space: pre-line;
+  word-break: break-word;
+}
+.preview-description p,
+.preview-description blockquote {
+  color: #000;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+  margin: 0;
+  margin-bottom: 0;
+  padding: 0;
+  text-align: left;
+  white-space: pre-line;
+  word-break: break-word;
+}
+.preview-description h1 {
+  color: inherit;
+  font-family: Arial, sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 27px;
+  margin: 0 !important;
+  margin-bottom: 26px !important;
+  padding: 0;
+  text-align: left;
+  word-wrap: normal;
+}
+.preview-description strong {
+  color: #1972b3;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 20px;
+}
+</style>

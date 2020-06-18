@@ -111,7 +111,7 @@ const routes = [
     component: JumpStartAdd
   },
   {
-    path: '/jumpstart/edit',
+    path: '/jumpstart/edit/:id',
     name: 'JumpStartEdit',
     component: JumpStartEdit
   },
@@ -149,12 +149,12 @@ const routes = [
     component: Email,
     props: true
   },
-  {
+  /*  {
     path: '/jumpstart/edit/:id',
     name: 'EditBlueDelta',
     component: EditBlueDelta,
     props: true
-  },
+  },*/
   {
     path: '/jumpstart/add/:date',
     name: 'AddBlueDelta',
