@@ -48,7 +48,7 @@
             Tag Usage
           </h2>
 
-          <p class="tg-caption-mobile text-black text-opacity-84 mb-4">Top 4 Tags by Usage</p>
+          <p class="tg-caption-mobile text-black text-opacity-84 mb-2">Top 4 Tags by Usage</p>
 
           <div>
             <ChartTagUsage
