@@ -6,7 +6,30 @@
 import { colors, opacity } from '@/constants/theme.js';
 import BaseChart from '@/components/BaseChart';
 import { cloneDeep, sortBy, random } from 'lodash-es';
+import { stringToHashCode } from '@/helpers.js';
 const MAX_TAGS_TO_SHOW = 4;
+
+const materialColors = [
+  '#d32f2f',
+  '#C2185B',
+  '#7B1FA2',
+  '#512DA8',
+  '#303F9F',
+  '#1976D2',
+  '#0097A7',
+  '#00796B',
+  '#388E3C',
+  '#AFB42B',
+  '#FBC02D',
+  '#F57C00',
+  '#5D4037',
+  '#651FFF',
+  '#4CAF50',
+  '#00E676',
+  '#E91E63',
+  '#3D5AFE',
+  '#283593'
+];
 
 // eslint-disable-next-line
 const PARSER_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
@@ -36,6 +59,9 @@ export default {
         .reverse()
         .slice(0, MAX_TAGS_TO_SHOW);
 
+      slicedSortedTags.map(item => {
+        item.color = colors[item.tag.toLowerCase()] || this.getRandomColor(item.tag);
+      });
       return slicedSortedTags;
     },
     stats() {
@@ -49,13 +75,12 @@ export default {
       const datasets = this.tags.map(tagData => {
         const data = this.adaptDataset(tagData.stats);
         const tagName = tagData.tag;
-        const tagColor = colors[tagName.toLowerCase()] || this.getRandomColor();
         return {
           label: tagName,
           data,
           borderWidth: 2,
-          backgroundColor: tagColor,
-          borderColor: tagColor,
+          backgroundColor: tagData.color,
+          borderColor: tagData.color,
           fill: false
         };
       });
@@ -76,17 +101,11 @@ export default {
     }
   },
   methods: {
-    getRandomColor() {
-      const colorsList = [
-        colors.priority,
-        colors.community,
-        colors.people,
-        colors.oneteam,
-        colors.answers,
-        colors.plant,
-        colors.events
-      ];
-      return colorsList[random(0, colorsList.length - 1)];
+    getRandomColor(tagName) {
+      const index = stringToHashCode(tagName) % (materialColors.length - 1);
+      console.log('index', index);
+
+      return materialColors[index];
     },
     adaptDataset(inputData) {
       return inputData.map(item => ({ t: item.date, y: item.count }));

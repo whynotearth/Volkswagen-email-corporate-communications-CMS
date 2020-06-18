@@ -225,3 +225,13 @@ export function statsOverviewDateRangeParamsGenerator({ range, isAllTime }) {
     }
   };
 }
+
+// Returns a hash code for a string.
+// https://gist.github.com/hyamamoto/fd435505d29ebfa3d9716fd2be8d42f0
+export function stringToHashCode(input) {
+  var h = 0,
+    l = input.length,
+    i = 0;
+  if (l > 0) while (i < l) h = ((h << 5) - h + input.charCodeAt(i++)) | 0;
+  return h;
+}
