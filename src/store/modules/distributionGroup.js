@@ -2,7 +2,6 @@
 // refactor: remove new Promise() and just return ajax
 
 import { DistributionGroupService } from '@whynotearth/meredith-axios';
-import Vue from 'vue';
 import { downloadBase64AsFile } from '@/helpers';
 
 export default {
@@ -139,9 +138,13 @@ export default {
       const data = await DistributionGroupService.stats1(payload.params);
       commit('update_stats_overview', data);
     },
-    async export_stats_overview({ commit }, payload) {
-      const data = await DistributionGroupService.export1(payload.params);
-      downloadBase64AsFile({ content: data, fileName: 'distribution-groups-stats.csv', mimeType: 'text/csv' });
+    async export_stats_overview({ commit }, { params, filenameDate }) {
+      const data = await DistributionGroupService.export1(params);
+      downloadBase64AsFile({
+        content: data,
+        fileName: `distribution-groups-stats-${filenameDate}.csv`,
+        mimeType: 'text/csv'
+      });
     },
     delete_group(context, payload) {
       console.log('TODO: connect delete group to api', payload);

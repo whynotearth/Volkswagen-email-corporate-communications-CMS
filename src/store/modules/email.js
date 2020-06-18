@@ -4,7 +4,7 @@ import { JumpStartService, NewJumpStartService } from '@whynotearth/meredith-axi
 import { downloadBase64AsFile } from '@/helpers';
 import qs from 'qs';
 import { debounce } from 'lodash-es';
-import store from '@/store';
+import Vue from 'vue';
 
 export default {
   namespaced: true,
@@ -130,7 +130,7 @@ export default {
     },
     async fetch_stat({ commit }, params) {
       const data = await JumpStartService.stats1(params);
-      commit('update_stat', data);
+      commit('update_stat', { key: data.jumpStartStat.id, data });
     },
     async fetch_stats_overview_jumpstart({ commit }, payload) {
       const data = await NewJumpStartService.stats1(payload.params);
@@ -140,9 +140,13 @@ export default {
       const data = await NewJumpStartService.stats(payload.params);
       commit('update_stats_overview', data);
     },
-    async export_stats_overview_jumpstart({ commit }, payload) {
+    async export_stats_overview_jumpstart({ commit }, payload, filenameDate) {
       const data = await NewJumpStartService.export1(payload.params);
-      downloadBase64AsFile({ content: data, fileName: 'stats_overview_jumpstart.csv', mimeType: 'text/csv' });
+      downloadBase64AsFile({ content: data, fileName: `jumpstart-stats-${filenameDate}.csv`, mimeType: 'text/csv' });
+    },
+    async export_stats_overview({ commit }, { params, filenameDate }) {
+      const data = await NewJumpStartService.export(params);
+      downloadBase64AsFile({ content: data, fileName: `jumpstarts-stats-${filenameDate}.csv`, mimeType: 'text/csv' });
     }
   },
   mutations: {
@@ -188,8 +192,8 @@ export default {
     update_stats(state, payload) {
       state.stats = payload;
     },
-    update_stat(state, payload) {
-      state.stat = payload;
+    update_stat(state, { key, data }) {
+      Vue.set(state.stat, key, data);
     },
     update_stats_overview(state, payload) {
       state.stats_overview = payload;

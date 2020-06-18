@@ -4,8 +4,8 @@
       <div class=" bg-primary flex-1"></div>
       <div class="container container--border px-0">
         <div class="flex relative">
-          <ul class="flex-auto flex justify-around text-left menu list-none bg-primary px-2 md:px-0">
-            <li class="text-white inline-block m-2 mb-1 text-xs flex-shrink-0">
+          <ul class="flex-auto flex justify-start text-left menu list-none bg-primary px-2 md:px-0">
+            <li class="text-white inline-block m-2 mx-3 md:mx-5 mb-1 text-xs flex-shrink-0">
               <router-link
                 :active-class="'router-active-link'"
                 class="router-normal-link"
@@ -16,13 +16,13 @@
                 Home
               </router-link>
             </li>
-            <li class="text-white inline-block m-2 mb-1 text-xs flex-shrink-0">
+            <li class="text-white inline-block m-2 mx-3 md:mx-5 mb-1 text-xs flex-shrink-0">
               <router-link :active-class="'router-active-link'" class="router-normal-link" :to="{ name: 'Stats' }">
                 <StatsIcon class="m-auto" />
                 Stats
               </router-link>
             </li>
-            <li class="text-white inline-block m-2 mb-1 text-xs flex-shrink-0">
+            <li class="text-white inline-block m-2 mx-3 md:mx-5 mb-1 text-xs flex-shrink-0">
               <router-link
                 :active-class="'router-active-link'"
                 class="router-normal-link"
@@ -32,7 +32,7 @@
                 JumpStart
               </router-link>
             </li>
-            <li class="text-white inline-block m-2 mb-1 text-xs flex-shrink-0">
+            <!--<li class="text-white inline-block m-2 mb-1 text-xs flex-shrink-0">
               <router-link
                 :active-class="'router-active-link'"
                 class="router-normal-link"
@@ -41,7 +41,7 @@
                 <BookingIcon class="m-auto" />
                 Article
               </router-link>
-            </li>
+            </li>-->
           </ul>
           <IconBottomNavFabOutcircle class="h-14 text-primary flex-shrink-0" />
           <ul :class="{ opened: isOpen }" class="absolute toggle-menu list-none">
@@ -100,7 +100,7 @@ export default {
     MemoIcon,
     MemoStatslIcon,
     ArticleIcon,
-    BookingIcon,
+    // BookingIcon,
     StatsIcon,
     IconBottomNavFabOutcircle
   },

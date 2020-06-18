@@ -63,6 +63,18 @@ export default {
 
 <style scoped>
 .memo-list-item--description {
-  height: 56px;
+  height: 144px;
+  @screen md {
+    height: 138px;
+  }
+}
+
+.activity-list {
+  .memo-list-item--description {
+    height: 64px;
+    @screen md {
+      height: 118px;
+    }
+  }
 }
 </style>

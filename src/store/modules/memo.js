@@ -1,6 +1,7 @@
 import { MemoService } from '@whynotearth/meredith-axios';
 import Vue from 'vue';
 import { cloneDeep } from 'lodash-es';
+import { downloadBase64AsFile } from '@/helpers';
 
 const defaultMemoFormData = {
   to: '',
@@ -87,6 +88,10 @@ export default {
     async fetch_stats_overview({ commit }, payload) {
       const data = await MemoService.overallstats(payload.params);
       commit('update_stats_overview', data);
+    },
+    async export_stats_overview({ commit }, { params, filenameDate }) {
+      const data = await MemoService.export(params);
+      downloadBase64AsFile({ content: data, fileName: `memos-stats-${filenameDate}.csv`, mimeType: 'text/csv' });
     }
   },
   getters: {
