@@ -5,7 +5,7 @@
     </template>
 
     <template #content>
-      <div class="container px-0 md:px-6 text-left">
+      <div class="activity-list container px-0 md:px-6 text-left">
         <div class="px-4 pt-4">
           <div class="mb-8" v-for="item in list" :key="item.id">
             <router-link

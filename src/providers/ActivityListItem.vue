@@ -68,4 +68,13 @@ export default {
     height: 138px;
   }
 }
+
+.activity-list {
+  .memo-list-item--description {
+    height: 64px;
+    @screen md {
+      height: 118px;
+    }
+  }
+}
 </style>
