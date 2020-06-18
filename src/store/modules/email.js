@@ -141,7 +141,7 @@ export default {
       commit('update_stats_overview', data);
     },
     async export_stats_overview_jumpstart({ commit }, payload) {
-      const data = await NewJumpStartService.export1(payload);
+      const data = await NewJumpStartService.export1(payload.params);
       downloadBase64AsFile({ content: data, fileName: 'stats_overview_jumpstart.csv', mimeType: 'text/csv' });
     }
   },

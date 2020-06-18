@@ -46,7 +46,7 @@
               <template #description>
                 <div class="flex w-full px-4 py-2 em-high">
                   <span class="tg-body-emphasis-mobile text-white mr-2">Distribution Group: </span>
-                  <BaseChip :text="'communications'" />
+                  <BaseChip v-for="(item, index) in stat.distributionGroups" :key="index" :text="item" />
                 </div>
                 <div class="flex w-full px-4 py-3 em-high">
                   <span class="tg-body-emphasis-mobile text-white mr-2">Subject: </span>
@@ -238,7 +238,15 @@ export default {
     },
 
     exportReport() {
-      this.export_stats_overview_jumpstart({ id: this.jumpStartId });
+      const range = this.stats_overview_jumpstart_date_range.value;
+
+      this.export_stats_overview_jumpstart({
+        params: {
+          id: this.jumpStartId,
+          fromDate: formatISO(new Date(range[0]), { representation: 'date' }),
+          toDate: formatISO(new Date(range[1]), { representation: 'date' })
+        }
+      });
     }
   }
 };
