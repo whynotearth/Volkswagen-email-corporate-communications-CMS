@@ -14,7 +14,7 @@ export default {
     return {
       pageInfo: {
         title: 'Open Rate',
-        backRoute: { name: 'JumpStartActivityList' }
+        backRoute: { name: 'StatsOverviewJumpstart' }
       }
     };
   },

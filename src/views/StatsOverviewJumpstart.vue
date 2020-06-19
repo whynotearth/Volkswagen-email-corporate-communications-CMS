@@ -1,8 +1,7 @@
 <template>
-  <!-- TODO: rename file to StatsOverviewJumpStarts.vue -->
   <LayoutFixedFooter>
     <template #header>
-      <BaseAppBarHeader :title="'JumpStart Overview'" :toLink="{ name: 'Stats' }" />
+      <BaseAppBarHeader :title="titleHeader" :toLink="{ name: 'JumpStartActivityList' }" />
     </template>
     <template #content>
       <div>
@@ -16,7 +15,7 @@
             @updateSelectedOption="fetchStatsOverview"
           >
             <template #icon>
-              <Calendar />
+              <Calendar class="inline-block align-baseline mr-4 h-5 w-5 -mb-0.5 pointer-events-none" />
             </template>
             <template #title="{ selectedOption }">
               <span class="text-black">
@@ -34,13 +33,39 @@
         <div class="container px-0 md:px-6 text-left mb-6">
           <div class="bg-brand-gradient">
             <ChartsStatsOverview
-              v-if="get_stats_overview"
-              :stats_overview="get_stats_overview"
+              v-if="get_stats_overview_jumpstart"
+              :stats_overview="get_stats_overview_jumpstart"
               :stats_overview_date_range="dateRange"
             >
-              <template #title><span class="block text-center">JumpStart Overview</span></template>
+              <template #title>
+                <span class="block text-center tg-h2-mobile">
+                  <span class="text-brand-light-blue-gradient">{{ get_stats_overview_jumpstart.recipientsCount }}</span>
+                  Recipients
+                </span>
+              </template>
+              <template #description>
+                <div v-if="stat" class="flex w-full px-4 py-2 em-high">
+                  <span class="tg-body-emphasis-mobile text-white mr-2">Distribution Group: </span>
+                  <BaseChip isSmall="true" v-for="(item, index) in stat.distributionGroups" :key="index" :text="item" />
+                </div>
+                <div class="flex w-full px-4 py-3 em-high">
+                  <span class="tg-body-emphasis-mobile text-white mr-2">Subject: </span>
+                  <span class="tg-body-mobile">{{ subjectdDateTime }}</span>
+                </div>
+                <div class="flex w-full px-4 py-3 mb-3 em-high">
+                  <span class="tg-body-emphasis-mobile text-white mr-2">Delivered: </span>
+                  <span class="tg-body-mobile">{{ deliveredDateTime }}</span>
+                </div>
+              </template>
             </ChartsStatsOverview>
           </div>
+        </div>
+        <div class="container px-0 md:px-6 text-left mb-6">
+          <StatsUserActivity
+            v-if="get_stats_overview_jumpstart"
+            :title="'Activity'"
+            :fields="get_stats_overview_jumpstart"
+          />
         </div>
 
         <div class="container px-4 md:px-6 text-left mb-6">
@@ -52,8 +77,8 @@
 
           <div>
             <ChartTagUsage
-              v-if="get_stats_overview"
-              :stats_overview="get_stats_overview"
+              v-if="get_stats_overview_jumpstart"
+              :stats_overview="get_stats_overview_jumpstart"
               :stats_overview_date_range="dateRange"
             />
           </div>
@@ -62,11 +87,11 @@
         <div class="container px-4 md:px-6 text-left pb-6">
           <div class="mb-6">
             <!-- link button -->
-            <BaseButtonPro :toLink="{ name: 'JumpStartActivityList' }">
+            <BaseButtonPro :toLink="{ name: 'JumpStartActivityDetail', params: { id: jumpStartId } }">
               <template #icon>
-                <Stat class="inline-block align-baseline mr-4 h-5 w-5 -mb-0.5 pointer-events-none" />
+                <Person class="inline-block align-baseline mr-4 h-5 w-5 -mb-0.5 pointer-events-none" />
               </template>
-              View Reports
+              View User Engagement
             </BaseButtonPro>
           </div>
 
@@ -87,13 +112,15 @@
 <script>
 import LayoutFixedFooter from '@/components/LayoutFixedFooter';
 import NavigationBottom from '@/components/BaseNavigationBottom';
+import StatsUserActivity from '@/components/StatsUserActivity';
 import BaseAppBarHeader from '@/components/BaseAppBarHeader.vue';
 import BaseDropdown from '@/components/BaseDropdown';
 import ChartsStatsOverview from '@/components/ChartsStatsOverview';
 import ChartTagUsage from '@/components/ChartTagUsage.vue';
 import BaseButtonPro from '@/components/BaseButtonPro';
+import BaseChip from '@/components/BaseChip';
 import Calendar from '@/assets/calendar.svg';
-import Stat from '@/assets/stat.svg';
+import Person from '@/assets/person.svg';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
 import { colors, opacity } from '@/constants/theme.js';
 import { formatDate, statsOverviewGenerateDateRangesAvailable, statsOverviewDateRangeParamsGenerator } from '@/helpers';
@@ -102,17 +129,19 @@ import { addDays, addYears, formatISO } from 'date-fns';
 const dateRangesAvailable = statsOverviewGenerateDateRangesAvailable();
 
 export default {
-  name: 'StatsOverviewJumpStarts',
+  name: 'StatsOverviewJumpStart',
   components: {
     BaseAppBarHeader,
     NavigationBottom,
     LayoutFixedFooter,
+    StatsUserActivity,
     BaseDropdown,
     ChartsStatsOverview,
     ChartTagUsage,
     BaseButtonPro,
+    BaseChip,
     Calendar,
-    Stat
+    Person
   },
   data: () => {
     return {
@@ -121,22 +150,45 @@ export default {
   },
   created() {
     this.fetchStatsOverview();
+    this.fetch_stats();
   },
   computed: {
-    ...mapGetters('email', ['get_stats_overview']),
+    ...mapGetters('email', ['get_stats', 'get_stats_overview_jumpstart']),
     dateRangesAvailable() {
       return dateRangesAvailable;
+    },
+    jumpStartId() {
+      return parseInt(this.$route.params.id);
+    },
+    stat() {
+      return this.get_stats.find(p => p.id === this.jumpStartId);
+    },
+    titleHeader() {
+      return this.stat ? formatDate(this.stat.dateTime, 'iiii, dd MMM, yyyy') : '';
+    },
+    deliveredDateTime() {
+      return this.get_stats_overview_jumpstart.firstDeliverDateTime
+        ? formatDate(this.get_stats_overview_jumpstart.firstDeliverDateTime, 'iiii, dd MMM yyyy, h:mm aaa')
+        : '-';
+    },
+    subjectdDateTime() {
+      return this.stat ? formatDate(this.stat.dateTime, 'iiii, dd MMM yyyy, h:mm aaa') : '-';
     }
   },
-
   methods: {
-    ...mapActions('email', ['fetch_stats_overview', 'export_stats_overview']),
+    ...mapMutations('email', ['update_stats_overview_jumpstart_date_range']),
+    ...mapActions('email', ['fetch_stats_overview_jumpstart', 'fetch_stats', 'export_stats_overview_jumpstart']),
+
+    fetchStatsOverview() {
+      const payload = statsOverviewDateRangeParamsGenerator(this.dateRange);
+      payload.params.id = this.jumpStartId;
+      this.fetch_stats_overview_jumpstart(payload);
+    },
 
     exportStatsOverview() {
-      this.export_stats_overview(statsOverviewDateRangeParamsGenerator(this.dateRange));
-    },
-    fetchStatsOverview() {
-      this.fetch_stats_overview(statsOverviewDateRangeParamsGenerator(this.dateRange));
+      const payload = statsOverviewDateRangeParamsGenerator(this.dateRange);
+      payload.params.id = this.jumpStartId;
+      this.export_stats_overview_jumpstart(payload);
     }
   }
 };

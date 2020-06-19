@@ -1,7 +1,11 @@
 <template functional>
-  <div class="chip rounded bg-opacity-12 bg-secondary border-1 border-divider inline-flex px-5">
+  <div
+    class="chip rounded bg-opacity-12 bg-secondary border-1 border-divider inline-flex"
+    :class="[props.isSmall ? 'px-2' : 'px-5']"
+  >
     <div
-      class="py-1 text-secondary uppercase md:tg-caption-bold-desktop tg-caption-mobile em-high tg-caption-bold-mobile"
+      class="py-1 text-secondary uppercase tg-caption-bold-mobile"
+      :class="[props.isSmall ? 'tg-caption-bold-mobile' : 'md:tg-caption-bold-desktop tg-caption-mobile em-high']"
     >
       {{ props.text }}
     </div>

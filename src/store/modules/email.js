@@ -1,9 +1,9 @@
 // TODO: rename store module to jumpstart
 
 import { JumpStartService, NewJumpStartService } from '@whynotearth/meredith-axios';
+import { downloadBase64AsFile } from '@/helpers';
 import qs from 'qs';
 import { debounce } from 'lodash-es';
-import { downloadBase64AsFile } from '@/helpers';
 import Vue from 'vue';
 
 export default {
@@ -34,10 +34,7 @@ export default {
     available_articles: [],
     stats: [],
     stats_overview: null,
-    stats_overview_date_range: {
-      text: '',
-      value: [] // ['2020-06-06', '2020-06-13']
-    },
+    stats_overview_jumpstart: null,
     stat: {}
   },
   getters: {
@@ -58,7 +55,7 @@ export default {
     get_available_articles: state => state.available_articles,
     get_stats: state => state.stats,
     get_stats_overview: state => state.stats_overview,
-    get_stats_overview_date_range: state => state.stats_overview_date_range,
+    get_stats_overview_jumpstart: state => state.stats_overview_jumpstart,
     get_stat: state => state.stat
   },
   actions: {
@@ -125,9 +122,21 @@ export default {
       const data = await JumpStartService.stats1(params);
       commit('update_stat', { key: data.jumpStartStat.id, data });
     },
+    async fetch_stats_overview_jumpstart({ commit }, payload) {
+      const data = await NewJumpStartService.stats1(payload.params);
+      commit('update_stats_overview_jumpstart', data);
+    },
     async fetch_stats_overview({ commit }, payload) {
       const data = await NewJumpStartService.stats(payload.params);
       commit('update_stats_overview', data);
+    },
+    async export_stats_overview_jumpstart({ commit }, payload) {
+      const data = await NewJumpStartService.export1(payload.params);
+      downloadBase64AsFile({
+        content: data,
+        fileName: `jumpstart-stats-${payload.filenameDate}--id-${payload.params.id}.csv`,
+        mimeType: 'text/csv'
+      });
     },
     async export_stats_overview({ commit }, { params, filenameDate }) {
       const data = await NewJumpStartService.export(params);
@@ -183,8 +192,8 @@ export default {
     update_stats_overview(state, payload) {
       state.stats_overview = payload;
     },
-    update_stats_overview_date_range(state, payload) {
-      state.stats_overview_date_range = payload;
+    update_stats_overview_jumpstart(state, payload) {
+      state.stats_overview_jumpstart = payload;
     }
   }
 };

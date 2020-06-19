@@ -213,10 +213,14 @@ export function statsOverviewGenerateDateRangesAvailable() {
   ];
 }
 
-export function statsOverviewDateRangeParamsGenerator({ range, isAllTime }) {
+export function statsOverviewDateRangeParamsGenerator(dateRange) {
+  const range = dateRange.value;
+  const isAllTime = dateRange.id === 'all_time';
+
   const fromDate = formatISO(new Date(range[0]), { representation: 'date' });
   const toDate = formatISO(new Date(range[1]), { representation: 'date' });
   const toDateMinusOneDay = formatISO(addDays(new Date(range[1]), -1), { representation: 'date' });
+
   return {
     filenameDate: isAllTime ? 'all-time' : `${fromDate}--${toDateMinusOneDay}`,
     params: {
