@@ -1,7 +1,7 @@
 <template>
   <LayoutFixedFooter>
     <template #header>
-      <BaseAppBarHeader title="JumpStart Settings" :to-link="{ name: 'Settings' }"></BaseAppBarHeader>
+      <BaseAppBarHeader title="Memo Settings" :to-link="{ name: 'Settings' }"></BaseAppBarHeader>
     </template>
     <template #content>
       <div class="container px-4 md:px-6 text-left pt-6">
@@ -13,9 +13,9 @@
         <template v-if="enableAutoSend">
           <div class="text-left py-6 pb-0">
             <p class="mb-6">
-              By default, JumpStart will automatically send each day according to the below details. You can change
-              these manually for each individual JumpStart
-              <router-link class="text-secondary underline" :to="{ name: 'JumpStartLists' }">here</router-link>.
+              By default, Memo will automatically send each day according to the below details.
+              <!-- You can change these manually for each individual Memo -->
+              <!-- <router-link class="text-secondary underline" :to="{ name: 'JumpStartLists' }">here</router-link>. -->
             </p>
           </div>
 
