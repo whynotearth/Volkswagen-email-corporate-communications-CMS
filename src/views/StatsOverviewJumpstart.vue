@@ -69,9 +69,11 @@
         </div>
 
         <div class="container px-4 md:px-6 text-left mb-6">
-          <h2 class="tg-body-emphasis-mobile lg:tg-body-emphasis-desktop mb-4" title="">
+          <h2 class="tg-h3-mobile mb-4" title="">
             Tag Usage
           </h2>
+
+          <p class="tg-caption-mobile text-black text-opacity-84 mb-2">Top 4 Tags by Usage</p>
 
           <div>
             <ChartTagUsage
