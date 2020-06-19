@@ -10,7 +10,7 @@
 </template>
 
 <script>
-//import UserAvatar from './BaseUserAvatar';
+//import UserAvatar from './UserAvatar';
 //import EmailInfoBox from './UserEmailInfoBox';
 
 export default {
@@ -21,5 +21,3 @@ export default {
   }
 };
 </script>
-
-<style scoped></style>

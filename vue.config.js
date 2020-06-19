@@ -1,4 +1,9 @@
 module.exports = {
+  configureWebpack: {
+    externals: {
+      moment: 'moment'
+    }
+  },
   chainWebpack: config => {
     const svgRule = config.module.rule('svg');
 

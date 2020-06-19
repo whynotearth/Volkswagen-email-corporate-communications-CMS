@@ -6,10 +6,10 @@
     <template #content>
       <div>
         <div class="bg-brand-gradient ">
-          <BaseUserAccountCard class="w-full relative container px-0 py-8" />
+          <UserAccountCard fullname="Xavier Jasso" />
         </div>
         <div class="container pt-6 pb-8 mb-4 text-left">
-          <BaseUserAccountInfo :to-link="{ name: 'ResetPassword' }" />
+          <UserAccountInfo :to-link="{ name: 'AuthForgotPassword' }" />
         </div>
       </div>
     </template>
@@ -19,12 +19,11 @@
 <script>
 import BaseAppBarHeader from '@/components/BaseAppBarHeader.vue';
 import LayoutFixedScrollable from '@/components/LayoutFixedScrollable';
-import BaseUserAccountCard from '@/components/BaseUserAccountCard';
-import BaseUserAccountInfo from '@/components/BaseUserAccountInfo';
+import UserAccountCard from '@/components/UserAccountCard';
+import UserAccountInfo from '@/components/UserAccountInfo';
 
 export default {
   name: 'MyAccount',
-  components: { BaseAppBarHeader, LayoutFixedScrollable, BaseUserAccountCard, BaseUserAccountInfo },
-  methods: {}
+  components: { BaseAppBarHeader, LayoutFixedScrollable, UserAccountCard, UserAccountInfo }
 };
 </script>

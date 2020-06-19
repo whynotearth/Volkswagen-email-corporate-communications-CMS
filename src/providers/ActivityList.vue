@@ -1,11 +1,11 @@
 <template>
-  <LayoutFixedScrollable>
+  <LayoutFixedFooter>
     <template #header>
       <BaseAppBarHeader :title="pageInfo.title" :to-link="pageInfo.backRoute" />
     </template>
 
     <template #content>
-      <div class="container px-0 md:px-6 text-left">
+      <div class="activity-list container px-0 md:px-6 text-left">
         <div class="px-4 pt-4">
           <div class="mb-8" v-for="item in list" :key="item.id">
             <router-link
@@ -21,13 +21,13 @@
     <template #footer>
       <NavigationBottom />
     </template>
-  </LayoutFixedScrollable>
+  </LayoutFixedFooter>
 </template>
 
 <script>
 import BaseAppBarHeader from '@/components/BaseAppBarHeader.vue';
 import ActivityListItem from './ActivityListItem.vue';
-import LayoutFixedScrollable from '@/components/LayoutFixedScrollable.vue';
+import LayoutFixedFooter from '@/components/LayoutFixedFooter.vue';
 import { mapGetters, mapActions } from 'vuex';
 import NavigationBottom from '@/components/BaseNavigationBottom';
 
@@ -43,6 +43,6 @@ export default {
       required: true
     }
   },
-  components: { ActivityListItem, BaseAppBarHeader, LayoutFixedScrollable, NavigationBottom }
+  components: { ActivityListItem, BaseAppBarHeader, LayoutFixedFooter, NavigationBottom }
 };
 </script>

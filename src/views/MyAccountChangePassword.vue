@@ -6,7 +6,7 @@
     <template #content>
       <div class="container px-4 md:px-6 text-left py-4">
         <div class="tg-body-mobile">Change password:</div>
-        <form ref="form" name="reset-password" @submit.prevent="" class="text-left">
+        <form ref="form" name="reset-password" @submit.prevent="submit" class="text-left">
           <BaseInputText
             class="bg-surface my-4"
             v-model="$v.oldPassword.$model"
@@ -55,8 +55,8 @@
           <p v-if="get_response_message.message" class="px-4 mb-4" :class="get_response_message.class">
             {{ get_response_message.message }}
           </p>
-          <div class="text-center my-8" @click="submit()">
-            <BaseButton>Change Password</BaseButton>
+          <div class="text-center my-8">
+            <BaseButton type="submit">Change Password</BaseButton>
           </div>
         </form>
       </div>
@@ -73,6 +73,8 @@ import BaseButton from '@/components/BaseButton.vue';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
 import { required, password, sameAs } from 'vuelidate/lib/validators';
 import { sleep } from '@/helpers.js';
+
+// TODO: move logics to a component
 
 export default {
   name: 'ChangePassword',
@@ -186,5 +188,3 @@ export default {
   }
 };
 </script>
-
-<style scoped></style>

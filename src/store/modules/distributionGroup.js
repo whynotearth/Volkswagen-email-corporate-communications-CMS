@@ -1,5 +1,8 @@
+// TODO: refactor function and state names to be snake_case
+// refactor: remove new Promise() and just return ajax
+
 import { DistributionGroupService } from '@whynotearth/meredith-axios';
-import Vue from 'vue';
+import { downloadBase64AsFile } from '@/helpers';
 
 export default {
   namespaced: true,
@@ -8,7 +11,8 @@ export default {
     selectedEmailList: {},
     emails: [],
     selectedEmail: {},
-    email: ''
+    email: '',
+    stats_overview: null
   },
   mutations: {
     updateEmailLists(state, payload) {
@@ -25,6 +29,9 @@ export default {
     },
     updateEmail(state, payload) {
       state.email = payload;
+    },
+    update_stats_overview(state, payload) {
+      state.stats_overview = payload;
     }
   },
   actions: {
@@ -60,6 +67,7 @@ export default {
     getEmails(context, groupName) {
       return new Promise((resolve, reject) => {
         DistributionGroupService.recipients({
+          // TODO: we should get groupName only from one source, param is better.
           distributionGroupName: context.state.selectedEmailList.distributionGroup || groupName
         })
           .then(data => {
@@ -74,6 +82,7 @@ export default {
     addEmail(context) {
       return new Promise((resolve, reject) => {
         DistributionGroupService.recipients1({
+          // TODO: get groupName from param
           distributionGroupName: context.state.selectedEmailList.distributionGroup,
           body: { email: context.state.email }
         })
@@ -89,6 +98,7 @@ export default {
     editEmail(context) {
       return new Promise((resolve, reject) => {
         DistributionGroupService.recipients2({
+          // TODO: get groupName from param
           distributionGroupName: context.state.selectedEmailList.distributionGroup,
           recipientId: context.state.selectedEmail.id,
           body: { email: context.state.selectedEmail.email }
@@ -105,6 +115,7 @@ export default {
     deleteEmail(context) {
       return new Promise((resolve, reject) => {
         DistributionGroupService.recipients3({
+          // TODO: get groupName from param
           distributionGroupName: context.state.selectedEmailList.distributionGroup,
           recipientId: context.state.selectedEmail.id
         })
@@ -114,6 +125,26 @@ export default {
           .catch(error => {
             reject(error);
           });
+      });
+    },
+    async fetch_stats_overview({ commit }, payload) {
+      const data = await DistributionGroupService.stats1(payload.params);
+      commit('update_stats_overview', data);
+    },
+    async export_stats_overview({ commit }, { params, filenameDate }) {
+      const data = await DistributionGroupService.export1(params);
+      downloadBase64AsFile({
+        content: data,
+        fileName: `distribution-groups-stats-${filenameDate}.csv`,
+        mimeType: 'text/csv'
+      });
+    },
+    delete_group(context, payload) {
+      console.log('TODO: connect delete group to api', payload);
+      return new Promise(resolve => {
+        setTimeout(() => {
+          resolve();
+        }, 1000);
       });
     }
   },
@@ -132,6 +163,7 @@ export default {
     },
     email: state => {
       return state.email;
-    }
+    },
+    get_stats_overview: state => state.stats_overview
   }
 };

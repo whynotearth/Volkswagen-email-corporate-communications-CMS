@@ -1,5 +1,5 @@
 <template>
-  <LayoutFixedScrollable>
+  <LayoutFixedFooter>
     <template #header>
       <BaseAppBarHeader title="Distribution Groups" :to-link="{ name: 'Settings' }"></BaseAppBarHeader>
     </template>
@@ -22,12 +22,16 @@
               v-for="item in emailList"
               v-bind:key="item.distributionGroup"
               class="flex flex-wrap text-left px-4 py-4 cursor-pointer"
-              @click="choiceEmailList(item)"
             >
-              <div class="w-full">{{ item.distributionGroup }}</div>
-              <div class="w-full item-details text-xs pt-1">
-                {{ item.subscriberCount }} subscribers | {{ item.openPercent }}% opens | {{ item.clickPercent }}% clicks
-              </div>
+              <router-link
+                :to="{ name: 'StatsOverviewDistributionGroup', params: { groupName: item.distributionGroup } }"
+              >
+                <div class="w-full">{{ item.distributionGroup }}</div>
+                <div class="w-full item-details text-xs pt-1">
+                  {{ item.subscriberCount }} subscribers | {{ item.openPercent }}% opens | {{ item.clickPercent }}%
+                  clicks
+                </div>
+              </router-link>
             </li>
           </ul>
         </div>
@@ -36,18 +40,18 @@
     <template #footer>
       <NavigationBottom />
     </template>
-  </LayoutFixedScrollable>
+  </LayoutFixedFooter>
 </template>
 
 <script>
 import BaseAppBarHeader from '@/components/BaseAppBarHeader.vue';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
-import LayoutFixedScrollable from '@/components/LayoutFixedScrollable';
+import LayoutFixedFooter from '@/components/LayoutFixedFooter';
 import NavigationBottom from '@/components/BaseNavigationBottom';
 
 export default {
   name: 'EmailLists',
-  components: { BaseAppBarHeader, NavigationBottom, LayoutFixedScrollable },
+  components: { BaseAppBarHeader, NavigationBottom, LayoutFixedFooter },
   computed: {
     emailList() {
       return this.$store.getters['distributionGroup/getEmailLists'];
@@ -64,10 +68,6 @@ export default {
     ...mapMutations('distributionGroup', ['selectEmailList', 'updateEmailLists']),
     init() {
       this.getEmailLists();
-    },
-    choiceEmailList(payload) {
-      this.selectEmailList(payload);
-      this.$router.push({ name: 'EmailList', params: { groupName: payload.distributionGroup } });
     }
   }
 };

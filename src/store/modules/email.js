@@ -1,7 +1,10 @@
-import { JumpStartService } from '@whynotearth/meredith-axios';
+// TODO: rename store module to jumpstart
+
+import { JumpStartService, NewJumpStartService } from '@whynotearth/meredith-axios';
+import { downloadBase64AsFile } from '@/helpers';
 import qs from 'qs';
 import { debounce } from 'lodash-es';
-import store from '@/store';
+import Vue from 'vue';
 
 export default {
   namespaced: true,
@@ -13,6 +16,9 @@ export default {
     articles: [],
     selected_articles: [],
     email_recipients: [],
+    description: '',
+    subject: '',
+    tags: [],
     jumpstarts: [],
     response_message: {
       type: '', // error, success
@@ -21,10 +27,14 @@ export default {
     },
     default_distribution_groups: [],
     default_schedule_time: null,
-    selected_plan: {},
+    selected_plan: {
+      articles: []
+    },
     daily_plan: [],
     available_articles: [],
     stats: [],
+    stats_overview: null,
+    stats_overview_jumpstart: null,
     stat: {}
   },
   getters: {
@@ -33,6 +43,9 @@ export default {
     get_selected_articles: state => state.selected_articles,
     get_preview_link: state => state.preview_link,
     get_email_recipients: state => state.email_recipients,
+    get_description: state => state.description,
+    get_subject: state => state.subject,
+    get_tags: state => state.tags,
     get_response_message: state => state.response_message,
     get_articles: state => state.articles,
     get_default_distribution_groups: state => state.default_distribution_groups,
@@ -41,11 +54,20 @@ export default {
     get_daily_plan: state => state.daily_plan,
     get_available_articles: state => state.available_articles,
     get_stats: state => state.stats,
+    get_stats_overview: state => state.stats_overview,
+    get_stats_overview_jumpstart: state => state.stats_overview_jumpstart,
     get_stat: state => state.stat
   },
   actions: {
-    async create_jumpstart({ commit }, payload) {
-      await JumpStartService.jumpstart(payload.params);
+    create_jumpstart({ commit }, payload) {
+      return NewJumpStartService.newjumpstart(payload);
+    },
+    attach_file({ commit }, payload) {
+      console.log('payload', payload);
+      return NewJumpStartService.attachment(payload);
+    },
+    delete_article_by_id({ state }, id) {
+      state.available_articles = state.available_articles.filter(item => item.id !== id);
     },
     update_selected_articles({ state }, payload) {
       if (!payload) {
@@ -98,7 +120,27 @@ export default {
     },
     async fetch_stat({ commit }, params) {
       const data = await JumpStartService.stats1(params);
-      commit('update_stat', data);
+      commit('update_stat', { key: data.jumpStartStat.id, data });
+    },
+    async fetch_stats_overview_jumpstart({ commit }, payload) {
+      const data = await NewJumpStartService.stats1(payload.params);
+      commit('update_stats_overview_jumpstart', data);
+    },
+    async fetch_stats_overview({ commit }, payload) {
+      const data = await NewJumpStartService.stats(payload.params);
+      commit('update_stats_overview', data);
+    },
+    async export_stats_overview_jumpstart({ commit }, payload) {
+      const data = await NewJumpStartService.export1(payload.params);
+      downloadBase64AsFile({
+        content: data,
+        fileName: `jumpstart-stats-${payload.filenameDate}--id-${payload.params.id}.csv`,
+        mimeType: 'text/csv'
+      });
+    },
+    async export_stats_overview({ commit }, { params, filenameDate }) {
+      const data = await NewJumpStartService.export(params);
+      downloadBase64AsFile({ content: data, fileName: `jumpstarts-stats-${filenameDate}.csv`, mimeType: 'text/csv' });
     }
   },
   mutations: {
@@ -110,6 +152,15 @@ export default {
     },
     update_email_recipients(state, payload) {
       state.email_recipients = payload;
+    },
+    update_description(state, payload) {
+      state.description = payload;
+    },
+    update_subject(state, payload) {
+      state.subject = payload;
+    },
+    update_tags(state, payload) {
+      state.tags = payload;
     },
     update_response_message(state, payload) {
       state.response_message = payload;
@@ -135,8 +186,14 @@ export default {
     update_stats(state, payload) {
       state.stats = payload;
     },
-    update_stat(state, payload) {
-      state.stat = payload;
+    update_stat(state, { key, data }) {
+      Vue.set(state.stat, key, data);
+    },
+    update_stats_overview(state, payload) {
+      state.stats_overview = payload;
+    },
+    update_stats_overview_jumpstart(state, payload) {
+      state.stats_overview_jumpstart = payload;
     }
   }
 };

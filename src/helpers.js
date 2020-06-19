@@ -1,7 +1,8 @@
 import { BASE_API } from '@/connection/api';
-import { format, formatISO } from 'date-fns';
+import { format, formatISO, addDays, addYears } from 'date-fns';
 import { startCase, toLower } from 'lodash-es';
 import store from './store';
+import router from './router';
 
 // https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener#Safely_detecting_option_support
 export function getPassiveEventConfig() {
@@ -165,4 +166,76 @@ export function randomId() {
   return Math.random()
     .toString()
     .substr(2);
+}
+
+export async function showOverlayAndRedirect({ title = '', message = '', route, timeout = 1000 }) {
+  store.commit('overlay/updateModel', {
+    title,
+    message
+  });
+
+  await sleep(1000);
+
+  await router.push(route);
+
+  store.commit('overlay/updateModel', {
+    title: '',
+    message: ''
+  });
+}
+
+export function downloadBase64AsFile({ content, mimeType, fileName }) {
+  var link = document.createElement('a');
+  document.body.appendChild(link);
+  link.setAttribute('type', 'hidden');
+  link.href = `data:${mimeType};base64,` + content;
+  link.download = fileName;
+  link.click();
+  document.body.removeChild(link);
+}
+
+export function statsOverviewGenerateDateRangesAvailable() {
+  // eslint-disable-next-line
+  const PARSER_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
+
+  const format = PARSER_FORMAT;
+  const allTimeStartDate = new Date('2020-05-27');
+  const now = new Date();
+  const today = formatDate(now, format);
+  const last7days = formatDate(addDays(now, -7), format);
+  const last30days = formatDate(addDays(now, -30), format);
+  const allTime = formatDate(allTimeStartDate, format);
+
+  return [
+    { id: '7d_ago', value: [last7days, today], text: 'Last 7 Days' },
+    { id: '30d_ago', value: [last30days, today], text: 'Last 30 Days' },
+    { id: 'all_time', value: [allTime, today], text: 'All Time' }
+  ];
+}
+
+export function statsOverviewDateRangeParamsGenerator(dateRange) {
+  const range = dateRange.value;
+  const isAllTime = dateRange.id === 'all_time';
+
+  const fromDate = formatISO(new Date(range[0]), { representation: 'date' });
+  const toDate = formatISO(new Date(range[1]), { representation: 'date' });
+  const toDateMinusOneDay = formatISO(addDays(new Date(range[1]), -1), { representation: 'date' });
+
+  return {
+    filenameDate: isAllTime ? 'all-time' : `${fromDate}--${toDateMinusOneDay}`,
+    params: {
+      fromDate,
+      toDate
+    }
+  };
+}
+
+// Returns a hash code for a string.
+// https://gist.github.com/hyamamoto/fd435505d29ebfa3d9716fd2be8d42f0
+export function stringToHashCode(input) {
+  var h = 0,
+    l = input.length,
+    i = 0;
+  if (l > 0) while (i < l) h = ((h << 5) - h + input.charCodeAt(i++)) | 0;
+  return h;
 }

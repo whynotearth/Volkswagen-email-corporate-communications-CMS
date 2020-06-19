@@ -1,17 +1,17 @@
 <template>
-  <nav class="px-4 py-4 shadow-4dp z-10">
+  <nav class="px-4 py-4 shadow-4dp z-30">
     <div class="container flex items-center justify-between px-0 md:px-6">
       <!-- start side -->
       <div class="appbar-startside flex items-center">
         <div v-if="toLink" class="flex-shrink-0">
           <router-link class="inline-block align-middle" :to="toLink">
             <img
-              class="lg:w-6 lg:h-6"
+              class="md:w-6 md:h-6"
               src="https://res.cloudinary.com/whynotearth/image/upload/v1587102533/Volkswagen/cms/back_oay5wt.png"
             />
           </router-link>
         </div>
-        <div v-if="title" class="text-primary tg-h2-mobile lg:tg-h2-desktop truncate pl-8">{{ title }}</div>
+        <div v-if="title" class="text-primary tg-h2-mobile md:tg-h2-desktop truncate pl-8 md:pb-2">{{ title }}</div>
       </div>
 
       <!-- end side -->
@@ -62,7 +62,8 @@ export default {
       type: String
     },
     toLink: {
-      default: null
+      type: [String, Object],
+      default: ''
     },
     action: {
       type: Object,

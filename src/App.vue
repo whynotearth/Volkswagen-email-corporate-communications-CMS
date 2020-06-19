@@ -1,8 +1,6 @@
 <template>
   <div id="app" class="text-center">
-    <transition name="fade" mode="out-in">
-      <router-view @hook:mounted="hideWelcomeMessage" />
-    </transition>
+    <router-view @hook:mounted="hideWelcomeMessage" />
     <transition name="fade">
       <div
         v-if="overlayModel.title || overlayModel.message"

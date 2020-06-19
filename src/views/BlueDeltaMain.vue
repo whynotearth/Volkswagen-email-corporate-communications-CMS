@@ -1,10 +1,10 @@
 <template>
-  <LayoutFixedScrollable>
+  <LayoutFixedFooter>
     <template #header>
-      <BaseAppBarHeader :title="'Blue Delta'" :to-link="{ name: 'Dashboard' }" />
+      <BaseAppBarHeader :title="'JumpStart'" :to-link="{ name: 'Dashboard' }" />
     </template>
     <template #content>
-      <div class="bg-white flex items-center justify-center min-h-full relative">
+      <div class="bg-white flex items-center justify-center min-h-full relative flex-shrink-0 py-6">
         <div class="w-full">
           <div class="max-w-sm mx-auto px-12">
             <div class="mb-4">
@@ -14,8 +14,8 @@
                 alt=""
               />
             </div>
-            <h1 class="text-primary h1-mobile md:h1 mb-h1-mobile">
-              Manage the Blue Delta
+            <h1 class="text-primary h1-mobile md:h1 mb-h1-mobile mb-14">
+              Manage the JumpStart
             </h1>
 
             <div>
@@ -25,12 +25,6 @@
               >
                 Scheduled Newsletters
               </router-link>
-              <router-link
-                :to="{ name: 'ActivityFeedJumpStartList' }"
-                class="block bg-secondary w-full hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline transition duration-100 ease-in-out transition-all label-mobile"
-              >
-                Blue Delta Stats
-              </router-link>
             </div>
           </div>
         </div>
@@ -39,22 +33,16 @@
     <template #footer>
       <BaseNavigationBottom />
     </template>
-  </LayoutFixedScrollable>
+  </LayoutFixedFooter>
 </template>
 
 <script>
 import BaseAppBarHeader from '@/components/BaseAppBarHeader.vue';
-import LayoutFixedScrollable from '@/components/LayoutFixedScrollable.vue';
+import LayoutFixedFooter from '@/components/LayoutFixedFooter.vue';
 import BaseNavigationBottom from '@/components/BaseNavigationBottom.vue';
 
 export default {
   name: 'BlueDeltaMain',
-  components: { LayoutFixedScrollable, BaseAppBarHeader, BaseNavigationBottom }
+  components: { LayoutFixedFooter, BaseAppBarHeader, BaseNavigationBottom }
 };
 </script>
-
-<style scoped>
-.mb-h1-mobile {
-  margin-bottom: 56px;
-}
-</style>

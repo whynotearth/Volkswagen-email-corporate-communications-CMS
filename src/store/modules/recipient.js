@@ -1,3 +1,5 @@
+// TODO: merge to distributionGroup.js
+
 import { RecipientService, DistributionGroupService } from '@whynotearth/meredith-axios';
 import Vue from 'vue';
 

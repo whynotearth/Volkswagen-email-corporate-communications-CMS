@@ -1,5 +1,5 @@
 <template>
-  <LayoutFixedScrollable>
+  <LayoutFixedFooter>
     <template #header>
       <BaseAppBarHeader title="Articles" :to-link="{ name: 'ArticleMain' }" />
     </template>
@@ -26,7 +26,7 @@
     <template #footer>
       <BaseNavigationBottom />
     </template>
-  </LayoutFixedScrollable>
+  </LayoutFixedFooter>
 </template>
 
 <script>
@@ -34,7 +34,7 @@ import BaseAppBarHeader from '@/components/BaseAppBarHeader.vue';
 import BaseTabs from '@/components/BaseTabs.vue';
 import BaseTab from '@/components/BaseTab.vue';
 import ArticleItem from '@/components/ArticleListsItem.vue';
-import LayoutFixedScrollable from '@/components/LayoutFixedScrollable.vue';
+import LayoutFixedFooter from '@/components/LayoutFixedFooter.vue';
 import BaseNavigationBottom from '@/components/BaseNavigationBottom.vue';
 import { mapGetters, mapActions } from 'vuex';
 import { formatISODate, formatDate } from '@/helpers.js';
@@ -47,7 +47,7 @@ export default {
     BaseTabs,
     BaseTab,
     ArticleItem,
-    LayoutFixedScrollable,
+    LayoutFixedFooter,
     BaseNavigationBottom
   },
   computed: {

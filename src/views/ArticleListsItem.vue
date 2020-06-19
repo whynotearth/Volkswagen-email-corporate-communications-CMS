@@ -4,43 +4,45 @@
       <BaseAppBarHeader :title="get_headline" :to-link="{ name: 'ArticleLists' }" />
     </template>
     <template #content>
-      <div v-if="selectedArticle && selectedArticle.id" class="min-h-full relative bg-background">
-        <BaseDropdown
-          class="relative bg-surface text-left container px-0 md:px-6"
-          :optionContainerClasses="'dropdown-top-auto'"
-          :dropdownContainerClasses="'dropdown-border-0'"
-          placeholder="Choose Type"
-          :options="get_categories.filter(category => category.slug !== 'community')"
-          v-model="$v.selected_category.$model"
-        >
-          <template #title="{ selectedOption }">
-            <div v-if="!get_categories.filter(category => category.slug !== 'community')">No option found</div>
-            <div v-if="selectedOption && selectedOption.name" class="flex items-center">
-              <div class="w-12 h-12">
-                <img class="p-2" :src="selectedOption.image" alt="" />
-              </div>
-              <div class="flex-auto">
-                <div class="w-full body-1-mobile">{{ selectedOption.name }}</div>
-                <div class="w-full text-xs text-black em-disabled">{{ selectedOption.description }}</div>
-              </div>
-            </div>
-            <div v-else>
-              No category selected
-            </div>
-          </template>
-          <template #option="{ option }">
-            <a @click.prevent="selected_category = option" href="#" class="flex items-center">
-              <div class="w-12 h-12">
-                <img class="p-2" :src="option.image" alt="" />
-              </div>
-              <div class="flex-auto">
-                <div class="w-full body-1-mobile">{{ option.name }}</div>
-                <div class="w-full text-xs text-black em-disabled">{{ option.description }}</div>
-              </div>
-            </a>
-          </template>
-        </BaseDropdown>
-        <div class="container px-4 md:px-6 text-left">
+      <div class="container px-0 md:px-6 pt-6 mb-40 text-left">
+        <div v-if="selectedArticle && selectedArticle.id" class="min-h-full relative bg-background">
+          <div class="mb-6">
+            <BaseDropdown
+              :optionContainerClasses="'dropdown-top-auto'"
+              :dropdownContainerClasses="'dropdown-border-0'"
+              placeholder="Choose Type"
+              :options="get_categories.filter(category => category.slug !== 'community')"
+              v-model="$v.selected_category.$model"
+            >
+              <template #title="{ selectedOption }">
+                <div v-if="!get_categories.filter(category => category.slug !== 'community')">No option found</div>
+                <div v-if="selectedOption && selectedOption.name" class="flex items-center">
+                  <div class="w-12 h-12">
+                    <img class="p-2" :src="selectedOption.image" alt="" />
+                  </div>
+                  <div class="flex-auto">
+                    <div class="w-full body-1-mobile">{{ selectedOption.name }}</div>
+                    <div class="w-full text-xs text-black em-disabled">{{ selectedOption.description }}</div>
+                  </div>
+                </div>
+                <div v-else>
+                  No category selected
+                </div>
+              </template>
+              <template #option="{ option }">
+                <a @click.prevent="selected_category = option" href="#" class="flex items-center">
+                  <div class="w-12 h-12">
+                    <img class="p-2" :src="option.image" alt="" />
+                  </div>
+                  <div class="flex-auto">
+                    <div class="w-full body-1-mobile">{{ option.name }}</div>
+                    <div class="w-full text-xs text-black em-disabled">{{ option.description }}</div>
+                  </div>
+                </a>
+              </template>
+            </BaseDropdown>
+          </div>
+
           <BaseInputText
             v-if="isFieldRequired('headline')"
             class="bg-surface mb-4"
@@ -120,6 +122,9 @@
             :options="dates"
             v-model="$v.date.$model"
           >
+            <template #icon>
+              <Calendar />
+            </template>
             <template #title="{ selectedOption }">
               Schedule
               <span v-if="dates.length === 0" class="text-gray-500">
@@ -176,6 +181,7 @@ import BaseEditor from '@/components/Editor/BaseEditor.vue';
 import BaseDropdown from '@/components/BaseDropdown';
 import ImageUpload from '@/components/ImageUpload/ImageUpload.vue';
 import LayoutFixedScrollable from '@/components/LayoutFixedScrollable.vue';
+import Calendar from '@/assets/calendar.svg';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
 import { required, decimal, maxLength, requiredIf } from 'vuelidate/lib/validators';
 import { mustBeDate } from '@/validations.js';
@@ -190,7 +196,8 @@ export default {
     BaseInputText,
     BaseEditor,
     BaseDropdown,
-    ImageUpload
+    ImageUpload,
+    Calendar
   },
   validations() {
     return {
@@ -314,13 +321,13 @@ export default {
       });
     },
     selected_category: {
+      /* eslint-disable indent */
       get() {
-        return this.get_selected_category.slug
-          ? this.get_selected_category
-          : this.selectedArticle
-          ? this.selectedArticle.category
-          : '';
+        if (this.get_selected_category.slug) return this.get_selected_category;
+        else if (this.selectedArticle) return this.selectedArticle.category;
+        return '';
       },
+      /* eslint-enable indent */
       set(value) {
         this.update_selected_category(value);
       }

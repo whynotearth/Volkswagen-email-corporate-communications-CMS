@@ -1,6 +1,7 @@
 import { MemoService } from '@whynotearth/meredith-axios';
 import Vue from 'vue';
 import { cloneDeep } from 'lodash-es';
+import { downloadBase64AsFile } from '@/helpers';
 
 const defaultMemoFormData = {
   to: '',
@@ -27,6 +28,7 @@ export default {
       class: '' // text-error text-success
     },
     stats: [],
+    stats_overview: null,
     stat: {}
   },
   mutations: {
@@ -56,6 +58,9 @@ export default {
     },
     update_stat(state, { key, data }) {
       Vue.set(state.stat, key, data);
+    },
+    update_stats_overview(state, payload) {
+      state.stats_overview = payload;
     }
   },
   actions: {
@@ -72,6 +77,14 @@ export default {
     async fetch_stat(context, payload) {
       const data = await MemoService.stats1(payload);
       context.commit('update_stat', { key: data.memoStat.id, data });
+    },
+    async fetch_stats_overview({ commit }, payload) {
+      const data = await MemoService.overallstats(payload.params);
+      commit('update_stats_overview', data);
+    },
+    async export_stats_overview({ commit }, { params, filenameDate }) {
+      const data = await MemoService.export(params);
+      downloadBase64AsFile({ content: data, fileName: `memos-stats-${filenameDate}.csv`, mimeType: 'text/csv' });
     }
   },
   getters: {
@@ -82,6 +95,7 @@ export default {
     get_recipients: state => state.form_data.recipients,
     get_response_message: state => state.response_message,
     get_stats: state => state.stats,
-    get_stat: state => state.stat
+    get_stat: state => state.stat,
+    get_stats_overview: state => state.stats_overview
   }
 };

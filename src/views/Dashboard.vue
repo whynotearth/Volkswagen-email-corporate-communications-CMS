@@ -1,5 +1,5 @@
 <template>
-  <LayoutFixedScrollable>
+  <LayoutFixedFooter>
     <template #header>
       <BaseAppBarHeader
         :showSettingsLink="true"
@@ -8,49 +8,52 @@
       ></BaseAppBarHeader>
     </template>
     <template #content>
-      <div class="min-h-full relative bg-background">
-        <!-- <router-link to="/settings" class="absolute top-0 right-0 p-4 text-sm z-10">
-          <img
-            src="https://res.cloudinary.com/whynotearth/image/upload/v1588775654/Volkswagen/cms/wheel_2_prifka.svg"
-          />
-        </router-link> -->
-        <!-- <div class="bg-brand-gradient ">
-          <UserCard class="w-full relative container px-0" />
-        </div> -->
+      <div class="bg-white flex items-center justify-center min-h-full relative flex-shrink-0 py-6">
+        <div class="w-full">
+          <div class="max-w-sm mx-auto px-12">
+            <div class="mb-4">
+              <img
+                class="w-24 h-24 mx-auto block"
+                src="https://res.cloudinary.com/whynotearth/image/upload/v1588067012/Volkswagen/cms/Volkswagen_logo_2019_1_ddafyt.svg"
+                alt=""
+              />
+            </div>
+            <h1 class="text-primary h1-mobile md:h1 mb-h1-mobile mb-14">Welcome</h1>
 
-        <div class="w-full relative container px-0 text-left">
-          <TodayEmail />
+            <div>
+              <router-link
+                :to="{ name: 'MemoAdd' }"
+                class="block bg-secondary w-full hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline transition duration-100 ease-in-out transition-all label-mobile"
+              >
+                New Memo
+              </router-link>
+            </div>
+          </div>
         </div>
-        <!--<div class="mb-8">
-          <SmartSuggestions />
-        </div>-->
       </div>
     </template>
     <template #footer>
       <NavigationBottom />
     </template>
-  </LayoutFixedScrollable>
+  </LayoutFixedFooter>
 </template>
 
 <script>
 import store from '@/store';
 import NavigationBottom from '@/components/BaseNavigationBottom';
-import LayoutFixedScrollable from '@/components/LayoutFixedScrollable';
-import UserCard from '@/components/BaseUserCard';
-import TodayEmail from '@/components/TodayEmail';
+import LayoutFixedFooter from '@/components/LayoutFixedFooter';
+import UserCard from '@/components/UserCard.vue';
+// import TodayEmail from '@/components/TodayEmail';
 import BaseAppBarHeader from '@/components/BaseAppBarHeader.vue';
-//import SmartSuggestions from '@/components/BaseSmartSuggestions';
+//import SmartSuggestions from '@/components/SmartSuggestions';
 
 export default {
   name: 'Dashboard',
   components: {
     NavigationBottom,
-    LayoutFixedScrollable,
-    BaseAppBarHeader,
-    TodayEmail
-    //SmartSuggestions
-  },
-  computed: {},
-  methods: {}
+    LayoutFixedFooter,
+    BaseAppBarHeader
+    // TodayEmail
+  }
 };
 </script>
