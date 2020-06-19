@@ -4,9 +4,9 @@
       <transition name="fade" mode="out-in">
         <Logo v-show="showLogo" :class="{ hidden: !showLogo }" />
       </transition>
-      <transition name="fade" mode="out-in">
+      <!-- <transition name="fade" mode="out-in">
         <img v-show="!showLogo" :src="get_preview_link" @error="onError" @load="onLoad" />
-      </transition>
+      </transition> -->
     </div>
   </div>
 </template>
