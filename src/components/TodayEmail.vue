@@ -1,13 +1,14 @@
 <template>
   <div class="flex flex-col items-center text-center px-4">
-    <div>
+    <!-- <div>
       <h2 class="tg-h2-mobile text-primary">
         {{ title }}
       </h2>
-    </div>
+    </div> -->
     <div class="my-4 w-full">
       <EmailPreview />
     </div>
+    <!-- 
     <div v-if="isTodayArticles">
       <h2 class="tg-h2-mobile text-primary">Daily Email will automatically send in</h2>
       <div v-if="get_selected_plan.dateTime" class="counter tg-h2-mobile my-2 text-center">
@@ -17,13 +18,13 @@
     <div>
       <BaseButton v-if="isTodayArticles" @selectButton="selectReviewArticle">REVIEW AND SEND</BaseButton>
       <BaseButton v-if="!isTodayArticles" @selectButton="selectNewArticle">NEW ARTICLE</BaseButton>
-    </div>
+    </div> -->
   </div>
 </template>
 
 <script>
-import BaseButton from './BaseButton';
-import BaseCounter from './BaseCounter';
+// import BaseButton from './BaseButton';
+// import BaseCounter from './BaseCounter';
 import EmailPreview from '@/components/Email/EmailPreview';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
 import { formatISODate, formatDate } from '@/helpers.js';
@@ -31,28 +32,32 @@ import { isToday, parseISO } from 'date-fns';
 
 export default {
   name: 'TodaysEmail',
-  components: { BaseButton, BaseCounter, EmailPreview },
+  components: {
+    // BaseButton,
+    // BaseCounter,
+    EmailPreview
+  },
   beforeMount() {
     this.update_selected_articles();
     this.update_preview_link('');
   },
-  mounted() {
-    this.fetch_daily_plan()
-      .then(() => {
-        let article, i;
-        if (this.isTodayArticles) {
-          this.update_selected_plan(this.get_daily_plan[0]);
-          this.update_email_date(this.get_selected_plan.dateTime);
-          for (i = 0; i < 5; i++) {
-            article = this.get_selected_plan.articles[i];
-            if (article) this.update_selected_articles(article);
-            else break;
-          }
-          this.debounced_preview();
-        }
-      })
-      .catch();
-  },
+  // mounted() {
+  //   this.fetch_daily_plan()
+  //     .then(() => {
+  //       let article, i;
+  //       if (this.isTodayArticles) {
+  //         this.update_selected_plan(this.get_daily_plan[0]);
+  //         this.update_email_date(this.get_selected_plan.dateTime);
+  //         for (i = 0; i < 5; i++) {
+  //           article = this.get_selected_plan.articles[i];
+  //           if (article) this.update_selected_articles(article);
+  //           else break;
+  //         }
+  //         this.debounced_preview();
+  //       }
+  //     })
+  //     .catch();
+  // },
   methods: {
     ...mapActions('email', [
       'debounced_preview',
