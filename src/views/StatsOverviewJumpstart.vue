@@ -61,7 +61,11 @@
           </div>
         </div>
         <div class="container px-0 md:px-6 text-left mb-6">
-          <StatsUserActivity :title="'Activity'" :fields="get_stats_overview_jumpstart" />
+          <StatsUserActivity
+            v-if="get_stats_overview_jumpstart"
+            :title="'Activity'"
+            :fields="get_stats_overview_jumpstart"
+          />
         </div>
 
         <div class="container px-4 md:px-6 text-left mb-6">
