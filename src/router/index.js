@@ -12,6 +12,7 @@ import Stats from '../views/Stats.vue';
 import StatsOverviewDistributionGroup from '../views/StatsOverviewDistributionGroup.vue';
 import StatsOverviewMemos from '../views/StatsOverviewMemos.vue';
 import StatsOverviewJumpstarts from '../views/StatsOverviewJumpstarts.vue';
+import StatsOverviewJumpstart from '../views/StatsOverviewJumpstart.vue';
 import MemoListActivity from '../views/MemoListActivity.vue';
 import MemoActivityDetail from '../views/MemoActivityDetail.vue';
 import EmailLists from '../views/EmailLists';
@@ -199,7 +200,12 @@ const routes = [
     component: JumpStartActivityList
   },
   {
-    path: '/stats/jumpstarts/activity/:id',
+    path: '/stats/jumpstart/:id',
+    name: 'StatsOverviewJumpstart',
+    component: StatsOverviewJumpstart
+  },
+  {
+    path: '/stats/jumpstart/:id/activity',
     name: 'JumpStartActivityDetail',
     component: JumpStartActivityDetail,
     props: true
