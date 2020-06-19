@@ -46,7 +46,7 @@
               <template #description>
                 <div v-if="stat" class="flex w-full px-4 py-2 em-high">
                   <span class="tg-body-emphasis-mobile text-white mr-2">Distribution Group: </span>
-                  <BaseChip v-for="(item, index) in stat.distributionGroups" :key="index" :text="item" />
+                  <BaseChip isSmall="true" v-for="(item, index) in stat.distributionGroups" :key="index" :text="item" />
                 </div>
                 <div class="flex w-full px-4 py-3 em-high">
                   <span class="tg-body-emphasis-mobile text-white mr-2">Subject: </span>
