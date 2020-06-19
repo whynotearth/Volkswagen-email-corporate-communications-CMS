@@ -1,10 +1,10 @@
 <template>
   <div class="flex flex-col items-center text-center px-4">
-    <div>
+    <!-- <div>
       <h2 class="tg-h2-mobile text-primary">
         {{ title }}
       </h2>
-    </div>
+    </div> -->
     <div class="my-4 w-full">
       <EmailPreview />
     </div>
