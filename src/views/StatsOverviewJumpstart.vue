@@ -11,11 +11,11 @@
             class="relative bg-surface text-left mb-6"
             placeholder="Schedule time"
             :options="dateRangesAvailable"
-            v-model="stats_overview_jumpstart_date_range"
+            v-model="dateRange"
             @updateSelectedOption="fetchStatsOverview"
           >
             <template #icon>
-              <Calendar />
+              <Calendar class="inline-block align-baseline mr-4 h-5 w-5 -mb-0.5 pointer-events-none" />
             </template>
             <template #title="{ selectedOption }">
               <span class="text-black">
@@ -35,7 +35,7 @@
             <ChartsStatsOverview
               v-if="get_stats_overview_jumpstart"
               :stats_overview="get_stats_overview_jumpstart"
-              :stats_overview_date_range="stats_overview_jumpstart_date_range"
+              :stats_overview_date_range="dateRange"
             >
               <template #title>
                 <span class="block text-center tg-h2-mobile">
@@ -77,7 +77,7 @@
             <ChartTagUsage
               v-if="get_stats_overview_jumpstart"
               :stats_overview="get_stats_overview_jumpstart"
-              :stats_overview_date_range="stats_overview_jumpstart_date_range"
+              :stats_overview_date_range="dateRange"
             />
           </div>
         </div>
@@ -94,7 +94,7 @@
           </div>
 
           <a
-            @click="exportReport()"
+            @click="exportStatsOverview()"
             class="bg-secondary block w-full mx-auto hover:bg-blue-700 text-white text-center font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline transition duration-100 ease-in-out transition-all label-mobile shadow-2dp max-w-sm"
             >Export Report</a
           >
@@ -121,11 +121,10 @@ import Calendar from '@/assets/calendar.svg';
 import Person from '@/assets/person.svg';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
 import { colors, opacity } from '@/constants/theme.js';
-import { formatDate } from '@/helpers';
+import { formatDate, statsOverviewGenerateDateRangesAvailable, statsOverviewDateRangeParamsGenerator } from '@/helpers';
 import { addDays, addYears, formatISO } from 'date-fns';
 
-// eslint-disable-next-line
-const PARSER_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
+const dateRangesAvailable = statsOverviewGenerateDateRangesAvailable();
 
 export default {
   name: 'StatsOverviewJumpStart',
@@ -142,31 +141,19 @@ export default {
     Calendar,
     Person
   },
+  data: () => {
+    return {
+      dateRange: dateRangesAvailable.find(item => item.id === '7d_ago')
+    };
+  },
   created() {
     this.fetchStatsOverview();
-    if (!this.get_stats.length) {
-      this.fetch_stats();
-    }
+    this.fetch_stats();
   },
   computed: {
-    ...mapGetters('email', ['get_stats', 'get_stats_overview_jumpstart_date_range', 'get_stats_overview_jumpstart']),
-    stats_overview_jumpstart_date_range: {
-      get() {
-        const current = this.get_stats_overview_jumpstart_date_range;
-        // default value
-        if (!current.value.length > 0) {
-          const last7days = this.dateRangesAvailable[0];
-          return last7days;
-        }
-        return current;
-      },
-      set(value) {
-        this.update_stats_overview_jumpstart_date_range(value);
-      }
-    },
-
+    ...mapGetters('email', ['get_stats', 'get_stats_overview_jumpstart']),
     dateRangesAvailable() {
-      return this.generateDateRangesAvailable();
+      return dateRangesAvailable;
     },
     jumpStartId() {
       return parseInt(this.$route.params.id);
@@ -191,46 +178,15 @@ export default {
     ...mapActions('email', ['fetch_stats_overview_jumpstart', 'fetch_stats', 'export_stats_overview_jumpstart']),
 
     fetchStatsOverview() {
-      const range = this.stats_overview_jumpstart_date_range.value;
-
-      this.fetch_stats_overview_jumpstart({
-        params: {
-          id: this.jumpStartId,
-          fromDate: formatISO(new Date(range[0]), { representation: 'date' }),
-          toDate: formatISO(new Date(range[1]), { representation: 'date' })
-        }
-      });
+      const payload = statsOverviewDateRangeParamsGenerator(this.dateRange);
+      payload.params.id = this.jumpStartId;
+      this.fetch_stats_overview_jumpstart(payload);
     },
 
-    generateDateRangesAvailable() {
-      const format = PARSER_FORMAT;
-      // TODO: process all time better
-      const allTimeStartDate = new Date('2020-05-27');
-      const now = this.stat ? new Date(this.stat.dateTime) : new Date();
-      const today = formatDate(now, format);
-      const last7days = formatDate(addDays(now, -7), format);
-      const last30days = formatDate(addDays(now, -30), format);
-      const allTime = formatDate(allTimeStartDate, format);
-
-      return [
-        { id: '7d_ago', value: [last7days, today], text: 'Last 7 Days' },
-        { id: '30d_ago', value: [last30days, today], text: 'Last 30 Days' },
-        { id: 'all_time', value: [allTime, today], text: 'All Time' }
-      ];
-    },
-
-    exportReport() {
-      const range = this.stats_overview_jumpstart_date_range.value;
-      const filename = this.stats_overview_jumpstart_date_range.id;
-
-      this.export_stats_overview_jumpstart({
-        params: {
-          id: this.jumpStartId,
-          fromDate: formatISO(new Date(range[0]), { representation: 'date' }),
-          toDate: formatISO(new Date(range[1]), { representation: 'date' })
-        },
-        filenameDate: filename
-      });
+    exportStatsOverview() {
+      const payload = statsOverviewDateRangeParamsGenerator(this.dateRange);
+      payload.params.id = this.jumpStartId;
+      this.export_stats_overview_jumpstart(payload);
     }
   }
 };

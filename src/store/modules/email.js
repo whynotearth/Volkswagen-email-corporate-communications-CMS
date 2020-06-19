@@ -34,15 +34,7 @@ export default {
     available_articles: [],
     stats: [],
     stats_overview: null,
-    stats_overview_date_range: {
-      text: '',
-      value: [] // ['2020-06-06', '2020-06-13']
-    },
     stats_overview_jumpstart: null,
-    stats_overview_jumpstart_date_range: {
-      text: '',
-      value: [] // ['2020-06-06', '2020-06-13']
-    },
     stat: {}
   },
   getters: {
@@ -64,7 +56,6 @@ export default {
     get_stats: state => state.stats,
     get_stats_overview: state => state.stats_overview,
     get_stats_overview_jumpstart: state => state.stats_overview_jumpstart,
-    get_stats_overview_jumpstart_date_range: state => state.stats_overview_jumpstart_date_range,
     get_stat: state => state.stat
   },
   actions: {
@@ -203,9 +194,6 @@ export default {
     },
     update_stats_overview_jumpstart(state, payload) {
       state.stats_overview_jumpstart = payload;
-    },
-    update_stats_overview_jumpstart_date_range(state, payload) {
-      state.stats_overview_jumpstart_date_range = payload;
     }
   }
 };
