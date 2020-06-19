@@ -171,7 +171,7 @@ export default {
       return this.get_stats.find(p => p.id === this.jumpStartId);
     },
     titleHeader() {
-      return this.stat ? formatDate(this.stat.dateTime) : '';
+      return this.stat ? formatDate(this.stat.dateTime, 'iiii, dd MMM, yyyy') : '';
     },
     deliveredDateTime() {
       return this.get_stats_overview_jumpstart.firstDeliverDateTime

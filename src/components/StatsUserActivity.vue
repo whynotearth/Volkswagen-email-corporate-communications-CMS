@@ -11,7 +11,7 @@
     </div>
     <div class="flex w-full justify-between text-black em-high py-2">
       <span class="tg-body-mobile">Total clicks</span>
-      <span class="tg-body-emphasis-mobile">{{ fields.clickCount || '-' }}</span>
+      <span class="tg-body-emphasis-mobile">{{ fields.clickCount }}</span>
     </div>
     <div class="flex w-full justify-between text-black em-high py-2">
       <span class="tg-body-mobile">Last clicked</span>
