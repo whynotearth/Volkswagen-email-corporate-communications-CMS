@@ -11,7 +11,7 @@
             class="relative bg-surface text-left mb-6"
             placeholder="Schedule time"
             :options="dateRangesAvailable"
-            v-model="stats_overview_date_range"
+            v-model="dateRange"
             @updateSelectedOption="fetchStatsOverview"
           >
             <template #icon>
@@ -35,7 +35,7 @@
             <ChartsStatsOverview
               v-if="get_stats_overview"
               :stats_overview="get_stats_overview"
-              :stats_overview_date_range="stats_overview_date_range"
+              :stats_overview_date_range="dateRange"
             >
               <template #title><span class="block text-center">Memo Overview</span></template>
             </ChartsStatsOverview>
@@ -81,6 +81,8 @@ import { colors, opacity } from '@/constants/theme.js';
 import { formatDate, statsOverviewGenerateDateRangesAvailable, statsOverviewDateRangeParamsGenerator } from '@/helpers';
 import { addDays, addYears, formatISO } from 'date-fns';
 
+const dateRangesAvailable = statsOverviewGenerateDateRangesAvailable();
+
 export default {
   name: 'StatsOverviewMemos',
   components: {
@@ -93,50 +95,28 @@ export default {
     Calendar,
     Stat
   },
+  data: () => {
+    return {
+      dateRange: dateRangesAvailable.find(item => item.id === '7d_ago')
+    };
+  },
   created() {
     this.fetchStatsOverview();
   },
   computed: {
-    ...mapGetters('memo', ['get_stats_overview_date_range', 'get_stats_overview']),
-    stats_overview_date_range: {
-      get() {
-        const current = this.get_stats_overview_date_range;
-        // default value
-        if (!current.value.length > 0) {
-          const last7days = this.dateRangesAvailable[0];
-          return last7days;
-        }
-        return current;
-      },
-      set(value) {
-        this.update_stats_overview_date_range(value);
-      }
-    },
-
+    ...mapGetters('memo', ['get_stats_overview']),
     dateRangesAvailable() {
-      return this.statsOverviewGenerateDateRangesAvailable();
-    },
-
-    dateRangeParamsGenerator() {
-      return statsOverviewDateRangeParamsGenerator({
-        range: this.stats_overview_date_range.value,
-        isAllTime: this.get_stats_overview_date_range.id === 'all_time'
-      });
+      return dateRangesAvailable;
     }
   },
 
   methods: {
-    ...mapMutations('memo', ['update_stats_overview_date_range']),
     ...mapActions('memo', ['fetch_stats_overview', 'export_stats_overview']),
-
-    statsOverviewGenerateDateRangesAvailable,
-
     exportStatsOverview() {
-      this.export_stats_overview(this.dateRangeParamsGenerator);
+      this.export_stats_overview(statsOverviewDateRangeParamsGenerator(this.dateRange));
     },
-
     fetchStatsOverview() {
-      this.fetch_stats_overview(this.dateRangeParamsGenerator);
+      this.fetch_stats_overview(statsOverviewDateRangeParamsGenerator(this.dateRange));
     }
   }
 };

@@ -20,20 +20,18 @@
           </div>
 
           <div
-            class="bg-white pb-0 text-left"
+            class="bg-white pb-0 text-left relative"
             :class="[
               {
                 'is-query-empty': to_query === '',
                 'is-filled': !$v.distributionGroups.$invalid,
                 error: $v.distributionGroups.$error
               },
-              $v.distributionGroups.$error
-                ? 'text-red-600 border-red-600 pl-error-message'
-                : 'text-gray-500 border-gray-600'
+              $v.distributionGroups.$error ? 'text-red-600 border-red-600' : 'text-gray-500 border-gray-600'
             ]"
           >
             <label
-              class="multiselect--material-label absolute"
+              class="multiselect--material-label absolute z-30"
               v-if="!$v.distributionGroups.$invalid"
               for="distributionGroups"
             >

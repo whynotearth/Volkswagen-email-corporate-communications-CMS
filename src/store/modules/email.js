@@ -63,7 +63,6 @@ export default {
     get_available_articles: state => state.available_articles,
     get_stats: state => state.stats,
     get_stats_overview: state => state.stats_overview,
-    get_stats_overview_date_range: state => state.stats_overview_date_range,
     get_stats_overview_jumpstart: state => state.stats_overview_jumpstart,
     get_stats_overview_jumpstart_date_range: state => state.stats_overview_jumpstart_date_range,
     get_stat: state => state.stat
@@ -201,9 +200,6 @@ export default {
     },
     update_stats_overview(state, payload) {
       state.stats_overview = payload;
-    },
-    update_stats_overview_date_range(state, payload) {
-      state.stats_overview_date_range = payload;
     },
     update_stats_overview_jumpstart(state, payload) {
       state.stats_overview_jumpstart = payload;

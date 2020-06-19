@@ -234,7 +234,7 @@ export default {
                 position: 'bottom',
                 ticks: {
                   source: 'data',
-                  padding: 8
+                  padding: 12
                 },
                 bounds: 'ticks',
                 type: 'time',
@@ -248,6 +248,8 @@ export default {
                 gridLines: {
                   drawBorder: false,
                   lineWidth: 1,
+                  drawTicks: false,
+                  zeroLineColor: `rgba(255,255,255,${opacity['12']})`,
                   color: `rgba(255,255,255,${opacity['12']})`
                 }
               }

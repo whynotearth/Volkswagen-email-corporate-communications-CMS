@@ -103,8 +103,6 @@ export default {
   methods: {
     getRandomColor(tagName) {
       const index = stringToHashCode(tagName) % (materialColors.length - 1);
-      console.log('index', index);
-
       return materialColors[index];
     },
     adaptDataset(inputData) {
@@ -128,7 +126,30 @@ export default {
             align: 'start',
             labels: {
               boxWidth: 16,
-              fontSize: 12
+              fontSize: 12,
+              // eslint-disable-next-line
+              fontFamily: "'VWText-Regular', sans-serif"
+            },
+            onClick: function(e, legendItem) {
+              var index = legendItem.datasetIndex;
+              var ci = this.chart;
+              var alreadyHidden = ci.getDatasetMeta(index).hidden === null ? false : ci.getDatasetMeta(index).hidden;
+
+              ci.data.datasets.forEach(function(e, i) {
+                var meta = ci.getDatasetMeta(i);
+
+                if (i !== index) {
+                  if (!alreadyHidden) {
+                    meta.hidden = meta.hidden === null ? !meta.hidden : null;
+                  } else if (meta.hidden === null) {
+                    meta.hidden = true;
+                  }
+                } else if (i === index) {
+                  meta.hidden = null;
+                }
+              });
+
+              ci.update();
             }
           },
           tooltips: false,
@@ -169,7 +190,7 @@ export default {
                 position: 'bottom',
                 ticks: {
                   source: 'data',
-                  padding: 8
+                  padding: 12
                 },
                 bounds: 'ticks',
                 type: 'time',
@@ -183,6 +204,8 @@ export default {
                 gridLines: {
                   drawBorder: false,
                   lineWidth: 1,
+                  drawTicks: false,
+                  zeroLineColor: colors.divider,
                   color: colors.divider
                 }
               }
