@@ -5,7 +5,7 @@ import ArticleAdd from '../views/ArticleAdd.vue';
 import AuthLogin from '../views/AuthLogin.vue';
 import MemoAdd from '../views/MemoAdd.vue';
 import Settings from '../views/Settings';
-// import BlueDeltaSettings from '../views/BlueDeltaSettings';
+import BlueDeltaSettings from '../views/BlueDeltaSettings';
 import MyAccount from '../views/MyAccount';
 import ChangePassword from '../views/MyAccountChangePassword';
 // import Stats from '../views/Stats.vue';
@@ -218,11 +218,11 @@ const routes = [
     name: 'Settings',
     component: Settings
   },
-  // {
-  //   path: '/settings/jumpstart',
-  //   name: 'BlueDeltaSettings',
-  //   component: BlueDeltaSettings
-  // },
+  {
+    path: '/settings/memo',
+    name: 'BlueDeltaSettings',
+    component: BlueDeltaSettings
+  },
   {
     path: '/settings/my-account',
     name: 'MyAccount',
