@@ -134,7 +134,7 @@ export default {
       const data = await NewJumpStartService.export1(payload.params);
       downloadBase64AsFile({
         content: data,
-        fileName: `jumpstart-stats-${payload.filenameDate}.csv`,
+        fileName: `jumpstart-stats-${payload.filenameDate}--id-${payload.params.id}.csv`,
         mimeType: 'text/csv'
       });
     },
