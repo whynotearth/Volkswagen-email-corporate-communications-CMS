@@ -140,9 +140,13 @@ export default {
       const data = await NewJumpStartService.stats(payload.params);
       commit('update_stats_overview', data);
     },
-    async export_stats_overview_jumpstart({ commit }, payload, filenameDate) {
+    async export_stats_overview_jumpstart({ commit }, payload) {
       const data = await NewJumpStartService.export1(payload.params);
-      downloadBase64AsFile({ content: data, fileName: `jumpstart-stats-${filenameDate}.csv`, mimeType: 'text/csv' });
+      downloadBase64AsFile({
+        content: data,
+        fileName: `jumpstart-stats-${payload.filenameDate}.csv`,
+        mimeType: 'text/csv'
+      });
     },
     async export_stats_overview({ commit }, { params, filenameDate }) {
       const data = await NewJumpStartService.export(params);

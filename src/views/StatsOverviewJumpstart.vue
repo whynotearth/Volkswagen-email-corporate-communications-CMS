@@ -39,29 +39,29 @@
             >
               <template #title>
                 <span class="block text-center tg-h2-mobile">
-                  <span class="text-brand-light-blue-gradient">3258</span>
+                  <span class="text-brand-light-blue-gradient">{{ get_stats_overview_jumpstart.recipientsCount }}</span>
                   Recipients
                 </span>
               </template>
               <template #description>
-                <div class="flex w-full px-4 py-2 em-high">
+                <div v-if="stat" class="flex w-full px-4 py-2 em-high">
                   <span class="tg-body-emphasis-mobile text-white mr-2">Distribution Group: </span>
                   <BaseChip v-for="(item, index) in stat.distributionGroups" :key="index" :text="item" />
                 </div>
                 <div class="flex w-full px-4 py-3 em-high">
                   <span class="tg-body-emphasis-mobile text-white mr-2">Subject: </span>
-                  <span class="tg-body-mobile">Wednesday, 6 May 2020, 9:45 AM</span>
+                  <span class="tg-body-mobile">{{ subjectdDateTime }}</span>
                 </div>
                 <div class="flex w-full px-4 py-3 mb-3 em-high">
                   <span class="tg-body-emphasis-mobile text-white mr-2">Delivered: </span>
-                  <span class="tg-body-mobile">Wednesday, 6 May 2020, 9:45 AM</span>
+                  <span class="tg-body-mobile">{{ deliveredDateTime }}</span>
                 </div>
               </template>
             </ChartsStatsOverview>
           </div>
         </div>
         <div class="container px-0 md:px-6 text-left mb-6">
-          <StatsUserActivity :title="'Activity'" :list="listOfActivity" />
+          <StatsUserActivity :title="'Activity'" :fields="get_stats_overview_jumpstart" />
         </div>
 
         <div class="container px-4 md:px-6 text-left mb-6">
@@ -172,37 +172,15 @@ export default {
     },
     titleHeader() {
       return this.stat ? formatDate(this.stat.dateTime) : '';
+    },
+    deliveredDateTime() {
+      return this.get_stats_overview_jumpstart.firstDeliverDateTime
+        ? formatDate(this.get_stats_overview_jumpstart.firstDeliverDateTime, 'iiii, dd MMM yyyy, h:mm aaa')
+        : '-';
+    },
+    subjectdDateTime() {
+      return this.stat ? formatDate(this.stat.dateTime, 'iiii, dd MMM yyyy, h:mm aaa') : '-';
     }
-  },
-  data() {
-    return {
-      listOfActivity: [
-        {
-          name: 'Successful deliveries',
-          value: '98%'
-        },
-        {
-          name: 'Last opened',
-          value: '6 May 2020, 9:44 PM'
-        },
-        {
-          name: 'Forwarded',
-          value: '0'
-        },
-        {
-          name: 'Clicks per unique opens',
-          value: '1'
-        },
-        {
-          name: 'Total clicks',
-          value: '1524'
-        },
-        {
-          name: 'Last clicked',
-          value: '2516'
-        }
-      ]
-    };
   },
   methods: {
     ...mapMutations('email', ['update_stats_overview_jumpstart_date_range']),
@@ -239,13 +217,15 @@ export default {
 
     exportReport() {
       const range = this.stats_overview_jumpstart_date_range.value;
+      const filename = this.stats_overview_jumpstart_date_range.id;
 
       this.export_stats_overview_jumpstart({
         params: {
           id: this.jumpStartId,
           fromDate: formatISO(new Date(range[0]), { representation: 'date' }),
           toDate: formatISO(new Date(range[1]), { representation: 'date' })
-        }
+        },
+        filenameDate: filename
       });
     }
   }
