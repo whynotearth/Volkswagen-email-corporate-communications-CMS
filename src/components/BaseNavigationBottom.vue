@@ -45,7 +45,7 @@
           </ul>
           <IconBottomNavFabOutcircle class="h-14 text-primary flex-shrink-0" />
           <ul :class="{ opened: isOpen }" class="absolute toggle-menu list-none">
-            <!-- <li class="absolute top-0 right-0 flex whitespace-no-wrap text-white text-xs justify-end my-3">
+            <li class="absolute top-0 right-0 flex whitespace-no-wrap text-white text-xs justify-end my-3">
               <router-link :to="{ name: 'JumpStartAdd' }" class="flex items-center">
                 Jumpstart
                 <div
@@ -55,7 +55,7 @@
                   <ArticleIcon class="m-auto" />
                 </div>
               </router-link>
-            </li> -->
+            </li>
             <li class="absolute top-0 right-0 flex whitespace-no-wrap text-white text-xs justify-end my-2">
               <router-link :to="{ name: 'MemoAdd' }" class="flex items-center">
                 Memo
@@ -68,13 +68,12 @@
               </router-link>
             </li>
           </ul>
-          <!-- @click="toggleMenu()" -->
-          <router-link
-            :to="{ name: 'MemoAdd' }"
+          <a
+            @click.prevent.stop="toggleMenu()"
             class="absolute flex content-center w-14 h-14 opacity-100 rounded-full cursor-pointer toggle-button bg-secondary shadow-6dp"
           >
             <AddIcon class="m-auto ease-in-out" :class="{ 'transform rotate-45': isOpen }" />
-          </router-link>
+          </a>
           <div v-if="isOpen" class="fixed w-full h-full top-0 left-0 -z-1 bg-opacity-50 bg-black"></div>
         </div>
       </div>
@@ -88,7 +87,7 @@ import AddIcon from '@/assets/add.svg';
 import HomeIcon from '@/assets/home.svg';
 import MemoIcon from '@/assets/memo.svg';
 import MemoStatslIcon from '@/assets/memo-stats.svg';
-// import ArticleIcon from '@/assets/article.svg';
+import ArticleIcon from '@/assets/article.svg';
 import BookingIcon from '@/assets/booking.svg';
 import StatsIcon from '@/assets/stats.svg';
 import IconBottomNavFabOutcircle from '@/assets/bottom-nav-fab-outcircle.svg';
@@ -100,7 +99,7 @@ export default {
     HomeIcon,
     MemoIcon,
     MemoStatslIcon,
-    // ArticleIcon,
+    ArticleIcon,
     // BookingIcon,
     StatsIcon,
     IconBottomNavFabOutcircle
