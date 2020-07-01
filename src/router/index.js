@@ -5,14 +5,14 @@ import ArticleAdd from '../views/ArticleAdd.vue';
 import AuthLogin from '../views/AuthLogin.vue';
 import MemoAdd from '../views/MemoAdd.vue';
 import Settings from '../views/Settings';
-// import BlueDeltaSettings from '../views/BlueDeltaSettings';
+import BlueDeltaSettings from '../views/BlueDeltaSettings';
 import MyAccount from '../views/MyAccount';
 import ChangePassword from '../views/MyAccountChangePassword';
-// import Stats from '../views/Stats.vue';
+import Stats from '../views/Stats.vue';
 import StatsOverviewDistributionGroup from '../views/StatsOverviewDistributionGroup.vue';
 import StatsOverviewMemos from '../views/StatsOverviewMemos.vue';
-// import StatsOverviewJumpstarts from '../views/StatsOverviewJumpstarts.vue';
-// import StatsOverviewJumpstart from '../views/StatsOverviewJumpstart.vue';
+import StatsOverviewJumpstarts from '../views/StatsOverviewJumpstarts.vue';
+import StatsOverviewJumpstart from '../views/StatsOverviewJumpstart.vue';
 import MemoListActivity from '../views/MemoListActivity.vue';
 import MemoActivityDetail from '../views/MemoActivityDetail.vue';
 import EmailLists from '../views/EmailLists';
@@ -25,21 +25,21 @@ import EmailListImport from '../views/EmailListImport';
 import EmailListImportHelp from '../views/EmailListImportHelp';
 import Email from '@/views/Email';
 import Dashboard from '../views/Dashboard';
-// import BlueDeltaMain from '@/views/BlueDeltaMain';
-// import JumpStartAdd from '../views/JumpStartAdd';
-// import JumpStartEdit from '../views/JumpStartEdit';
-// import JumpStartLists from '../views/JumpStartLists';
-// import ArticleMain from '../views/ArticleMain';
-// import ArticleLists from '../views/ArticleLists';
-// import ArticleListsItem from '../views/ArticleListsItem';
-// import EditBlueDelta from '../views/EditBlueDelta';
-// import BlueDeltaRearrange from '../views/BlueDeltaRearrange';
+import BlueDeltaMain from '@/views/BlueDeltaMain';
+import JumpStartAdd from '../views/JumpStartAdd';
+import JumpStartEdit from '../views/JumpStartEdit';
+import JumpStartLists from '../views/JumpStartLists';
+import ArticleMain from '../views/ArticleMain';
+import ArticleLists from '../views/ArticleLists';
+import ArticleListsItem from '../views/ArticleListsItem';
+import EditBlueDelta from '../views/EditBlueDelta';
+import BlueDeltaRearrange from '../views/BlueDeltaRearrange';
 import DeveloperTesting from '../views/DeveloperTesting.vue';
 import AuthForgotPassword from '../views/AuthForgotPassword';
 import AuthNewPassword from '../views/AuthNewPassword';
-// import JumpStartActivityList from '../views/JumpStartActivityList.vue';
-// import JumpStartActivityDetail from '../views/JumpStartActivityDetail.vue';
-// import ArticleCategorySelection from '../views/ArticleCategorySelection.vue';
+import JumpStartActivityList from '../views/JumpStartActivityList.vue';
+import JumpStartActivityDetail from '../views/JumpStartActivityDetail.vue';
+import ArticleCategorySelection from '../views/ArticleCategorySelection.vue';
 import store from '../store';
 
 Vue.use(VueRouter);
@@ -55,11 +55,11 @@ const routes = [
     name: 'Dashboard',
     component: Dashboard
   },
-  // {
-  //   path: '/stats',
-  //   name: 'Stats',
-  //   component: Stats
-  // },
+  {
+    path: '/stats',
+    name: 'Stats',
+    component: Stats
+  },
   {
     path: '/login',
     name: 'AuthLogin',
@@ -84,43 +84,43 @@ const routes = [
       isPublic: true
     }
   },
-  // {
-  //   path: '/articles',
-  //   name: 'ArticleMain',
-  //   component: ArticleMain
-  // },
-  // {
-  //   path: '/articles/add/:step?',
-  //   name: 'ArticleAdd',
-  //   component: ArticleAdd,
-  //   props: true
-  // },
-  // {
-  //   path: '/articles/category-selection',
-  //   name: 'ArticleCategorySelection',
-  //   component: ArticleCategorySelection
-  // },
+  {
+    path: '/articles',
+    name: 'ArticleMain',
+    component: ArticleMain
+  },
+  {
+    path: '/articles/add/:step?',
+    name: 'ArticleAdd',
+    component: ArticleAdd,
+    props: true
+  },
+  {
+    path: '/articles/category-selection',
+    name: 'ArticleCategorySelection',
+    component: ArticleCategorySelection
+  },
   {
     path: '/memo/add/:step?',
     name: 'MemoAdd',
     component: MemoAdd,
     props: true
   },
-  // {
-  //   path: '/jumpstart/add',
-  //   name: 'JumpStartAdd',
-  //   component: JumpStartAdd
-  // },
-  // {
-  //   path: '/jumpstart/edit',
-  //   name: 'JumpStartEdit',
-  //   component: JumpStartEdit
-  // },
-  // {
-  //   path: '/jumpstart',
-  //   name: 'BlueDeltaMain',
-  //   component: BlueDeltaMain
-  // },
+  {
+    path: '/jumpstart/add',
+    name: 'JumpStartAdd',
+    component: JumpStartAdd
+  },
+  {
+    path: '/jumpstart/edit',
+    name: 'JumpStartEdit',
+    component: JumpStartEdit
+  },
+  {
+    path: '/jumpstart',
+    name: 'BlueDeltaMain',
+    component: BlueDeltaMain
+  },
 
   // Stats Overview
   {
@@ -150,66 +150,66 @@ const routes = [
     component: Email,
     props: true
   },
-  // {
-  //   path: '/jumpstart/edit/:id',
-  //   name: 'EditBlueDelta',
-  //   component: EditBlueDelta,
-  //   props: true
-  // },
-  // {
-  //   path: '/jumpstart/add/:date',
-  //   name: 'AddBlueDelta',
-  //   component: EditBlueDelta,
-  //   props: true
-  // },
-  // {
-  //   path: '/jumpstart/rearrange/:id',
-  //   name: 'BlueDeltaRearrange',
-  //   component: BlueDeltaRearrange,
-  //   props: true
-  // },
-  // {
-  //   path: '/jumpstart/rearrange/add/:date',
-  //   name: 'AddBlueDeltaRearrange',
-  //   component: BlueDeltaRearrange,
-  //   props: true
-  // },
-  // {
-  //   path: '/jumpstart/list',
-  //   name: 'JumpStartLists',
-  //   component: JumpStartLists
-  // },
-  // {
-  //   path: '/article-lists',
-  //   name: 'ArticleLists',
-  //   component: ArticleLists
-  // },
-  // {
-  //   path: '/article-lists/:id',
-  //   name: 'ArticleListsItem',
-  //   component: ArticleListsItem
-  // },
-  // {
-  //   path: '/stats/jumpstarts',
-  //   name: 'StatsOverviewJumpstarts',
-  //   component: StatsOverviewJumpstarts
-  // },
-  // {
-  //   path: '/stats/jumpstarts/activity',
-  //   name: 'JumpStartActivityList',
-  //   component: JumpStartActivityList
-  // },
-  // {
-  //   path: '/stats/jumpstart/:id',
-  //   name: 'StatsOverviewJumpstart',
-  //   component: StatsOverviewJumpstart
-  // },
-  // {
-  //   path: '/stats/jumpstart/:id/activity',
-  //   name: 'JumpStartActivityDetail',
-  //   component: JumpStartActivityDetail,
-  //   props: true
-  // },
+  {
+    path: '/jumpstart/edit/:id',
+    name: 'EditBlueDelta',
+    component: EditBlueDelta,
+    props: true
+  },
+  {
+    path: '/jumpstart/add/:date',
+    name: 'AddBlueDelta',
+    component: EditBlueDelta,
+    props: true
+  },
+  {
+    path: '/jumpstart/rearrange/:id',
+    name: 'BlueDeltaRearrange',
+    component: BlueDeltaRearrange,
+    props: true
+  },
+  {
+    path: '/jumpstart/rearrange/add/:date',
+    name: 'AddBlueDeltaRearrange',
+    component: BlueDeltaRearrange,
+    props: true
+  },
+  {
+    path: '/jumpstart/list',
+    name: 'JumpStartLists',
+    component: JumpStartLists
+  },
+  {
+    path: '/article-lists',
+    name: 'ArticleLists',
+    component: ArticleLists
+  },
+  {
+    path: '/article-lists/:id',
+    name: 'ArticleListsItem',
+    component: ArticleListsItem
+  },
+  {
+    path: '/stats/jumpstarts',
+    name: 'StatsOverviewJumpstarts',
+    component: StatsOverviewJumpstarts
+  },
+  {
+    path: '/stats/jumpstarts/activity',
+    name: 'JumpStartActivityList',
+    component: JumpStartActivityList
+  },
+  {
+    path: '/stats/jumpstart/:id',
+    name: 'StatsOverviewJumpstart',
+    component: StatsOverviewJumpstart
+  },
+  {
+    path: '/stats/jumpstart/:id/activity',
+    name: 'JumpStartActivityDetail',
+    component: JumpStartActivityDetail,
+    props: true
+  },
 
   // settings
   // -----------------------
@@ -218,11 +218,11 @@ const routes = [
     name: 'Settings',
     component: Settings
   },
-  // {
-  //   path: '/settings/jumpstart',
-  //   name: 'BlueDeltaSettings',
-  //   component: BlueDeltaSettings
-  // },
+  {
+    path: '/settings/jumpstart',
+    name: 'BlueDeltaSettings',
+    component: BlueDeltaSettings
+  },
   {
     path: '/settings/my-account',
     name: 'MyAccount',
