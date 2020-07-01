@@ -16,13 +16,13 @@
                 Home
               </router-link>
             </li>
-            <!-- <li class="text-white inline-block m-2 mx-3 md:mx-5 mb-1 text-xs flex-shrink-0">
+            <li class="text-white inline-block m-2 mx-3 md:mx-5 mb-1 text-xs flex-shrink-0">
               <router-link :active-class="'router-active-link'" class="router-normal-link" :to="{ name: 'Stats' }">
                 <StatsIcon class="m-auto" />
                 Stats
               </router-link>
-            </li> -->
-            <!-- <li class="text-white inline-block m-2 mx-3 md:mx-5 mb-1 text-xs flex-shrink-0">
+            </li>
+            <li class="text-white inline-block m-2 mx-3 md:mx-5 mb-1 text-xs flex-shrink-0">
               <router-link
                 :active-class="'router-active-link'"
                 class="router-normal-link"
@@ -31,7 +31,7 @@
                 <MemoStatslIcon class="m-auto" />
                 JumpStart
               </router-link>
-            </li> -->
+            </li>
             <!--<li class="text-white inline-block m-2 mb-1 text-xs flex-shrink-0">
               <router-link
                 :active-class="'router-active-link'"
@@ -87,10 +87,10 @@
 import AddIcon from '@/assets/add.svg';
 import HomeIcon from '@/assets/home.svg';
 import MemoIcon from '@/assets/memo.svg';
-// import MemoStatslIcon from '@/assets/memo-stats.svg';
+import MemoStatslIcon from '@/assets/memo-stats.svg';
 // import ArticleIcon from '@/assets/article.svg';
 import BookingIcon from '@/assets/booking.svg';
-// import StatsIcon from '@/assets/stats.svg';
+import StatsIcon from '@/assets/stats.svg';
 import IconBottomNavFabOutcircle from '@/assets/bottom-nav-fab-outcircle.svg';
 
 export default {
@@ -99,10 +99,10 @@ export default {
     AddIcon,
     HomeIcon,
     MemoIcon,
-    // MemoStatslIcon,
+    MemoStatslIcon,
     // ArticleIcon,
     // BookingIcon,
-    // StatsIcon,
+    StatsIcon,
     IconBottomNavFabOutcircle
   },
   data() {
