@@ -19,7 +19,7 @@
             :to="{ name: 'BlueDeltaSettings' }"
             class="link-fordward block flex-grow justify-between flex h-full items-center cursor-pointer select-none px-4 pr-6 py-5"
           >
-            <span class="mr-2 tg-body-mobile">Memo Settings</span>
+            <span class="mr-2 tg-body-mobile">JumpStart Settings</span>
             <ArrowRightIcon />
           </router-link>
         </div>

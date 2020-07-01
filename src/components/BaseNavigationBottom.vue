@@ -16,13 +16,13 @@
                 Home
               </router-link>
             </li>
-            <!-- <li class="text-white inline-block m-2 mx-3 md:mx-5 mb-1 text-xs flex-shrink-0">
+            <li class="text-white inline-block m-2 mx-3 md:mx-5 mb-1 text-xs flex-shrink-0">
               <router-link :active-class="'router-active-link'" class="router-normal-link" :to="{ name: 'Stats' }">
                 <StatsIcon class="m-auto" />
                 Stats
               </router-link>
-            </li> -->
-            <!-- <li class="text-white inline-block m-2 mx-3 md:mx-5 mb-1 text-xs flex-shrink-0">
+            </li>
+            <li class="text-white inline-block m-2 mx-3 md:mx-5 mb-1 text-xs flex-shrink-0">
               <router-link
                 :active-class="'router-active-link'"
                 class="router-normal-link"
@@ -31,7 +31,7 @@
                 <MemoStatslIcon class="m-auto" />
                 JumpStart
               </router-link>
-            </li> -->
+            </li>
             <!--<li class="text-white inline-block m-2 mb-1 text-xs flex-shrink-0">
               <router-link
                 :active-class="'router-active-link'"
@@ -45,7 +45,7 @@
           </ul>
           <IconBottomNavFabOutcircle class="h-14 text-primary flex-shrink-0" />
           <ul :class="{ opened: isOpen }" class="absolute toggle-menu list-none">
-            <!-- <li class="absolute top-0 right-0 flex whitespace-no-wrap text-white text-xs justify-end my-3">
+            <li class="absolute top-0 right-0 flex whitespace-no-wrap text-white text-xs justify-end my-3">
               <router-link :to="{ name: 'JumpStartAdd' }" class="flex items-center">
                 Jumpstart
                 <div
@@ -55,7 +55,7 @@
                   <ArticleIcon class="m-auto" />
                 </div>
               </router-link>
-            </li> -->
+            </li>
             <li class="absolute top-0 right-0 flex whitespace-no-wrap text-white text-xs justify-end my-2">
               <router-link :to="{ name: 'MemoAdd' }" class="flex items-center">
                 Memo
@@ -68,13 +68,12 @@
               </router-link>
             </li>
           </ul>
-          <!-- @click="toggleMenu()" -->
-          <router-link
-            :to="{ name: 'MemoAdd' }"
+          <a
+            @click.prevent.stop="toggleMenu()"
             class="absolute flex content-center w-14 h-14 opacity-100 rounded-full cursor-pointer toggle-button bg-secondary shadow-6dp"
           >
             <AddIcon class="m-auto ease-in-out" :class="{ 'transform rotate-45': isOpen }" />
-          </router-link>
+          </a>
           <div v-if="isOpen" class="fixed w-full h-full top-0 left-0 -z-1 bg-opacity-50 bg-black"></div>
         </div>
       </div>
@@ -87,10 +86,10 @@
 import AddIcon from '@/assets/add.svg';
 import HomeIcon from '@/assets/home.svg';
 import MemoIcon from '@/assets/memo.svg';
-// import MemoStatslIcon from '@/assets/memo-stats.svg';
-// import ArticleIcon from '@/assets/article.svg';
+import MemoStatslIcon from '@/assets/memo-stats.svg';
+import ArticleIcon from '@/assets/article.svg';
 import BookingIcon from '@/assets/booking.svg';
-// import StatsIcon from '@/assets/stats.svg';
+import StatsIcon from '@/assets/stats.svg';
 import IconBottomNavFabOutcircle from '@/assets/bottom-nav-fab-outcircle.svg';
 
 export default {
@@ -99,10 +98,10 @@ export default {
     AddIcon,
     HomeIcon,
     MemoIcon,
-    // MemoStatslIcon,
-    // ArticleIcon,
+    MemoStatslIcon,
+    ArticleIcon,
     // BookingIcon,
-    // StatsIcon,
+    StatsIcon,
     IconBottomNavFabOutcircle
   },
   data() {

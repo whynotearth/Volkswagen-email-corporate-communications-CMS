@@ -17,12 +17,12 @@
             <h1 class="text-primary h1-mobile md:h1 mb-h1-mobile mb-14">Let's crunch the numbers...</h1>
 
             <div>
-              <!-- <router-link
+              <router-link
                 :to="{ name: 'StatsOverviewJumpstarts' }"
                 class="block bg-secondary w-full hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline transition duration-100 ease-in-out transition-all label-mobile mb-6"
               >
                 JumpStart Stats
-              </router-link> -->
+              </router-link>
               <router-link
                 :to="{ name: 'StatsOverviewMemos' }"
                 class="block bg-secondary w-full hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline transition duration-100 ease-in-out transition-all label-mobile"
