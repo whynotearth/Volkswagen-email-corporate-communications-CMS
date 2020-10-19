@@ -148,7 +148,7 @@
           <div class="h-full overflow-y-auto">
             <div class="p-4 flex items-center">
               <img
-                src="https://res.cloudinary.com/whynotearth/image/upload/v1586844643/Volkswagen/cms/logo_tjf9ej.svg"
+                src="https://res.cloudinary.com/die9ji2vn/image/upload/v1603095054/vk-new-logo_ik4ew5.png"
                 alt=""
                 class="h-8 mr-2"
               />
