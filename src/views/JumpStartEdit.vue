@@ -152,7 +152,6 @@
                 alt=""
                 class="h-8 mr-2"
               />
-              <span class="font-semibold text-2xs text-blue-900">Chattanooga</span>
             </div>
             <hr />
             <div class="p-4 body-1-mobile">

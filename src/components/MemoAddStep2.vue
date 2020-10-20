@@ -9,7 +9,6 @@
               src="https://res.cloudinary.com/die9ji2vn/image/upload/v1603095054/vk-new-logo_ik4ew5.png"
               alt=""
             />
-            <span class="font-semibold text-2xs md:text-lg text-blue-900">Chattanooga</span>
           </div>
           <hr />
           <template v-if="get_response_message.message">
