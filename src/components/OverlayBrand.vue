@@ -16,7 +16,7 @@
             y="20"
             width="288"
             height="288"
-            xlink:href="https://res.cloudinary.com/die9ji2vn/image/upload/f_auto/v1578304830/Home%20Page/logo2_qoiy2d.png"
+            xlink:href="https://res.cloudinary.com/whynotearth/image/upload/v1586859428/Volkswagen/cms/logo-light_um5gka.svg"
           ></image>
         </BaseProgressCircle>
 
@@ -34,7 +34,7 @@
             y="10"
             width="144"
             height="144"
-            xlink:href="https://res.cloudinary.com/die9ji2vn/image/upload/f_auto/v1578304830/Home%20Page/logo2_qoiy2d.png"
+            xlink:href="https://res.cloudinary.com/whynotearth/image/upload/v1586859428/Volkswagen/cms/logo-light_um5gka.svg"
           ></image>
         </BaseProgressCircle>
       </div>

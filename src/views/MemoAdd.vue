@@ -88,10 +88,11 @@
           <div class="h-full overflow-y-auto">
             <div class="p-4 flex items-center">
               <img
-                src="https://res.cloudinary.com/die9ji2vn/image/upload/v1603095054/vk-new-logo_ik4ew5.png"
+                src="https://res.cloudinary.com/whynotearth/image/upload/v1586844643/Volkswagen/cms/logo_tjf9ej.svg"
                 alt=""
-                class="h-10 md:h-20 mr-2"
+                class="h-8 md:h-16 mr-2"
               />
+              <span class="font-semibold text-2xs text-blue-900">Chattanooga</span>
             </div>
             <hr />
             <div class="p-4 body-1-mobile">
