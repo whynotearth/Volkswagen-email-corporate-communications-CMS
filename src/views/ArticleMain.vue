@@ -9,8 +9,8 @@
           <div class="max-w-sm mx-auto px-12">
             <div class="mb-4">
               <img
-                class="w-30 h-24 mx-auto block"
-                src="https://res.cloudinary.com/die9ji2vn/image/upload/v1603095054/vk-new-logo_ik4ew5.png"
+                class="w-24 h-24 mx-auto block"
+                src="https://res.cloudinary.com/whynotearth/image/upload/v1588067012/Volkswagen/cms/Volkswagen_logo_2019_1_ddafyt.svg"
                 alt=""
               />
             </div>
